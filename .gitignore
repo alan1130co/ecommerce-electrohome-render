@@ -1,21 +1,75 @@
-# Created by venv; see https://docs.python.org/3/library/venv.html
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
 # Entorno virtual
 venv/
+env/
+ENV/
+env.bak/
+venv.bak/
 Include/
 Lib/
 Scripts/
 pyvenv.cfg
 
-# Archivos temporales
-__pycache__/
-*.pyc
-
-# Base de datos local
+# Django
+*.log
+local_settings.py
 db.sqlite3
+db.sqlite3-journal
+*.sqlite3
 
-# Variables de entorno
+# Variables de entorno y configuración sensible
 .env
+.env.local
+.env.*.local
+*.env
 
-# Configuración de VS Code
+# Base de datos
+*.db
+
+# Media files (archivos subidos por usuarios)
+media/
+*/media/*
+
+# Static files
+staticfiles/
+static_root/
+*/static_root/*
+
+# Archivos de IDEs
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
 
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Pytest
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Backups
+*.bak
+*.backup
+*.old
+
+# Archivos de sistema
+Thumbs.db
+.DS_Store
+
+# Node modules (si usas frontend con npm)
+node_modules/
