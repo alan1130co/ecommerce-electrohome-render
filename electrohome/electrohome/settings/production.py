@@ -5,7 +5,7 @@ import dj_database_url
 DEBUG = False
 
 # ===== SITE ID PARA RAILWAY =====
-SITE_ID = 4
+SITE_ID = 7
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
@@ -25,7 +25,7 @@ CACHES = {
 # ===== SEGURIDAD =====
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
+CSRF_TRUSTED_ORIGINS = [x for x in os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://ecommerce-electrohome-render.onrender.com').split(',') if x]
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
