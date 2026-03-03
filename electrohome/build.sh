@@ -13,7 +13,7 @@ python manage.py migrate --settings=electrohome.settings.production
 echo "Configurando Site domain..."
 python manage.py shell --settings=electrohome.settings.production -c "
 from django.contrib.sites.models import Site
-site, _ = Site.objects.get_or_create(id=4)
+site, _ = Site.objects.get_or_create(id=7)
 site.domain = 'ecommerce-electrohome-render.onrender.com'
 site.name = 'ElectroHome'
 site.save()
