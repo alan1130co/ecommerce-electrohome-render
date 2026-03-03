@@ -1,0 +1,247 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}{{ titulo }} - Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="eh-page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="eh-page-title"><i class="fas fa-box me-2" style="color:var(--yellow)"></i>{{ titulo }}</h1>
+    </div>
+    <a href="{% url 'dashboard:productos' %}" class="eh-btn-primary">
+        <i class="fas fa-arrow-left"></i> Volver a Productos
+    </a>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div style="padding:12px 16px;border-radius:8px;margin-bottom:1rem;font-size:0.9rem;font-weight:500;
+            background:{% if message.tags == 'error' %}rgba(239,68,68,0.1){% else %}rgba(16,185,129,0.1){% endif %};
+            color:{% if message.tags == 'error' %}#dc2626{% else %}#059669{% endif %};
+            border-left:4px solid {% if message.tags == 'error' %}#ef4444{% else %}#10b981{% endif %};">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="row justify-content-center">
+<div class="col-md-9">
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+
+    <!-- INFORMACIÓN BÁSICA -->
+    <div class="eh-card mb-4">
+        <div class="eh-card-header"><i class="fas fa-info-circle" style="color:var(--yellow)"></i> Información Básica</div>
+        <div style="padding:1.5rem;">
+            <div class="mb-3">
+                <label class="eh-form-label">{{ form.nombre.label }}</label>
+                {{ form.nombre }}
+                {% if form.nombre.errors %}<div style="color:#dc2626;font-size:0.82rem;margin-top:4px;">{{ form.nombre.errors }}</div>{% endif %}
+            </div>
+            <div class="mb-3">
+                <label class="eh-form-label">{{ form.descripcion.label }}</label>
+                {{ form.descripcion }}
+                {% if form.descripcion.errors %}<div style="color:#dc2626;font-size:0.82rem;margin-top:4px;">{{ form.descripcion.errors }}</div>{% endif %}
+            </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.categoria.label }}</label>
+                    {{ form.categoria }}
+                    {% if form.categoria.errors %}<div style="color:#dc2626;font-size:0.82rem;margin-top:4px;">{{ form.categoria.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.marca.label }}</label>
+                    {{ form.marca }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRECIO Y STOCK -->
+    <div class="eh-card mb-4">
+        <div class="eh-card-header"><i class="fas fa-dollar-sign" style="color:var(--yellow)"></i> Precio y Stock</div>
+        <div style="padding:1.5rem;">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.precio.label }}</label>
+                    {{ form.precio }}
+                    {% if form.precio.errors %}<div style="color:#dc2626;font-size:0.82rem;margin-top:4px;">{{ form.precio.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.stock.label }}</label>
+                    {{ form.stock }}
+                    {% if form.stock.errors %}<div style="color:#dc2626;font-size:0.82rem;margin-top:4px;">{{ form.stock.errors }}</div>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ESPECIFICACIONES TÉCNICAS -->
+    <div class="eh-card mb-4">
+        <div class="eh-card-header"><i class="fas fa-cogs" style="color:var(--yellow)"></i> Especificaciones Técnicas</div>
+        <div style="padding:1.5rem;">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.capacidad.label }}</label>
+                    {{ form.capacidad }}
+                </div>
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.potencia.label }}</label>
+                    {{ form.potencia }}
+                </div>
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.color.label }}</label>
+                    {{ form.color }}
+                </div>
+                <div class="col-md-6">
+                    <label class="eh-form-label">{{ form.garantia_meses.label }}</label>
+                    {{ form.garantia_meses }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CARACTERÍSTICAS E IMAGEN -->
+    <div class="eh-card mb-4">
+        <div class="eh-card-header"><i class="fas fa-images" style="color:var(--yellow)"></i> Características e Imagen</div>
+        <div style="padding:1.5rem;">
+            <div class="mb-3">
+                <label class="eh-form-label">{{ form.caracteristicas_destacadas.label }}</label>
+                {{ form.caracteristicas_destacadas }}
+                <small style="color:#94a3b8;font-size:0.8rem;display:block;margin-top:4px;">Separa con comas. Ej: No Frost, Inverter, Digital</small>
+            </div>
+            <div class="mb-3">
+                <label class="eh-form-label">{{ form.imagen_principal.label }}</label>
+                {{ form.imagen_principal }}
+            </div>
+
+            {% if formset %}
+            <div>
+                <label class="eh-form-label">Imágenes Adicionales</label>
+                {{ formset.management_form }}
+                <div id="formset-container">
+                    {% for f in formset.forms %}
+                    <div class="img-form-row" style="border:1px solid #e2e8f0;border-radius:10px;padding:1rem;margin-bottom:0.75rem;background:#f8fafc;">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-5">
+                                <label class="eh-form-label">{{ f.imagen.label }}</label>
+                                {% if f.instance.pk and f.instance.imagen %}
+                                <div style="margin-bottom:6px;">
+                                    <img src="{{ f.instance.imagen.url }}" style="width:70px;height:70px;object-fit:cover;border-radius:8px;">
+                                </div>
+                                {% endif %}
+                                {{ f.imagen }}
+                                {% if f.imagen.errors %}<div style="color:#dc2626;font-size:0.82rem;">{{ f.imagen.errors }}</div>{% endif %}
+                            </div>
+                            <div class="col-md-5">
+                                <label class="eh-form-label">{{ f.descripcion.label }}</label>
+                                {{ f.descripcion }}
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                {% if f.instance.pk %}
+                                <button type="button" class="eh-btn-danger remove-image" style="padding:8px 12px;width:100%;justify-content:center;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <div style="display:none;">{{ f.DELETE }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="button" id="add-image" class="eh-btn-primary" style="margin-top:0.5rem;">
+                    <i class="fas fa-plus"></i> Agregar imagen
+                </button>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ESTADO -->
+    <div class="eh-card mb-4">
+        <div class="eh-card-header"><i class="fas fa-toggle-on" style="color:var(--yellow)"></i> Estado</div>
+        <div style="padding:1.25rem 1.5rem;display:flex;align-items:center;gap:10px;">
+            {{ form.activo }}
+            <label for="{{ form.activo.id_for_label }}" style="font-weight:600;color:#334155;cursor:pointer;">{{ form.activo.label }}</label>
+        </div>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="d-flex gap-3 mb-4">
+        <button type="submit" class="eh-btn-yellow" style="padding:12px 28px;font-size:1rem;">
+            <i class="fas fa-save"></i> {{ boton }}
+        </button>
+        <a href="{% url 'dashboard:productos' %}" class="eh-btn-primary" style="padding:12px 24px;font-size:1rem;">
+            <i class="fas fa-times"></i> Cancelar
+        </a>
+    </div>
+
+</form>
+</div>
+</div>
+
+<!-- EMPTY FORM para clonar -->
+<div id="empty-form" style="display:none;">
+    <div class="img-form-row" style="border:1px solid #e2e8f0;border-radius:10px;padding:1rem;margin-bottom:0.75rem;background:#f8fafc;">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-5">
+                <label class="eh-form-label">Archivo de imagen</label>
+                <input type="file" name="{{ formset.prefix }}-__prefix__-imagen" class="eh-input" accept="image/*">
+            </div>
+            <div class="col-md-5">
+                <label class="eh-form-label">Descripción</label>
+                <input type="text" name="{{ formset.prefix }}-__prefix__-descripcion" class="eh-input" placeholder="Descripción (opcional)" maxlength="255">
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="button" class="eh-btn-danger remove-image" style="padding:8px 12px;width:100%;justify-content:center;">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+        <input type="hidden" name="{{ formset.prefix }}-__prefix__-DELETE" class="delete-flag">
+        <input type="hidden" name="{{ formset.prefix }}-__prefix__-id">
+        <input type="hidden" name="{{ formset.prefix }}-__prefix__-producto">
+    </div>
+</div>
+
+<style>
+.eh-form-label { display:block;font-size:0.8rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px; }
+.eh-input, input[type=text], input[type=number], input[type=file], select, textarea {
+    width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;
+    font-size:0.9rem;color:#1e293b;outline:none;transition:border-color 0.2s;background:white;
+    font-family:inherit;
+}
+input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus { border-color:#1d4ed8; }
+input[type=checkbox] { width:18px;height:18px;accent-color:#1d4ed8; }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const prefix = "{{ formset.prefix }}";
+    const addBtn = document.getElementById('add-image');
+    if (!addBtn) return;
+
+    addBtn.addEventListener('click', function() {
+        const totalForms = document.getElementById('id_' + prefix + '-TOTAL_FORMS');
+        if (!totalForms) return;
+        const currentCount = parseInt(totalForms.value, 10);
+        const container = document.getElementById('formset-container');
+        const newHtml = document.getElementById('empty-form').innerHTML.replace(/__prefix__/g, currentCount);
+        container.insertAdjacentHTML('beforeend', newHtml);
+        totalForms.value = currentCount + 1;
+    });
+
+    document.getElementById('formset-container').addEventListener('click', function(e) {
+        if (e.target.closest('.remove-image')) {
+            const wrapper = e.target.closest('.img-form-row');
+            if (!wrapper) return;
+            const del = wrapper.querySelector('.delete-flag');
+            if (del) del.value = 'on';
+            wrapper.style.display = 'none';
+        }
+    });
+});
+</script>
+
+{% endblock %}

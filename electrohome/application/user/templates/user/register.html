@@ -1,0 +1,660 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - ElectroHome</title>
+    
+    <!-- TailwindCSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        /* Estilos personalizados para los inputs */
+        .custom-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background-color: #f9fafb;
+        }
+        
+        .custom-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .custom-input:hover {
+            border-color: #cbd5e1;
+        }
+        
+        /* Estilos para la barra de fuerza */
+        .strength-bar {
+            height: 6px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-weak { 
+            background: linear-gradient(90deg, #ef4444 0%, #f87171 100%); 
+            width: 25%;
+        }
+        
+        .strength-medium { 
+            background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); 
+            width: 50%;
+        }
+        
+        .strength-strong { 
+            background: linear-gradient(90deg, #10b981 0%, #34d399 100%); 
+            width: 75%;
+        }
+        
+        .strength-very-strong { 
+            background: linear-gradient(90deg, #059669 0%, #10b981 100%); 
+            width: 100%;
+        }
+        
+        /* Animación para los checkmarks */
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+        
+        .checkmark-animation {
+            animation: checkmark 0.3s ease;
+        }
+        
+        /* Requisito cumplido */
+        .requirement-met {
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        .requirement-not-met {
+            color: #6b7280;
+        }
+        
+        /* Estilos para errores de campo */
+        .input-error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+        
+        .input-error:focus {
+            border-color: #dc2626 !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+        }
+        
+        .error-message {
+            display: flex;
+            align-items-center;
+            margin-top: 8px;
+            padding: 8px 12px;
+            background-color: #fef2f2;
+            border-left: 3px solid #ef4444;
+            border-radius: 6px;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .input-success {
+            border-color: #10b981 !important;
+        }
+        
+        .input-success:focus {
+            border-color: #059669 !important;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+        }
+        
+        /* Animación de shake para inputs inválidos */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+            border-color: #ef4444 !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="{% url 'product:home' %}">
+                    <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" class="w-20 h-auto hover:scale-105 transition-transform duration-500">
+                </a>
+                <a href="{% url 'product:home' %}" class="text-white hover:text-yellow-300 font-semibold">
+                    <i class="fas fa-home mr-2"></i>Volver al inicio
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-16">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                <!-- Header -->
+                <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-center">
+                    <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-user-plus text-blue-600 text-6xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-white">Crear Cuenta</h1>
+                    <p class="text-blue-100 mt-2">Únete a ElectroHome y disfruta de grandes ofertas</p>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-8">
+                    <!-- Mensajes -->
+                    {% if messages %}
+                    <div class="mb-6">
+                        {% for message in messages %}
+                        <div class="bg-{% if message.tags == 'error' %}red{% else %}green{% endif %}-50 border-l-4 border-{% if message.tags == 'error' %}red{% else %}green{% endif %}-500 rounded-lg p-4 mb-2">
+                            <div class="flex items-center">
+                                <i class="fas fa-{% if message.tags == 'error' %}exclamation-circle{% else %}check-circle{% endif %} text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-500 mr-3"></i>
+                                <p class="text-{% if message.tags == 'error' %}red{% else %}green{% endif %}-700 font-semibold">{{ message }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Formulario -->
+                    <form method="POST" action="{% url 'user:register' %}" id="registerForm">
+                        {% csrf_token %}
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">
+                                    <i class="fas fa-user text-blue-600 mr-2"></i>
+                                    Nombre *
+                                </label>
+                                <input type="text" 
+                                       name="first_name" 
+                                       id="id_first_name"
+                                       class="custom-input {% if form.first_name.errors %}input-error{% endif %}" 
+                                       placeholder="Ingresa tu nombre"
+                                       required
+                                       value="{{ form.first_name.value|default:'' }}">
+                                {% if form.first_name.errors %}
+                                    {% for error in form.first_name.errors %}
+                                    <div class="error-message">
+                                        <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                        <span class="text-red-600 text-sm font-semibold">{{ error }}</span>
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 font-bold mb-2">
+                                    <i class="fas fa-user text-blue-600 mr-2"></i>
+                                    Apellido *
+                                </label>
+                                <input type="text" 
+                                       name="last_name" 
+                                       id="id_last_name"
+                                       class="custom-input {% if form.last_name.errors %}input-error{% endif %}" 
+                                       placeholder="Ingresa tu apellido"
+                                       required
+                                       value="{{ form.last_name.value|default:'' }}">
+                                {% if form.last_name.errors %}
+                                    {% for error in form.last_name.errors %}
+                                    <div class="error-message">
+                                        <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                        <span class="text-red-600 text-sm font-semibold">{{ error }}</span>
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-bold mb-2">
+                                <i class="fas fa-envelope text-blue-600 mr-2"></i>
+                                Correo Electrónico *
+                            </label>
+                            <input type="email" 
+                                   name="email" 
+                                   id="id_email"
+                                   class="custom-input {% if form.email.errors %}input-error{% endif %}" 
+                                   placeholder="correo@ejemplo.com"
+                                   required
+                                   value="{{ form.email.value|default:'' }}">
+                            {% if form.email.errors %}
+                                {% for error in form.email.errors %}
+                                <div class="error-message">
+                                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                    <span class="text-red-600 text-sm font-semibold">{{ error }}</span>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-bold mb-2">
+                                <i class="fas fa-phone text-blue-600 mr-2"></i>
+                                Teléfono
+                            </label>
+                            <input type="tel" 
+                                   name="telefono" 
+                                   id="id_telefono"
+                                   class="custom-input {% if form.telefono.errors %}input-error{% endif %}" 
+                                   placeholder="3001234567"
+                                   maxlength="10"
+                                   minlength="10"
+                                   pattern="[0-9]{10}"
+                                   value="{{ form.telefono.value|default:'' }}">
+                            <p class="text-xs text-gray-500 mt-1 flex items-center">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Debe contener exactamente 10 dígitos
+                            </p>
+                            {% if form.telefono.errors %}
+                                {% for error in form.telefono.errors %}
+                                <div class="error-message">
+                                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                    <span class="text-red-600 text-sm font-semibold">{{ error }}</span>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <!-- Campo de Contraseña con Validación -->
+                        <div class="mb-5">
+                            <label class="block text-gray-700 font-bold mb-2">
+                                <i class="fas fa-lock text-blue-600 mr-2"></i>
+                                Contraseña *
+                            </label>
+                            <div class="relative">
+                                <input type="password" 
+                                       name="password1" 
+                                       id="id_password1"
+                                       class="custom-input pr-12 {% if form.password1.errors %}input-error{% endif %}" 
+                                       placeholder="Crea una contraseña segura"
+                                       required>
+                                <button type="button" 
+                                        onclick="togglePassword('password1')" 
+                                        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-600 transition">
+                                    <i id="eye-icon-1" class="fas fa-eye text-xl"></i>
+                                </button>
+                            </div>
+                            
+                            {% if form.password1.errors %}
+                                {% for error in form.password1.errors %}
+                                <div class="error-message">
+                                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                    <span class="text-red-600 text-sm font-semibold">{{ error }}</span>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            <!-- Barra de Fuerza de Contraseña -->
+                            <div class="mt-3">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-semibold text-gray-600">Fuerza de contraseña:</span>
+                                    <span id="strength-text" class="text-sm font-bold text-gray-400">-</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                                    <div id="strength-bar" class="strength-bar h-full" style="width: 0%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Requisitos de Contraseña -->
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 mt-4">
+                                <p class="font-semibold text-blue-800 mb-3 flex items-center">
+                                    <i class="fas fa-shield-alt mr-2"></i>
+                                    Requisitos de contraseña:
+                                </p>
+                                <ul class="space-y-2">
+                                    <li id="req-length" class="requirement-not-met flex items-center text-sm">
+                                        <i class="fas fa-circle text-xs mr-3"></i>
+                                        <span>Mínimo 8 caracteres</span>
+                                    </li>
+                                    <li id="req-uppercase" class="requirement-not-met flex items-center text-sm">
+                                        <i class="fas fa-circle text-xs mr-3"></i>
+                                        <span>Al menos una letra mayúscula (A-Z)</span>
+                                    </li>
+                                    <li id="req-number" class="requirement-not-met flex items-center text-sm">
+                                        <i class="fas fa-circle text-xs mr-3"></i>
+                                        <span>Al menos un número (0-9)</span>
+                                    </li>
+                                    <li id="req-special" class="requirement-not-met flex items-center text-sm">
+                                        <i class="fas fa-circle text-xs mr-3"></i>
+                                        <span>Al menos un carácter especial (!@#$%^&*)</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Confirmar Contraseña -->
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-bold mb-2">
+                                <i class="fas fa-lock text-blue-600 mr-2"></i>
+                                Confirmar Contraseña *
+                            </label>
+                            <div class="relative">
+                                <input type="password" 
+                                       name="password2" 
+                                       id="id_password2"
+                                       class="custom-input pr-12 {% if form.password2.errors %}input-error{% endif %}" 
+                                       placeholder="Confirma tu contraseña"
+                                       required>
+                                <button type="button" 
+                                        onclick="togglePassword('password2')" 
+                                        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-600 transition">
+                                    <i id="eye-icon-2" class="fas fa-eye text-xl"></i>
+                                </button>
+                            </div>
+                            
+                            {% if form.password2.errors %}
+                                {% for error in form.password2.errors %}
+                                <div class="error-message">
+                                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                    <span class="text-red-600 text-sm font-semibold">{{ error }}</span>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                            
+                            <!-- Mensaje de coincidencia -->
+                            <div id="password-match-message" class="mt-2 text-sm hidden">
+                                <div class="flex items-center">
+                                    <i id="match-icon" class="mr-2"></i>
+                                    <span id="match-text"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" 
+                                class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-6 py-4 rounded-xl font-bold hover:from-blue-600 hover:to-blue-700 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Crear Cuenta
+                        </button>
+                    </form>
+
+                    <!-- Separador -->
+                    <div class="mt-6 pt-6 border-t-2 border-gray-200 text-center">
+                        <p class="text-gray-600">
+                            ¿Ya tienes una cuenta? 
+                            <a href="{% url 'user:login' %}" class="text-blue-600 hover:text-blue-800 font-bold transition-colors">
+                                Inicia sesión aquí
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">&copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle password visibility
+        function togglePassword(fieldName) {
+            const passwordInput = document.getElementById(`id_${fieldName}`);
+            const eyeIcon = document.getElementById(`eye-icon-${fieldName === 'password1' ? '1' : '2'}`);
+            
+            if (passwordInput && eyeIcon) {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                }
+            }
+        }
+
+        // Validación de contraseña en tiempo real
+        const passwordInput = document.getElementById('id_password1');
+        const password2Input = document.getElementById('id_password2');
+        const strengthBar = document.getElementById('strength-bar');
+        const strengthText = document.getElementById('strength-text');
+        
+        const reqLength = document.getElementById('req-length');
+        const reqUppercase = document.getElementById('req-uppercase');
+        const reqNumber = document.getElementById('req-number');
+        const reqSpecial = document.getElementById('req-special');
+
+        function updateRequirement(element, isMet) {
+            const icon = element.querySelector('i');
+            if (isMet) {
+                element.classList.remove('requirement-not-met');
+                element.classList.add('requirement-met');
+                icon.classList.remove('fa-circle');
+                icon.classList.add('fa-check-circle', 'checkmark-animation');
+            } else {
+                element.classList.remove('requirement-met');
+                element.classList.add('requirement-not-met');
+                icon.classList.remove('fa-check-circle', 'checkmark-animation');
+                icon.classList.add('fa-circle');
+            }
+        }
+
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const checks = {
+                length: password.length >= 8,
+                uppercase: /[A-Z]/.test(password),
+                number: /[0-9]/.test(password),
+                special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+            };
+
+            // Actualizar requisitos visuales
+            updateRequirement(reqLength, checks.length);
+            updateRequirement(reqUppercase, checks.uppercase);
+            updateRequirement(reqNumber, checks.number);
+            updateRequirement(reqSpecial, checks.special);
+
+            // Calcular fuerza
+            if (checks.length) strength++;
+            if (checks.uppercase) strength++;
+            if (checks.number) strength++;
+            if (checks.special) strength++;
+
+            // Actualizar barra y texto
+            strengthBar.className = 'strength-bar h-full';
+            
+            if (password.length === 0) {
+                strengthBar.style.width = '0%';
+                strengthText.textContent = '-';
+                strengthText.className = 'text-sm font-bold text-gray-400';
+            } else if (strength === 1) {
+                strengthBar.classList.add('strength-weak');
+                strengthText.textContent = '🔴 Débil';
+                strengthText.className = 'text-sm font-bold text-red-500';
+            } else if (strength === 2) {
+                strengthBar.classList.add('strength-medium');
+                strengthText.textContent = '🟡 Media';
+                strengthText.className = 'text-sm font-bold text-yellow-500';
+            } else if (strength === 3) {
+                strengthBar.classList.add('strength-strong');
+                strengthText.textContent = '🟢 Fuerte';
+                strengthText.className = 'text-sm font-bold text-green-500';
+            } else if (strength === 4) {
+                strengthBar.classList.add('strength-very-strong');
+                strengthText.textContent = '🟢 Muy Fuerte';
+                strengthText.className = 'text-sm font-bold text-green-600';
+            }
+        }
+
+        // Validar coincidencia de contraseñas
+        function checkPasswordMatch() {
+            const password1 = passwordInput.value;
+            const password2 = password2Input.value;
+            const matchMessage = document.getElementById('password-match-message');
+            const matchIcon = document.getElementById('match-icon');
+            const matchText = document.getElementById('match-text');
+
+            if (password2.length === 0) {
+                matchMessage.classList.add('hidden');
+                return;
+            }
+
+            matchMessage.classList.remove('hidden');
+
+            if (password1 === password2) {
+                matchIcon.className = 'fas fa-check-circle text-green-500 mr-2';
+                matchText.textContent = '¡Las contraseñas coinciden!';
+                matchText.className = 'text-green-600 font-semibold';
+            } else {
+                matchIcon.className = 'fas fa-times-circle text-red-500 mr-2';
+                matchText.textContent = 'Las contraseñas no coinciden';
+                matchText.className = 'text-red-600 font-semibold';
+            }
+        }
+
+        // Event listeners
+        passwordInput.addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+            if (password2Input.value.length > 0) {
+                checkPasswordMatch();
+            }
+        });
+
+        password2Input.addEventListener('input', checkPasswordMatch);
+
+        // Animación de inputs al hacer focus
+        const allInputs = document.querySelectorAll('.custom-input');
+        allInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.01)';
+                this.parentElement.style.transition = 'transform 0.2s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Validación para Nombre y Apellido - Solo letras y espacios
+        const firstNameInput = document.getElementById('id_first_name');
+        const lastNameInput = document.getElementById('id_last_name');
+        const telefonoInput = document.getElementById('id_telefono');
+
+        function onlyLettersAndSpaces(e) {
+            const char = e.key;
+            // Permitir teclas especiales (Backspace, Delete, Tab, Enter, flechas)
+            if (['Backspace', 'Delete', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(char)) {
+                return true;
+            }
+            // Solo permitir letras (a-z, A-Z, con acentos) y espacios
+            const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]$/;
+            if (!regex.test(char)) {
+                e.preventDefault();
+                // Efecto visual de error temporal
+                e.target.classList.add('shake');
+                setTimeout(() => e.target.classList.remove('shake'), 500);
+                return false;
+            }
+        }
+
+        // Validación para Teléfono - Solo números, máximo 10 dígitos
+        function onlyNumbers(e) {
+            const char = e.key;
+            const currentValue = e.target.value;
+            
+            // Permitir teclas especiales
+            if (['Backspace', 'Delete', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(char)) {
+                return true;
+            }
+            
+            // Solo permitir números
+            if (!/^\d$/.test(char)) {
+                e.preventDefault();
+                e.target.classList.add('shake');
+                setTimeout(() => e.target.classList.remove('shake'), 500);
+                return false;
+            }
+            
+            // Limitar a 10 dígitos
+            if (currentValue.length >= 10) {
+                e.preventDefault();
+                e.target.classList.add('shake');
+                setTimeout(() => e.target.classList.remove('shake'), 500);
+                return false;
+            }
+        }
+
+        // Aplicar validaciones
+        if (firstNameInput) {
+            firstNameInput.addEventListener('keydown', onlyLettersAndSpaces);
+            firstNameInput.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+                const cleanText = pastedText.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '');
+                document.execCommand('insertText', false, cleanText);
+            });
+        }
+
+        if (lastNameInput) {
+            lastNameInput.addEventListener('keydown', onlyLettersAndSpaces);
+            lastNameInput.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+                const cleanText = pastedText.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '');
+                document.execCommand('insertText', false, cleanText);
+            });
+        }
+
+        if (telefonoInput) {
+            telefonoInput.addEventListener('keydown', onlyNumbers);
+            telefonoInput.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+                const cleanText = pastedText.replace(/\D/g, '').substring(0, 10);
+                document.execCommand('insertText', false, cleanText);
+            });
+            
+            // Validación adicional para evitar más de 10 dígitos al pegar
+            telefonoInput.addEventListener('input', function(e) {
+                if (this.value.length > 10) {
+                    this.value = this.value.substring(0, 10);
+                }
+            });
+        }
+
+        // Scroll automático al primer campo con error al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            const firstError = document.querySelector('.input-error');
+            if (firstError) {
+                setTimeout(() => {
+                    firstError.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                    firstError.focus();
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>

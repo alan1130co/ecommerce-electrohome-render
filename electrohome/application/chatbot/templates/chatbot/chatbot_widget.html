@@ -1,0 +1,878 @@
+
+{% load static %}
+<!-- ============================================
+     CHATBOT FLOTANTE - VERSIÓN PROFESIONAL MEJORADA
+     Con IA conversacional y escalamiento a asesores
+     ============================================ -->
+
+<style>
+/* ================================================
+   BOTÓN FLOTANTE - INFERIOR DERECHA
+   ================================================ */
+#eh-chatbot-toggle {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    top: auto !important;
+    left: auto !important;
+    z-index: 2147483647 !important;
+    
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+    max-width: 60px !important;
+    max-height: 60px !important;
+    
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
+    color: white !important;
+    font-size: 28px !important;
+    line-height: 60px !important;
+    text-align: center !important;
+    border: none !important;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4) !important;
+    cursor: pointer !important;
+    
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: scale(1) !important;
+    
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+@keyframes chatbot-pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 32px rgba(37, 99, 235, 0.5), 0 0 0 8px rgba(37, 99, 235, 0.1);
+    }
+}
+
+#eh-chatbot-toggle {
+    animation: chatbot-pulse 2.5s ease-in-out infinite !important;
+}
+
+#eh-chatbot-toggle:hover {
+    background: linear-gradient(135deg, #1D4ED8 0%, #1E40AF 100%) !important;
+    transform: scale(1.12) !important;
+    box-shadow: 0 12px 32px rgba(37, 99, 235, 0.6) !important;
+    animation: none !important;
+}
+
+#eh-chatbot-toggle:active {
+    transform: scale(0.98) !important;
+}
+
+/* ================================================
+   CONTENEDOR DEL CHAT
+   ================================================ */
+#eh-chatbot-container {
+    position: fixed !important;
+    bottom: 90px !important;
+    right: 20px !important;
+    top: auto !important;
+    left: auto !important;
+    z-index: 2147483646 !important;
+    
+    width: 400px !important;
+    max-width: calc(100vw - 40px) !important;
+    height: 600px !important;
+    max-height: calc(100vh - 120px) !important;
+    
+    background: white !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.2) !important;
+    overflow: hidden !important;
+    
+    display: none !important;
+    opacity: 0 !important;
+    transform: translateY(20px) scale(0.95) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+#eh-chatbot-container.open {
+    display: flex !important;
+    flex-direction: column !important;
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+}
+
+/* Header del Chat */
+#eh-chatbot-header {
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%) !important;
+    color: white !important;
+    padding: 18px 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    border-bottom: none !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+#eh-chatbot-header-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+}
+
+#eh-chatbot-header-icon {
+    font-size: 24px !important;
+}
+
+#eh-chatbot-status {
+    font-size: 11px !important;
+    opacity: 0.9 !important;
+    font-weight: 400 !important;
+    margin-top: 2px !important;
+}
+
+#eh-chatbot-close {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: none !important;
+    color: white !important;
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all 0.2s ease !important;
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+#eh-chatbot-close:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+    transform: rotate(90deg) scale(1.1) !important;
+}
+
+/* Body del Chat */
+#eh-chatbot-body {
+    flex: 1 !important;
+    padding: 20px !important;
+    overflow-y: auto !important;
+    background: linear-gradient(to bottom, #F9FAFB 0%, #FFFFFF 100%) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+#eh-chatbot-body::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+#eh-chatbot-body::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+#eh-chatbot-body::-webkit-scrollbar-thumb {
+    background: #D1D5DB !important;
+    border-radius: 10px !important;
+}
+
+#eh-chatbot-body::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF !important;
+}
+
+/* Mensajes */
+.message {
+    padding: 12px 16px !important;
+    border-radius: 16px !important;
+    max-width: 80% !important;
+    line-height: 1.5 !important;
+    font-size: 14px !important;
+    word-wrap: break-word !important;
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-message {
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%) !important;
+    color: white !important;
+    align-self: flex-end !important;
+    border-bottom-right-radius: 6px !important;
+}
+
+.bot-message {
+    background: white !important;
+    color: #1F2937 !important;
+    align-self: flex-start !important;
+    border-bottom-left-radius: 6px !important;
+    border: 1px solid #E5E7EB !important;
+}
+
+.system-message {
+    background: #FEF3C7 !important;
+    color: #92400E !important;
+    align-self: center !important;
+    border: 1px solid #FCD34D !important;
+    font-size: 13px !important;
+    padding: 10px 14px !important;
+    max-width: 90% !important;
+    text-align: center !important;
+}
+
+/* Botón de acción en mensajes */
+.action-button {
+    display: inline-block !important;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: white !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    margin-top: 8px !important;
+    cursor: pointer !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.action-button:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Indicador de escritura */
+.typing-indicator {
+    display: flex !important;
+    gap: 5px !important;
+    padding: 12px 16px !important;
+    background: white !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 16px !important;
+    border-bottom-left-radius: 6px !important;
+    max-width: 70px !important;
+    align-self: flex-start !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.typing-dot {
+    width: 8px !important;
+    height: 8px !important;
+    background: #9CA3AF !important;
+    border-radius: 50% !important;
+    animation: typing 1.4s infinite ease-in-out !important;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s !important; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s !important; }
+
+@keyframes typing {
+    0%, 60%, 100% { 
+        transform: translateY(0); 
+        opacity: 0.6; 
+    }
+    30% { 
+        transform: translateY(-10px); 
+        opacity: 1; 
+    }
+}
+
+/* Input Container */
+#eh-chatbot-input-container {
+    border-top: 1px solid #E5E7EB !important;
+    padding: 16px !important;
+    display: flex !important;
+    gap: 10px !important;
+    background: #F9FAFB !important;
+    flex-shrink: 0 !important;
+}
+
+#eh-chatbot-input {
+    flex: 1 !important;
+    padding: 12px 16px !important;
+    border: 2px solid #E5E7EB !important;
+    border-radius: 12px !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+    outline: none !important;
+    background: white !important;
+}
+
+#eh-chatbot-input:focus {
+    border-color: #3B82F6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+#eh-chatbot-send {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 20px !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+    white-space: nowrap !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+#eh-chatbot-send:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+#eh-chatbot-send:active {
+    transform: translateY(0) !important;
+}
+
+#eh-chatbot-send:disabled {
+    background: #D1D5DB !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Sugerencias rápidas */
+#quick-replies {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    padding: 0 20px 10px 20px !important;
+    background: linear-gradient(to bottom, #F9FAFB 0%, #FFFFFF 100%) !important;
+}
+
+.quick-reply-btn {
+    background: white !important;
+    border: 2px solid #E5E7EB !important;
+    color: #374151 !important;
+    padding: 8px 14px !important;
+    border-radius: 20px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.quick-reply-btn:hover {
+    background: #F3F4F6 !important;
+    border-color: #3B82F6 !important;
+    color: #2563EB !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #eh-chatbot-toggle {
+        bottom: 15px !important;
+        right: 15px !important;
+        width: 56px !important;
+        height: 56px !important;
+        font-size: 26px !important;
+    }
+    
+    #eh-chatbot-container {
+        bottom: 80px !important;
+        right: 10px !important;
+        left: 10px !important;
+        width: auto !important;
+        max-width: none !important;
+        height: 550px !important;
+        border-radius: 16px !important;
+    }
+    
+    .message {
+        max-width: 85% !important;
+    }
+}
+
+#eh-chatbot-toggle,
+#eh-chatbot-container,
+#eh-chatbot-container * {
+    box-sizing: border-box !important;
+}
+</style>
+
+<!-- ============================================
+     HTML DEL CHATBOT
+     ============================================ -->
+
+<!-- Botón Flotante -->
+<button id="eh-chatbot-toggle" title="Abrir asistente virtual" aria-label="Chatbot">
+    💬
+</button>
+
+<!-- Contenedor del Chat -->
+<div id="eh-chatbot-container">
+    <!-- Header -->
+    <div id="eh-chatbot-header">
+        <div>
+            <div id="eh-chatbot-header-title">
+                <img src="{% static 'img/chat2-bot.webp' %}" alt="Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                <span>AJ-Bot</span>
+            </div>
+            <div id="eh-chatbot-status">● En línea</div>
+        </div>
+        <button id="eh-chatbot-close" title="Cerrar chat" aria-label="Cerrar">
+            ✕
+        </button>
+    </div>
+    
+    <!-- Body -->
+    <div id="eh-chatbot-body">
+        <!-- Los mensajes se agregarán aquí dinámicamente -->
+    </div>
+    
+    <!-- Sugerencias Rápidas -->
+    <div id="quick-replies" style="display: none;">
+        <!-- Se llenarán dinámicamente -->
+    </div>
+    
+    <!-- Input -->
+    <div id="eh-chatbot-input-container">
+        <input 
+            type="text" 
+            id="eh-chatbot-input" 
+            placeholder="Escribe tu mensaje..."
+            autocomplete="off"
+            aria-label="Mensaje"
+        >
+        <button id="eh-chatbot-send" aria-label="Enviar mensaje">Enviar</button>
+    </div>
+</div>
+
+<!-- ============================================
+     JAVASCRIPT DEL CHATBOT INTELIGENTE
+     ============================================ -->
+<script>
+(function() {
+    'use strict';
+    
+    // ==========================================
+    // CONFIGURACIÓN GLOBAL - CORREGIDA
+    // ==========================================
+    const CHATBOT_CONFIG = {
+        {% if user.is_authenticated %}
+        userName: '{{ user.first_name|escapejs }}',
+        userLastName: '{{ user.last_name|escapejs }}',
+        isAuthenticated: true,
+        userEmail: '{{ user.email|escapejs }}',
+        {% else %}
+        userName: '',
+        userLastName: '',
+        isAuthenticated: false,
+        userEmail: '',
+        {% endif %}
+        supportEmail: 'soporte@electrohome.com',
+        supportPhone: '+57 300 760 7645',
+        whatsappLink: 'https://wa.me/573007607645',
+        companyName: 'ElectroHome'
+    };
+    
+    // Estado de la conversación
+    let conversationContext = {
+        topic: null,
+        needsHumanSupport: false,
+        lastIntent: null,
+        messageCount: 0
+    };
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🤖 Iniciando chatbot inteligente ElectroHome...');
+        
+        const toggle = document.getElementById('eh-chatbot-toggle');
+        const container = document.getElementById('eh-chatbot-container');
+        const close = document.getElementById('eh-chatbot-close');
+        const send = document.getElementById('eh-chatbot-send');
+        const input = document.getElementById('eh-chatbot-input');
+        const body = document.getElementById('eh-chatbot-body');
+        const quickReplies = document.getElementById('quick-replies');
+        
+        if (!toggle || !container) {
+            console.error('❌ Elementos del chatbot no encontrados');
+            return;
+        }
+        
+        // ==========================================
+        // FUNCIONES DE INTERFAZ
+        // ==========================================
+        
+        function openChat() {
+            container.classList.add('open');
+            if (conversationContext.messageCount === 0) {
+                initializeChat();
+            }
+            setTimeout(function() { input.focus(); }, 300);
+        }
+        
+        function closeChat() {
+            container.classList.remove('open');
+        }
+        
+        function addMessage(text, sender, isHTML) {
+            if (isHTML === undefined) isHTML = false;
+            
+            const msg = document.createElement('div');
+            msg.className = 'message ' + sender + '-message';
+            
+            if (isHTML) {
+                msg.innerHTML = text;
+            } else {
+                msg.textContent = text;
+            }
+            
+            body.appendChild(msg);
+            body.scrollTop = body.scrollHeight;
+            conversationContext.messageCount++;
+        }
+        
+        function showTyping() {
+            const typing = document.createElement('div');
+            typing.className = 'typing-indicator';
+            typing.id = 'typing';
+            typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            body.appendChild(typing);
+            body.scrollTop = body.scrollHeight;
+        }
+        
+        function hideTyping() {
+            const typing = document.getElementById('typing');
+            if (typing) typing.remove();
+        }
+        
+        function showQuickReplies(replies) {
+            quickReplies.innerHTML = '';
+            replies.forEach(function(reply) {
+                const btn = document.createElement('button');
+                btn.className = 'quick-reply-btn';
+                btn.textContent = reply.text;
+                btn.onclick = function() {
+                    input.value = reply.value;
+                    sendMessage();
+                    quickReplies.style.display = 'none';
+                };
+                quickReplies.appendChild(btn);
+            });
+            quickReplies.style.display = 'flex';
+        }
+        
+        function hideQuickReplies() {
+            quickReplies.style.display = 'none';
+        }
+        
+        // ==========================================
+        // INICIALIZACIÓN DEL CHAT
+        // ==========================================
+        
+        function initializeChat() {
+            const greeting = getGreeting();
+            addMessage(greeting, 'bot');
+            
+            setTimeout(function() {
+                const initialSuggestions = [
+                    { text: '🛍️ Ver productos', value: 'Quiero ver productos' },
+                    { text: '📦 Rastrear pedido', value: 'Rastrear mi pedido' },
+                    { text: '💳 Métodos de pago', value: 'Cómo puedo pagar' },
+                    { text: '📞 Contactar asesor', value: 'Necesito hablar con un asesor' }
+                ];
+                showQuickReplies(initialSuggestions);
+            }, 500);
+        }
+        
+        function getGreeting() {
+            const hour = new Date().getHours();
+            let timeGreeting = '';
+            
+            if (hour < 12) timeGreeting = 'Buenos días';
+            else if (hour < 18) timeGreeting = 'Buenas tardes';
+            else timeGreeting = 'Buenas noches';
+            
+            const userName = CHATBOT_CONFIG.userName || 'amigo/a';
+            
+            if (CHATBOT_CONFIG.isAuthenticated) {
+                return timeGreeting + ', ' + userName + '! 👋 Soy tu asistente virtual de ElectroHome. ¿En qué puedo ayudarte hoy?';
+            } else {
+                return timeGreeting + '! 👋 Soy tu asistente virtual de ElectroHome. ¿En qué puedo ayudarte?';
+            }
+        }
+        
+        // ==========================================
+        // MOTOR DE INTELIGENCIA CONVERSACIONAL
+        // ==========================================
+        
+        function analyzeIntent(message) {
+            const m = message.toLowerCase().trim();
+            
+            // Saludos
+            if (m.match(/^(hola|hey|buenos|buenas|saludos|hi|hello)$/)) {
+                return { intent: 'greeting', confidence: 'high' };
+            }
+            
+            // Productos
+            if (m.match(/producto|comprar|precio|costo|vale|electrodoméstico|nevera|lavadora|cocina|licuadora|televisor|tv|aire|ventilador|catálogo|tienda|disponible/)) {
+                return { intent: 'products', confidence: 'high' };
+            }
+            
+            // Pedidos
+            if (m.match(/pedido|orden|envío|entrega|rastreo|rastrear|seguimiento|dónde está|cuándo llega|tracking/)) {
+                return { intent: 'orders', confidence: 'high' };
+            }
+            
+            // Pagos
+            if (m.match(/pago|pagar|tarjeta|transferencia|pse|efectivo|cuotas|financiación|cómo pago/)) {
+                return { intent: 'payment', confidence: 'high' };
+            }
+            
+            // Devoluciones - ESCALAMIENTO
+            if (m.match(/devol|reembolso|cambio|cambiar|me arrepentí|cancelar|no me gusta|defecto|dañado|roto/)) {
+                return { intent: 'returns_escalate', confidence: 'high' };
+            }
+            
+            // Garantías - ESCALAMIENTO
+            if (m.match(/garantía|garantia|falla|problema técnico|no funciona|se dañó|reparación|servicio técnico/)) {
+                return { intent: 'warranty_escalate', confidence: 'high' };
+            }
+            
+            // Errores de pago - ESCALAMIENTO URGENTE
+            if (m.match(/error.*pago|me.*descont|no.*aparece.*pago|pag.*no.*refleja|cobr.*doble|problema.*pago|pag.*fall/)) {
+                return { intent: 'payment_error_escalate', confidence: 'high' };
+            }
+            
+            // Contacto directo
+            if (m.match(/asesor|humano|persona|hablar|llamar|contacto|teléfono|correo|email|whatsapp/)) {
+                return { intent: 'contact', confidence: 'high' };
+            }
+            
+            // Ayuda general
+            if (m.match(/ayuda|necesito|no entiendo|explica|cómo/)) {
+                return { intent: 'help', confidence: 'medium' };
+            }
+            
+            // Despedida
+            if (m.match(/gracias|chao|adiós|bye|hasta luego|nos vemos/)) {
+                return { intent: 'goodbye', confidence: 'high' };
+            }
+            
+            return { intent: 'unknown', confidence: 'low' };
+        }
+        
+        function getSmartResponse(message) {
+            const analysis = analyzeIntent(message);
+            conversationContext.lastIntent = analysis.intent;
+            
+            let response = '';
+            
+            switch (analysis.intent) {
+                case 'greeting':
+                    response = getGreeting();
+                    break;
+                
+                case 'products':
+                    conversationContext.topic = 'products';
+                    response = '¡Excelente elección! 🛍️ Tenemos una amplia variedad de electrodomésticos:\n\n' +
+                           '• Neveras y congeladores ❄️\n' +
+                           '• Lavadoras y secadoras 👕\n' +
+                           '• Cocinas y hornos 🍳\n' +
+                           '• Licuadoras y procesadores 🥤\n' +
+                           '• Televisores y audio 📺\n\n' +
+                           '<a href="/productos/" class="action-button" target="_blank">Ver catálogo completo</a>\n\n' +
+                           '¿Qué tipo de producto estás buscando?';
+                    break;
+                
+                case 'orders':
+                    conversationContext.topic = 'orders';
+                    if (CHATBOT_CONFIG.isAuthenticated) {
+                        response = 'Para consultar el estado de tu pedido, ' + CHATBOT_CONFIG.userName + ', puedes:\n\n' +
+                               '1. Ver tus pedidos en tu cuenta 📦\n' +
+                               '2. Decirme tu número de orden\n\n' +
+                               '<a href="/pedidos/" class="action-button" target="_blank">Ver mis pedidos</a>\n\n' +
+                               '¿Tienes tu número de orden a mano?';
+                    } else {
+                        response = 'Para rastrear tu pedido necesitas:\n\n' +
+                               '1. Iniciar sesión en tu cuenta 🔐\n' +
+                               '2. O tener tu número de orden\n\n' +
+                               '<a href="/login/" class="action-button" target="_blank">Iniciar sesión</a>\n\n' +
+                               '¿Prefieres que te ayude de otra forma?';
+                    }
+                    break;
+                
+                case 'payment':
+                    conversationContext.topic = 'payment';
+                    response = 'Aceptamos los siguientes métodos de pago 💳:\n\n' +
+                           '✅ Tarjetas de crédito/débito (Visa, Mastercard)\n' +
+                           '✅ PSE (transferencia bancaria)\n' +
+                           '✅ Efectivo contra entrega\n' +
+                           '✅ Financiación hasta 12 cuotas sin intereses\n\n' +
+                           'Todas las transacciones son 100% seguras 🔒\n\n' +
+                           '¿Tienes alguna pregunta sobre algún método específico?';
+                    break;
+                
+                case 'returns_escalate':
+                    conversationContext.needsHumanSupport = true;
+                    response = 'Entiendo que necesitas información sobre devoluciones o cambios. 🔄\n\n' +
+                           'Para procesar tu solicitud de manera rápida y efectiva, te voy a conectar con un asesor especializado.\n\n' +
+                           '<button class="action-button" onclick="window.open(\'' + CHATBOT_CONFIG.whatsappLink + '?text=Hola, necesito ayuda con una devolución/cambio\', \'_blank\')">💬 Chatear por WhatsApp</button>\n\n' +
+                           'O llámanos directamente:\n📞 ' + CHATBOT_CONFIG.supportPhone + '\n\n' +
+                           'Horario: Lun-Sáb 8:00 AM - 6:00 PM';
+                    break;
+                
+                case 'warranty_escalate':
+                    conversationContext.needsHumanSupport = true;
+                    response = 'Lamento que tengas un problema con tu producto. 😔\n\n' +
+                           'Para brindarte la mejor asistencia con garantías y servicio técnico, necesitas hablar con nuestro equipo especializado.\n\n' +
+                           '<button class="action-button" onclick="window.open(\'' + CHATBOT_CONFIG.whatsappLink + '?text=Hola, necesito soporte técnico/garantía\', \'_blank\')">💬 Soporte por WhatsApp</button>\n\n' +
+                           'Contacto directo:\n' +
+                           '📞 ' + CHATBOT_CONFIG.supportPhone + '\n' +
+                           '✉️ ' + CHATBOT_CONFIG.supportEmail + '\n\n' +
+                           'Te atenderán inmediatamente.';
+                    break;
+                
+                case 'payment_error_escalate':
+                    conversationContext.needsHumanSupport = true;
+                    addMessage('⚠️ CASO PRIORITARIO DETECTADO', 'system');
+                    response = 'Entiendo que tienes un problema con tu pago. Esto es urgente y necesita atención inmediata. 🚨\n\n' +
+                           'Por favor, contacta AHORA con nuestro equipo de soporte:\n\n' +
+                           '<button class="action-button" onclick="window.open(\'' + CHATBOT_CONFIG.whatsappLink + '?text=URGENTE: Problema con pago - El dinero fue descontado pero no se refleja\', \'_blank\')">💬 WhatsApp URGENTE</button>\n\n' +
+                           '📞 Llamar: ' + CHATBOT_CONFIG.supportPhone + '\n\n' +
+                           'Ten a mano:\n' +
+                           '• Número de transacción\n' +
+                           '• Comprobante de pago\n' +
+                           '• Correo de confirmación (si llegó)\n\n' +
+                           'Resolveremos esto lo antes posible.';
+                    break;
+                
+                case 'contact':
+                    response = '¡Claro! Aquí están nuestros canales de contacto 📞:\n\n' +
+                           '<button class="action-button" onclick="window.open(\'' + CHATBOT_CONFIG.whatsappLink + '?text=Hola, necesito ayuda\', \'_blank\')">💬 WhatsApp</button>\n\n' +
+                           '📞 Teléfono: ' + CHATBOT_CONFIG.supportPhone + '\n' +
+                           '✉️ Email: ' + CHATBOT_CONFIG.supportEmail + '\n' +
+                           '📍 Dirección: Calle 1 #2-40, Cartagena\n\n' +
+                           '🕐 Horario: Lun-Sáb 8:00 AM - 6:00 PM\n\n' +
+                           '¿Prefieres que te conecte directamente?';
+                    break;
+                
+                case 'help':
+                    response = 'Puedo ayudarte con 🤝:\n\n' +
+                           '• 🛍️ Información de productos\n' +
+                           '• 📦 Rastreo de pedidos\n' +
+                           '• 💳 Métodos de pago\n' +
+                           '• 🔄 Devoluciones y cambios\n' +
+                           '• 🛡️ Garantías\n' +
+                           '• 📞 Contacto con asesores\n\n' +
+                           '¿Qué necesitas saber?';
+                    break;
+                
+                case 'goodbye':
+                    const userName = CHATBOT_CONFIG.userName || 'amigo/a';
+                    response = '¡Hasta pronto, ' + userName + '! 👋 Fue un placer ayudarte.\n\n' +
+                           'Si necesitas algo más, aquí estaré. ¡Que tengas un excelente día! 😊';
+                    break;
+                
+                default:
+                    response = 'No estoy seguro de haber entendido completamente tu pregunta. 🤔\n\n' +
+                           'Puedo ayudarte mejor con:\n' +
+                           '• Productos y precios\n' +
+                           '• Pedidos y envíos\n' +
+                           '• Pagos y financiación\n' +
+                           '• Devoluciones y garantías\n\n' +
+                           '¿Podrías reformular tu pregunta? O si prefieres, puedo conectarte con un asesor.';
+                    break;
+            }
+            
+            return response;
+        }
+        
+        // ==========================================
+        // ENVÍO DE MENSAJES
+        // ==========================================
+        
+        function sendMessage() {
+            const text = input.value.trim();
+            if (!text) return;
+            
+            send.disabled = true;
+            input.disabled = true;
+            hideQuickReplies();
+            
+            addMessage(text, 'user');
+            input.value = '';
+            
+            showTyping();
+            
+            const delay = 800 + Math.random() * 700;
+            setTimeout(function() {
+                hideTyping();
+                const response = getSmartResponse(text);
+                addMessage(response, 'bot', true);
+                
+                send.disabled = false;
+                input.disabled = false;
+                input.focus();
+            }, delay);
+        }
+        
+        // ==========================================
+        // EVENT LISTENERS
+        // ==========================================
+        
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openChat();
+        });
+        
+        close.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeChat();
+        });
+        
+        send.addEventListener('click', sendMessage);
+        
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        console.log('✅ Chatbot inteligente completamente funcional');
+        
+        // Forzar estilos
+        let forceCount = 0;
+        const forceStyles = setInterval(function() {
+            if (toggle && forceCount < 15) {
+                toggle.style.setProperty('display', 'flex', 'important');
+                toggle.style.setProperty('visibility', 'visible', 'important');
+                toggle.style.setProperty('opacity', '1', 'important');
+                toggle.style.setProperty('position', 'fixed', 'important');
+                toggle.style.setProperty('bottom', '20px', 'important');
+                toggle.style.setProperty('right', '20px', 'important');
+                toggle.style.setProperty('z-index', '2147483647', 'important');
+                forceCount++;
+            } else {
+                clearInterval(forceStyles);
+            }
+        }, 100);
+    });
+})();
+</script>

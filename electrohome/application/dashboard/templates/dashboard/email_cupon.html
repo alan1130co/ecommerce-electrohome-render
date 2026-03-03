@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroHome</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:30px 0;">
+    <tr>
+        <td align="center">
+            <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
+
+                <!-- Header -->
+                <tr>
+                    <td style="background:linear-gradient(135deg,#1e3a8a,#2563eb);padding:30px;text-align:center;">
+                        <h1 style="color:#fbbf24;margin:0;font-size:28px;font-weight:900;letter-spacing:2px;">ELECTROHOME</h1>
+                        <p style="color:rgba(255,255,255,0.8);margin:8px 0 0;font-size:14px;">Tu tienda de electrodomésticos</p>
+                    </td>
+                </tr>
+
+                <!-- Imagen si se subió -->
+                {% if imagen_base64 %}
+                <tr>
+                    <td style="padding:0;">
+                        <img src="data:{{ imagen_mime }};base64,{{ imagen_base64 }}"
+                             alt="Promoción"
+                             style="width:100%;max-height:350px;object-fit:cover;display:block;">
+                    </td>
+                </tr>
+                {% endif %}
+
+                <!-- Saludo -->
+                <tr>
+                    <td style="padding:30px 40px 10px;">
+                        <h2 style="color:#1e3a8a;margin:0 0 10px;font-size:22px;">
+                            ¡Hola, {{ usuario.first_name|default:usuario.email }}! 👋
+                        </h2>
+                        <p style="color:#4b5563;font-size:16px;line-height:1.6;margin:0;">
+                            {{ mensaje }}
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Cupón si existe -->
+                {% if codigo_cupon %}
+                <tr>
+                    <td style="padding:20px 40px;">
+                        <table width="100%" cellpadding="0" cellspacing="0"
+                               style="background:linear-gradient(135deg,#1e3a8a,#2563eb);border-radius:12px;padding:30px;text-align:center;">
+                            <tr>
+                                <td>
+                                    <p style="color:rgba(255,255,255,0.8);margin:0 0 5px;font-size:14px;letter-spacing:1px;">GRACIAS POR PREFERIR ELECTROHOME</p>
+                                    {% if descuento %}
+                                    <p style="color:#fbbf24;font-size:60px;font-weight:900;margin:0;line-height:1;">{{ descuento }}</p>
+                                    <p style="color:#ffffff;font-size:22px;font-weight:700;margin:0 0 15px;">OFF</p>
+                                    <p style="color:rgba(255,255,255,0.9);font-size:14px;margin:0 0 15px;">EN TU PRÓXIMA COMPRA</p>
+                                    {% endif %}
+                                    <div style="background:#fbbf24;border-radius:8px;padding:12px 24px;display:inline-block;margin:10px 0;">
+                                        <p style="margin:0;font-size:11px;color:#1e3a8a;font-weight:700;letter-spacing:1px;">CÓDIGO</p>
+                                        <p style="margin:0;font-size:24px;font-weight:900;color:#1e3a8a;letter-spacing:3px;">{{ codigo_cupon }}</p>
+                                    </div>
+                                    <p style="color:rgba(255,255,255,0.7);font-size:11px;margin:15px 0 0;">APLICAN T&C. NO ACUMULABLE CON OTRAS PROMOCIONES</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                {% endif %}
+
+                <!-- CTA -->
+                <tr>
+                    <td style="padding:10px 40px 30px;text-align:center;">
+                        <a href="http://127.0.0.1:8000"
+                           style="background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1e3a8a;padding:14px 40px;border-radius:10px;font-weight:900;font-size:16px;text-decoration:none;display:inline-block;letter-spacing:1px;">
+                            🛒 COMPRAR AHORA
+                        </a>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td style="background:#1e3a8a;padding:20px;text-align:center;">
+                        <p style="color:rgba(255,255,255,0.6);font-size:12px;margin:0;">
+                            © 2025 ElectroHome. Todos los derechos reservados.<br>
+                            Cartagena de Indias, Colombia
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,578 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <script>
+      (function(){
+        var t = localStorage.getItem('electrohome-theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Detalle de Orden #{{ order.order_number }} - ElectroHome</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
+
+    <!-- ✅ DARK MODE ESPECÍFICO PARA ORDEN DETALLE -->
+    <style>
+      /* ── PRECIOS AMARILLOS EN TODOS LOS MODOS ── */
+      .product-row-price,
+      .summary-total-value,
+      .order-item-price,
+      .order-subtotal-price { color: #f0b429 !important; }
+
+      /* ── TARJETAS ── */
+      [data-theme="dark"] .order-detail-card {
+        background: #161b22 !important;
+        border: 1px solid #21262d !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+      }
+
+      /* ── TÍTULO ORDEN ── */
+      [data-theme="dark"] .order-title       { color: #e6edf3 !important; }
+      [data-theme="dark"] .order-date        { color: #8b949e !important; }
+
+      /* ── BADGES DE ESTADO ── */
+      [data-theme="dark"] .badge-pending {
+        background: rgba(240,180,41,0.15) !important;
+        color: #f0b429 !important;
+        border: 1px solid rgba(240,180,41,0.3);
+      }
+      [data-theme="dark"] .badge-processing {
+        background: rgba(56,139,253,0.15) !important;
+        color: #58a6ff !important;
+        border: 1px solid rgba(56,139,253,0.3);
+      }
+      [data-theme="dark"] .badge-shipped {
+        background: rgba(139,92,246,0.15) !important;
+        color: #a78bfa !important;
+        border: 1px solid rgba(139,92,246,0.3);
+      }
+      [data-theme="dark"] .badge-delivered {
+        background: rgba(63,185,80,0.15) !important;
+        color: #3fb950 !important;
+        border: 1px solid rgba(63,185,80,0.3);
+      }
+      [data-theme="dark"] .badge-cancelled {
+        background: rgba(248,81,73,0.15) !important;
+        color: #f85149 !important;
+        border: 1px solid rgba(248,81,73,0.3);
+      }
+
+      /* ── PRODUCTOS ── */
+      [data-theme="dark"] .product-row {
+        background: #1c2330 !important;
+        border: 1px solid #21262d !important;
+      }
+      [data-theme="dark"] .product-row:hover {
+        border-color: #388bfd !important;
+      }
+      [data-theme="dark"] .product-row-name   { color: #e6edf3 !important; }
+      [data-theme="dark"] .product-row-detail { color: #8b949e !important; }
+      [data-theme="dark"] .product-row-price  { color: #f0b429 !important; }
+
+      /* ── INFORMACIÓN DE ENVÍO ── */
+      [data-theme="dark"] .shipping-label { color: #e6edf3 !important; font-weight: 600; }
+      [data-theme="dark"] .shipping-value { color: #8b949e !important; }
+      [data-theme="dark"] .shipping-icon  { color: #58a6ff !important; }
+
+      /* ── RESUMEN LATERAL ── */
+      [data-theme="dark"] .summary-row-label { color: #8b949e !important; }
+      [data-theme="dark"] .summary-row-value { color: #e6edf3 !important; }
+      [data-theme="dark"] .summary-total-label { color: #e6edf3 !important; }
+      [data-theme="dark"] .summary-total-value { color: #f0b429 !important; }
+      [data-theme="dark"] .summary-divider   { border-color: #21262d !important; }
+
+      /* ── MÉTODO DE PAGO ── */
+      [data-theme="dark"] .payment-box {
+        background: rgba(56,139,253,0.08) !important;
+        border: 1px solid rgba(56,139,253,0.2) !important;
+      }
+      [data-theme="dark"] .payment-box-label { color: #6e7681 !important; }
+      [data-theme="dark"] .payment-box-value { color: #58a6ff !important; }
+
+      /* ── BOTONES ── */
+      [data-theme="dark"] .btn-secondary-order {
+        background: #1c2330 !important;
+        color: #e6edf3 !important;
+        border: 1px solid #30363d;
+      }
+      [data-theme="dark"] .btn-secondary-order:hover {
+        background: #21262d !important;
+        color: #58a6ff !important;
+      }
+
+      /* ── AYUDA ── */
+      [data-theme="dark"] .help-label { color: #6e7681 !important; }
+      [data-theme="dark"] .help-link  { color: #58a6ff !important; }
+      [data-theme="dark"] .help-link:hover { color: #79c0ff !important; }
+
+      /* ── BREADCRUMB ── */
+      [data-theme="dark"] .breadcrumb-wrap { color: #6e7681 !important; }
+      [data-theme="dark"] .breadcrumb-link { color: #8b949e !important; }
+      [data-theme="dark"] .breadcrumb-link:hover { color: #58a6ff !important; }
+      [data-theme="dark"] .breadcrumb-current { color: #58a6ff !important; }
+    </style>
+     <style>
+  [data-theme="dark"] header,
+  [data-theme="dark"] header.bg-blue-800 {
+    background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
+    border-bottom: 1px solid #21262d !important;
+    box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important;
+  }
+</style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- HEADER -->
+   <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500 sticky top-0 z-50">
+  <nav class="container mx-auto px-4 py-3">
+    <div class="flex justify-between items-center gap-4">
+
+      <!-- Logo -->
+      <div class="flex items-center space-x-2 flex-shrink-0">
+        <a href="{% url 'product:home' %}">
+          <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome"
+               class="w-20 h-auto hover:scale-105 transition-transform duration-500" />
+        </a>
+      </div>
+
+      <!-- Buscador Desktop -->
+<div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
+  <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
+    <input type="text" name="q" placeholder="Buscar productos..."
+           class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
+           value="{{ request.GET.q }}" />
+    <button type="submit"
+            class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+</div>
+
+      <!-- Nav Desktop -->
+      <div class="hidden lg:flex space-x-6">
+        <a href="{% url 'product:home' %}"         class="text-yellow-400 font-semibold">Inicio</a>
+        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 transition">Productos</a>
+        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 transition">Contacto</a>
+      </div>
+
+      <!-- Controles derechos -->
+      <div class="flex items-center space-x-3">
+
+        <!-- Botón Tema -->
+        <button id="theme-toggle" class="theme-toggle-button" aria-label="Cambiar tema">
+          <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- Wishlist -->
+        {% if user.is_authenticated %}
+        <a href="{% url 'product:wishlist' %}" class="relative text-white hover:text-red-400 transition">
+          <i class="fas fa-heart text-2xl"></i>
+          {% if user.wishlist.total_items > 0 %}
+          <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+            {{ user.wishlist.total_items }}
+          </span>
+          {% endif %}
+        </a>
+        {% endif %}
+
+        <!-- Carrito -->
+        <a href="{% url 'product:cart' %}" class="relative text-white hover:text-yellow-300 transition">
+          <i class="fas fa-shopping-cart text-2xl"></i>
+          <span id="cart-counter" class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+            {{ cart_items_count|default:0 }}
+          </span>
+        </a>
+
+        {% if user.is_authenticated %}
+        <!-- Menú Usuario -->
+        <div class="relative">
+          <button id="user-menu-btn" aria-label="Menú usuario" class="flex items-center justify-center">
+            {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+          </button>
+          <div id="user-dropdown" class="hidden absolute right-0 mt-3 z-50" style="width:270px;">
+            <div class="dropdown-header">
+              <div class="flex items-center gap-3">
+                <div class="dropdown-avatar">
+                  {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+                </div>
+                <div>
+                  <div class="dropdown-name">
+                    {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+                  </div>
+                  <div class="dropdown-badge"><i class="fas fa-user-check" style="font-size:.6rem;"></i> Cliente</div>
+                </div>
+              </div>
+            </div>
+            <div style="padding:6px 0;">
+              <a href="{% url 'user:profile' %}"    class="dropdown-item"><span class="item-icon"><i class="fas fa-user"></i></span><span>Mi Perfil</span></a>
+              <a href="{% url 'order:order_list' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-shopping-bag"></i></span><span>Mis Pedidos</span></a>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'user:logout' %}" class="dropdown-item logout"><span class="item-icon"><i class="fas fa-sign-out-alt"></i></span><span>Cerrar Sesión</span></a>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <a href="{% url 'user:login' %}"    class="hidden md:inline-flex items-center gap-2 text-white hover:text-yellow-300 font-semibold text-sm transition"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+        <a href="{% url 'user:register' %}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition text-sm">Registrarse</a>
+        {% endif %}
+
+        <!-- Mobile Menu Btn -->
+        <button class="lg:hidden text-gray-50 hover:text-yellow-300" id="mobile-menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+   <!-- Buscador Mobile -->
+    <div class="md:hidden mt-3">
+      <form action="{% url 'product:search' %}" method="GET">
+        <div class="flex w-full">
+          <input type="text" name="q" placeholder="Buscar productos..."
+                 class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
+                 value="{{ request.GET.q }}" />
+          <button type="submit"
+                  class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="lg:hidden mt-4 pb-4 hidden" id="mobile-menu">
+      <div class="flex flex-col space-y-2">
+        <a href="{% url 'product:home' %}"         class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-home mr-2"></i>Inicio</a>
+        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-tag mr-2"></i>Productos</a>
+        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-envelope mr-2"></i>Contacto</a>
+        <hr class="border-blue-600">
+        {% if user.is_authenticated %}
+        <a href="{% url 'user:profile' %}"    class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-user mr-3"></i>Mi Perfil</a>
+        <a href="{% url 'product:wishlist' %}" class="flex items-center text-white hover:text-red-300 py-2"><i class="fas fa-heart mr-3"></i>Lista de Deseos</a>
+        <a href="{% url 'order:order_list' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-shopping-bag mr-3"></i>Mis Pedidos</a>
+        <a href="{% url 'user:logout' %}"      class="flex items-center text-red-300 hover:text-red-100 py-2"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
+        {% else %}
+        <a href="{% url 'user:login' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-sign-in-alt mr-3"></i>Ingresar</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-5xl mx-auto">
+
+            <!-- Breadcrumb -->
+            <div class="mb-6 flex items-center text-sm breadcrumb-wrap text-gray-600">
+                <a href="{% url 'product:home' %}" class="breadcrumb-link hover:text-blue-600">Inicio</a>
+                <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                <a href="{% url 'order:order_list' %}" class="breadcrumb-link hover:text-blue-600">Mis Órdenes</a>
+                <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                <span class="breadcrumb-current text-blue-600 font-semibold">Orden #{{ order.order_number }}</span>
+            </div>
+
+            <!-- Header de la orden -->
+            <div class="order-detail-card bg-white rounded-lg shadow-lg p-6 mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                    <div>
+                        <h1 class="order-title text-3xl font-bold text-blue-800 mb-2">
+                            <i class="fas fa-receipt"></i> Orden #{{ order.order_number }}
+                        </h1>
+                        <p class="order-date text-gray-600">
+                            <i class="far fa-calendar-alt"></i>
+                            Realizada el {{ order.created_at|date:"d/m/Y \a \l\a\s H:i" }}
+                        </p>
+                    </div>
+
+                    <div class="mt-4 md:mt-0">
+                        {% if order.status == 'pending' %}
+                        <span class="badge-pending inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800">
+                            <i class="fas fa-clock mr-2"></i> Pendiente
+                        </span>
+                        {% elif order.status == 'processing' %}
+                        <span class="badge-processing inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
+                            <i class="fas fa-spinner mr-2"></i> En Proceso
+                        </span>
+                        {% elif order.status == 'shipped' %}
+                        <span class="badge-shipped inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-purple-100 text-purple-800">
+                            <i class="fas fa-shipping-fast mr-2"></i> Enviado
+                        </span>
+                        {% elif order.status == 'delivered' %}
+                        <span class="badge-delivered inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                            <i class="fas fa-check-circle mr-2"></i> Entregado
+                        </span>
+                        {% elif order.status == 'cancelled' %}
+                        <span class="badge-cancelled inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-red-100 text-red-800">
+                            <i class="fas fa-times-circle mr-2"></i> Cancelado
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- Productos + Envío -->
+                <div class="lg:col-span-2 space-y-6">
+
+                    <!-- Productos -->
+                    <div class="order-detail-card bg-white rounded-lg shadow-lg p-6">
+                        <h2 class="order-title text-2xl font-bold text-blue-800 mb-6">
+                            <i class="fas fa-box"></i> Productos
+                        </h2>
+                        <div class="space-y-4">
+                            {% for item in order.items.all %}
+                            <div class="product-row flex items-center gap-4 p-4 border-2 border-gray-200 rounded-lg hover:border-blue-300 transition">
+                                <div class="w-20 h-20 flex-shrink-0 bg-gray-100 rounded overflow-hidden">
+                                    {% if item.product.imagen_principal %}
+                                    <img src="{{ item.product.imagen_principal.url }}" alt="{{ item.product_name }}" class="w-full h-full object-cover">
+                                    {% else %}
+                                    <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                                        <i class="fas fa-image text-gray-400 text-2xl"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow">
+                                    <h3 class="product-row-name font-bold text-gray-800 mb-1">{{ item.product_name }}</h3>
+                                    <p class="product-row-detail text-sm text-gray-600">Cantidad: <span class="font-semibold">{{ item.quantity }}</span></p>
+                                    <p class="order-item-price text-sm text-gray-600">Precio unitario: <span class="font-semibold" style="color:#f0b429;">${{ item.product_price|formato_precio }}</span></p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="product-row-price text-xl font-bold" style="color:#f0b429;">{{ item.get_total_price|formato_precio }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Información de envío -->
+                    <div class="order-detail-card bg-white rounded-lg shadow-lg p-6">
+                        <h2 class="order-title text-2xl font-bold text-blue-800 mb-4">
+                            <i class="fas fa-map-marker-alt"></i> Información de Envío
+                        </h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="shipping-icon fas fa-home text-blue-600 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="shipping-label font-semibold text-gray-700">Dirección:</p>
+                                    <p class="shipping-value text-gray-600">{{ order.shipping_address }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="shipping-icon fas fa-city text-blue-600 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="shipping-label font-semibold text-gray-700">Ciudad:</p>
+                                    <p class="shipping-value text-gray-600">{{ order.shipping_city }}, {{ order.shipping_department }}</p>
+                                    {% if order.shipping_postal_code %}
+                                    <p class="shipping-value text-sm text-gray-600">CP: {{ order.shipping_postal_code }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="shipping-icon fas fa-phone text-blue-600 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="shipping-label font-semibold text-gray-700">Teléfono:</p>
+                                    <p class="shipping-value text-gray-600">{{ order.phone }}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="shipping-icon fas fa-envelope text-blue-600 mt-1 mr-3"></i>
+                                <div>
+                                    <p class="shipping-label font-semibold text-gray-700">Email:</p>
+                                    <p class="shipping-value text-gray-600">{{ order.email }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if order.notes %}
+                    <div class="order-detail-card bg-white rounded-lg shadow-lg p-6">
+                        <h2 class="order-title text-2xl font-bold text-blue-800 mb-4">
+                            <i class="fas fa-sticky-note"></i> Notas
+                        </h2>
+                        <p class="shipping-value text-gray-700">{{ order.notes }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Resumen lateral -->
+                <div class="lg:col-span-1">
+                    <div class="order-detail-card bg-white rounded-lg shadow-lg p-6 sticky top-24">
+                        <h2 class="order-title text-2xl font-bold text-blue-800 mb-6">
+                            <i class="fas fa-calculator"></i> Resumen
+                        </h2>
+
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between">
+                                <span class="summary-row-label text-gray-700">Subtotal:</span>
+                                <span class="summary-row-value font-semibold" style="color:#f0b429;">{{ order.subtotal|formato_precio }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="summary-row-label text-gray-700">IVA:</span>
+                                <span class="summary-row-value font-semibold" style="color:#f0b429;">{{ order.tax|formato_precio }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="summary-row-label text-gray-700">Envío:</span>
+                                <span class="summary-row-value font-semibold" style="color:#f0b429;">{{ order.shipping_cost|formato_precio }}</span>
+                            </div>
+                            <hr class="summary-divider border-gray-300">
+                            <div class="flex justify-between text-2xl font-bold">
+                                <span class="summary-total-label text-blue-800">Total:</span>
+                                <span class="summary-total-value" style="color:#f0b429;">{{ order.total|formato_precio }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Método de pago -->
+                        <div class="payment-box bg-blue-50 rounded-lg p-4 mb-6">
+                            <p class="payment-box-label text-sm text-gray-600 mb-1">Método de Pago</p>
+                            <p class="payment-box-value font-bold text-blue-800">
+                                {% if order.payment_method == 'credit_card' %}
+                                    <i class="fas fa-credit-card mr-2"></i> Tarjeta de Crédito
+                                {% elif order.payment_method == 'debit_card' %}
+                                    <i class="fas fa-credit-card mr-2"></i> Tarjeta de Débito
+                                {% elif order.payment_method == 'pse' %}
+                                    <i class="fas fa-university mr-2"></i> PSE
+                                {% elif order.payment_method == 'cash' %}
+                                    <i class="fas fa-money-bill-wave mr-2"></i> Efectivo Contraentrega
+                                {% else %}
+                                    {{ order.get_payment_method_display }}
+                                {% endif %}
+                            </p>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="space-y-3">
+                            <a href="{% url 'order:order_list' %}" class="block w-full bg-yellow-500 text-white text-center py-3 rounded-lg font-bold hover:bg-yellow-600 transition">
+                                <i class="fas fa-list"></i> Ver Todas mis Órdenes
+                            </a>
+                            <a href="{% url 'product:home' %}" class="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                                <i class="fas fa-shopping-bag"></i> Seguir Comprando
+                            </a>
+                        </div>
+
+                        <div class="mt-6 text-center">
+                            <p class="help-label text-sm text-gray-600 mb-2">¿Necesitas ayuda?</p>
+                            <a href="{% url 'product:contact' %}" class="help-link text-blue-600 hover:text-blue-800 font-semibold text-sm">
+                                <i class="fas fa-headset"></i> Contactar Soporte
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-12 mt-10">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-white mb-3 tracking-wide">ElectroHome</h2>
+          <p class="text-gray-400 max-w-md mx-auto text-sm">La mejor tecnología para tu hogar. Compra fácil, rápido y con total seguridad.</p>
+        </div>
+        <div class="flex justify-center space-x-8 mb-10">
+          <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i></a>
+          <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i></a>
+          <a href="https://tiktok.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i></a>
+          <a href="https://twitter.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i></a>
+        </div>
+        <div class="flex flex-wrap justify-center space-x-6 text-sm mb-8">
+          <a href="#" class="hover:text-white transition">Inicio</a>
+          <a href="#" class="hover:text-white transition">Productos</a>
+          <a href="#" class="hover:text-white transition">Ofertas</a>
+          <a href="#" class="hover:text-white transition">Nosotros</a>
+          <a href="#" class="hover:text-white transition">Contacto</a>
+        </div>
+        <div class="text-center text-gray-400 text-sm mb-8">
+          <p>📍 Calle 1 #2-40, Cartagena de Indias, Colombia</p>
+          <p>📞 +57 300 760 7645</p>
+          <p>✉️ <a href="mailto:info@electrohome.com" class="underline hover:text-blue-400">info@electrohome.com</a></p>
+        </div>
+        <div class="border-t border-gray-700 pt-6 text-center text-xs text-gray-500">
+          &copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dropdown usuario
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdown = document.getElementById('user-dropdown');
+        if (userMenuBtn && userDropdown) {
+            userMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', function(e) {
+                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+        }
+
+        // Menú móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Logout limpio
+        document.querySelectorAll('a[href*="logout"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.replace(this.href);
+            });
+        });
+    });
+
+    // Prevenir caché
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+    </script>
+
+    {% include 'chatbot/chatbot_widget.html' %}
+    <script src="{% static 'js/dark_mode.js' %}"></script>
+</body>
+</html>

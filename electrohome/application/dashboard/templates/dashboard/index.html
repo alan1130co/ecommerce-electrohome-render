@@ -1,0 +1,279 @@
+<!--INDEX-->
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Panel de Control - ElectroHome{% endblock %}
+
+{% block content %}
+
+<div class="eh-page-header d-flex justify-content-between align-items-start">
+    <div>
+        <h1 class="eh-page-title"><i class="fas fa-chart-line me-2" style="color:var(--yellow)"></i>Panel de Control</h1>
+        <p class="eh-page-subtitle">Resumen general de ElectroHome</p>
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+        <a href="{% url 'dashboard:reporte_pdf' %}?tipo=diario" class="eh-btn-danger">
+            <i class="fas fa-file-pdf"></i> Diario
+        </a>
+        <a href="{% url 'dashboard:reporte_pdf' %}?tipo=semanal" class="eh-btn-danger">
+            <i class="fas fa-file-pdf"></i> Semanal
+        </a>
+        <a href="{% url 'dashboard:reporte_pdf' %}?tipo=mensual" class="eh-btn-danger">
+            <i class="fas fa-file-pdf"></i> Mensual
+        </a>
+    </div>
+</div>
+
+<!-- ACCESOS RÁPIDOS -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <a href="{% url 'dashboard:productos' %}" class="eh-access-card">
+            <span class="eh-access-icon">📦</span>
+            <div class="eh-access-title">Productos</div>
+            <div class="eh-access-sub">Administrar catálogo</div>
+            <span class="eh-badge eh-badge-blue">{{ total_productos }}</span>
+        </a>
+    </div>
+    <div class="col-6 col-md-3">
+        <a href="{% url 'dashboard:categorias' %}" class="eh-access-card">
+            <span class="eh-access-icon">📋</span>
+            <div class="eh-access-title">Categorías</div>
+            <div class="eh-access-sub">Organizar productos</div>
+            <span class="eh-badge eh-badge-yellow">{{ total_categorias }}</span>
+        </a>
+    </div>
+    <div class="col-6 col-md-3">
+        <a href="{% url 'dashboard:pedidos' %}" class="eh-access-card">
+            <span class="eh-access-icon">🛒</span>
+            <div class="eh-access-title">Pedidos</div>
+            <div class="eh-access-sub">Revisar órdenes</div>
+            <span class="eh-badge eh-badge-green">{{ total_pedidos }}</span>
+        </a>
+    </div>
+    <div class="col-6 col-md-3">
+        <a href="{% url 'dashboard:usuarios' %}" class="eh-access-card">
+            <span class="eh-access-icon">👥</span>
+            <div class="eh-access-title">Usuarios</div>
+            <div class="eh-access-sub">Gestión de clientes</div>
+            <span class="eh-badge eh-badge-red">{{ total_clientes }}</span>
+        </a>
+    </div>
+</div>
+
+<!-- MÉTRICAS -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="eh-stat blue">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="eh-stat-label">Total Ventas</div>
+                <div class="eh-stat-icon"><i class="fas fa-shopping-bag"></i></div>
+            </div>
+            <div class="eh-stat-value">{{ total_ventas }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="eh-stat green">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="eh-stat-label">Ingresos Totales</div>
+                <div class="eh-stat-icon"><i class="fas fa-dollar-sign"></i></div>
+            </div>
+            <div class="eh-stat-value" style="font-size:1.4rem;">${{ ingresos_totales|floatformat:0 }}</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="eh-stat yellow">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="eh-stat-label">Conversión</div>
+                <div class="eh-stat-icon"><i class="fas fa-chart-pie"></i></div>
+            </div>
+            <div class="eh-stat-value">{{ conversion }}%</div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="eh-stat cyan">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <div class="eh-stat-label">Vistas Productos</div>
+                <div class="eh-stat-icon"><i class="fas fa-eye"></i></div>
+            </div>
+            <div class="eh-stat-value">{{ total_vistas }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- TOP PRODUCTOS -->
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="eh-card h-100">
+            <div class="eh-card-header">
+                <i class="fas fa-trophy" style="color:var(--yellow)"></i> Productos Más Vendidos
+            </div>
+            <div class="p-0">
+                {% if top_productos %}
+                <table class="eh-table">
+                    <thead><tr><th>Producto</th><th style="text-align:right">Ventas</th></tr></thead>
+                    <tbody>
+                        {% for item in top_productos %}
+                        <tr>
+                            <td>{{ item.product__nombre }}</td>
+                            <td style="text-align:right"><span class="eh-badge eh-badge-green">{{ item.total }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div style="padding:2rem;text-align:center;color:#94a3b8;">No hay ventas registradas aún</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="eh-card h-100">
+            <div class="eh-card-header">
+                <i class="fas fa-eye" style="color:#06b6d4"></i> Productos Más Vistos
+            </div>
+            <div class="p-0">
+                {% if top_vistos %}
+                <table class="eh-table">
+                    <thead><tr><th>Producto</th><th style="text-align:right">Vistas</th></tr></thead>
+                    <tbody>
+                        {% for item in top_vistos %}
+                        <tr>
+                            <td>{{ item.product__nombre }}</td>
+                            <td style="text-align:right"><span class="eh-badge eh-badge-cyan">{{ item.total }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div style="padding:2rem;text-align:center;color:#94a3b8;">No hay vistas registradas aún</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- GRÁFICA MENSUAL -->
+<div class="row g-3 mb-4">
+    <div class="col-12">
+        <div class="eh-card">
+            <div class="eh-card-header">
+                <i class="fas fa-chart-line" style="color:var(--yellow)"></i> Ingresos del Mes Actual
+            </div>
+            <div class="p-3" style="height:360px;position:relative;">
+                <canvas id="ventasChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VENTAS HOY + SEMANA -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="eh-card h-100">
+            <div class="eh-card-header">
+                <i class="fas fa-clock" style="color:var(--yellow)"></i> Ventas de Hoy
+            </div>
+            <div style="max-height:260px;overflow-y:auto;">
+                <table class="eh-table">
+                    <thead><tr><th>Hora</th><th style="text-align:center">Pedidos</th><th style="text-align:right">Ingresos</th></tr></thead>
+                    <tbody>
+                        {% for v in ventas_hoy %}
+                        <tr>
+                            <td>{{ v.hora }}</td>
+                            <td style="text-align:center"><span class="eh-badge eh-badge-blue">{{ v.count }}</span></td>
+                            <td style="text-align:right;font-weight:600;color:#059669;">${{ v.total|floatformat:0 }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3" style="text-align:center;padding:2rem;color:#94a3b8;">Sin ventas hoy</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="eh-card h-100">
+            <div class="eh-card-header">
+                <i class="fas fa-chart-bar" style="color:var(--yellow)"></i> Ventas de la Semana Actual
+            </div>
+            <div class="p-3" style="height:280px;position:relative;">
+                <canvas id="semanalChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+    const labelsDiarios  = [{% for v in ventas_por_dia %}"{{ v.dia }}",{% endfor %}];
+    const totalesDiarios = [{% for v in ventas_por_dia %}{{ v.total }},{% endfor %}];
+
+    new Chart(document.getElementById('ventasChart').getContext('2d'), {
+        type: 'line',
+        data: {
+            labels: labelsDiarios,
+            datasets: [{
+                label: 'Ingresos ($)',
+                data: totalesDiarios,
+                borderColor: '#1d4ed8',
+                backgroundColor: 'rgba(29,78,216,0.08)',
+                borderWidth: 2.5,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 4,
+                pointBackgroundColor: '#f59e0b',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointHoverRadius: 7,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: true, position: 'top' },
+                tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toLocaleString('es-CO')}` } }
+            },
+            scales: {
+                x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { maxTicksLimit: 15, maxRotation: 45 } },
+                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$' + v.toLocaleString('es-CO') } }
+            }
+        }
+    });
+
+    const diasSemana    = [{% for d in dias_semana_actual %}"{{ d.dia }}",{% endfor %}];
+    const totalesSemana = [{% for d in dias_semana_actual %}{{ d.total }},{% endfor %}];
+
+    new Chart(document.getElementById('semanalChart').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: diasSemana,
+            datasets: [{
+                label: 'Ingresos ($)',
+                data: totalesSemana,
+                backgroundColor: [
+                    'rgba(29,78,216,0.75)', 'rgba(16,185,129,0.75)', 'rgba(245,158,11,0.75)',
+                    'rgba(239,68,68,0.75)', 'rgba(6,182,212,0.75)', 'rgba(139,92,246,0.75)',
+                    'rgba(249,115,22,0.75)'
+                ],
+                borderRadius: 8,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toLocaleString('es-CO')}` } }
+            },
+            scales: {
+                x: { grid: { display: false } },
+                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$' + v.toLocaleString('es-CO') } }
+            }
+        }
+    });
+</script>
+
+{% endblock %}

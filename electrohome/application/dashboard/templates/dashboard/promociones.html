@@ -1,0 +1,89 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Promociones - Dashboard{% endblock %}
+{% block content %}
+
+<div class="eh-page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="eh-page-title"><i class="fas fa-tag me-2" style="color:var(--yellow)"></i>Promociones</h1>
+        <p class="eh-page-subtitle">Gestión de descuentos y ofertas</p>
+    </div>
+    <a href="{% url 'dashboard:crear_promocion' %}" class="eh-btn-yellow">
+        <i class="fas fa-plus"></i> Nueva Promoción
+    </a>
+</div>
+
+{% if messages %}
+{% for message in messages %}
+<div style="padding:12px 16px;border-radius:8px;margin-bottom:1rem;font-size:0.9rem;font-weight:500;
+            background:{% if message.tags == 'error' %}rgba(239,68,68,0.1){% else %}rgba(16,185,129,0.1){% endif %};
+            color:{% if message.tags == 'error' %}#dc2626{% else %}#059669{% endif %};
+            border-left:4px solid {% if message.tags == 'error' %}#ef4444{% else %}#10b981{% endif %};">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="eh-card">
+    <div class="table-responsive">
+        <table class="eh-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Etiqueta</th>
+                    <th>Descuento</th>
+                    <th>Precio Original</th>
+                    <th>Precio Promo</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for promo in promociones %}
+                <tr>
+                    <td><strong style="color:#1e3a8a;">{{ promo.producto.nombre }}</strong></td>
+                    <td><span class="eh-badge eh-badge-red">{{ promo.etiqueta }}</span></td>
+                    <td><span class="eh-badge eh-badge-yellow">{{ promo.descuento_porcentaje }}%</span></td>
+                    <td style="color:#94a3b8;text-decoration:line-through;">${{ promo.producto.precio|floatformat:0 }}</td>
+                    <td><strong style="color:#059669;">${{ promo.precio_promocional|floatformat:0 }}</strong></td>
+                    <td style="color:#64748b;font-size:0.82rem;">{{ promo.fecha_inicio|date:"d/m/Y" }}</td>
+                    <td style="color:#64748b;font-size:0.82rem;">{{ promo.fecha_fin|date:"d/m/Y" }}</td>
+                    <td>
+                        {% if promo.vigente %}
+                        <span class="eh-badge eh-badge-green">Activa</span>
+                        {% elif not promo.activo %}
+                        <span class="eh-badge" style="background:#f1f5f9;color:#94a3b8;">Inactiva</span>
+                        {% elif hoy > promo.fecha_fin %}
+                        <span class="eh-badge eh-badge-yellow">Expirada</span>
+                        {% else %}
+                        <span class="eh-badge eh-badge-cyan">Próxima</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a href="{% url 'dashboard:editar_promocion' promo.id %}"
+                               class="eh-btn-primary" style="padding:6px 10px;font-size:0.8rem;">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'dashboard:eliminar_promocion' promo.id %}"
+                               class="eh-btn-danger" style="padding:6px 10px;font-size:0.8rem;">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="9" style="text-align:center;padding:3rem;color:#94a3b8;">
+                        <i class="fas fa-tag" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>
+                        No hay promociones. <a href="{% url 'dashboard:crear_promocion' %}" style="color:var(--blue-mid);">Crear una</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Verificada - ElectroHome</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="{% url 'product:home' %}">
+                    <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" class="w-20 h-auto hover:scale-105 transition-transform duration-500">
+                </a>
+                <a href="{% url 'user:login' %}" class="text-white hover:text-yellow-300 font-semibold">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-16">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                
+                <!-- Icono de éxito -->
+                <div class="bg-gradient-to-r from-green-600 to-green-500 p-8 text-center">
+                    <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce">
+                        <i class="fas fa-check-circle text-green-600 text-8xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-white">¡Cuenta Verificada!</h1>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-8 text-center">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                            🎉 ¡Tu correo ha sido verificado exitosamente!
+                        </h2>
+                        <p class="text-gray-600 text-lg mb-6">
+                            Tu cuenta de ElectroHome está lista. Ahora puedes disfrutar de todas nuestras funciones.
+                        </p>
+                    </div>
+
+                    <!-- Beneficios -->
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 mb-8">
+                        <h3 class="text-xl font-bold text-blue-800 mb-4">
+                            <i class="fas fa-gift text-yellow-500 mr-2"></i>
+                            Ahora puedes:
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Comprar productos</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Guardar favoritos</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Ver tu historial</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Recibir ofertas exclusivas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botón para iniciar sesión -->
+                    <a href="{% url 'user:login' %}" 
+                       class="inline-block w-full md:w-auto bg-gradient-to-r from-yellow-300 to-yellow-500 text-white px-12 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-blue-900 transition transform hover:scale-105 shadow-lg mb-4">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Iniciar Sesión Ahora
+                    </a>
+
+                    <p class="text-gray-500 text-sm mt-4">
+                        O ve directamente al 
+                        <a href="{% url 'product:home' %}" class="text-blue-600 hover:text-blue-800 font-bold">
+                            Catálogo de productos
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">&copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>

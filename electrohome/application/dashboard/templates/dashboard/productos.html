@@ -1,0 +1,110 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Productos - Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="eh-page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="eh-page-title"><i class="fas fa-box me-2" style="color:var(--yellow)"></i>Productos</h1>
+        <p class="eh-page-subtitle">Total: <strong>{{ total_count }}</strong> productos registrados</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{% url 'dashboard:index' %}" class="eh-btn-primary">
+            <i class="fas fa-arrow-left"></i> Dashboard
+        </a>
+        <a href="{% url 'dashboard:crear_producto' %}" class="eh-btn-yellow">
+            <i class="fas fa-plus"></i> Crear Producto
+        </a>
+    </div>
+</div>
+
+<div class="eh-card">
+    <div class="table-responsive">
+        <table class="eh-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in page_obj %}
+                <tr>
+                    <td><span class="eh-badge eh-badge-blue">#{{ producto.id }}</span></td>
+                    <td><strong style="color:#1e3a8a;">{{ producto.nombre }}</strong></td>
+                    <td>
+                        {% if producto.categoria %}
+                        <span class="eh-badge eh-badge-cyan">{{ producto.categoria.nombre }}</span>
+                        {% else %}
+                        <span style="color:#cbd5e1;">—</span>
+                        {% endif %}
+                    </td>
+                    <td><strong style="color:#059669;">${{ producto.precio }}</strong></td>
+                    <td>
+                        {% if producto.stock > 20 %}
+                        <span class="eh-badge eh-badge-green">{{ producto.stock }} u.</span>
+                        {% elif producto.stock > 5 %}
+                        <span class="eh-badge eh-badge-yellow">{{ producto.stock }} u.</span>
+                        {% else %}
+                        <span class="eh-badge eh-badge-red">{{ producto.stock }} u.</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if producto.activo %}
+                        <span class="eh-badge eh-badge-green">Activo</span>
+                        {% else %}
+                        <span class="eh-badge" style="background:#f1f5f9;color:#94a3b8;">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td style="color:#64748b;font-size:0.82rem;">{{ producto.fecha_creacion|date:"d/m/Y" }}</td>
+                    <td>
+                        <div class="d-flex gap-1">
+                            <a href="{% url 'dashboard:editar_producto' producto.id %}"
+                               class="eh-btn-primary" style="padding:6px 10px;font-size:0.8rem;" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'dashboard:eliminar_producto' producto.id %}"
+                               class="eh-btn-danger" style="padding:6px 10px;font-size:0.8rem;" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" style="text-align:center;padding:3rem;color:#94a3b8;">
+                        <i class="fas fa-box-open" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>
+                        No hay productos registrados
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% if page_obj.has_other_pages %}
+<div class="d-flex justify-content-center gap-2 mt-4">
+    {% if page_obj.has_previous %}
+    <a href="?page=1" class="eh-btn-primary" style="padding:6px 14px;">«</a>
+    <a href="?page={{ page_obj.previous_page_number }}" class="eh-btn-primary" style="padding:6px 14px;">‹</a>
+    {% endif %}
+    <span class="eh-btn-primary" style="padding:6px 14px;cursor:default;background:linear-gradient(135deg,#0f172a,#1e3a8a);">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="eh-btn-primary" style="padding:6px 14px;">›</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}" class="eh-btn-primary" style="padding:6px 14px;">»</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

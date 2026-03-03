@@ -1,0 +1,66 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Eliminar Producto - Dashboard{% endblock %}
+{% block content %}
+
+<div class="eh-page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="eh-page-title"><i class="fas fa-trash me-2" style="color:#ef4444"></i>Eliminar Producto</h1>
+    </div>
+    <a href="{% url 'dashboard:productos' %}" class="eh-btn-primary">
+        <i class="fas fa-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+
+    <div class="eh-card mb-4">
+        <div style="background:linear-gradient(135deg,#7f1d1d,#dc2626);padding:1.25rem 1.5rem;display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div>
+                <div style="color:white;font-weight:700;font-size:1rem;">Confirmar eliminación</div>
+                <div style="color:rgba(255,255,255,0.7);font-size:0.82rem;">Esta acción no se puede deshacer</div>
+            </div>
+        </div>
+        <div style="padding:1.5rem;">
+            <div style="background:#f8fafc;border-radius:10px;padding:1.25rem;margin-bottom:1rem;border-left:4px solid #1d4ed8;">
+                <div style="font-size:1.1rem;font-weight:800;color:#1e3a8a;margin-bottom:6px;">{{ producto.nombre }}</div>
+                <div style="color:#64748b;font-size:0.875rem;margin-bottom:1rem;">{{ producto.descripcion|truncatewords:20 }}</div>
+                <div style="display:flex;gap:1.5rem;flex-wrap:wrap;font-size:0.85rem;">
+                    <div>
+                        <span style="color:#94a3b8;display:block;font-size:0.75rem;text-transform:uppercase;font-weight:700;letter-spacing:0.05em;">Categoría</span>
+                        <span style="color:#334155;font-weight:600;margin-top:2px;display:block;">{{ producto.categoria }}</span>
+                    </div>
+                    <div>
+                        <span style="color:#94a3b8;display:block;font-size:0.75rem;text-transform:uppercase;font-weight:700;letter-spacing:0.05em;">Precio</span>
+                        <span style="color:#059669;font-weight:700;margin-top:2px;display:block;">${{ producto.precio }}</span>
+                    </div>
+                    <div>
+                        <span style="color:#94a3b8;display:block;font-size:0.75rem;text-transform:uppercase;font-weight:700;letter-spacing:0.05em;">Stock</span>
+                        <span style="color:#334155;font-weight:600;margin-top:2px;display:block;">{{ producto.stock }} u.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background:#fee2e2;border-left:4px solid #ef4444;border-radius:8px;padding:12px 14px;margin-bottom:1.5rem;font-size:0.875rem;color:#991b1b;">
+                <i class="fas fa-ban me-2"></i>
+                <strong>Se eliminarán todos los datos asociados.</strong> Esta acción es irreversible.
+            </div>
+
+            <form method="post" class="d-flex gap-3">
+                {% csrf_token %}
+                <button type="submit" class="eh-btn-danger" style="flex:1;padding:12px;font-size:1rem;justify-content:center;">
+                    <i class="fas fa-trash"></i> Sí, eliminar
+                </button>
+                <a href="{% url 'dashboard:productos' %}" class="eh-btn-primary" style="flex:1;padding:12px;font-size:1rem;justify-content:center;">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+
+</div>
+</div>
+{% endblock %}

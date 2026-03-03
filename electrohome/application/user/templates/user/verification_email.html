@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifica tu correo - ElectroHome</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f3f4f6;">
+    <table role="presentation" style="width: 100%; border-collapse: collapse;">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <table role="presentation" style="width: 600px; border-collapse: collapse; background-color: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(to right, #1e3a8a, #2563eb); padding: 40px; text-align: center; border-radius: 16px 16px 0 0;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 32px;">🔐 ElectroHome</h1>
+                            <p style="color: #bfdbfe; margin: 10px 0 0 0; font-size: 16px;">Verifica tu correo electrónico</p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Contenido -->
+                    <tr>
+                        <td style="padding: 40px;">
+                            <h2 style="color: #1f2937; margin: 0 0 20px 0;">¡Hola {{ user.first_name|default:"Usuario" }}! 👋</h2>
+                            
+                            <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                                Gracias por registrarte en <strong>ElectroHome</strong>. Para activar tu cuenta y comenzar a disfrutar de nuestras ofertas, necesitamos verificar tu correo electrónico.
+                            </p>
+                            
+                            <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
+                                Haz clic en el siguiente botón para verificar tu cuenta:
+                            </p>
+                            
+                            <!-- Botón -->
+                            <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td align="center" style="padding: 20px 0;">
+                                        <a href="{{ protocol }}://{{ domain }}{% url 'user:verify_email' uidb64=uid token=token %}" 
+                                           style="display: inline-block; padding: 16px 40px; background: linear-gradient(to right, #fbbf24, #f59e0b); color: #ffffff; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                            ✅ Verificar mi correo
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- Enlace alternativo -->
+                            <div style="background-color: #eff6ff; border-left: 4px solid #2563eb; padding: 16px; border-radius: 8px; margin: 30px 0;">
+                                <p style="color: #1e40af; margin: 0 0 10px 0; font-size: 14px; font-weight: bold;">
+                                    ℹ️ ¿No funciona el botón?
+                                </p>
+                                <p style="color: #1e3a8a; margin: 0; font-size: 13px; line-height: 1.5; word-break: break-all;">
+                                    Copia y pega este enlace en tu navegador:<br>
+                                    <a href="{{ protocol }}://{{ domain }}{% url 'user:verify_email' uidb64=uid token=token %}" 
+                                       style="color: #2563eb;">
+                                        {{ protocol }}://{{ domain }}{% url 'user:verify_email' uidb64=uid token=token %}
+                                    </a>
+                                </p>
+                            </div>
+                            
+                            <!-- Advertencia de seguridad -->
+                            <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 8px; margin: 20px 0;">
+                                <p style="color: #92400e; margin: 0; font-size: 14px;">
+                                    ⚠️ <strong>Importante:</strong> Este enlace expira en 24 horas. Si no solicitaste esta cuenta, ignora este correo.
+                                </p>
+                            </div>
+                            
+                            <p style="color: #6b7280; font-size: 14px; margin: 30px 0 0 0; line-height: 1.6;">
+                                Saludos,<br>
+                                <strong style="color: #1f2937;">El equipo de ElectroHome</strong>
+                            </p>
+                        </td>
+                    </tr>
+                    
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #1f2937; padding: 30px; text-align: center; border-radius: 0 0 16px 16px;">
+                            <p style="color: #9ca3af; font-size: 13px; margin: 0 0 10px 0;">
+                                © 2025 ElectroHome. Todos los derechos reservados.
+                            </p>
+                            <p style="color: #6b7280; font-size: 12px; margin: 0;">
+                                Este correo fue enviado a {{ user.email }}
+                            </p>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

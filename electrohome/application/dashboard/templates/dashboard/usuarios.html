@@ -1,0 +1,162 @@
+{% extends "dashboard/base.html" %}
+{% load static %}
+
+{% block title %}Usuarios - Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="eh-page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="eh-page-title"><i class="fas fa-users me-2" style="color:var(--yellow)"></i>Usuarios</h1>
+        <p class="eh-page-subtitle">Clientes y administradores registrados</p>
+    </div>
+    <a href="{% url 'dashboard:index' %}" class="eh-btn-primary">
+        <i class="fas fa-arrow-left"></i> Dashboard
+    </a>
+</div>
+
+<!-- TABS -->
+<div style="display:flex;gap:0;margin-bottom:1.5rem;border-bottom:2px solid #e2e8f0;">
+    <button onclick="showTab('clientes',this)"
+            id="tab-clientes"
+            style="padding:10px 24px;background:linear-gradient(135deg,var(--blue-mid),var(--blue-dark));color:white;
+                   border:none;border-radius:8px 8px 0 0;font-weight:700;font-size:0.9rem;cursor:pointer;">
+        👥 Clientes ({{ total_clientes }})
+    </button>
+    <button onclick="showTab('admins',this)"
+            id="tab-admins"
+            style="padding:10px 24px;background:#f8fafc;color:#64748b;
+                   border:none;border-radius:8px 8px 0 0;font-weight:600;font-size:0.9rem;cursor:pointer;margin-left:4px;">
+        🔐 Administradores ({{ total_admins }})
+    </button>
+</div>
+
+<!-- CLIENTES -->
+<div id="pane-clientes">
+    <div class="eh-card">
+        <div class="table-responsive">
+            <table class="eh-table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Ciudad</th>
+                        <th>Estado</th>
+                        <th>Órdenes</th>
+                        <th>Miembro Desde</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes_page %}
+                    <tr>
+                        <td><a href="mailto:{{ cliente.email }}" style="color:var(--blue-mid);font-weight:500;">{{ cliente.email }}</a></td>
+                        <td>{{ cliente.get_full_name }}</td>
+                        <td>
+                            {% if cliente.telefono %}
+                            <a href="tel:{{ cliente.telefono }}" style="color:#64748b;">{{ cliente.telefono }}</a>
+                            {% else %}<span style="color:#cbd5e1;">—</span>{% endif %}
+                        </td>
+                        <td>
+                            {% if cliente.ciudad %}
+                            <span class="eh-badge eh-badge-cyan">{{ cliente.ciudad }}</span>
+                            {% else %}<span style="color:#cbd5e1;">—</span>{% endif %}
+                        </td>
+                        <td>
+                            {% if cliente.is_active %}
+                            <span class="eh-badge eh-badge-green">Activo</span>
+                            {% else %}
+                            <span class="eh-badge eh-badge-red">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td><span class="eh-badge eh-badge-blue">{{ cliente.orders.count }}</span></td>
+                        <td style="color:#64748b;font-size:0.82rem;">{{ cliente.fecha_registro|date:"d/m/Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="7" style="text-align:center;padding:3rem;color:#94a3b8;">No hay clientes registrados</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if clientes_page.has_other_pages %}
+    <div class="d-flex justify-content-center gap-2 mt-4">
+        {% if clientes_page.has_previous %}
+        <a href="?page=1" class="eh-btn-primary" style="padding:6px 14px;">«</a>
+        <a href="?page={{ clientes_page.previous_page_number }}" class="eh-btn-primary" style="padding:6px 14px;">‹</a>
+        {% endif %}
+        <span class="eh-btn-primary" style="padding:6px 14px;cursor:default;">
+            {{ clientes_page.number }} / {{ clientes_page.paginator.num_pages }}
+        </span>
+        {% if clientes_page.has_next %}
+        <a href="?page={{ clientes_page.next_page_number }}" class="eh-btn-primary" style="padding:6px 14px;">›</a>
+        <a href="?page={{ clientes_page.paginator.num_pages }}" class="eh-btn-primary" style="padding:6px 14px;">»</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- ADMINISTRADORES -->
+<div id="pane-admins" style="display:none;">
+    <div class="eh-card">
+        <div class="table-responsive">
+            <table class="eh-table">
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Último Acceso</th>
+                        <th>Registrado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for admin in admins %}
+                    <tr>
+                        <td><a href="mailto:{{ admin.email }}" style="color:var(--blue-mid);font-weight:500;">{{ admin.email }}</a></td>
+                        <td>{{ admin.get_full_name }}</td>
+                        <td>
+                            {% if admin.is_superuser %}
+                            <span class="eh-badge eh-badge-red">SuperAdmin</span>
+                            {% else %}
+                            <span class="eh-badge eh-badge-yellow">Admin</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if admin.is_active %}
+                            <span class="eh-badge eh-badge-green">Activo</span>
+                            {% else %}
+                            <span class="eh-badge" style="background:#f1f5f9;color:#94a3b8;">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td style="color:#64748b;font-size:0.82rem;">
+                            {% if admin.last_login %}{{ admin.last_login|date:"d/m/Y H:i" }}
+                            {% else %}<span style="color:#cbd5e1;">Nunca</span>{% endif %}
+                        </td>
+                        <td style="color:#64748b;font-size:0.82rem;">{{ admin.fecha_registro|date:"d/m/Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6" style="text-align:center;padding:3rem;color:#94a3b8;">No hay administradores registrados</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+function showTab(name, btn) {
+    document.getElementById('pane-clientes').style.display = name === 'clientes' ? 'block' : 'none';
+    document.getElementById('pane-admins').style.display   = name === 'admins'   ? 'block' : 'none';
+    document.getElementById('tab-clientes').style.background = name === 'clientes'
+        ? 'linear-gradient(135deg,var(--blue-mid),var(--blue-dark))' : '#f8fafc';
+    document.getElementById('tab-clientes').style.color = name === 'clientes' ? 'white' : '#64748b';
+    document.getElementById('tab-admins').style.background = name === 'admins'
+        ? 'linear-gradient(135deg,var(--blue-mid),var(--blue-dark))' : '#f8fafc';
+    document.getElementById('tab-admins').style.color = name === 'admins' ? 'white' : '#64748b';
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,658 @@
+<!--BASE-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Dashboard - Electrohome{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --blue-dark:   #1e3a8a;
+            --blue-mid:    #1d4ed8;
+            --blue-light:  #3b82f6;
+            --yellow:      #f59e0b;
+            --yellow-dark: #d97706;
+            --sidebar-w:   260px;
+            --header-h:    64px;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            margin: 0;
+        }
+
+        /* ── HEADER ── */
+        .eh-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: linear-gradient(180deg, #0f172a 0%, #1e3a8a 100%);
+            border-bottom: 2px solid var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1.5rem;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .eh-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+        }
+
+        .eh-brand span {
+            color: var(--yellow);
+        }
+
+        .eh-brand-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--yellow);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            font-size: 1rem;
+        }
+
+        .eh-header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .eh-notif-btn {
+            position: relative;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .eh-notif-btn:hover {
+            background: rgba(245,158,11,0.3);
+            border-color: var(--yellow);
+            color: var(--yellow);
+        }
+
+        .eh-user-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 24px;
+            padding: 6px 14px 6px 6px;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .eh-user-avatar {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0f172a;
+            font-weight: 800;
+            font-size: 0.75rem;
+        }
+
+        /* ── SIDEBAR ── */
+        .eh-sidebar {
+            position: fixed;
+            top: var(--header-h);
+            left: 0;
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            border-right: 1px solid rgba(255,255,255,0.07);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 900;
+        }
+
+        .eh-sidebar-nav {
+            padding: 1rem 0.75rem;
+            flex: 1;
+        }
+
+        .eh-nav-section {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255,255,255,0.3);
+            padding: 0.75rem 0.75rem 0.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .eh-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .eh-nav-link:hover {
+            background: rgba(255,255,255,0.07);
+            color: white;
+        }
+
+        .eh-nav-link.active {
+            background: linear-gradient(135deg, var(--blue-mid) 0%, var(--blue-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(29,78,216,0.4);
+        }
+
+        .eh-nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 60%;
+            background: var(--yellow);
+            border-radius: 0 3px 3px 0;
+        }
+
+        .eh-nav-link i {
+            width: 18px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .eh-sidebar-footer {
+            padding: 1rem 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .eh-logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: #f87171;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .eh-logout-btn:hover {
+            background: rgba(248,113,113,0.1);
+            color: #fca5a5;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .eh-main {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 2rem;
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        /* ── PAGE HEADER ── */
+        .eh-page-header {
+            margin-bottom: 1.75rem;
+        }
+
+        .eh-page-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #1e3a8a;
+            margin: 0;
+        }
+
+        .eh-page-subtitle {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 4px;
+        }
+
+        /* ── CARDS ── */
+        .eh-card {
+            background: white;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .eh-card-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 1rem 1.25rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ── STAT CARDS ── */
+        .eh-stat {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .eh-stat:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+        .eh-stat.blue  { border-color: var(--blue-mid); }
+        .eh-stat.green { border-color: #10b981; }
+        .eh-stat.yellow{ border-color: var(--yellow); }
+        .eh-stat.cyan  { border-color: #06b6d4; }
+
+        .eh-stat-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+
+        .eh-stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+            line-height: 1;
+        }
+
+        .eh-stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .eh-stat.blue  .eh-stat-icon { background: rgba(29,78,216,0.1);  color: var(--blue-mid); }
+        .eh-stat.green .eh-stat-icon { background: rgba(16,185,129,0.1);  color: #10b981; }
+        .eh-stat.yellow .eh-stat-icon{ background: rgba(245,158,11,0.1);  color: var(--yellow); }
+        .eh-stat.cyan  .eh-stat-icon { background: rgba(6,182,212,0.1);   color: #06b6d4; }
+
+        /* ── BUTTONS ── */
+        .eh-btn-primary {
+            background: linear-gradient(135deg, var(--blue-mid) 0%, var(--blue-dark) 100%);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eh-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(29,78,216,0.4);
+            color: white;
+        }
+
+        .eh-btn-yellow {
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--yellow-dark) 100%);
+            color: #0f172a;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eh-btn-yellow:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(245,158,11,0.4);
+            color: #0f172a;
+        }
+
+        .eh-btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .eh-btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(220,38,38,0.4);
+            color: white;
+        }
+
+        /* ── TABLES ── */
+        .eh-table { width: 100%; border-collapse: collapse; }
+        .eh-table th {
+            background: #f8fafc;
+            color: #475569;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 10px 14px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .eh-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.875rem;
+            color: #334155;
+        }
+        .eh-table tr:hover td { background: #f8fafc; }
+
+        /* ── BADGES ── */
+        .eh-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .eh-badge-blue   { background: rgba(29,78,216,0.1);  color: var(--blue-mid); }
+        .eh-badge-green  { background: rgba(16,185,129,0.1);  color: #059669; }
+        .eh-badge-yellow { background: rgba(245,158,11,0.1);  color: var(--yellow-dark); }
+        .eh-badge-red    { background: rgba(239,68,68,0.1);   color: #dc2626; }
+        .eh-badge-cyan   { background: rgba(6,182,212,0.1);   color: #0891b2; }
+
+        /* ── DROPDOWN NOTIF ── */
+        .eh-notif-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            border: 1px solid #e2e8f0;
+            display: none;
+            z-index: 2000;
+            overflow: hidden;
+        }
+
+        .eh-notif-dropdown.show { display: block; }
+
+        .eh-notif-header {
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .eh-notif-item {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            text-decoration: none;
+            display: block;
+            transition: background 0.15s;
+        }
+
+        .eh-notif-item:hover { background: #f8fafc; }
+
+        /* ── ACCESS CARDS ── */
+        .eh-access-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+            height: 100%;
+        }
+
+        .eh-access-card:hover {
+            border-color: var(--blue-mid);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(29,78,216,0.15);
+        }
+
+        .eh-access-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .eh-access-title {
+            font-weight: 700;
+            color: #1e3a8a;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .eh-access-sub {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ── SCROLLBAR ── */
+        .eh-sidebar::-webkit-scrollbar { width: 4px; }
+        .eh-sidebar::-webkit-scrollbar-track { background: transparent; }
+        .eh-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="eh-header">
+        <a class="eh-brand" href="{% url 'dashboard:index' %}">
+            <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome"
+                 style="height:58px;width:auto;object-fit:contain;">
+            <small style="font-weight:400;font-size:1rem;margin-left:10px;" class="me-2">ADMINISTRADOR</small>
+        </a>
+
+        <div class="eh-header-right">
+            <!-- Notificaciones -->
+            <div style="position:relative;">
+                <button class="eh-notif-btn" id="notif-btn">
+                    <i class="fas fa-bell"></i>
+                    <span id="notif-badge"
+                          style="position:absolute;top:-4px;right:-4px;background:var(--yellow);color:#0f172a;
+                                 font-size:0.65rem;font-weight:800;border-radius:50%;width:18px;height:18px;
+                                 display:none;align-items:center;justify-content:center;">0</span>
+                </button>
+                <div class="eh-notif-dropdown" id="notif-dropdown">
+                    <div class="eh-notif-header">
+                        <i class="fas fa-bell me-2"></i> Pedidos Recientes (24h)
+                    </div>
+                    <div id="notif-lista">
+                        <div style="padding:16px;text-align:center;color:#94a3b8;font-size:0.85rem;">Cargando...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Usuario -->
+            <div class="eh-user-pill">
+                <div class="eh-user-avatar">
+                    {{ request.user.first_name.0|default:request.user.email.0|upper }}
+                </div>
+                <span>{{ request.user.first_name|default:request.user.email }}</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside class="eh-sidebar">
+        <nav class="eh-sidebar-nav">
+
+            <div class="eh-nav-section">Principal</div>
+
+            <a class="eh-nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+               href="{% url 'dashboard:index' %}">
+                <i class="fas fa-home"></i> Inicio
+            </a>
+
+            <div class="eh-nav-section">Catálogo</div>
+
+            <a class="eh-nav-link {% if request.resolver_match.url_name == 'productos' %}active{% endif %}"
+               href="{% url 'dashboard:productos' %}">
+                <i class="fas fa-box"></i> Productos
+            </a>
+            <a class="eh-nav-link {% if request.resolver_match.url_name == 'categorias' %}active{% endif %}"
+               href="{% url 'dashboard:categorias' %}">
+                <i class="fas fa-list"></i> Categorías
+            </a>
+
+            <div class="eh-nav-section">Gestión</div>
+
+            <a class="eh-nav-link {% if request.resolver_match.url_name == 'pedidos' %}active{% endif %}"
+               href="{% url 'dashboard:pedidos' %}">
+                <i class="fas fa-shopping-cart"></i> Pedidos
+            </a>
+            <a class="eh-nav-link {% if request.resolver_match.url_name == 'usuarios' %}active{% endif %}"
+               href="{% url 'dashboard:usuarios' %}">
+                <i class="fas fa-users"></i> Usuarios
+            </a>
+
+            <div class="eh-nav-section">Marketing</div>
+
+            <a class="eh-nav-link {% if request.resolver_match.url_name == 'promociones' %}active{% endif %}"
+               href="{% url 'dashboard:promociones' %}">
+                <i class="fas fa-tag"></i> Promociones
+            </a>
+            <a class="eh-nav-link {% if request.resolver_match.url_name == 'envio_masivo' %}active{% endif %}"
+               href="{% url 'dashboard:envio_masivo' %}">
+                <i class="fas fa-envelope"></i> Envío Masivo
+            </a>
+        </nav>
+
+        <div class="eh-sidebar-footer">
+            <a class="eh-logout-btn" href="{% url 'dashboard:logout' %}">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="eh-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ── NOTIFICACIONES ──
+        let ultimoIdVisto = null;
+
+        async function cargarNotificaciones() {
+            try {
+                const res = await fetch("{% url 'dashboard:notificaciones' %}");
+                const data = await res.json();
+                const lista = document.getElementById('notif-lista');
+                const badge = document.getElementById('notif-badge');
+
+                const hayNuevos = data.pedidos.length > 0 &&
+                    ultimoIdVisto !== null &&
+                    data.pedidos[0].id !== ultimoIdVisto;
+
+                if (hayNuevos) {
+                    badge.style.display = 'flex';
+                    badge.textContent = data.count;
+                }
+
+                if (ultimoIdVisto === null && data.pedidos.length > 0) {
+                    ultimoIdVisto = data.pedidos[0].id;
+                }
+
+                if (data.pedidos.length === 0) {
+                    lista.innerHTML = '<div style="padding:16px;text-align:center;color:#94a3b8;font-size:0.85rem;">Sin pedidos recientes</div>';
+                } else {
+                    lista.innerHTML = data.pedidos.map(p => `
+                        <a class="eh-notif-item" href="/dashboard/pedidos/">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                                <strong style="font-size:0.85rem;color:#0f172a;">#${p.id} — ${p.usuario}</strong>
+                                <small style="color:#94a3b8;">${p.fecha}</small>
+                            </div>
+                            <span style="font-size:0.8rem;color:#10b981;font-weight:700;">$${p.total}</span>
+                        </a>
+                    `).join('');
+                }
+            } catch (e) {
+                console.error('Error cargando notificaciones:', e);
+            }
+        }
+
+        // Toggle dropdown notificaciones
+        document.getElementById('notif-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dd = document.getElementById('notif-dropdown');
+            dd.classList.toggle('show');
+            document.getElementById('notif-badge').style.display = 'none';
+        });
+
+        document.addEventListener('click', function(e) {
+            const dd = document.getElementById('notif-dropdown');
+            if (!document.getElementById('notif-btn').contains(e.target)) {
+                dd.classList.remove('show');
+            }
+        });
+
+        cargarNotificaciones();
+        setInterval(cargarNotificaciones, 30000);
+    </script>
+</body>
+</html>

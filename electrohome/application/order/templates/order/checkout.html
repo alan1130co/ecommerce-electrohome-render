@@ -1,0 +1,767 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <script>
+      (function(){
+        var t = localStorage.getItem('electrohome-theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Checkout - ElectroHome</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
+
+    <!-- ✅ ESTILOS DARK MODE ESPECÍFICOS PARA CHECKOUT -->
+    <style>
+      /* Secciones del formulario */
+      [data-theme="dark"] .checkout-card {
+        background: #161b22 !important;
+        border: 1px solid #21262d !important;
+      }
+
+      /* Títulos de secciones */
+      [data-theme="dark"] .checkout-card h2 {
+        color: #e6edf3 !important;
+      }
+
+      /* Labels */
+      [data-theme="dark"] .checkout-label {
+        color: #8b949e !important;
+      }
+
+      /* ── ALERTA AZUL (info) ── */
+      [data-theme="dark"] .alert-info {
+        background: rgba(56,139,253,0.1) !important;
+        border-color: #388bfd !important;
+      }
+      [data-theme="dark"] .alert-info .alert-title  { color: #79c0ff !important; }
+      [data-theme="dark"] .alert-info .alert-text   { color: #58a6ff !important; }
+
+      /* ── MÉTODO PAGO ACTIVO (verde) ── */
+      [data-theme="dark"] .payment-active {
+        background: rgba(63,185,80,0.1) !important;
+        border-color: #3fb950 !important;
+      }
+      [data-theme="dark"] .payment-active .payment-title { color: #e6edf3 !important; }
+      [data-theme="dark"] .payment-active .payment-desc  { color: #8b949e !important; }
+      [data-theme="dark"] .payment-active i.text-green-600 { color: #3fb950 !important; }
+
+      /* ── MÉTODOS DESHABILITADOS ── */
+      [data-theme="dark"] .payment-disabled-wrap label {
+        background: #1c2330 !important;
+        border-color: #30363d !important;
+      }
+      [data-theme="dark"] .payment-disabled-wrap .payment-title { color: #6e7681 !important; }
+      [data-theme="dark"] .payment-disabled-wrap .payment-desc  { color: #6e7681 !important; }
+
+      /* ── ALERTA AMARILLA (instrucciones) ── */
+      [data-theme="dark"] .alert-warning {
+        background: rgba(240,180,41,0.08) !important;
+        border-color: rgba(240,180,41,0.3) !important;
+      }
+      [data-theme="dark"] .alert-warning h4   { color: #f0b429 !important; }
+      [data-theme="dark"] .alert-warning li   { color: #d4a017 !important; }
+
+      /* ── RESUMEN DEL PEDIDO ── */
+      [data-theme="dark"] .summary-card {
+        background: #161b22 !important;
+        border: 1px solid #21262d !important;
+      }
+      [data-theme="dark"] .summary-card h2           { color: #e6edf3 !important; }
+      [data-theme="dark"] .summary-item-name         { color: #e6edf3 !important; }
+      [data-theme="dark"] .summary-item-qty          { color: #6e7681 !important; }
+      [data-theme="dark"] .summary-item-price        { color: #f0b429 !important; }
+      [data-theme="dark"] .summary-border            { border-color: #21262d !important; }
+      [data-theme="dark"] .summary-label             { color: #e6edf3 !important; }
+      [data-theme="dark"] .summary-value             { color: #e6edf3 !important; }
+      [data-theme="dark"] .summary-total-label       { color: #e6edf3 !important; }
+      [data-theme="dark"] .summary-total-value       { color: #f0b429 !important; }
+      [data-theme="dark"] .summary-secure            { color: #6e7681 !important; }
+
+      /* ── BOTÓN VOLVER ── */
+      [data-theme="dark"] .btn-back {
+        background: #1d4ed8 !important;
+        color: #ffffff !important;
+      }
+      [data-theme="dark"] .btn-back:hover { background: #1e40af !important; }
+
+      /* ── BREADCRUMB ── */
+      [data-theme="dark"] .breadcrumb-text  { color: #8b949e !important; }
+      [data-theme="dark"] .breadcrumb-link:hover { color: #58a6ff !important; }
+      [data-theme="dark"] .breadcrumb-active { color: #58a6ff !important; }
+    </style>
+     <style>
+  [data-theme="dark"] header,
+  [data-theme="dark"] header.bg-blue-800 {
+    background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
+    border-bottom: 1px solid #21262d !important;
+    box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important;
+  }
+</style>
+</head>
+<body class="bg-gray-50">
+    <!-- HEADER -->
+   <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500 sticky top-0 z-50">
+  <nav class="container mx-auto px-4 py-3">
+    <div class="flex justify-between items-center gap-4">
+
+      <!-- Logo -->
+      <div class="flex items-center space-x-2 flex-shrink-0">
+        <a href="{% url 'product:home' %}">
+          <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome"
+               class="w-20 h-auto hover:scale-105 transition-transform duration-500" />
+        </a>
+      </div>
+
+      <!-- Buscador Desktop -->
+<div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
+  <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
+    <input type="text" name="q" placeholder="Buscar productos..."
+           class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
+           value="{{ request.GET.q }}" />
+    <button type="submit"
+            class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+</div>
+
+      <!-- Nav Desktop -->
+      <div class="hidden lg:flex space-x-6">
+        <a href="{% url 'product:home' %}"         class="text-yellow-400 font-semibold">Inicio</a>
+        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 transition">Productos</a>
+        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 transition">Contacto</a>
+      </div>
+
+      <!-- Controles derechos -->
+      <div class="flex items-center space-x-3">
+
+        <!-- Botón Tema -->
+        <button id="theme-toggle" class="theme-toggle-button" aria-label="Cambiar tema">
+          <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- Wishlist -->
+        {% if user.is_authenticated %}
+        <a href="{% url 'product:wishlist' %}" class="relative text-white hover:text-red-400 transition">
+          <i class="fas fa-heart text-2xl"></i>
+          {% if user.wishlist.total_items > 0 %}
+          <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+            {{ user.wishlist.total_items }}
+          </span>
+          {% endif %}
+        </a>
+        {% endif %}
+
+        <!-- Carrito -->
+        <a href="{% url 'product:cart' %}" class="relative text-white hover:text-yellow-300 transition">
+          <i class="fas fa-shopping-cart text-2xl"></i>
+          <span id="cart-counter" class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+            {{ cart_items_count|default:0 }}
+          </span>
+        </a>
+
+        {% if user.is_authenticated %}
+        <!-- Menú Usuario -->
+        <div class="relative">
+          <button id="user-menu-btn" aria-label="Menú usuario" class="flex items-center justify-center">
+            {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+          </button>
+          <div id="user-dropdown" class="hidden absolute right-0 mt-3 z-50" style="width:270px;">
+            <div class="dropdown-header">
+              <div class="flex items-center gap-3">
+                <div class="dropdown-avatar">
+                  {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+                </div>
+                <div>
+                  <div class="dropdown-name">
+                    {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+                  </div>
+                  <div class="dropdown-badge"><i class="fas fa-user-check" style="font-size:.6rem;"></i> Cliente</div>
+                </div>
+              </div>
+            </div>
+            <div style="padding:6px 0;">
+              <a href="{% url 'user:profile' %}"    class="dropdown-item"><span class="item-icon"><i class="fas fa-user"></i></span><span>Mi Perfil</span></a>
+              <a href="{% url 'order:order_list' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-shopping-bag"></i></span><span>Mis Pedidos</span></a>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'user:logout' %}" class="dropdown-item logout"><span class="item-icon"><i class="fas fa-sign-out-alt"></i></span><span>Cerrar Sesión</span></a>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <a href="{% url 'user:login' %}"    class="hidden md:inline-flex items-center gap-2 text-white hover:text-yellow-300 font-semibold text-sm transition"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+        <a href="{% url 'user:register' %}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition text-sm">Registrarse</a>
+        {% endif %}
+
+        <!-- Mobile Menu Btn -->
+        <button class="lg:hidden text-gray-50 hover:text-yellow-300" id="mobile-menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+   <!-- Buscador Mobile -->
+    <div class="md:hidden mt-3">
+      <form action="{% url 'product:search' %}" method="GET">
+        <div class="flex w-full">
+          <input type="text" name="q" placeholder="Buscar productos..."
+                 class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
+                 value="{{ request.GET.q }}" />
+          <button type="submit"
+                  class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="lg:hidden mt-4 pb-4 hidden" id="mobile-menu">
+      <div class="flex flex-col space-y-2">
+        <a href="{% url 'product:home' %}"         class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-home mr-2"></i>Inicio</a>
+        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-tag mr-2"></i>Productos</a>
+        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-envelope mr-2"></i>Contacto</a>
+        <hr class="border-blue-600">
+        {% if user.is_authenticated %}
+        <a href="{% url 'user:profile' %}"    class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-user mr-3"></i>Mi Perfil</a>
+        <a href="{% url 'product:wishlist' %}" class="flex items-center text-white hover:text-red-300 py-2"><i class="fas fa-heart mr-3"></i>Lista de Deseos</a>
+        <a href="{% url 'order:order_list' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-shopping-bag mr-3"></i>Mis Pedidos</a>
+        <a href="{% url 'user:logout' %}"      class="flex items-center text-red-300 hover:text-red-100 py-2"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
+        {% else %}
+        <a href="{% url 'user:login' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-sign-in-alt mr-3"></i>Ingresar</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="max-w-6xl mx-auto">
+
+            <!-- Breadcrumb -->
+            <div class="mb-8 flex items-center text-sm breadcrumb-text text-gray-600">
+                <a href="{% url 'product:home' %}" class="breadcrumb-link hover:text-blue-600">Inicio</a>
+                <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                <a href="{% url 'product:cart' %}" class="breadcrumb-link hover:text-blue-600">Carrito</a>
+                <i class="fas fa-chevron-right mx-2 text-xs"></i>
+                <span class="breadcrumb-active text-blue-600 font-semibold">Checkout</span>
+            </div>
+
+            <h1 class="text-4xl font-bold text-blue-800 mb-8">
+                <i class="fas fa-credit-card"></i> Finalizar Compra
+            </h1>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- FORMULARIO -->
+                <div class="lg:col-span-2">
+                    <form id="checkout-form" class="space-y-6">
+                        {% csrf_token %}
+
+                        <!-- Información de Contacto -->
+                        <div class="checkout-card bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-2xl font-bold text-blue-800 mb-4">
+                                <i class="fas fa-user"></i> Información de Contacto
+                            </h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="checkout-label block text-gray-700 font-semibold mb-2">
+                                        Email <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="email" name="email" value="{{ user.email }}" required
+                                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                                        placeholder="tu@email.com" />
+                                </div>
+                                <div>
+                                    <label class="checkout-label block text-gray-700 font-semibold mb-2">
+                                        Teléfono <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="tel" name="phone" value="{{ user.telefono|default:'' }}" required
+                                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                                        placeholder="3001234567" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dirección de Envío -->
+                        <div class="checkout-card bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-2xl font-bold text-blue-800 mb-4">
+                                <i class="fas fa-map-marker-alt"></i> Dirección de Envío
+                            </h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="checkout-label block text-gray-700 font-semibold mb-2">
+                                        Dirección Completa <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" name="shipping_address" value="{{ user.direccion|default:'' }}" required
+                                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                                        placeholder="Calle 123 #45-67, Apto 890" />
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="checkout-label block text-gray-700 font-semibold mb-2">
+                                            Departamento <span class="text-red-500">*</span>
+                                        </label>
+                                        <select name="shipping_department" id="department-select" required autocomplete="off"
+                                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none bg-white">
+                                            <option value="">Seleccione un departamento</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="checkout-label block text-gray-700 font-semibold mb-2">
+                                            Ciudad/Municipio <span class="text-red-500">*</span>
+                                        </label>
+                                        <select name="shipping_city" id="city-select" required disabled autocomplete="off"
+                                            class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none bg-white disabled:bg-gray-100 disabled:cursor-not-allowed">
+                                            <option value="">Primero seleccione un departamento</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Método de Pago -->
+                        <div class="checkout-card bg-white rounded-lg shadow-md p-6">
+                            <h2 class="text-2xl font-bold text-blue-800 mb-4">
+                                <i class="fas fa-wallet"></i> Método de Pago
+                            </h2>
+
+                            <!-- Alerta info -->
+                            <div class="alert-info bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+                                <div class="flex">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-info-circle text-blue-500 text-xl"></i>
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="alert-title text-sm text-blue-700 font-bold">Por el momento solo aceptamos:</p>
+                                        <p class="alert-text text-sm text-blue-600 mt-1">💵 Pago en efectivo al momento de la entrega</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3">
+                                <!-- Efectivo - ACTIVO -->
+                                <label class="payment-active flex items-center p-4 border-2 border-green-500 bg-green-50 rounded-lg cursor-pointer">
+                                    <input type="radio" name="payment_method" value="cash" checked required class="mr-3 w-5 h-5" />
+                                    <i class="fas fa-money-bill-wave text-green-600 mr-3 text-xl"></i>
+                                    <div class="flex-grow">
+                                        <span class="payment-title font-semibold text-gray-800">Efectivo Contraentrega</span>
+                                        <p class="payment-desc text-sm text-gray-600 mt-1">Paga en efectivo cuando recibas tu pedido</p>
+                                    </div>
+                                </label>
+
+                                <!-- Tarjeta - DESHABILITADO -->
+                                <div class="payment-disabled-wrap opacity-50">
+                                    <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-not-allowed bg-gray-50">
+                                        <input type="radio" name="payment_method_disabled" disabled class="mr-3 w-5 h-5" />
+                                        <i class="fas fa-credit-card text-gray-400 mr-3 text-xl"></i>
+                                        <div class="flex-grow">
+                                            <span class="payment-title font-semibold text-gray-500">Tarjeta de Crédito/Débito</span>
+                                            <p class="payment-desc text-sm text-gray-500 mt-1">
+                                                <i class="fas fa-clock mr-1"></i>Próximamente disponible
+                                            </p>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <!-- PSE - DESHABILITADO -->
+                                <div class="payment-disabled-wrap opacity-50">
+                                    <label class="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-not-allowed bg-gray-50">
+                                        <input type="radio" name="payment_method_disabled" disabled class="mr-3 w-5 h-5" />
+                                        <i class="fas fa-university text-gray-400 mr-3 text-xl"></i>
+                                        <div class="flex-grow">
+                                            <span class="payment-title font-semibold text-gray-500">PSE</span>
+                                            <p class="payment-desc text-sm text-gray-500 mt-1">
+                                                <i class="fas fa-clock mr-1"></i>Próximamente disponible
+                                            </p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Instrucciones -->
+                            <div class="alert-warning mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                <h4 class="font-semibold text-yellow-800 mb-2">
+                                    <i class="fas fa-hand-holding-usd mr-2"></i>Instrucciones de pago:
+                                </h4>
+                                <ul class="text-sm text-yellow-700 space-y-1 ml-6">
+                                    <li>• Prepara el monto exacto en efectivo</li>
+                                    <li>• El pago se realiza al recibir tu pedido</li>
+                                    <li>• Recibirás un comprobante de entrega</li>
+                                    <li>• Revisa tu pedido antes de pagar</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- RESUMEN DEL PEDIDO -->
+                <div class="lg:col-span-1">
+                    <div class="summary-card bg-white rounded-lg shadow-lg p-6 sticky top-24">
+                        <h2 class="text-2xl font-bold text-blue-800 mb-6">Resumen del Pedido</h2>
+
+                        <!-- Productos -->
+                        <div class="mb-6 max-h-64 overflow-y-auto">
+                            {% for item in items %}
+                            <div class="flex items-center gap-3 mb-4 pb-4 summary-border border-b border-gray-200">
+                                <div class="w-16 h-16 flex-shrink-0">
+                                    {% if item.product.imagen_principal %}
+                                    <img src="{{ item.product.imagen_principal.url }}" alt="{{ item.product.nombre }}" class="w-full h-full object-cover rounded" />
+                                    {% else %}
+                                    <div class="w-full h-full bg-gray-200 rounded flex items-center justify-center">
+                                        <i class="fas fa-image text-gray-400"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow">
+                                    <h4 class="summary-item-name font-semibold text-sm text-gray-800">{{ item.product.nombre|truncatewords:5 }}</h4>
+                                    <p class="summary-item-qty text-xs text-gray-500">Cantidad: {{ item.quantity }}</p>
+                                    <p class="summary-item-price text-sm font-bold text-blue-600">${{ item.subtotal|formato_precio }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Totales -->
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between">
+                                <span class="summary-label text-gray-700">Subtotal:</span>
+                                <span class="summary-value font-semibold text-gray-700">${{ subtotal|formato_precio }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="summary-label text-gray-700">IVA (19%):</span>
+                                <span class="summary-value font-semibold text-gray-700">${{ tax|formato_precio }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="summary-label text-gray-700">Envío:</span>
+                                <span class="summary-value font-semibold text-gray-700">${{ shipping_cost|formato_precio }}</span>
+                            </div>
+                            <hr class="summary-border border-gray-300" />
+                            <div class="flex justify-between text-2xl font-bold">
+                                <span class="summary-total-label text-blue-800">Total:</span>
+                                <span class="summary-total-value text-blue-800">${{ grand_total|formato_precio }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <button type="submit" form="checkout-form" id="submit-btn"
+                            class="w-full bg-yellow-500 text-white py-4 rounded-lg font-bold hover:bg-yellow-600 transition mb-3 flex items-center justify-center">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span id="btn-text">Confirmar Pedido</span>
+                            <span id="btn-loading" class="hidden">
+                                <i class="fas fa-spinner fa-spin mr-2"></i>Procesando...
+                            </span>
+                        </button>
+
+                        <a href="{% url 'product:cart' %}" class="btn-back block w-full text-center bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                            <i class="fas fa-arrow-left"></i> Volver al Carrito
+                        </a>
+
+                        <div class="mt-6 text-center">
+                            <p class="summary-secure text-xs text-gray-500 flex items-center justify-center">
+                                <i class="fas fa-lock mr-2 text-green-600"></i>
+                                Pago 100% seguro y protegido
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-12 mt-10">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-white mb-3 tracking-wide">ElectroHome</h2>
+          <p class="text-gray-400 max-w-md mx-auto text-sm">La mejor tecnología para tu hogar. Compra fácil, rápido y con total seguridad.</p>
+        </div>
+        <div class="flex justify-center space-x-8 mb-10">
+          <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i></a>
+          <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i></a>
+          <a href="https://tiktok.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i></a>
+          <a href="https://twitter.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i></a>
+        </div>
+        <div class="flex flex-wrap justify-center space-x-6 text-sm mb-8">
+          <a href="#" class="hover:text-white transition">Inicio</a>
+          <a href="#" class="hover:text-white transition">Productos</a>
+          <a href="#" class="hover:text-white transition">Ofertas</a>
+          <a href="#" class="hover:text-white transition">Nosotros</a>
+          <a href="#" class="hover:text-white transition">Contacto</a>
+        </div>
+        <div class="text-center text-gray-400 text-sm mb-8">
+          <p>📍 Calle 1 #2-40, Cartagena de Indias, Colombia</p>
+          <p>📞 +57 300 760 7645</p>
+          <p>✉️ <a href="mailto:info@electrohome.com" class="underline hover:text-blue-400">info@electrohome.com</a></p>
+        </div>
+        <div class="border-t border-gray-700 pt-6 text-center text-xs text-gray-500">
+          &copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+    // Datos Colombia
+    const colombiaData = {
+        "Amazonas": ["Leticia", "Puerto Nariño"],
+        "Antioquia": ["Medellín", "Bello", "Itagüí", "Envigado", "Apartadó", "Turbo", "Rionegro", "Caucasia", "Sabaneta", "La Estrella", "Caldas", "Copacabana"],
+        "Arauca": ["Arauca", "Arauquita", "Saravena", "Tame", "Fortul"],
+        "Atlántico": ["Barranquilla", "Soledad", "Malambo", "Sabanalarga", "Puerto Colombia", "Galapa", "Baranoa"],
+        "Bolívar": ["Cartagena", "Magangué", "Turbaco", "Arjona", "El Carmen de Bolívar", "Mompós", "Simití"],
+        "Boyacá": ["Tunja", "Duitama", "Sogamoso", "Chiquinquirá", "Paipa", "Villa de Leyva", "Moniquirá"],
+        "Caldas": ["Manizales", "Villamaría", "Chinchiná", "La Dorada", "Riosucio", "Aguadas", "Anserma"],
+        "Caquetá": ["Florencia", "San Vicente del Caguán", "Puerto Rico", "El Doncello", "El Paujil"],
+        "Casanare": ["Yopal", "Aguazul", "Villanueva", "Monterrey", "Tauramena", "Maní"],
+        "Cauca": ["Popayán", "Santander de Quilichao", "Puerto Tejada", "Patía", "Guachené", "Corinto"],
+        "Cesar": ["Valledupar", "Aguachica", "Bosconia", "Chiriguaná", "La Jagua de Ibirico", "Codazzi"],
+        "Chocó": ["Quibdó", "Istmina", "Condoto", "Tadó", "Acandí", "Bahía Solano"],
+        "Córdoba": ["Montería", "Cereté", "Lorica", "Sahagún", "Planeta Rica", "Montelíbano"],
+        "Cundinamarca": ["Bogotá", "Soacha", "Facatativá", "Zipaquirá", "Chía", "Fusagasugá", "Madrid", "Mosquera", "Cajicá", "Funza", "Girardot"],
+        "Guainía": ["Inírida"],
+        "Guaviare": ["San José del Guaviare"],
+        "Huila": ["Neiva", "Pitalito", "Garzón", "La Plata", "Campoalegre", "Algeciras"],
+        "La Guajira": ["Riohacha", "Maicao", "Uribia", "Manaure", "Albania", "Fonseca"],
+        "Magdalena": ["Santa Marta", "Ciénaga", "Fundación", "Zona Bananera", "Plato", "El Banco"],
+        "Meta": ["Villavicencio", "Acacías", "Granada", "Puerto López", "San Martín", "Cumaral"],
+        "Nariño": ["Pasto", "Tumaco", "Ipiales", "Túquerres", "Barbacoas", "La Unión"],
+        "Norte de Santander": ["Cúcuta", "Ocaña", "Pamplona", "Villa del Rosario", "Los Patios", "Tibú"],
+        "Putumayo": ["Mocoa", "Puerto Asís", "Orito", "Valle del Guamuez", "Villagarzón"],
+        "Quindío": ["Armenia", "Calarcá", "Montenegro", "La Tebaida", "Quimbaya", "Circasia"],
+        "Risaralda": ["Pereira", "Dosquebradas", "Santa Rosa de Cabal", "La Virginia", "Belén de Umbría"],
+        "San Andrés y Providencia": ["San Andrés", "Providencia"],
+        "Santander": ["Bucaramanga", "Floridablanca", "Girón", "Piedecuesta", "Barrancabermeja", "San Gil"],
+        "Sucre": ["Sincelejo", "Corozal", "Sampués", "San Marcos", "Tolú", "Coveñas"],
+        "Tolima": ["Ibagué", "Espinal", "Melgar", "Honda", "Chaparral", "Líbano"],
+        "Valle del Cauca": ["Cali", "Palmira", "Buenaventura", "Tuluá", "Cartago", "Buga", "Jamundí", "Yumbo"],
+        "Vaupés": ["Mitú"],
+        "Vichada": ["Puerto Carreño"]
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dropdown usuario
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdown = document.getElementById('user-dropdown');
+        if (userMenuBtn && userDropdown) {
+            userMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                userDropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', function(e) {
+                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                }
+            });
+        }
+
+        // Menú móvil
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Departamentos y ciudades
+        const departmentSelect = document.getElementById('department-select');
+        const citySelect = document.getElementById('city-select');
+        Object.keys(colombiaData).sort().forEach(department => {
+            const option = document.createElement('option');
+            option.value = department;
+            option.textContent = department;
+            departmentSelect.appendChild(option);
+        });
+        departmentSelect.addEventListener('change', function() {
+            const selected = this.value;
+            citySelect.innerHTML = '<option value="">Seleccione una ciudad</option>';
+            if (selected && colombiaData[selected]) {
+                citySelect.disabled = false;
+                colombiaData[selected].sort().forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            } else {
+                citySelect.disabled = true;
+                citySelect.innerHTML = '<option value="">Primero seleccione un departamento</option>';
+            }
+        });
+
+        // Validación teléfono
+        const phoneInput = document.querySelector('input[name="phone"]');
+        if (phoneInput) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'text-red-500 text-sm mt-1 hidden';
+            errorDiv.id = 'phone-error';
+            phoneInput.parentElement.appendChild(errorDiv);
+            phoneInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '');
+                if (this.value.length > 10) this.value = this.value.slice(0, 10);
+                this.classList.remove('border-red-500');
+                errorDiv.classList.add('hidden');
+            });
+            phoneInput.addEventListener('blur', function() {
+                const phone = this.value.trim();
+                if (phone.length > 0 && phone.length !== 10) {
+                    this.classList.add('border-red-500');
+                    errorDiv.textContent = 'El teléfono debe tener exactamente 10 números.';
+                    errorDiv.classList.remove('hidden');
+                } else if (phone.length === 10) {
+                    this.classList.remove('border-red-500');
+                    errorDiv.classList.add('hidden');
+                }
+            });
+        }
+
+        // Logout con limpieza de storage
+        const logoutLinks = document.querySelectorAll('a[href*="logout"]');
+        logoutLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.replace(this.href);
+            });
+        });
+    });
+
+    // Prevenir caché después de logout
+    window.addEventListener('pageshow', function(event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            window.location.reload();
+        }
+    });
+
+    // Checkout form
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const phoneInput = document.querySelector('input[name="phone"]');
+        const phone = phoneInput.value.trim();
+        const phoneError = document.getElementById('phone-error');
+        if (phone.length !== 10) {
+            phoneInput.classList.add('border-red-500');
+            phoneInput.focus();
+            if (phoneError) {
+                phoneError.textContent = 'El teléfono debe tener exactamente 10 números.';
+                phoneError.classList.remove('hidden');
+            }
+            showErrorModal('El teléfono debe tener exactamente 10 números.');
+            return false;
+        }
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnLoading = document.getElementById('btn-loading');
+        submitBtn.disabled = true;
+        btnText.classList.add('hidden');
+        btnLoading.classList.remove('hidden');
+        const formData = new FormData(this);
+        fetch('{% url "order:process_checkout" %}', {
+            method: 'POST',
+            headers: { 'X-CSRFToken': csrftoken },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccessModal('¡Orden creada exitosamente!', 'Número de orden: ' + data.order_number);
+                setTimeout(() => { window.location.href = data.redirect_url; }, 2000);
+            } else {
+                showErrorModal(data.message);
+                submitBtn.disabled = false;
+                btnText.classList.remove('hidden');
+                btnLoading.classList.add('hidden');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showErrorModal('Error al procesar el pedido. Por favor intenta nuevamente.');
+            submitBtn.disabled = false;
+            btnText.classList.remove('hidden');
+            btnLoading.classList.add('hidden');
+        });
+    });
+
+    function showErrorModal(message) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        modal.innerHTML = `
+            <div class="bg-white rounded-lg shadow-2xl p-6 max-w-md mx-4">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mb-4">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Error</h3>
+                    <p class="text-gray-600 mb-6">${message}</p>
+                    <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-semibold">Aceptar</button>
+                </div>
+            </div>`;
+        document.body.appendChild(modal);
+    }
+
+    function showSuccessModal(title, message) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        modal.innerHTML = `
+            <div class="bg-white rounded-lg shadow-2xl p-6 max-w-md mx-4">
+                <div class="text-center">
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                        <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">${title}</h3>
+                    <p class="text-gray-600 mb-6">${message}</p>
+                    <div class="flex items-center justify-center">
+                        <i class="fas fa-spinner fa-spin text-blue-600 text-xl"></i>
+                        <span class="ml-2 text-gray-600">Redirigiendo...</span>
+                    </div>
+                </div>
+            </div>`;
+        document.body.appendChild(modal);
+    }
+    </script>
+
+    {% include 'chatbot/chatbot_widget.html' %}
+    <script src="{% static 'js/dark_mode.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,647 @@
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <script>
+      (function(){
+        var t = localStorage.getItem('electrohome-theme') || 
+                (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>{{ producto.nombre }} - ElectroHome</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
+    <style>
+        .image-gallery img {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .image-gallery img:hover {
+            transform: scale(1.05);
+            border-color: #3b82f6;
+        }
+        .image-gallery img.active {
+            border-color: #f59e0b;
+            border-width: 3px;
+        }
+
+        .wishlist-btn-detail {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 2rem;
+            z-index: 20;
+            padding: 8px;
+            font-weight: bold;
+            line-height: 1;
+            color: #9ca3af;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .wishlist-btn-detail:hover { transform: scale(1.1); color: #ef4444; }
+        .wishlist-btn-detail.active { color: #ef4444; animation: heartbeat 0.5s ease; }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1.15); }
+        }
+
+        /* ── DARK MODE HEADER ── */
+        [data-theme="dark"] header,
+        [data-theme="dark"] header.bg-blue-800 {
+            background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
+            border-bottom: 1px solid #21262d !important;
+            box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important;
+        }
+
+        /* ── TABS scroll horizontal en móvil ── */
+        .tabs-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .tabs-scroll::-webkit-scrollbar { display: none; }
+        .tabs-scroll .flex { min-width: max-content; }
+
+        /* ── Evitar zoom en inputs iOS ── */
+        @media (max-width: 640px) {
+            input, select, textarea { font-size: 16px !important; }
+        }
+
+        /* ── Auth modal ── */
+        #auth-modal.show #auth-modal-content {
+            animation: modalSlideIn 0.3s ease-out forwards;
+        }
+        @keyframes modalSlideIn {
+            from { transform: scale(0.9) translateY(-20px); opacity: 0; }
+            to   { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        #auth-modal.hide #auth-modal-content {
+            animation: modalSlideOut 0.2s ease-in forwards;
+        }
+        @keyframes modalSlideOut {
+            from { transform: scale(1) translateY(0); opacity: 1; }
+            to   { transform: scale(0.9) translateY(-20px); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+<!-- ═══════════════════════════════════════════
+     HEADER  (idéntico al de home / products_list)
+     ═══════════════════════════════════════════ -->
+<header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500 sticky top-0 z-50">
+  <nav class="container mx-auto px-4 py-3">
+    <div class="flex justify-between items-center gap-4">
+
+      <!-- Logo -->
+      <div class="flex items-center space-x-2 flex-shrink-0">
+        <a href="{% url 'product:home' %}">
+          <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome"
+               class="w-20 h-auto hover:scale-105 transition-transform duration-500" />
+        </a>
+      </div>
+
+      <!-- Buscador Desktop -->
+<div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
+  <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
+    <input type="text" name="q" placeholder="Buscar productos..."
+           class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
+           value="{{ request.GET.q }}" />
+    <button type="submit"
+            class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+</div>
+
+      <!-- Nav Desktop -->
+      <div class="hidden lg:flex space-x-6">
+        <a href="{% url 'product:home' %}"         class="text-yellow-400 font-semibold">Inicio</a>
+        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 transition">Productos</a>
+        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 transition">Contacto</a>
+      </div>
+
+      <!-- Controles derechos -->
+      <div class="flex items-center space-x-3">
+
+        <!-- Botón Tema -->
+        <button id="theme-toggle" class="theme-toggle-button" aria-label="Cambiar tema">
+          <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <!-- Wishlist -->
+        {% if user.is_authenticated %}
+        <a href="{% url 'product:wishlist' %}" class="relative text-white hover:text-red-400 transition">
+          <i class="fas fa-heart text-2xl"></i>
+          {% if user.wishlist.total_items > 0 %}
+          <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+            {{ user.wishlist.total_items }}
+          </span>
+          {% endif %}
+        </a>
+        {% endif %}
+
+        <!-- Carrito -->
+        <a href="{% url 'product:cart' %}" class="relative text-white hover:text-yellow-300 transition">
+          <i class="fas fa-shopping-cart text-2xl"></i>
+          <span id="cart-counter" class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
+            {{ cart_items_count|default:0 }}
+          </span>
+        </a>
+
+        {% if user.is_authenticated %}
+        <!-- Menú Usuario -->
+        <div class="relative">
+          <button id="user-menu-btn" aria-label="Menú usuario" class="flex items-center justify-center">
+            {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+          </button>
+          <div id="user-dropdown" class="hidden absolute right-0 mt-3 z-50" style="width:270px;">
+            <div class="dropdown-header">
+              <div class="flex items-center gap-3">
+                <div class="dropdown-avatar">
+                  {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+                </div>
+                <div>
+                  <div class="dropdown-name">
+                    {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+                  </div>
+                  <div class="dropdown-badge"><i class="fas fa-user-check" style="font-size:.6rem;"></i> Cliente</div>
+                </div>
+              </div>
+            </div>
+            <div style="padding:6px 0;">
+              <a href="{% url 'user:profile' %}"    class="dropdown-item"><span class="item-icon"><i class="fas fa-user"></i></span><span>Mi Perfil</span></a>
+              <a href="{% url 'order:order_list' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-shopping-bag"></i></span><span>Mis Pedidos</span></a>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'user:logout' %}" class="dropdown-item logout"><span class="item-icon"><i class="fas fa-sign-out-alt"></i></span><span>Cerrar Sesión</span></a>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <a href="{% url 'user:login' %}"    class="hidden md:inline-flex items-center gap-2 text-white hover:text-yellow-300 font-semibold text-sm transition"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+        <a href="{% url 'user:register' %}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition text-sm">Registrarse</a>
+        {% endif %}
+
+        <!-- Mobile Menu Btn -->
+        <button class="lg:hidden text-gray-50 hover:text-yellow-300" id="mobile-menu-button">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+   <!-- Buscador Mobile -->
+    <div class="md:hidden mt-3">
+      <form action="{% url 'product:search' %}" method="GET">
+        <div class="flex w-full">
+          <input type="text" name="q" placeholder="Buscar productos..."
+                 class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
+                 value="{{ request.GET.q }}" />
+          <button type="submit"
+                  class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="lg:hidden mt-4 pb-4 hidden" id="mobile-menu">
+      <div class="flex flex-col space-y-2">
+        <a href="{% url 'product:home' %}"         class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-home mr-2"></i>Inicio</a>
+        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-tag mr-2"></i>Productos</a>
+        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-envelope mr-2"></i>Contacto</a>
+        <hr class="border-blue-600">
+        {% if user.is_authenticated %}
+        <a href="{% url 'user:profile' %}"    class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-user mr-3"></i>Mi Perfil</a>
+        <a href="{% url 'product:wishlist' %}" class="flex items-center text-white hover:text-red-300 py-2"><i class="fas fa-heart mr-3"></i>Lista de Deseos</a>
+        <a href="{% url 'order:order_list' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-shopping-bag mr-3"></i>Mis Pedidos</a>
+        <a href="{% url 'user:logout' %}"      class="flex items-center text-red-300 hover:text-red-100 py-2"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
+        {% else %}
+        <a href="{% url 'user:login' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-sign-in-alt mr-3"></i>Ingresar</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     MAIN
+     ═══════════════════════════════════════════ -->
+<main class="container mx-auto px-4 py-8">
+
+  <!-- Breadcrumb -->
+  <div class="mb-6 flex items-center text-sm text-gray-600 flex-wrap gap-1">
+    <a href="{% url 'product:home' %}" class="hover:text-blue-600">Inicio</a>
+    <i class="fas fa-chevron-right mx-1 text-xs"></i>
+    <a href="#" class="hover:text-blue-600">{{ producto.categoria.nombre }}</a>
+    <i class="fas fa-chevron-right mx-1 text-xs"></i>
+    <span class="text-blue-600 font-semibold">{{ producto.nombre|truncatewords:5 }}</span>
+  </div>
+
+  <!-- ── GRID: imagen izquierda / info derecha ──────────────────── -->
+  <!-- En móvil: 1 columna. En md+: 2 columnas iguales -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
+    <!-- COLUMNA IZQUIERDA: imagen + galería -->
+    <div>
+      <!-- Imagen principal -->
+      <div class="bg-white rounded-xl shadow-lg p-4 mb-3 relative">
+        <button class="wishlist-btn-detail"
+                data-product-id="{{ producto.id }}"
+                onclick="toggleWishlistDetail(event, {{ producto.id }})">♡</button>
+        {% if producto.imagen_principal %}
+        <img id="main-image" src="{{ producto.imagen_principal }}" alt="{{ producto.nombre }}"
+             class="w-full object-contain rounded-lg"
+             style="height:300px;" />
+        {% else %}
+        <div class="w-full bg-gray-200 rounded-lg flex items-center justify-center" style="height:300px;">
+          <i class="fas fa-image text-gray-400 text-6xl"></i>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Miniaturas -->
+      {% if producto.galeria.all %}
+      <div class="grid grid-cols-4 gap-2 image-gallery">
+        {% if producto.imagen_principal %}
+        <img src="{{ producto.imagen_principal }}" alt="Imagen 1"
+             class="w-full h-16 object-cover rounded-lg border-2 border-gray-300 active"
+             onclick="changeImage(this.src)" />
+        {% endif %}
+        {% for imagen in producto.galeria.all %}
+        <img src="{{ imagen.imagen }}" alt="Imagen {{ forloop.counter }}"
+             class="w-full h-16 object-cover rounded-lg border-2 border-gray-300"
+             onclick="changeImage(this.src)" />
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- COLUMNA DERECHA: info del producto -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h1 class="text-2xl md:text-3xl font-bold text-blue-800 mb-4">{{ producto.nombre }}</h1>
+
+      <!-- Calificación -->
+      <div class="flex items-center mb-4 flex-wrap gap-2">
+        <div class="flex text-yellow-400 text-lg">
+          <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+          <i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+        </div>
+        <span class="text-gray-600 text-sm">(4.5/5) - 128 reseñas</span>
+      </div>
+
+      <!-- Precio -->
+      <div class="mb-5">
+        {% if producto.precio_oferta %}
+        <div class="flex items-center gap-3 flex-wrap">
+          <span class="text-3xl font-bold text-red-600">{{ producto.precio_oferta|formato_precio }}</span>
+          <span class="text-xl text-gray-400 line-through">{{ producto.precio|formato_precio }}</span>
+          <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">¡OFERTA!</span>
+        </div>
+        {% else %}
+        <span class="text-3xl font-bold text-blue-800">{{ producto.precio|formato_precio }}</span>
+        {% endif %}
+      </div>
+
+      <!-- Stock -->
+      <div class="mb-5">
+        {% if producto.stock > 0 %}
+        <p class="text-green-600 font-semibold flex items-center">
+          <i class="fas fa-check-circle mr-2"></i>Disponible ({{ producto.stock }} unidades)
+        </p>
+        {% else %}
+        <p class="text-red-600 font-semibold flex items-center">
+          <i class="fas fa-times-circle mr-2"></i>Agotado
+        </p>
+        {% endif %}
+      </div>
+
+      <!-- Descripción corta -->
+      <div class="mb-5">
+        <h3 class="text-base font-bold text-gray-800 mb-1">Descripción:</h3>
+        <p class="text-gray-600 leading-relaxed text-sm">{{ producto.descripcion|truncatewords:30 }}</p>
+      </div>
+
+      <!-- Cantidad -->
+      <div class="mb-5">
+        <label class="block text-gray-700 font-semibold mb-2">Cantidad:</label>
+        <div class="flex items-center border-2 border-gray-300 rounded-lg w-32">
+          <button onclick="decreaseQuantity()" class="px-3 py-2 text-gray-600 hover:bg-gray-100">
+            <i class="fas fa-minus"></i>
+          </button>
+          <input type="number" id="quantity" value="1" min="1" max="{{ producto.stock }}"
+                 class="w-full text-center border-0 focus:outline-none" readonly />
+          <button onclick="increaseQuantity()" class="px-3 py-2 text-gray-600 hover:bg-gray-100">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="space-y-3">
+        {% if producto.stock > 0 %}
+        <button onclick="addToCart({{ producto.id }})"
+                class="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold text-base hover:bg-yellow-600 transition flex items-center justify-center">
+          <i class="fas fa-shopping-cart mr-2"></i>Agregar al Carrito
+        </button>
+        <button onclick="buyNow({{ producto.id }})"
+                class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold text-base hover:bg-blue-700 transition flex items-center justify-center">
+          <i class="fas fa-bolt mr-2"></i>Comprar Ahora
+        </button>
+        {% else %}
+        <button disabled class="w-full bg-gray-400 text-white py-3 rounded-lg font-bold text-base cursor-not-allowed">
+          <i class="fas fa-times-circle mr-2"></i>Producto Agotado
+        </button>
+        {% endif %}
+      </div>
+
+      <!-- Info adicional -->
+      <div class="mt-5 space-y-2 text-sm text-gray-600">
+        <p class="flex items-center"><i class="fas fa-truck text-blue-600 mr-2"></i>Envío gratis en compras superiores a $150.000</p>
+        <p class="flex items-center"><i class="fas fa-undo text-blue-600 mr-2"></i>Devolución gratis en los primeros 30 días</p>
+        <p class="flex items-center"><i class="fas fa-shield-alt text-blue-600 mr-2"></i>Garantía de 12 meses</p>
+      </div>
+    </div>
+  </div>
+  <!-- ── FIN GRID ────────────────────────────────────────────────── -->
+
+  <!-- TABS -->
+  <div class="bg-white rounded-xl shadow-lg p-6 mb-10">
+    <div class="tabs-scroll mb-6">
+      <div class="flex border-b border-gray-300">
+        <button class="tab-button active px-5 py-3 font-bold text-blue-600 border-b-2 border-blue-600 whitespace-nowrap" data-tab="description">Descripción</button>
+        <button class="tab-button px-5 py-3 font-bold text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="specifications">Especificaciones</button>
+        <button class="tab-button px-5 py-3 font-bold text-gray-600 hover:text-blue-600 whitespace-nowrap" data-tab="reviews">Reseñas (128)</button>
+      </div>
+    </div>
+
+    <div id="description" class="tab-content">
+      <h3 class="text-xl font-bold text-gray-800 mb-3">Descripción del Producto</h3>
+      <p class="text-gray-600 leading-relaxed">{{ producto.descripcion }}</p>
+    </div>
+
+    <div id="specifications" class="tab-content hidden">
+      <h3 class="text-xl font-bold text-gray-800 mb-3">Especificaciones Técnicas</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="flex justify-between py-2 border-b border-gray-200"><span class="font-semibold text-gray-700">Marca:</span><span class="text-gray-600">{{ producto.marca|default:"N/A" }}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-200"><span class="font-semibold text-gray-700">Modelo:</span><span class="text-gray-600">{{ producto.modelo|default:"N/A" }}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-200"><span class="font-semibold text-gray-700">Categoría:</span><span class="text-gray-600">{{ producto.categoria.nombre }}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-200"><span class="font-semibold text-gray-700">SKU:</span><span class="text-gray-600">{{ producto.id|stringformat:"05d" }}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-200"><span class="font-semibold text-gray-700">Peso:</span><span class="text-gray-600">{{ producto.peso|default:"N/A" }}</span></div>
+        <div class="flex justify-between py-2 border-b border-gray-200"><span class="font-semibold text-gray-700">Garantía:</span><span class="text-gray-600">12 meses</span></div>
+      </div>
+    </div>
+
+    <div id="reviews" class="tab-content hidden">
+      <h3 class="text-xl font-bold text-gray-800 mb-3">Reseñas de Clientes</h3>
+      <p class="text-gray-600">Las reseñas estarán disponibles próximamente.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCTOS RELACIONADOS -->
+  <div class="mb-10">
+    <h2 class="text-2xl font-bold text-blue-800 mb-5"><i class="fas fa-th mr-2"></i>Productos Relacionados</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="bg-white rounded-lg shadow-lg p-4">
+        <p class="text-gray-500 text-center py-8">Productos relacionados próximamente</p>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-12 mt-10">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-white mb-3 tracking-wide">ElectroHome</h2>
+      <p class="text-gray-400 max-w-md mx-auto text-sm">La mejor tecnología para tu hogar. Compra fácil, rápido y con total seguridad.</p>
+    </div>
+    <div class="flex justify-center space-x-8 mb-10">
+      <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i></a>
+      <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i></a>
+      <a href="https://tiktok.com"    target="_blank" class="transition transform hover:scale-110"><i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i></a>
+      <a href="https://twitter.com"   target="_blank" class="transition transform hover:scale-110"><i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i></a>
+    </div>
+    <div class="flex flex-wrap justify-center space-x-6 text-sm mb-8">
+      <a href="#" class="hover:text-white transition">Inicio</a>
+      <a href="#" class="hover:text-white transition">Productos</a>
+      <a href="#" class="hover:text-white transition">Ofertas</a>
+      <a href="#" class="hover:text-white transition">Nosotros</a>
+      <a href="#" class="hover:text-white transition">Contacto</a>
+    </div>
+    <div class="text-center text-gray-400 text-sm mb-8">
+      <p>📍 Calle 1 #2-40, Cartagena de Indias, Colombia</p>
+      <p>📞 +57 300 760 7645</p>
+      <p>✉️ <a href="mailto:info@electrohome.com" class="underline hover:text-blue-400">info@electrohome.com</a></p>
+    </div>
+    <div class="border-t border-gray-700 pt-6 text-center text-xs text-gray-500">
+      &copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL AUTH -->
+<div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all scale-95 opacity-0" id="auth-modal-content">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-t-2xl relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-200 transition">
+        <i class="fas fa-times text-2xl"></i>
+      </button>
+      <div class="text-center">
+        <i class="fas fa-heart text-5xl mb-3 animate-pulse"></i>
+        <h3 class="text-2xl font-bold">¡Guarda tus Favoritos!</h3>
+      </div>
+    </div>
+    <div class="p-8">
+      <p class="text-gray-700 text-center mb-6 text-lg">Para guardar tus favoritos, <span class="font-bold text-blue-600">inicia sesión</span> o <span class="font-bold text-blue-600">regístrate</span></p>
+      <div class="space-y-3">
+        <a href="{% url 'user:login' %}?next={{ request.path }}"    class="block w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-center hover:bg-blue-700 transition"><i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión</a>
+        <a href="{% url 'user:register' %}?next={{ request.path }}" class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-4 rounded-lg font-bold text-center hover:from-yellow-600 hover:to-yellow-700 transition"><i class="fas fa-user-plus mr-2"></i>Registrarse Gratis</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const IS_AUTHENTICATED = {{ user.is_authenticated|yesno:"true,false" }};
+
+function getCookie(name) {
+  let v = null;
+  if (document.cookie && document.cookie !== '') {
+    document.cookie.split(';').forEach(c => {
+      c = c.trim();
+      if (c.startsWith(name + '=')) v = decodeURIComponent(c.slice(name.length + 1));
+    });
+  }
+  return v;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+// ── Notificación ──
+function mostrarNotificacion(mensaje, tipo) {
+  const n = document.createElement('div');
+  n.style.cssText = `position:fixed;top:80px;right:20px;min-width:280px;background:white;border-radius:12px;padding:14px 18px;box-shadow:0 10px 40px rgba(0,0,0,.2);display:flex;align-items:center;gap:12px;z-index:9999;animation:slideIn .3s ease-out;border-left:4px solid ${tipo==='success'?'#10b981':'#ef4444'};`;
+  n.innerHTML = `<div style="width:36px;height:36px;border-radius:50%;background:${tipo==='success'?'#10b981':'#ef4444'};color:white;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:bold;">${tipo==='success'?'✓':'✕'}</div><div style="flex:1;font-size:13px;color:#6b7280;">${mensaje}</div>`;
+  document.body.appendChild(n);
+  setTimeout(() => { n.style.animation = 'slideOut .3s ease-in'; setTimeout(() => n.remove(), 300); }, 3000);
+}
+
+const animStyle = document.createElement('style');
+animStyle.textContent = `@keyframes slideIn{from{transform:translateX(400px);opacity:0}to{transform:translateX(0);opacity:1}}@keyframes slideOut{from{transform:translateX(0);opacity:1}to{transform:translateX(400px);opacity:0}}`;
+document.head.appendChild(animStyle);
+
+// ── Carrito ──
+function addToCart(productId) {
+  const quantity = document.getElementById('quantity').value;
+  fetch(`/carrito/agregar/${productId}/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': csrftoken },
+    body: `quantity=${quantity}`
+  }).then(r => r.json()).then(data => {
+    if (data.success) { document.getElementById('cart-counter').textContent = data.cart_total_items; mostrarNotificacion('Producto agregado al carrito', 'success'); }
+    else mostrarNotificacion('Error: ' + data.message, 'error');
+  });
+}
+
+function buyNow(productId) {
+  const quantity = document.getElementById('quantity').value;
+  fetch(`/carrito/agregar/${productId}/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': csrftoken },
+    body: `quantity=${quantity}`
+  }).then(r => r.json()).then(data => {
+    if (data.success) window.location.href = '{% url "order:checkout" %}';
+    else mostrarNotificacion('Error: ' + data.message, 'error');
+  });
+}
+
+function increaseQuantity() { const i = document.getElementById('quantity'); if (parseInt(i.value) < parseInt(i.max)) i.value = parseInt(i.value) + 1; }
+function decreaseQuantity() { const i = document.getElementById('quantity'); if (parseInt(i.value) > 1) i.value = parseInt(i.value) - 1; }
+
+// ── Imagen ──
+function changeImage(src) {
+  document.getElementById('main-image').src = src;
+  document.querySelectorAll('.image-gallery img').forEach(img => img.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ── Tabs ──
+document.querySelectorAll('.tab-button').forEach(btn => {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+    document.querySelectorAll('.tab-button').forEach(b => { b.classList.remove('active','text-blue-600','border-b-2','border-blue-600'); b.classList.add('text-gray-600'); });
+    document.getElementById(this.dataset.tab).classList.remove('hidden');
+    this.classList.add('active','text-blue-600','border-b-2','border-blue-600');
+    this.classList.remove('text-gray-600');
+  });
+});
+
+// ── Wishlist ──
+function actualizarContadorWishlistEnHeader(n) {
+  const icon = document.querySelector('a[href*="wishlist"] i.fa-heart');
+  if (!icon) return;
+  const link = icon.parentElement;
+  let badge = link.querySelector('span.absolute');
+  if (n > 0) {
+    if (!badge) { badge = document.createElement('span'); badge.className = 'absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1'; link.appendChild(badge); }
+    badge.textContent = n;
+  } else if (badge) badge.remove();
+}
+
+function toggleWishlistDetail(event, productId) {
+  event.preventDefault(); event.stopPropagation();
+  if (!IS_AUTHENTICATED) { showAuthModal(); return; }
+  const btn = event.currentTarget;
+  btn.classList.contains('active') ? removeFromWishlistDetail(btn, productId) : addToWishlistDetail(btn, productId);
+}
+
+function addToWishlistDetail(btn, productId) {
+  fetch(`/wishlist/add/${productId}/`, { method:'POST', headers:{'X-CSRFToken':csrftoken,'Content-Type':'application/json'} })
+  .then(r => r.json()).then(data => {
+    if (data.success) { btn.classList.add('active'); btn.textContent = '♥'; mostrarNotificacion(data.message, 'success'); if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items); }
+  });
+}
+
+function removeFromWishlistDetail(btn, productId) {
+  fetch(`/wishlist/remove/${productId}/`, { method:'POST', headers:{'X-CSRFToken':csrftoken,'Content-Type':'application/json'} })
+  .then(r => r.json()).then(data => {
+    if (data.success) { btn.classList.remove('active'); btn.textContent = '♡'; mostrarNotificacion(data.message, 'success'); if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items); }
+  });
+}
+
+function checkWishlistStatusDetail(btn, productId) {
+  fetch(`/wishlist/check/${productId}/`, { method:'GET', headers:{'X-CSRFToken':csrftoken} })
+  .then(r => r.json()).then(data => { if (data.in_wishlist) { btn.classList.add('active'); btn.textContent = '♥'; } });
+}
+
+// ── Modal ──
+function showAuthModal()  { const m = document.getElementById('auth-modal'); m.classList.remove('hidden'); setTimeout(() => m.classList.add('show'), 10); document.body.style.overflow = 'hidden'; }
+function closeAuthModal() { const m = document.getElementById('auth-modal'); m.classList.remove('show'); m.classList.add('hide'); setTimeout(() => { m.classList.add('hidden'); m.classList.remove('hide'); document.body.style.overflow = ''; }, 200); }
+document.getElementById('auth-modal')?.addEventListener('click', e => { if (e.target === document.getElementById('auth-modal')) closeAuthModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuthModal(); });
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  // Dropdown usuario
+  const btn = document.getElementById('user-menu-btn');
+  const dd  = document.getElementById('user-dropdown');
+  if (btn && dd) {
+    btn.addEventListener('click', e => { e.stopPropagation(); dd.classList.toggle('hidden'); });
+    document.addEventListener('click', e => { if (!btn.contains(e.target) && !dd.contains(e.target)) dd.classList.add('hidden'); });
+  }
+  // Menú móvil
+  const mBtn = document.getElementById('mobile-menu-button');
+  const mMenu = document.getElementById('mobile-menu');
+  if (mBtn && mMenu) mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
+
+  // Wishlist status
+  if (IS_AUTHENTICATED) {
+    const wBtn = document.querySelector('.wishlist-btn-detail');
+    if (wBtn) checkWishlistStatusDetail(wBtn, wBtn.dataset.productId);
+  }
+
+  // Logout
+  document.querySelectorAll('a[href*="logout"]').forEach(l => {
+    l.addEventListener('click', e => { e.preventDefault(); sessionStorage.clear(); localStorage.clear(); window.location.replace(l.href); });
+  });
+});
+
+window.addEventListener('pageshow', e => {
+  if (e.persisted || (window.performance && window.performance.navigation.type === 2)) window.location.reload();
+});
+</script>
+
+{% include 'chatbot/chatbot_widget.html' %}
+<script src="{% static 'js/dark_mode.js' %}"></script>
+</body>
+</html>

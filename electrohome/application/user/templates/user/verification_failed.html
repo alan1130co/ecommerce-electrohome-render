@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación Fallida - ElectroHome</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="{% url 'product:home' %}">
+                    <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" class="w-20 h-auto hover:scale-105 transition-transform duration-500">
+                </a>
+                <a href="{% url 'product:home' %}" class="text-white hover:text-yellow-300 font-semibold">
+                    <i class="fas fa-home mr-2"></i>Volver al inicio
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-16">
+        <div class="max-w-2xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                
+                <!-- Icono de error -->
+                <div class="bg-gradient-to-r from-red-600 to-red-500 p-8 text-center">
+                    <div class="w-32 h-32 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-times-circle text-red-600 text-8xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-bold text-white">Enlace Inválido</h1>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-8 text-center">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">
+                            ❌ No pudimos verificar tu cuenta
+                        </h2>
+                        <p class="text-gray-600 text-lg mb-6">
+                            El enlace de verificación es inválido o ha expirado.
+                        </p>
+                    </div>
+
+                    <!-- Razones posibles -->
+                    <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-6 mb-8 text-left">
+                        <h3 class="text-lg font-bold text-red-800 mb-3">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Posibles razones:
+                        </h3>
+                        <ul class="space-y-2 text-red-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-dot-circle mt-1 mr-3 text-red-500 text-xs"></i>
+                                <span>El enlace ha expirado (válido por 24 horas)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-dot-circle mt-1 mr-3 text-red-500 text-xs"></i>
+                                <span>El enlace ya fue utilizado anteriormente</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-dot-circle mt-1 mr-3 text-red-500 text-xs"></i>
+                                <span>El enlace fue copiado incorrectamente</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Solución -->
+                    <div class="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6 mb-8 text-left">
+                        <h3 class="text-lg font-bold text-blue-800 mb-3">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            Solución:
+                        </h3>
+                        <p class="text-blue-700">
+                            Solicita un nuevo correo de verificación haciendo clic en el botón de abajo.
+                        </p>
+                    </div>
+
+                    <!-- Botón reenviar -->
+                    <a href="{% url 'user:resend_verification' %}" 
+                       class="inline-block w-full md:w-auto bg-gradient-to-r from-yellow-300 to-yellow-500 text-white px-12 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-blue-900 transition transform hover:scale-105 shadow-lg mb-4">
+                        <i class="fas fa-redo mr-2"></i>
+                        Solicitar Nuevo Correo de Verificación
+                    </a>
+
+                    <!-- Link alternativo -->
+                    <div class="mt-6 pt-6 border-t-2 border-gray-200">
+                        <p class="text-gray-500 text-sm">
+                            ¿Ya verificaste tu cuenta? 
+                            <a href="{% url 'user:login' %}" class="text-blue-600 hover:text-blue-800 font-bold">
+                                Inicia sesión aquí
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm">&copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
