@@ -14,7 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
-from django.core.mail import EmailMessage
+from anymail.message import AnymailMessage
 from django.contrib.auth.tokens import default_token_generator
 from .forms import RegisterForm, LoginForm
 from .models import Usuario
@@ -36,7 +36,7 @@ def register_view(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
-            send_verification_email(request, user)
+            # send_verification_email(request, user)
             messages.success(
                 request, 
                 f'¡Registro exitoso! Hemos enviado un correo de verificación a {user.email}. '
@@ -64,7 +64,7 @@ def send_verification_email(request, user):
             'token': token,
             'protocol': 'https' if request.is_secure() else 'http',
         })
-        email = EmailMessage(mail_subject, message, to=[user.email])
+        email = AnymailMessage(mail_subject, message, to=[user.email], from_email='ElectroHome <noreply@electrohome.site>')
         email.content_subtype = "html"
         email.send(fail_silently=True)
     except Exception as e:
@@ -123,7 +123,7 @@ def resend_verification(request):
             if user.is_active:
                 messages.info(request, 'Esta cuenta ya está verificada. Puedes iniciar sesión.')
                 return redirect('user:login')
-            send_verification_email(request, user)
+            # send_verification_email(request, user)
             messages.success(
                 request, 
                 f'Correo de verificación reenviado a {email}. Revisa tu bandeja de entrada.'
