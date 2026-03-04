@@ -14,7 +14,7 @@ echo "Configurando Site domain..."
 python electrohome/manage.py shell --settings=electrohome.settings.production -c "
 from django.contrib.sites.models import Site
 site, _ = Site.objects.get_or_create(id=7)
-site.domain = 'ecommerce-electrohome-render.onrender.com'
+site.domain = 'electrohome.site'
 site.name = 'ElectroHome'
 site.save()
 print('Site configurado:', site.domain)
