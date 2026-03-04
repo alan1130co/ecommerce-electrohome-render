@@ -66,7 +66,7 @@ def send_verification_email(request, user):
         })
         email = EmailMessage(mail_subject, message, to=[user.email])
         email.content_subtype = "html"
-        email.send()
+        email.send(fail_silently=True)
     except Exception as e:
         print(f"Error al enviar correo: {e}")
 
