@@ -51,7 +51,8 @@ def register_view(request):
     return render(request, 'user/register.html', {'form': form})
 
 
-def send_verification_email(request, user):`n    print(f"?? INICIANDO envio de correo a {user.email}")
+def send_verification_email(request, user):
+    print(f"INICIANDO envio de correo a {user.email}")
     try:
         current_site = get_current_site(request)
         mail_subject = '🔐 Activa tu cuenta de ElectroHome'
@@ -298,3 +299,4 @@ def edit_profile(request):
 def access_denied(request):
     messages.warning(request, 'Debes iniciar sesión para acceder a esta página.')
     return redirect('user:login')
+
