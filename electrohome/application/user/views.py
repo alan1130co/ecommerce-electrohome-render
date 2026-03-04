@@ -51,7 +51,7 @@ def register_view(request):
     return render(request, 'user/register.html', {'form': form})
 
 
-def send_verification_email(request, user):
+def send_verification_email(request, user):`n    print(f"?? INICIANDO envio de correo a {user.email}")
     try:
         current_site = get_current_site(request)
         mail_subject = '🔐 Activa tu cuenta de ElectroHome'
