@@ -132,9 +132,10 @@ class OrderItem(models.Model):
     """Items de la orden"""
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Producto, on_delete=models.PROTECT)
-    product_name = models.CharField(max_length=200)  # Guardar nombre por si se elimina el producto
+    product_name = models.CharField(max_length=200)
     product_price = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField(default=1)
+    product_image = models.CharField(max_length=500, blank=True, null=True)  
     
     class Meta:
         verbose_name = 'Item de Orden'

@@ -46,12 +46,21 @@ class OrderService:
         
         # Crear items de la orden y actualizar stock
         for item in cart.items.all():
+            # ✅ Guardar la URL de la imagen al momento de la compra
+            product_image = None
+            if item.product.imagen_principal:
+                try:
+                    product_image = item.product.imagen_principal.url
+                except Exception:
+                    product_image = None
+
             OrderItem.objects.create(
                 order=order,
                 product=item.product,
                 product_name=item.product.nombre,
                 product_price=item.product.precio,
-                quantity=item.quantity
+                quantity=item.quantity,
+                product_image=product_image,  # ✅ NUEVO CAMPO
             )
             
             # Actualizar stock
