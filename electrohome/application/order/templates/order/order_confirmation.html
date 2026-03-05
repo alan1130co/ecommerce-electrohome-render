@@ -271,8 +271,8 @@
                         {% for item in order.items.all %}
                         <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-lg">
                             <div class="w-20 h-20 flex-shrink-0">
-                                {% if item.product.imagen_principal %}
-                                <img src="{{ item.product.imagen_principal.url }}" alt="{{ item.product_name }}" class="w-full h-full object-cover rounded" />
+                               {% if item.product_image %}
+                                <img src="{{ item.product_image }}" alt="{{ item.product_name }}" class="w-full h-full object-cover rounded" />
                                 {% else %}
                                 <div class="w-full h-full bg-gray-200 rounded flex items-center justify-center">
                                     <i class="fas fa-image text-gray-400 text-2xl"></i>

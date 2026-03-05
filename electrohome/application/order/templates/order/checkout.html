@@ -37,7 +37,7 @@
       [data-theme="dark"] .checkout-label {
         color: #8b949e !important;
       }
-
+        
       /* ── ALERTA AZUL (info) ── */
       [data-theme="dark"] .alert-info {
         background: rgba(56,139,253,0.1) !important;
@@ -428,14 +428,20 @@
                             {% for item in items %}
                             <div class="flex items-center gap-3 mb-4 pb-4 summary-border border-b border-gray-200">
                                 <div class="w-16 h-16 flex-shrink-0">
-                                    {% if item.product.imagen_principal %}
-                                    <img src="{{ item.product.imagen_principal.url }}" alt="{{ item.product.nombre }}" class="w-full h-full object-cover rounded" />
-                                    {% else %}
-                                    <div class="w-full h-full bg-gray-200 rounded flex items-center justify-center">
-                                        <i class="fas fa-image text-gray-400"></i>
-                                    </div>
-                                    {% endif %}
+                                {% if item.product.imagen_principal %}
+                                <img src="{{ item.product.imagen_principal.url }}" 
+                                    alt="{{ item.product.nombre }}" 
+                                    class="w-full h-full object-cover rounded"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                <div class="w-full h-full bg-gray-200 rounded items-center justify-center hidden">
+                                    <i class="fas fa-image text-gray-400"></i>
                                 </div>
+                                 {% else %}
+                                 <div class="w-full h-full bg-gray-200 rounded flex items-center justify-center">
+                                     <i class="fas fa-image text-gray-400"></i>
+                                 </div>
+                                {% endif %}
+                            </div>
                                 <div class="flex-grow">
                                     <h4 class="summary-item-name font-semibold text-sm text-gray-800">{{ item.product.nombre|truncatewords:5 }}</h4>
                                     <p class="summary-item-qty text-xs text-gray-500">Cantidad: {{ item.quantity }}</p>
