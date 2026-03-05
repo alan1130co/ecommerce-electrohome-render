@@ -251,7 +251,8 @@ def profile_view(request):
             user.last_name = last_name
             user.telefono = telefono
             user.ciudad = ciudad
-            user.save()            messages.success(request, '¡Perfil actualizado correctamente! ✅')
+            user.save()
+            messages.success(request, '�Perfil actualizado correctamente! ?')
         except Exception as e:
             messages.error(request, f'Error al actualizar perfil: {str(e)}')
         
@@ -289,6 +290,7 @@ def edit_profile(request):
 def access_denied(request):
     messages.warning(request, 'Debes iniciar sesión para acceder a esta página.')
     return redirect('user:login')
+
 
 
 
