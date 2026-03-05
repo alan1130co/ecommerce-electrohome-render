@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+﻿from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -30,7 +30,7 @@ def register_view(request):
             send_verification_email(request, user)
             messages.success(
                 request, 
-                f'¡Registro exitoso! Hemos enviado un correo de verificación a {user.email}. '
+                f'Â¡Registro exitoso! Hemos enviado un correo de verificaciÃ³n a {user.email}. '
                 f'Por favor revisa tu bandeja de entrada y carpeta de spam.'
             )
             return redirect('user:verification_sent')
@@ -46,7 +46,7 @@ def send_verification_email(request, user):
     logger.error(f"INICIANDO envio de correo a {user.email}")
     try:
         current_site = get_current_site(request)
-        mail_subject = '🔐 Activa tu cuenta de ElectroHome'
+        mail_subject = 'ðŸ” Activa tu cuenta de ElectroHome'
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         message = render_to_string('user/verification_email.html', {
@@ -64,7 +64,7 @@ def send_verification_email(request, user):
 
 
 # ============================================
-# ✅ VERIFICACIÓN DE CORREO
+# âœ… VERIFICACIÃ“N DE CORREO
 # ============================================
 
 def verify_email(request, uidb64, token):
@@ -79,20 +79,20 @@ def verify_email(request, uidb64, token):
         user.save()
         messages.success(
             request, 
-            '¡Correo verificado exitosamente! Tu cuenta ha sido activada. Ahora puedes iniciar sesión.'
+            'Â¡Correo verificado exitosamente! Tu cuenta ha sido activada. Ahora puedes iniciar sesiÃ³n.'
         )
         return redirect('user:verification_success')
     else:
         messages.error(
             request, 
-            'El enlace de verificación es inválido o ha expirado. '
-            'Por favor solicita un nuevo correo de verificación.'
+            'El enlace de verificaciÃ³n es invÃ¡lido o ha expirado. '
+            'Por favor solicita un nuevo correo de verificaciÃ³n.'
         )
         return redirect('user:verification_failed')
 
 
 # ============================================
-# ✅ PÁGINAS DE CONFIRMACIÓN
+# âœ… PÃGINAS DE CONFIRMACIÃ“N
 # ============================================
 
 def verification_sent(request):
@@ -113,29 +113,29 @@ def resend_verification(request):
         try:
             user = Usuario.objects.get(email=email)
             if user.is_active:
-                messages.info(request, 'Esta cuenta ya está verificada. Puedes iniciar sesión.')
+                messages.info(request, 'Esta cuenta ya estÃ¡ verificada. Puedes iniciar sesiÃ³n.')
                 return redirect('user:login')
             # send_verification_email(request, user)
             messages.success(
                 request, 
-                f'Correo de verificación reenviado a {email}. Revisa tu bandeja de entrada.'
+                f'Correo de verificaciÃ³n reenviado a {email}. Revisa tu bandeja de entrada.'
             )
             return redirect('user:verification_sent')
         except Usuario.DoesNotExist:
-            messages.error(request, 'No existe una cuenta con este correo electrónico.')
+            messages.error(request, 'No existe una cuenta con este correo electrÃ³nico.')
     
     return render(request, 'user/resend_verification.html')
 
 
 # ============================================
-# ✅ LOGIN - REDIRIGE SEGÚN TIPO DE USUARIO
+# âœ… LOGIN - REDIRIGE SEGÃšN TIPO DE USUARIO
 # ============================================
 
 @ensure_csrf_cookie
 @csrf_protect
 def login_view(request):
     if request.user.is_authenticated:
-        # Si ya está autenticado redirigir según su tipo
+        # Si ya estÃ¡ autenticado redirigir segÃºn su tipo
         if request.user.is_superuser:
             return redirect('/admin/')
         elif request.user.tipo_usuario == 'supervisor':
@@ -149,14 +149,14 @@ def login_view(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
-            # Verificar si el usuario existe y está activo
+            # Verificar si el usuario existe y estÃ¡ activo
             try:
                 user_check = Usuario.objects.get(email=email)
                 if not user_check.is_active:
                     messages.error(
                         request, 
-                        'Tu cuenta no ha sido verificada. Por favor revisa tu correo electrónico. '
-                        '<a href="/user/resend-verification/" class="text-blue-600 font-bold underline">Reenviar correo de verificación</a>',
+                        'Tu cuenta no ha sido verificada. Por favor revisa tu correo electrÃ³nico. '
+                        '<a href="/user/resend-verification/" class="text-blue-600 font-bold underline">Reenviar correo de verificaciÃ³n</a>',
                         extra_tags='html'
                     )
                     return render(request, 'user/login.html', {'form': form})
@@ -167,21 +167,21 @@ def login_view(request):
             user = authenticate(request, username=email, password=password)
             if user:
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-                messages.success(request, f'¡Bienvenido de nuevo, {user.first_name or user.email}!')
+                messages.success(request, f'Â¡Bienvenido de nuevo, {user.first_name or user.email}!')
 
-                # ✅ REDIRECCIÓN SEGÚN TIPO DE USUARIO
+                # âœ… REDIRECCIÃ“N SEGÃšN TIPO DE USUARIO
                 if user.is_superuser:
-                    # Admin → panel de administración Django
+                    # Admin â†’ panel de administraciÃ³n Django
                     return redirect('/admin/')
                 elif user.tipo_usuario == 'supervisor':
-                    # Supervisor → dashboard
+                    # Supervisor â†’ dashboard
                     return redirect('dashboard:index')
                 else:
-                    # Cliente → página principal
+                    # Cliente â†’ pÃ¡gina principal
                     next_url = request.GET.get('next', 'product:home')
                     return redirect(next_url)
             else:
-                messages.error(request, 'Correo o contraseña incorrectos.')
+                messages.error(request, 'Correo o contraseÃ±a incorrectos.')
         else:
             messages.error(request, 'Por favor verifica los datos del formulario.')
     else:
@@ -191,7 +191,7 @@ def login_view(request):
 
 
 # ============================================
-# ✅ LOGOUT
+# âœ… LOGOUT
 # ============================================
 
 @never_cache
@@ -200,12 +200,12 @@ def login_view(request):
 def logout_view(request):
     user_name = request.user.first_name or request.user.username
     logout(request)
-    messages.success(request, f'¡Hasta pronto, {user_name}! Has cerrado sesión correctamente.')
+    messages.success(request, f'Â¡Hasta pronto, {user_name}! Has cerrado sesiÃ³n correctamente.')
     return redirect('product:home')
 
 
 # ============================================
-# ✅ PERFIL
+# âœ… PERFIL
 # ============================================
 
 @login_required
@@ -224,19 +224,19 @@ def profile_view(request):
             errores.append('El nombre es obligatorio')
         elif len(first_name) < 3:
             errores.append('El nombre debe tener al menos 3 letras')
-        elif not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$', first_name):
+        elif not re.match(r'^[a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘\s]+$', first_name):
             errores.append('El nombre solo puede contener letras')
         
         if not last_name:
             errores.append('El apellido es obligatorio')
         elif len(last_name) < 4:
             errores.append('El apellido debe tener al menos 4 letras')
-        elif not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$', last_name):
+        elif not re.match(r'^[a-zA-ZÃ¡Ã©Ã­Ã³ÃºÃÃ‰ÃÃ“ÃšÃ±Ã‘\s]+$', last_name):
             errores.append('El apellido solo puede contener letras')
         
         if telefono:
             if not re.match(r'^\d{10}$', telefono):
-                errores.append('El teléfono debe tener exactamente 10 números')
+                errores.append('El telÃ©fono debe tener exactamente 10 nÃºmeros')
         
         if not ciudad:
             errores.append('Debes seleccionar una ciudad')
@@ -252,7 +252,7 @@ def profile_view(request):
             user.telefono = telefono
             user.ciudad = ciudad
             user.save()
-            messages.success(request, '�Perfil actualizado correctamente! ?')
+            messages.success(request, 'Perfil actualizado correctamente!')
         except Exception as e:
             messages.error(request, f'Error al actualizar perfil: {str(e)}')
         
@@ -280,7 +280,7 @@ def edit_profile(request):
             return redirect('user:edit_profile')
         
         user.save()
-        messages.success(request, '¡Perfil actualizado correctamente! ✅')
+        messages.success(request, 'Perfil actualizado correctamente!')
         return redirect('user:profile')
     
     return render(request, 'user/edit_profile.html', {'user': request.user})
@@ -288,8 +288,9 @@ def edit_profile(request):
 
 @never_cache
 def access_denied(request):
-    messages.warning(request, 'Debes iniciar sesión para acceder a esta página.')
+    messages.warning(request, 'Debes iniciar sesiÃ³n para acceder a esta pÃ¡gina.')
     return redirect('user:login')
+
 
 
 
