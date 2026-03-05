@@ -27,6 +27,7 @@ def register_view(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+            raise Exception("TEST - ESTO DEBERIA APARECER EN LOGS")
             # send_verification_email(request, user)
             messages.success(
                 request, 
@@ -77,6 +78,7 @@ def verify_email(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
+            raise Exception("TEST - ESTO DEBERIA APARECER EN LOGS")
         messages.success(
             request, 
             '¡Correo verificado exitosamente! Tu cuenta ha sido activada. Ahora puedes iniciar sesión.'
@@ -252,6 +254,7 @@ def profile_view(request):
             user.telefono = telefono
             user.ciudad = ciudad
             user.save()
+            raise Exception("TEST - ESTO DEBERIA APARECER EN LOGS")
             messages.success(request, '¡Perfil actualizado correctamente! ✅')
         except Exception as e:
             messages.error(request, f'Error al actualizar perfil: {str(e)}')
@@ -280,6 +283,7 @@ def edit_profile(request):
             return redirect('user:edit_profile')
         
         user.save()
+            raise Exception("TEST - ESTO DEBERIA APARECER EN LOGS")
         messages.success(request, '¡Perfil actualizado correctamente! ✅')
         return redirect('user:profile')
     
@@ -290,6 +294,7 @@ def edit_profile(request):
 def access_denied(request):
     messages.warning(request, 'Debes iniciar sesión para acceder a esta página.')
     return redirect('user:login')
+
 
 
 
