@@ -22,4 +22,4 @@ print('Site configurado:', site.domain)
 
 echo "Build completado exitosamente."
 echo 'Actualizando imagenes en OrderItems...'
-python manage.py fix_order_images
+python electrohome/manage.py fix_order_images
