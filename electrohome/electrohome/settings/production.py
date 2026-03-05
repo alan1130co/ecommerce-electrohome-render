@@ -1,4 +1,4 @@
-from .base import *
+﻿from .base import *
 import os
 import dj_database_url
 
@@ -30,14 +30,9 @@ SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # ===== EMAIL =====
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 465
-EMAIL_USE_SSL = True
-EMAIL_USE_TLS = False
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
+ANYMAIL = {'RESEND_API_KEY': os.environ.get('RESEND_API_KEY', '')}
+DEFAULT_FROM_EMAIL = 'ElectroHome <noreply@electrohome.site>'
 
 # ===== WOMPI =====
 WOMPI_PUBLIC_KEY = os.environ.get('WOMPI_PUBLIC_KEY', '')
@@ -45,7 +40,7 @@ WOMPI_PRIVATE_KEY = os.environ.get('WOMPI_PRIVATE_KEY', '')
 WOMPI_ENVIRONMENT = os.environ.get('WOMPI_ENVIRONMENT', 'test')
 WOMPI_API_URL = 'https://sandbox.wompi.co/v1'
 
-# ===== ARCHIVOS ESTÁTICOS =====
+# ===== ARCHIVOS ESTÃTICOS =====
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # ===== CLOUDINARY =====
@@ -74,3 +69,4 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
