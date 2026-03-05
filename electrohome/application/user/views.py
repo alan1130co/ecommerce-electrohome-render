@@ -76,7 +76,8 @@ def verify_email(request, uidb64, token):
     
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
-        user.save()        messages.success(
+        user.save()
+        messages.success(
             request, 
             '¡Correo verificado exitosamente! Tu cuenta ha sido activada. Ahora puedes iniciar sesión.'
         )
@@ -277,7 +278,8 @@ def edit_profile(request):
             messages.error(request, 'El email es obligatorio')
             return redirect('user:edit_profile')
         
-        user.save()        messages.success(request, '¡Perfil actualizado correctamente! ✅')
+        user.save()
+        messages.success(request, '¡Perfil actualizado correctamente! ✅')
         return redirect('user:profile')
     
     return render(request, 'user/edit_profile.html', {'user': request.user})
@@ -287,6 +289,7 @@ def edit_profile(request):
 def access_denied(request):
     messages.warning(request, 'Debes iniciar sesión para acceder a esta página.')
     return redirect('user:login')
+
 
 
 
