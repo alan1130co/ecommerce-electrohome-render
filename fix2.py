@@ -1,0 +1,10 @@
+﻿import re
+content = open('electrohome/application/user/views.py', 'rb').read()
+content = content.decode('utf-8', errors='replace')
+content = content.replace('!Bienvenido', 'Bienvenido')
+content = content.replace('!Registro exitoso', 'Registro exitoso')
+content = content.replace('!Correo verificado', 'Correo verificado')
+content = content.replace('!Hasta pronto', 'Hasta pronto')
+content = re.sub(r'[^\x00-\x7F\n\r\t ]', '', content)
+open('electrohome/application/user/views.py', 'w', encoding='utf-8').write(content)
+print('Listo')
