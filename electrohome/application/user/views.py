@@ -3,22 +3,32 @@
 # SISTEMA DE VERIFICACIÓN DE CORREO COMPLETO
 # ============================================
 
-from django.shortcuts import render, redirect
+from django.shortcuts import re
+import logging
+logger = logging.getLogger(__name__)nder, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
 from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import re
+import logging
+logger = logging.getLogger(__name__)quire_http_methods
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.template.loader import render_to_string
+from django.template.loader import re
+import logging
+logger = logging.getLogger(__name__)nder_to_string
 from anymail.message import AnymailMessage
 from django.contrib.auth.tokens import default_token_generator
-from .forms import RegisterForm, LoginForm
+from .forms import re
+import logging
+logger = logging.getLogger(__name__)gisterForm, LoginForm
 from .models import Usuario
-import re 
+import re
+import logging
+logger = logging.getLogger(__name__) 
 
 # ============================================
 # ✅ REGISTRO CON VERIFICACIÓN DE CORREO
@@ -52,7 +62,7 @@ def register_view(request):
 
 
 def send_verification_email(request, user):
-    print(f"INICIANDO envio de correo a {user.email}")
+    logger.error(f"INICIANDO envio de correo a {user.email}")
     try:
         current_site = get_current_site(request)
         mail_subject = '🔐 Activa tu cuenta de ElectroHome'
@@ -299,4 +309,6 @@ def edit_profile(request):
 def access_denied(request):
     messages.warning(request, 'Debes iniciar sesión para acceder a esta página.')
     return redirect('user:login')
+
+
 
