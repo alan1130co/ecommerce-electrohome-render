@@ -50,7 +50,7 @@ class OrderService:
             product_image = None
             if item.product.imagen_principal:
                 try:
-                    product_image = item.product.imagen_principal.url
+                    product_image = str(item.product.imagen_principal)
                 except Exception:
                     product_image = None
 
