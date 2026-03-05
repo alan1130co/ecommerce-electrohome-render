@@ -353,7 +353,7 @@
                                 <div class="flex-grow">
                                     <h3 class="product-row-name font-bold text-gray-800 mb-1">{{ item.product_name }}</h3>
                                     <p class="product-row-detail text-sm text-gray-600">Cantidad: <span class="font-semibold">{{ item.quantity }}</span></p>
-                                    <p class="order-item-price text-sm text-gray-600">Precio unitario: <span class="font-semibold" style="color:#f0b429;">${{ item.product_price|formato_precio }}</span></p>
+                                    <p class="order-item-price text-sm text-gray-600">Precio unitario: <span class="font-semibold" style="color:#f0b429;">{{ item.product_price|formato_precio }}</span></p>
                                 </div>
                                 <div class="text-right">
                                     <p class="product-row-price text-xl font-bold" style="color:#f0b429;">{{ item.get_total_price|formato_precio }}</p>

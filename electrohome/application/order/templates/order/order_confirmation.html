@@ -282,10 +282,10 @@
                             <div class="flex-grow">
                                 <h4 class="font-bold text-gray-800">{{ item.product_name }}</h4>
                                 <p class="text-sm text-gray-600">Cantidad: {{ item.quantity }}</p>
-                                <p class="text-sm text-gray-600">Precio unitario: ${{ item.product_price|formato_precio }}</p>
+                                <p class="text-sm text-gray-600">Precio unitario: {{ item.product_price|formato_precio }}</p>
                             </div>
                             <div class="text-right">
-                                <p class="text-xl font-bold text-blue-600">${{ item.subtotal|formato_precio }}</p>
+                                <p class="text-xl font-bold text-blue-600">{{ item.subtotal|formato_precio }}</p>
                             </div>
                         </div>
                         {% endfor %}
@@ -297,20 +297,20 @@
                     <div class="space-y-2 mb-4">
                         <div class="flex justify-between text-gray-700">
                             <span>Subtotal:</span>
-                            <span class="font-semibold">${{ order.subtotal|formato_precio }}</span>
+                            <span class="font-semibold">{{ order.subtotal|formato_precio }}</span>
                         </div>
                         <div class="flex justify-between text-gray-700">
                             <span>IVA (19%):</span>
-                            <span class="font-semibold">${{ order.tax|formato_precio }}</span>
+                            <span class="font-semibold">{{ order.tax|formato_precio }}</span>
                         </div>
                         <div class="flex justify-between text-gray-700">
                             <span>Envío:</span>
-                            <span class="font-semibold">${{ order.shipping_cost|formato_precio }}</span>
+                            <span class="font-semibold">{{ order.shipping_cost|formato_precio }}</span>
                         </div>
                     </div>
                     <div class="flex justify-between text-2xl font-bold text-blue-800 border-t border-gray-300 pt-4">
                         <span>Total:</span>
-                        <span>${{ order.total|formato_precio }}</span>
+                        <span>{{ order.total|formato_precio }}</span>
                     </div>
                 </div>
             </div>
