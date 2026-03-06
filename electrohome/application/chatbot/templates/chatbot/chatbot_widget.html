@@ -41,6 +41,10 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     animation: chatbot-pulse 2.5s ease-in-out infinite !important;
 }
+
+@media (max-width: 1023px) {
+    #eh-chatbot-toggle { bottom: 78px !important; }
+}
 @keyframes chatbot-pulse {
     0%, 100% { transform: scale(1); box-shadow: 0 8px 24px rgba(37,99,235,0.4); }
     50% { transform: scale(1.05); box-shadow: 0 12px 32px rgba(37,99,235,0.5), 0 0 0 8px rgba(37,99,235,0.1); }
@@ -100,11 +104,7 @@
 #quick-replies { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; padding: 0 20px 10px 20px !important; background: #F9FAFB; }
 .quick-reply-btn { background: white; border: 2px solid #E5E7EB; color: #374151; padding: 8px 14px !important; border-radius: 20px !important; font-size: 13px !important; font-weight: 500 !important; cursor: pointer !important; transition: all 0.2s ease !important; }
 .quick-reply-btn:hover { background: #F3F4F6 !important; border-color: #3B82F6 !important; color: #2563EB !important; }
-@media (max-width: 768px) {
-    #eh-chatbot-toggle { bottom: 15px !important; right: 15px !important; width: 56px !important; height: 56px !important; font-size: 26px !important; }
-    #eh-chatbot-container { bottom: 80px !important; right: 10px !important; left: 10px !important; width: auto !important; max-width: none !important; height: 550px !important; border-radius: 16px !important; }
-    .message { max-width: 85% !important; }
-}
+
 #eh-chatbot-toggle, #eh-chatbot-container, #eh-chatbot-container * { box-sizing: border-box !important; }
 [data-theme="dark"] #eh-chatbot-container { background: #161b22 !important; border: 1px solid #30363d !important; box-shadow: 0 20px 60px rgba(0,0,0,0.7) !important; }
 [data-theme="dark"] #eh-chatbot-body { background: #0d1117 !important; }
@@ -233,7 +233,7 @@
         send.addEventListener('click',sendMsg);
         input.addEventListener('keypress',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendMsg(); } });
         let fc=0;
-        const fs=setInterval(()=>{ if(toggle&&fc<15){ toggle.style.setProperty('display','flex','important'); toggle.style.setProperty('visibility','visible','important'); toggle.style.setProperty('opacity','1','important'); toggle.style.setProperty('position','fixed','important'); toggle.style.setProperty('bottom','20px','important'); toggle.style.setProperty('right','20px','important'); toggle.style.setProperty('z-index','2147483647','important'); fc++; } else clearInterval(fs); },100);
+        const fs=setInterval(()=>{ if(toggle&&fc<15){ toggle.style.setProperty('display','flex','important'); toggle.style.setProperty('visibility','visible','important'); toggle.style.setProperty('opacity','1','important'); toggle.style.setProperty('position','fixed','important'); toggle.style.setProperty('bottom', window.innerWidth < 1024 ? '78px' : '20px','important'); toggle.style.setProperty('right','20px','important'); toggle.style.setProperty('z-index','2147483647','important'); fc++; } else clearInterval(fs); },100);
     });
 })();
 </script>

@@ -17,6 +17,7 @@ from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
 from io import BytesIO
+from application.product.models import Resena
 
 # ========== AUTENTICACIÓN ==========
 
@@ -607,3 +608,63 @@ def envio_masivo(request):
         return redirect('dashboard:envio_masivo')
 
     return render(request, 'dashboard/envio_masivo.html', {'usuarios': usuarios})
+
+# ========== RESEÑAS ==========
+
+
+
+@supervisor_required
+def resenas_list(request):
+    estado = request.GET.get('estado', 'pendiente')
+    resenas = Resena.objects.select_related('producto', 'usuario').order_by('-creado_en')
+
+    if estado in ('pendiente', 'aprobada', 'rechazada'):
+        resenas = resenas.filter(estado=estado)
+
+    paginator = Paginator(resenas, 20)
+    page_obj  = paginator.get_page(request.GET.get('page'))
+
+    conteos = {
+        'pendiente': Resena.objects.filter(estado='pendiente').count(),
+        'aprobada':  Resena.objects.filter(estado='aprobada').count(),
+        'rechazada': Resena.objects.filter(estado='rechazada').count(),
+    }
+
+    return render(request, 'dashboard/resenas.html', {
+        'page_obj': page_obj,
+        'estado':   estado,
+        'conteos':  conteos,
+    })
+
+
+@supervisor_required
+def aprobar_resena(request, resena_id):
+    resena = get_object_or_404(Resena, id=resena_id)
+    resena.estado      = 'aprobada'
+    resena.revisado_en = timezone.now()
+    resena.motivo_rechazo = ''
+    resena.save()
+    messages.success(request, f'Reseña de "{resena.usuario.email}" aprobada.')
+    return redirect(request.META.get('HTTP_REFERER', 'dashboard:resenas'))
+
+
+@supervisor_required
+def rechazar_resena(request, resena_id):
+    resena = get_object_or_404(Resena, id=resena_id)
+    if request.method == 'POST':
+        motivo = request.POST.get('motivo', '').strip()
+        resena.estado         = 'rechazada'
+        resena.revisado_en    = timezone.now()
+        resena.motivo_rechazo = motivo
+        resena.save()
+        messages.warning(request, 'Reseña rechazada.')
+    return redirect('dashboard:resenas')
+
+
+@supervisor_required
+def eliminar_resena(request, resena_id):
+    resena = get_object_or_404(Resena, id=resena_id)
+    if request.method == 'POST':
+        resena.delete()
+        messages.success(request, 'Reseña eliminada definitivamente.')
+    return redirect('dashboard:resenas')

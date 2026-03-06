@@ -21,91 +21,128 @@
     <link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
     <style>
       .wishlist-btn-products {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    font-size: 2.5rem;
-    z-index: 20;
-    padding: 0;
-    font-weight: bold;
-    line-height: 1;
-    color: #9ca3af;
-}
+        position: absolute; top: 12px; left: 12px;
+        background: transparent; border: none; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        transition: all 0.3s ease;
+        font-size: 2.5rem; z-index: 20; padding: 0;
+        font-weight: bold; line-height: 1; color: #9ca3af;
+      }
+      .wishlist-btn-products:hover { transform: scale(1.15); color: #ef4444; }
+      .wishlist-btn-products.active { color: #ef4444; animation: heartbeat 0.5s ease; }
+      @keyframes heartbeat {
+        0%, 100% { transform: scale(1); }
+        25% { transform: scale(1.2); }
+        50% { transform: scale(1.15); }
+      }
 
-.wishlist-btn-products:hover {
-    transform: scale(1.15);
-    color: #ef4444;
-}
+      #auth-modal.show #auth-modal-content { animation: modalSlideIn 0.3s ease-out forwards; }
+      @keyframes modalSlideIn { from { transform: scale(0.9) translateY(-20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+      #auth-modal.hide #auth-modal-content { animation: modalSlideOut 0.2s ease-in forwards; }
+      @keyframes modalSlideOut { from { transform: scale(1) translateY(0); opacity: 1; } to { transform: scale(0.9) translateY(-20px); opacity: 0; } }
 
-.wishlist-btn-products.active {
-    color: #ef4444;
-}
+      [data-theme="dark"] header,
+      [data-theme="dark"] header.bg-blue-800 {
+        background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
+        border-bottom: 1px solid #21262d !important;
+        box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important;
+      }
 
-@keyframes heartbeat {
-    0%, 100% { 
-        transform: scale(1);
-    }
-    25% { 
-        transform: scale(1.2);
-    }
-    50% { 
-        transform: scale(1.15);
-    }
-}
+      /* ============================================================
+         ★ MOBILE NAV — ocultar/mostrar
+         ============================================================ */
+      @media (max-width: 1023px) {
+        header { display: none !important; }
+        body   { padding-bottom: 66px !important; }
+      }
+      @media (min-width: 1024px) {
+        #meh-header  { display: none !important; }
+        #meh-botnav  { display: none !important; }
+        #meh-overlay { display: none !important; }
+        #meh-drawer  { display: none !important; }
+      }
 
-.wishlist-btn-products.active {
-    animation: heartbeat 0.5s ease;
-}
+      /* ── Mobile Header ── */
+      #meh-header {
+        position: sticky; top: 0; z-index: 999;
+        background: #1e40af;
+        padding: 10px 14px;
+        display: flex; flex-direction: column;
+        box-shadow: 0 2px 14px rgba(0,0,0,0.22);
+      }
+      [data-theme="dark"] #meh-header { background: linear-gradient(180deg,#010409 0%,#0d1117 100%); border-bottom: 1px solid #21262d; }
+      .meh-top { display: flex; align-items: center; gap: 10px; }
+      .meh-logo { flex-shrink: 0; }
+      .meh-logo img { height: 33px; width: auto; display: block; }
+      .meh-top .meh-search { flex: 1; min-width: 0; }
+      .meh-search { display: flex; background: #fff; border-radius: 11px; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.15); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+      [data-theme="dark"] .meh-search { background: #0d1117; border-color: #30363d; }
+      .meh-search input { flex: 1; min-width: 0; border: none; outline: none; padding: 11px 14px; font-size: 14px; background: transparent; color: #1a202c; font-family: inherit; }
+      [data-theme="dark"] .meh-search input { color: #e6edf3; }
+      .meh-search input::placeholder { color: #718096; }
+      .meh-search button { background: #f59e0b; border: none; padding: 0 18px; height: 44px; color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
+      .meh-search button:hover { background: #d97706; }
+      .meh-avatar-btn { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#f59e0b 0%,#d97706 100%); border: 2px solid rgba(255,255,255,0.35); color: #fff; font-weight: 800; font-size: 0.78rem; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
 
-/* Animación de entrada del modal */
-#auth-modal.show #auth-modal-content {
-    animation: modalSlideIn 0.3s ease-out forwards;
-}
+      /* ── Bottom Nav ── */
+      #meh-botnav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 998; height: 62px; background: #fff; border-top: 1px solid #e2e8f0; display: flex; align-items: stretch; box-shadow: 0 -4px 20px rgba(0,0,0,0.09); padding-bottom: env(safe-area-inset-bottom,0px); }
+      [data-theme="dark"] #meh-botnav { background: #0d1117; border-top-color: #21262d; box-shadow: 0 -4px 24px rgba(0,0,0,0.5); }
+      .bn-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; background: none; border: none; cursor: pointer; color: #718096; font-family: inherit; padding: 6px 0 4px; position: relative; transition: color 0.18s; -webkit-tap-highlight-color: transparent; }
+      .bn-tab:active { opacity: 0.7; }
+      .bn-tab.bn-on { color: #2563eb; }
+      [data-theme="dark"] .bn-tab { color: #6e7681; }
+      [data-theme="dark"] .bn-tab.bn-on { color: #58a6ff; }
+      .bn-tab.bn-on::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 28px; height: 3px; background: #2563eb; border-radius: 0 0 4px 4px; }
+      [data-theme="dark"] .bn-tab.bn-on::before { background: #58a6ff; }
+      .bn-ico { font-size: 1.22rem; line-height: 1; position: relative; display: flex; align-items: center; justify-content: center; }
+      .bn-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.01em; line-height: 1; }
+      .bn-chip { position: absolute; top: -5px; right: -9px; background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; min-width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; padding: 0 2px; }
+      [data-theme="dark"] .bn-chip { border-color: #0d1117; }
+      .bn-tab.bn-cart .bn-ico { background: linear-gradient(135deg,#1e40af 0%,#2563eb 100%); border-radius: 50%; width: 46px; height: 46px; margin-top: -14px; box-shadow: 0 4px 16px rgba(37,99,235,0.45); color: #fff; font-size: 1.15rem; transition: transform 0.15s; }
+      .bn-tab.bn-cart:active .bn-ico { transform: scale(0.91); }
 
-@keyframes modalSlideIn {
-    from {
-        transform: scale(0.9) translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-    }
-}
-
-/* Animación de salida del modal */
-#auth-modal.hide #auth-modal-content {
-    animation: modalSlideOut 0.2s ease-in forwards;
-}
-
-@keyframes modalSlideOut {
-    from {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-    }
-    to {
-        transform: scale(0.9) translateY(-20px);
-        opacity: 0;
-    }
-}
+      /* ── Drawer ── */
+      #meh-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(2px); }
+      #meh-overlay.open { opacity: 1; pointer-events: all; }
+      #meh-drawer { position: fixed; top: 0; right: -100%; width: min(82vw,310px); height: 100%; z-index: 1001; background: #fff; box-shadow: -8px 0 40px rgba(0,0,0,0.2); transition: right 0.3s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; overflow-y: auto; }
+      [data-theme="dark"] #meh-drawer { background: #0d1117; border-left: 1px solid #21262d; }
+      #meh-drawer.open { right: 0; }
+      .mdr-head { background: #1e40af; padding: 18px 16px 14px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+      [data-theme="dark"] .mdr-head { background: linear-gradient(135deg,#010409 0%,#0d1117 100%); border-bottom: 1px solid #21262d; }
+      .mdr-close { background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 32px; height: 32px; color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      .mdr-close:hover { background: rgba(255,255,255,0.25); }
+      .mdr-section { padding: 10px 18px 3px; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #718096; }
+      [data-theme="dark"] .mdr-section { color: #6e7681; }
+      .mdr-item { display: flex; align-items: center; gap: 13px; padding: 13px 18px; text-decoration: none; color: #1a202c; font-size: 0.9rem; font-weight: 600; border-bottom: 1px solid #e2e8f0; transition: background 0.15s, color 0.15s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; width: 100%; text-align: left; font-family: inherit; }
+      [data-theme="dark"] .mdr-item { color: #e6edf3; border-color: #21262d; }
+      .mdr-item:last-child { border-bottom: none; }
+      .mdr-item:hover { background: #f0f4f8; color: #2563eb; }
+      [data-theme="dark"] .mdr-item:hover { background: #161b22; color: #58a6ff; }
+      .mdr-ico { width: 34px; height: 34px; border-radius: 10px; background: rgba(37,99,235,0.09); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+      [data-theme="dark"] .mdr-ico { color: #58a6ff; }
+      .mdr-item.mdr-danger { color: #dc2626; }
+      .mdr-item.mdr-danger .mdr-ico { background: rgba(220,38,38,0.08); color: #dc2626; }
+      [data-theme="dark"] .mdr-item.mdr-danger { color: #f85149; }
+      [data-theme="dark"] .mdr-item.mdr-danger .mdr-ico { color: #f85149; background: rgba(248,81,73,0.1); }
     </style>
-     <style>
-  [data-theme="dark"] header,
-  [data-theme="dark"] header.bg-blue-800 {
-    background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
-    border-bottom: 1px solid #21262d !important;
-    box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important;
-  }
-</style>
 </head>
 <body class="bg-gray-50">
+
+<!-- ============================================================
+     ★ MOBILE HEADER (solo visible en móvil < 1024px)
+     ============================================================ -->
+<div id="meh-header">
+  <div class="meh-top">
+    <a href="{% url 'product:home' %}" class="meh-logo">
+      <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" />
+    </a>
+    <form action="{% url 'product:search' %}" method="GET" class="meh-search">
+      <input type="text" name="q" placeholder="Buscar productos..." value="{{ request.GET.q }}" autocomplete="off" />
+      <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </div>
+</div>
+<!-- FIN MOBILE HEADER -->
 
 <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500 sticky top-0 z-50">
   <nav class="container mx-auto px-4 py-3">
@@ -120,17 +157,17 @@
       </div>
 
       <!-- Buscador Desktop -->
-<div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
-  <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
-    <input type="text" name="q" placeholder="Buscar productos..."
-           class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
-           value="{{ request.GET.q }}" />
-    <button type="submit"
-            class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
-      <i class="fas fa-search"></i>
-    </button>
-  </form>
-</div>
+      <div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
+        <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
+          <input type="text" name="q" placeholder="Buscar productos..."
+                 class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
+                 value="{{ request.GET.q }}" />
+          <button type="submit"
+                  class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
 
       <!-- Nav Desktop -->
       <div class="hidden lg:flex space-x-6">
@@ -216,7 +253,7 @@
       </div>
     </div>
 
-   <!-- Buscador Mobile -->
+    <!-- Buscador Mobile -->
     <div class="md:hidden mt-3">
       <form action="{% url 'product:search' %}" method="GET">
         <div class="flex w-full">
@@ -252,32 +289,15 @@
 </header>
 
 <script>
-  // Toggle dropdown del usuario
   const userMenuBtn = document.getElementById('user-menu-btn');
   const userDropdown = document.getElementById('user-dropdown');
-
   if (userMenuBtn && userDropdown) {
-    userMenuBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      userDropdown.classList.toggle('hidden');
-    });
-
-    document.addEventListener('click', function(e) {
-      if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-        userDropdown.classList.add('hidden');
-      }
-    });
+    userMenuBtn.addEventListener('click', function(e) { e.stopPropagation(); userDropdown.classList.toggle('hidden'); });
+    document.addEventListener('click', function(e) { if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) userDropdown.classList.add('hidden'); });
   }
-
-  // Toggle menú mobile
   const mobileMenuBtn = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
-
-  if (mobileMenuBtn && mobileMenu) {
-    mobileMenuBtn.addEventListener('click', function() {
-      mobileMenu.classList.toggle('hidden');
-    });
-  }
+  if (mobileMenuBtn && mobileMenu) mobileMenuBtn.addEventListener('click', function() { mobileMenu.classList.toggle('hidden'); });
 </script>
 
 <!-- MAIN CONTENT -->
@@ -307,7 +327,6 @@
                 {% if filtros_activos.precio_min %}<input type="hidden" name="precio_min" value="{{ filtros_activos.precio_min }}">{% endif %}
                 {% if filtros_activos.precio_max %}<input type="hidden" name="precio_max" value="{{ filtros_activos.precio_max }}">{% endif %}
                 {% if filtros_activos.disponible %}<input type="hidden" name="disponible" value="{{ filtros_activos.disponible }}">{% endif %}
-                
                 <select name="orden" onchange="this.form.submit()" class="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
                     <option value="nuevo" {% if filtros_activos.orden == 'nuevo' %}selected{% endif %}>Más recientes</option>
                     <option value="antiguo" {% if filtros_activos.orden == 'antiguo' %}selected{% endif %}>Más antiguos</option>
@@ -327,11 +346,8 @@
                 <h2 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
                     <i class="fas fa-filter mr-2"></i> Filtros
                 </h2>
-
                 <form method="GET" action="{% url 'product:products_list' %}" id="filter-form">
                     {% if filtros_activos.orden %}<input type="hidden" name="orden" value="{{ filtros_activos.orden }}">{% endif %}
-
-                    <!-- Categorías -->
                     <div class="mb-6">
                         <h3 class="font-bold text-gray-800 mb-3">Categorías</h3>
                         <div class="space-y-2">
@@ -347,8 +363,6 @@
                             {% endfor %}
                         </div>
                     </div>
-
-                    <!-- Rango de Precio -->
                     <div class="mb-6">
                         <h3 class="font-bold text-gray-800 mb-3">Rango de Precio</h3>
                         <div class="space-y-3">
@@ -362,38 +376,27 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Disponibilidad -->
                     <div class="mb-6">
                         <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
                             <input type="checkbox" name="disponible" value="1" {% if filtros_activos.disponible == '1' %}checked{% endif %} onchange="this.form.submit()" class="mr-2">
                             <span class="text-gray-700 font-semibold">Solo disponibles</span>
                         </label>
                     </div>
-
-                    <!-- Botones -->
                     <div class="space-y-2">
-                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">
-                            Aplicar Filtros
-                        </button>
-                        <a href="{% url 'product:products_list' %}" class="block w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-bold text-center hover:bg-gray-300 transition">
-                            Limpiar Filtros
-                        </a>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Aplicar Filtros</button>
+                        <a href="{% url 'product:products_list' %}" class="block w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-bold text-center hover:bg-gray-300 transition">Limpiar Filtros</a>
                     </div>
                 </form>
             </div>
         </aside>
-        
+
         <!-- GRID DE PRODUCTOS -->
         <div class="lg:col-span-3">
             {% if productos %}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {% for producto in productos %}
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col relative product-card-container">
-                    <button class="wishlist-btn-products" data-product-id="{{ producto.id }}" onclick="toggleWishlist(event, {{ producto.id }})">
-                        ♡
-                    </button>
-
+                    <button class="wishlist-btn-products" data-product-id="{{ producto.id }}" onclick="toggleWishlist(event, {{ producto.id }})">♡</button>
                     <a href="{% url 'product:product_detail' producto.id %}" class="block">
                         {% if producto.imagen_principal %}
                         <div class="w-full h-56 overflow-hidden bg-gray-50 flex items-center justify-center">
@@ -405,47 +408,26 @@
                         </div>
                         {% endif %}
                     </a>
-
                     <div class="p-4 flex flex-col flex-1">
                         <a href="{% url 'product:product_detail' producto.id %}" class="block mb-4">
-                            <h3 class="font-bold text-gray-800 hover:text-blue-600 transition line-clamp-2 text-base min-h-[3rem]">
-                                {{ producto.nombre }}
-                            </h3>
+                            <h3 class="font-bold text-gray-800 hover:text-blue-600 transition line-clamp-2 text-base min-h-[3rem]">{{ producto.nombre }}</h3>
                         </a>
-
                         <div class="flex-1"></div>
-
                         <div class="flex items-center justify-between mb-4 mt-2">
-                            <span class="text-2xl font-bold text-blue-800">
-                                {{ producto.precio|formato_precio }}
-                            </span>
+                            <span class="text-2xl font-bold text-blue-800">{{ producto.precio|formato_precio }}</span>
                             {% if producto.stock > 0 %}
-                            <span class="text-xs text-green-600 font-semibold flex items-center gap-1">
-                                <i class="fas fa-check-circle"></i> Disponible
-                            </span>
+                            <span class="text-xs text-green-600 font-semibold flex items-center gap-1"><i class="fas fa-check-circle"></i> Disponible</span>
                             {% else %}
-                            <span class="text-xs text-red-600 font-semibold flex items-center gap-1">
-                                <i class="fas fa-times-circle"></i> Agotado
-                            </span>
+                            <span class="text-xs text-red-600 font-semibold flex items-center gap-1"><i class="fas fa-times-circle"></i> Agotado</span>
                             {% endif %}
                         </div>
-
                         <div class="flex gap-2">
                             {% if producto.stock > 0 %}
-                            <button onclick="agregarAlCarrito({{ producto.id }})" 
-                                    class="flex-1 bg-yellow-500 text-white py-2.5 rounded-lg font-semibold hover:bg-yellow-600 transition duration-200 flex items-center justify-center">
-                                <i class="fas fa-cart-plus text-lg"></i>
-                            </button>
+                            <button onclick="agregarAlCarrito({{ producto.id }})" class="flex-1 bg-yellow-500 text-white py-2.5 rounded-lg font-semibold hover:bg-yellow-600 transition duration-200 flex items-center justify-center"><i class="fas fa-cart-plus text-lg"></i></button>
                             {% else %}
-                            <button disabled 
-                                    class="flex-1 bg-gray-300 text-gray-500 py-2.5 rounded-lg font-semibold cursor-not-allowed flex items-center justify-center">
-                                <i class="fas fa-times text-lg"></i>
-                            </button>
+                            <button disabled class="flex-1 bg-gray-300 text-gray-500 py-2.5 rounded-lg font-semibold cursor-not-allowed flex items-center justify-center"><i class="fas fa-times text-lg"></i></button>
                             {% endif %}
-                            <a href="{% url 'product:product_detail' producto.id %}" 
-                               class="flex-1 bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition duration-200 flex items-center justify-center">
-                                Ver
-                            </a>
+                            <a href="{% url 'product:product_detail' producto.id %}" class="flex-1 bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition duration-200 flex items-center justify-center">Ver</a>
                         </div>
                     </div>
                 </div>
@@ -456,29 +438,13 @@
             {% if productos.has_other_pages %}
             <div class="flex justify-center items-center mt-8 space-x-2">
                 {% if productos.has_previous %}
-                <a href="?page=1{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition">
-                    <i class="fas fa-angle-double-left"></i>
-                </a>
-                <a href="?page={{ productos.previous_page_number }}{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition">
-                    <i class="fas fa-angle-left"></i>
-                </a>
+                <a href="?page=1{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition"><i class="fas fa-angle-double-left"></i></a>
+                <a href="?page={{ productos.previous_page_number }}{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition"><i class="fas fa-angle-left"></i></a>
                 {% endif %}
-
-                <span class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg">
-                    {{ productos.number }} de {{ productos.paginator.num_pages }}
-                </span>
-
+                <span class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg">{{ productos.number }} de {{ productos.paginator.num_pages }}</span>
                 {% if productos.has_next %}
-                <a href="?page={{ productos.next_page_number }}{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition">
-                    <i class="fas fa-angle-right"></i>
-                </a>
-                <a href="?page={{ productos.paginator.num_pages }}{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" 
-                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition">
-                    <i class="fas fa-angle-double-right"></i>
-                </a>
+                <a href="?page={{ productos.next_page_number }}{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition"><i class="fas fa-angle-right"></i></a>
+                <a href="?page={{ productos.paginator.num_pages }}{% if filtros_activos.categoria %}&categoria={{ filtros_activos.categoria }}{% endif %}{% if filtros_activos.search %}&q={{ filtros_activos.search }}{% endif %}{% if filtros_activos.precio_min %}&precio_min={{ filtros_activos.precio_min }}{% endif %}{% if filtros_activos.precio_max %}&precio_max={{ filtros_activos.precio_max }}{% endif %}{% if filtros_activos.disponible %}&disponible={{ filtros_activos.disponible }}{% endif %}{% if filtros_activos.orden %}&orden={{ filtros_activos.orden }}{% endif %}" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-blue-50 transition"><i class="fas fa-angle-double-right"></i></a>
                 {% endif %}
             </div>
             {% endif %}
@@ -488,41 +454,26 @@
                 <i class="fas fa-box-open text-gray-300 text-6xl mb-4"></i>
                 <h3 class="text-2xl font-bold text-gray-800 mb-2">No se encontraron productos</h3>
                 <p class="text-gray-600 mb-6">Intenta ajustar los filtros o buscar algo diferente</p>
-                <a href="{% url 'product:products_list' %}" 
-                   class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition">
-                    Ver todos los productos
-                </a>
+                <a href="{% url 'product:products_list' %}" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition">Ver todos los productos</a>
             </div>
             {% endif %}
         </div>
     </div>
 </main>
 
-<!--FOOTER -->
+<!-- FOOTER -->
 <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-12 mt-10">
   <div class="container mx-auto px-6">
     <div class="text-center mb-8">
       <h2 class="text-3xl font-bold text-white mb-3 tracking-wide">ElectroHome</h2>
-      <p class="text-gray-400 max-w-md mx-auto text-sm">
-        La mejor tecnología para tu hogar. Compra fácil, rápido y con total seguridad.
-      </p>
+      <p class="text-gray-400 max-w-md mx-auto text-sm">La mejor tecnología para tu hogar. Compra fácil, rápido y con total seguridad.</p>
     </div>
-
     <div class="flex justify-center space-x-8 mb-10">
-      <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110">
-        <i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i>
-      </a>
-      <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110">
-        <i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i>
-      </a>
-      <a href="https://tiktok.com" target="_blank" class="transition transform hover:scale-110">
-        <i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i>
-      </a>
-      <a href="https://twitter.com" target="_blank" class="transition transform hover:scale-110">
-        <i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i>
-      </a>
+      <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i></a>
+      <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i></a>
+      <a href="https://tiktok.com"    target="_blank" class="transition transform hover:scale-110"><i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i></a>
+      <a href="https://twitter.com"   target="_blank" class="transition transform hover:scale-110"><i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i></a>
     </div>
-
     <div class="flex flex-wrap justify-center space-x-6 text-sm mb-8">
       <a href="#" class="hover:text-white transition">Inicio</a>
       <a href="#" class="hover:text-white transition">Productos</a>
@@ -530,72 +481,146 @@
       <a href="#" class="hover:text-white transition">Nosotros</a>
       <a href="#" class="hover:text-white transition">Contacto</a>
     </div>
-
     <div class="text-center text-gray-400 text-sm mb-8">
       <p>📍 Calle 1 #2-40, Cartagena de Indias, Colombia</p>
       <p>📞 +57 300 760 7645</p>
-      <p>
-        ✉️ <a href="mailto:info@electrohome.com" class="underline hover:text-blue-400">info@electrohome.com</a>
-      </p>
+      <p>✉️ <a href="mailto:info@electrohome.com" class="underline hover:text-blue-400">info@electrohome.com</a></p>
     </div>
-
     <div class="border-t border-gray-700 pt-6 text-center text-xs text-gray-500">
       &copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.
     </div>
   </div>
 </footer>
 
+<!-- ============================================================
+     ★ BOTTOM NAV (solo visible en móvil < 1024px)
+     ============================================================ -->
+<nav id="meh-botnav">
+  <a href="{% url 'product:home' %}" class="bn-tab">
+    <span class="bn-ico"><i class="fas fa-home"></i></span>
+    <span class="bn-lbl">Inicio</span>
+  </a>
+  {% if user.is_authenticated %}
+<a href="{% url 'product:wishlist' %}" class="bn-tab {% if request.resolver_match.url_name == 'wishlist' %}bn-on{% endif %}">
+  <span class="bn-ico">
+    <i class="fas fa-heart"></i>
+    <span class="bn-chip" id="bn-wishlist-chip" {% if not user.wishlist.total_items %}style="display:none;"{% endif %}>{{ user.wishlist.total_items|default:0 }}</span>
+  </span>
+  <span class="bn-lbl">Favoritos</span>
+</a>
+{% else %}
+<button class="bn-tab" onclick="showAuthModal()">
+  <span class="bn-ico"><i class="fas fa-heart"></i></span>
+  <span class="bn-lbl">Favoritos</span>
+</button>
+{% endif %}
+  <a href="{% url 'product:cart' %}" class="bn-tab bn-cart">
+    <span class="bn-ico">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="bn-chip" id="bn-cart-chip">{{ cart_items_count|default:0 }}</span>
+    </span>
+    <span class="bn-lbl">Carrito</span>
+  </a>
+  <a href="{% url 'product:products_list' %}" class="bn-tab bn-on">
+    <span class="bn-ico"><i class="fas fa-tag"></i></span>
+    <span class="bn-lbl">Productos</span>
+  </a>
+  <button class="bn-tab" id="meh-open-drawer">
+    <span class="bn-ico"><i class="fas fa-bars"></i></span>
+    <span class="bn-lbl">Menú</span>
+  </button>
+</nav>
+
+<!-- Overlay drawer -->
+<div id="meh-overlay"></div>
+
+<!-- ============================================================
+     ★ DRAWER LATERAL
+     ============================================================ -->
+<div id="meh-drawer">
+  <div class="mdr-head">
+    {% if user.is_authenticated %}
+    <div style="display:flex;align-items:center;gap:11px;">
+      <div class="meh-avatar-btn" style="width:40px;height:40px;font-size:0.95rem;">{{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}</div>
+      <div>
+        <div style="color:#fff;font-weight:800;font-size:0.9rem;">{% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</div>
+        <div style="color:rgba(255,255,255,0.55);font-size:0.72rem;margin-top:1px;">Cliente ElectroHome</div>
+      </div>
+    </div>
+    {% else %}
+    <div>
+      <div style="color:#fff;font-weight:800;font-size:0.95rem;">¡Hola! 👋</div>
+      <div style="color:rgba(255,255,255,0.6);font-size:0.75rem;margin-top:2px;">Inicia sesión para más opciones</div>
+    </div>
+    {% endif %}
+    <button class="mdr-close" id="meh-close-drawer"><i class="fas fa-times"></i></button>
+  </div>
+
+  <div style="padding:8px 0;">
+    {% if user.is_authenticated %}
+    <div class="mdr-section">Mi cuenta</div>
+    <a href="{% url 'user:profile' %}"    class="mdr-item"><span class="mdr-ico"><i class="fas fa-user"></i></span>Mi Perfil</a>
+    <a href="{% url 'order:order_list' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-shopping-bag"></i></span>Mis Pedidos</a>
+    <a href="{% url 'product:wishlist' %}" class="mdr-item">
+      <span class="mdr-ico"><i class="fas fa-heart"></i></span>
+      Lista de Deseos
+      {% if user.wishlist.total_items > 0 %}<span style="margin-left:auto;background:#ef4444;color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:20px;">{{ user.wishlist.total_items }}</span>{% endif %}
+    </a>
+    <a href="{% url 'product:cart' %}" class="mdr-item">
+      <span class="mdr-ico"><i class="fas fa-shopping-cart"></i></span>
+      Mi Carrito
+      {% if cart_items_count > 0 %}<span style="margin-left:auto;background:#1e40af;color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:20px;">{{ cart_items_count }}</span>{% endif %}
+    </a>
+    {% else %}
+    <div class="mdr-section">Cuenta</div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px;">
+      <a href="{% url 'user:login' %}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;font-weight:700;font-size:0.92rem;text-decoration:none;box-shadow:0 3px 12px rgba(37,99,235,0.35);"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+      <a href="{% url 'user:register' %}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-weight:700;font-size:0.92rem;text-decoration:none;box-shadow:0 3px 12px rgba(245,158,11,0.35);"><i class="fas fa-user-plus"></i> Registrarse gratis</a>
+    </div>
+    <a href="{% url 'product:cart' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-shopping-cart"></i></span>Ver Carrito</a>
+    {% endif %}
+
+    <div class="mdr-section">Navegación</div>
+    <a href="{% url 'product:home' %}"         class="mdr-item"><span class="mdr-ico"><i class="fas fa-home"></i></span>Inicio</a>
+    <a href="{% url 'product:products_list' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-tag"></i></span>Productos</a>
+    <a href="{% url 'product:contact' %}"       class="mdr-item"><span class="mdr-ico"><i class="fas fa-envelope"></i></span>Contacto</a>
+
+    <div class="mdr-section">Preferencias</div>
+    <button class="mdr-item" id="meh-drawer-theme">
+      <span class="mdr-ico"><i class="fas fa-moon" id="mdr-theme-ico"></i></span>
+      <span id="mdr-theme-lbl">Modo oscuro</span>
+      <span id="mdr-theme-toggle-pill" style="margin-left:auto;width:40px;height:22px;border-radius:11px;background:#cbd5e0;display:flex;align-items:center;padding:2px;transition:background 0.3s;">
+        <span id="mdr-theme-pill-dot" style="width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);transition:transform 0.3s;transform:translateX(0);"></span>
+      </span>
+    </button>
+
+    {% if user.is_authenticated %}
+    <div style="height:1px;background:#e2e8f0;margin:8px 16px;"></div>
+    <a href="{% url 'user:logout' %}" class="mdr-item mdr-danger" id="mdr-logout"><span class="mdr-ico"><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a>
+    {% endif %}
+  </div>
+</div>
+
 <!-- Modal de Autenticación -->
 <div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all scale-95 opacity-0" id="auth-modal-content">
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-t-2xl relative">
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-200 transition">
-                <i class="fas fa-times text-2xl"></i>
-            </button>
-            <div class="text-center">
-                <i class="fas fa-heart text-5xl mb-3 animate-pulse"></i>
-                <h3 class="text-2xl font-bold">¡Guarda tus Favoritos!</h3>
-            </div>
+            <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-200 transition"><i class="fas fa-times text-2xl"></i></button>
+            <div class="text-center"><i class="fas fa-heart text-5xl mb-3 animate-pulse"></i><h3 class="text-2xl font-bold">¡Guarda tus Favoritos!</h3></div>
         </div>
-
         <div class="p-8">
-            <p class="text-gray-700 text-center mb-6 text-lg">
-                Para guardar tus productos favoritos, <span class="font-bold text-blue-600">inicia sesión</span> o <span class="font-bold text-blue-600">regístrate</span>
-            </p>
-
+            <p class="text-gray-700 text-center mb-6 text-lg">Para guardar tus productos favoritos, <span class="font-bold text-blue-600">inicia sesión</span> o <span class="font-bold text-blue-600">regístrate</span></p>
             <div class="space-y-3">
-                <a href="{% url 'user:login' %}?next={{ request.path }}" 
-                   class="block w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-center hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">
-                    <i class="fas fa-sign-in-alt mr-2"></i>
-                    Iniciar Sesión
-                </a>
-
-                <a href="{% url 'user:register' %}?next={{ request.path }}" 
-                   class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-4 rounded-lg font-bold text-center hover:from-yellow-600 hover:to-yellow-700 transition-all transform hover:scale-105 shadow-lg">
-                    <i class="fas fa-user-plus mr-2"></i>
-                    Registrarse Gratis
-                </a>
+                <a href="{% url 'user:login' %}?next={{ request.path }}"    class="block w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-center hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg"><i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión</a>
+                <a href="{% url 'user:register' %}?next={{ request.path %}" class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-4 rounded-lg font-bold text-center hover:from-yellow-600 hover:to-yellow-700 transition-all transform hover:scale-105 shadow-lg"><i class="fas fa-user-plus mr-2"></i>Registrarse Gratis</a>
             </div>
-
             <div class="mt-6 pt-6 border-t border-gray-200">
                 <p class="text-sm font-semibold text-gray-800 mb-3">Beneficios de tener una cuenta:</p>
                 <ul class="space-y-2 text-sm text-gray-600">
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-                        <span>Guarda tus productos favoritos</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-                        <span>Seguimiento de pedidos en tiempo real</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-                        <span>Ofertas y descuentos exclusivos</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-                        <span>Compra más rápida con datos guardados</span>
-                    </li>
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i><span>Guarda tus productos favoritos</span></li>
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i><span>Seguimiento de pedidos en tiempo real</span></li>
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i><span>Ofertas y descuentos exclusivos</span></li>
+                    <li class="flex items-start"><i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i><span>Compra más rápida con datos guardados</span></li>
                 </ul>
             </div>
         </div>
@@ -603,297 +628,184 @@
 </div>
 
 <script>
-// ====================================
-// UTILIDADES
-// ====================================
-
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
+      if (cookie.substring(0, name.length + 1) === (name + '=')) { cookieValue = decodeURIComponent(cookie.substring(name.length + 1)); break; }
     }
   }
   return cookieValue;
 }
-
 const csrftoken = getCookie('csrftoken');
 
 function mostrarNotificacion(mensaje, tipo) {
   const notif = document.createElement('div');
-  notif.className = `fixed top-24 right-4 z-50 px-6 py-4 rounded-lg shadow-lg transition-all duration-300 ${
-      tipo === 'success' ? 'bg-green-500' : 'bg-red-500'
-  } text-white font-bold`;
+  notif.className = `fixed top-24 right-4 z-50 px-6 py-4 rounded-lg shadow-lg transition-all duration-300 ${tipo === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white font-bold`;
   notif.textContent = mensaje;
   document.body.appendChild(notif);
-  
-  setTimeout(() => {
-      notif.style.opacity = '0';
-      setTimeout(() => notif.remove(), 300);
-  }, 3000);
+  setTimeout(() => { notif.style.opacity = '0'; setTimeout(() => notif.remove(), 300); }, 3000);
 }
 
-// ====================================
-// MODAL
-// ====================================
-
-function showAuthModal() {
-    const modal = document.getElementById('auth-modal');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-        modal.classList.add('show');
-    }, 10);
-    document.body.style.overflow = 'hidden';
-}
-
-function closeAuthModal() {
-    const modal = document.getElementById('auth-modal');
-    modal.classList.remove('show');
-    modal.classList.add('hide');
-    
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.classList.remove('hide');
-        document.body.style.overflow = '';
-    }, 200);
-}
-
-document.getElementById('auth-modal')?.addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeAuthModal();
-    }
-});
-
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeAuthModal();
-    }
-});
-
-// ====================================
-// CARRITO
-// ====================================
+function showAuthModal() { const modal = document.getElementById('auth-modal'); modal.classList.remove('hidden'); setTimeout(() => modal.classList.add('show'), 10); document.body.style.overflow = 'hidden'; }
+function closeAuthModal() { const modal = document.getElementById('auth-modal'); modal.classList.remove('show'); modal.classList.add('hide'); setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('hide'); document.body.style.overflow = ''; }, 200); }
+document.getElementById('auth-modal')?.addEventListener('click', function(e) { if (e.target === this) closeAuthModal(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeAuthModal(); });
 
 function agregarAlCarrito(productId, quantity = 1) {
-  fetch(`/carrito/agregar/${productId}/`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'X-CSRFToken': csrftoken
-      },
-      body: `quantity=${quantity}`
-  })
+  fetch(`/carrito/agregar/${productId}/`, { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded','X-CSRFToken': csrftoken}, body: `quantity=${quantity}` })
   .then(response => response.json())
   .then(data => {
-      if (data.success) {
-          actualizarContadorCarrito(data.cart_total_items);
-          mostrarNotificacion('✅ ' + data.message, 'success');
-      } else {
-          mostrarNotificacion('❌ ' + data.message, 'error');
-      }
-  })
-  .catch(error => {
-      console.error('Error:', error);
-      mostrarNotificacion('❌ Error al agregar al carrito', 'error');
-  });
+    if (data.success) { actualizarContadorCarrito(data.cart_total_items); mostrarNotificacion('✅ ' + data.message, 'success'); }
+    else mostrarNotificacion('❌ ' + data.message, 'error');
+  }).catch(error => { mostrarNotificacion('❌ Error al agregar al carrito', 'error'); });
 }
 
 function actualizarContadorCarrito(cantidad) {
   const cartCounter = document.getElementById('cart-counter');
-  if (cartCounter) {
-      cartCounter.textContent = cantidad;
-  }
+  if (cartCounter) cartCounter.textContent = cantidad;
+  // ★ Mobile badge
+  const chip = document.getElementById('bn-cart-chip');
+  if (chip) { chip.textContent = cantidad; chip.style.display = parseInt(cantidad) === 0 ? 'none' : ''; }
 }
 
 function cargarContadorCarrito() {
-  fetch('/carrito/', {
-    method: 'GET',
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest'
-    }
-  })
+  fetch('/carrito/', { method: 'GET', headers: {'X-Requested-With': 'XMLHttpRequest'} })
   .then(response => response.text())
-  .then(html => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    const serverCounter = doc.getElementById('cart-counter');
-    if (serverCounter) {
-      actualizarContadorCarrito(serverCounter.textContent);
-    }
-  })
+  .then(html => { const doc = new DOMParser().parseFromString(html, 'text/html'); const sc = doc.getElementById('cart-counter'); if (sc) actualizarContadorCarrito(sc.textContent); })
   .catch(error => console.log('Error carrito:', error));
 }
 
-// ====================================
-// WISHLIST
-// ====================================
-
-function actualizarContadorWishlistEnHeader(totalItems) {
-    const wishlistIcon = document.querySelector('a[href*="wishlist"] i.fa-heart');
-    
-    if (wishlistIcon) {
-        const wishlistLink = wishlistIcon.parentElement;
-        let badge = wishlistLink.querySelector('span.absolute');
-        
-        if (totalItems > 0) {
-            if (!badge) {
-                badge = document.createElement('span');
-                badge.className = 'absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1';
-                wishlistLink.appendChild(badge);
-            }
-            badge.textContent = totalItems;
-            badge.style.display = 'flex';
-        } else {
-            if (badge) {
-                badge.remove();
-            }
-        }
+// ── Wishlist ──
+function actualizarContadorWishlistEnHeader(total) {
+  // 1. Desktop header
+  const icon = document.querySelector('header a[href*="wishlist"] i.fa-heart');
+  if (icon) {
+    const link = icon.parentElement;
+    let badge = link.querySelector('span.absolute');
+    if (total > 0) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1';
+        link.appendChild(badge);
+      }
+      badge.textContent = total;
+    } else {
+      if (badge) badge.remove();
     }
-    
-    const mobileWishlistLinks = document.querySelectorAll('#mobile-menu a[href*="wishlist"]');
-    mobileWishlistLinks.forEach(link => {
-        let mobileBadge = link.querySelector('span.bg-red-500');
-        
-        if (totalItems > 0) {
-            if (!mobileBadge) {
-                mobileBadge = document.createElement('span');
-                mobileBadge.className = 'ml-2 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-0.5';
-                link.appendChild(mobileBadge);
-            }
-            mobileBadge.textContent = totalItems;
-        } else {
-            if (mobileBadge) {
-                mobileBadge.remove();
-            }
-        }
-    });
+  }
+
+  // 2. Bottom nav chip
+  const chip = document.getElementById('bn-wishlist-chip');
+  if (chip) {
+    chip.textContent = total;
+    chip.style.display = total > 0 ? '' : 'none';
+  }
+
+  // 3. Drawer badge
+  const drawerLink = document.querySelector('#meh-drawer a[href*="wishlist"]');
+  if (drawerLink) {
+    let drawerBadge = drawerLink.querySelector('span[style*="background:#ef4444"]');
+    if (total > 0) {
+      if (!drawerBadge) {
+        drawerBadge = document.createElement('span');
+        drawerBadge.setAttribute('style', 'margin-left:auto;background:#ef4444;color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:20px;');
+        drawerLink.appendChild(drawerBadge);
+      }
+      drawerBadge.textContent = total;
+    } else {
+      if (drawerBadge) drawerBadge.remove();
+    }
+  }
 }
 
 function toggleWishlist(event, productId) {
-    event.preventDefault();
-    event.stopPropagation();
-    
-    const isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
-    
-    if (!isAuthenticated) {
-        showAuthModal();
-        return;
-    }
-    
-    const btn = event.currentTarget;
-    const isActive = btn.classList.contains('active');
-    
-    if (isActive) {
-        removeFromWishlist(btn, productId);
-    } else {
-        addToWishlist(btn, productId);
-    }
+  event.preventDefault(); event.stopPropagation();
+  const isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
+  if (!isAuthenticated) { showAuthModal(); return; }
+  const btn = event.currentTarget;
+  btn.classList.contains('active') ? removeFromWishlist(btn, productId) : addToWishlist(btn, productId);
 }
 
 function addToWishlist(btn, productId) {
-    fetch(`/wishlist/add/${productId}/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            btn.classList.add('active');
-            btn.textContent = '♥';
-            mostrarNotificacion('❤️ ' + data.message, 'success');
-            
-            if (data.total_items !== undefined) {
-                actualizarContadorWishlistEnHeader(data.total_items);
-            }
-        } else {
-            mostrarNotificacion('ℹ️ ' + data.message, 'error');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        mostrarNotificacion('❌ Error al agregar a wishlist', 'error');
-    });
+  fetch(`/wishlist/add/${productId}/`, { method: 'POST', headers: {'X-CSRFToken': csrftoken,'Content-Type': 'application/json'} })
+  .then(r => r.json()).then(data => {
+    if (data.success) { btn.classList.add('active'); btn.textContent = '♥'; mostrarNotificacion('❤️ ' + data.message, 'success'); if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items); }
+    else mostrarNotificacion('ℹ️ ' + data.message, 'error');
+  }).catch(() => mostrarNotificacion('❌ Error al agregar a wishlist', 'error'));
 }
 
 function removeFromWishlist(btn, productId) {
-    fetch(`/wishlist/remove/${productId}/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': csrftoken,
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            btn.classList.remove('active');
-            btn.textContent = '♡';
-            mostrarNotificacion('❤️ ' + data.message, 'success');
-            
-            if (data.total_items !== undefined) {
-                actualizarContadorWishlistEnHeader(data.total_items);
-            }
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        mostrarNotificacion('❌ Error al eliminar de wishlist', 'error');
-    });
+  fetch(`/wishlist/remove/${productId}/`, { method: 'POST', headers: {'X-CSRFToken': csrftoken,'Content-Type': 'application/json'} })
+  .then(r => r.json()).then(data => {
+    if (data.success) { btn.classList.remove('active'); btn.textContent = '♡'; mostrarNotificacion('❤️ ' + data.message, 'success'); if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items); }
+  }).catch(() => mostrarNotificacion('❌ Error al eliminar de wishlist', 'error'));
 }
 
 function checkWishlistStatus(btn, productId) {
-    fetch(`/wishlist/check/${productId}/`, {
-        method: 'GET',
-        headers: {
-            'X-CSRFToken': csrftoken,
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.in_wishlist) {
-            btn.classList.add('active');
-            btn.textContent = '♥';
-        }
-    })
-    .catch(error => console.error('Error:', error));
+  fetch(`/wishlist/check/${productId}/`, { method: 'GET', headers: {'X-CSRFToken': csrftoken} })
+  .then(r => r.json()).then(data => { if (data.in_wishlist) { btn.classList.add('active'); btn.textContent = '♥'; } })
+  .catch(error => console.error('Error:', error));
 }
-
-// ====================================
-// INICIALIZACIÓN
-// ====================================
 
 document.addEventListener('DOMContentLoaded', function() {
   cargarContadorCarrito();
-  
-  const productCards = document.querySelectorAll('.wishlist-btn-products');
-  productCards.forEach(btn => {
-    const productId = btn.dataset.productId;
-    checkWishlistStatus(btn, productId);
+  document.querySelectorAll('.wishlist-btn-products').forEach(btn => { checkWishlistStatus(btn, btn.dataset.productId); });
+  document.querySelectorAll('a[href*="logout"]').forEach(link => {
+    link.addEventListener('click', function(e) { e.preventDefault(); sessionStorage.clear(); localStorage.clear(); window.location.replace(this.href); });
   });
-  
-  const logoutLinks = document.querySelectorAll('a[href*="logout"]');
-  logoutLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      sessionStorage.clear();
-      localStorage.clear();
-      window.location.replace(this.href);
+
+  // ★ Drawer móvil
+  const drawer  = document.getElementById('meh-drawer');
+  const overlay = document.getElementById('meh-overlay');
+  const openBtn = document.getElementById('meh-open-drawer');
+  const closeBtn= document.getElementById('meh-close-drawer');
+
+  function openDrawer()  { drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; }
+
+  if (openBtn)  openBtn.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay)  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && drawer && drawer.classList.contains('open')) closeDrawer(); });
+
+  // ★ Sync tema en drawer (usa dark_mode.js ya cargado)
+  function syncMobileTheme() {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const ico  = document.getElementById('mdr-theme-ico');
+    const lbl  = document.getElementById('mdr-theme-lbl');
+    const pill = document.getElementById('mdr-theme-toggle-pill');
+    const dot  = document.getElementById('mdr-theme-pill-dot');
+    if (ico)  ico.className = dark ? 'fas fa-sun' : 'fas fa-moon';
+    if (lbl)  lbl.textContent = dark ? 'Modo claro' : 'Modo oscuro';
+    if (pill) pill.style.background = dark ? '#2563eb' : '#cbd5e0';
+    if (dot)  dot.style.transform   = dark ? 'translateX(18px)' : 'translateX(0)';
+  }
+  syncMobileTheme();
+
+  const mdrThemeBtn = document.getElementById('meh-drawer-theme');
+  if (mdrThemeBtn) {
+    mdrThemeBtn.addEventListener('click', () => {
+      document.getElementById('theme-toggle')?.click();
+      setTimeout(syncMobileTheme, 50);
     });
-  });
+  }
+
+  // ★ Badge carrito mobile
+  const chip = document.getElementById('bn-cart-chip');
+  if (chip && parseInt(chip.textContent) === 0) chip.style.display = 'none';
+
+  // ★ Logout desde drawer
+  const mdrLogout = document.getElementById('mdr-logout');
+  if (mdrLogout) {
+    mdrLogout.addEventListener('click', function(e) { e.preventDefault(); sessionStorage.clear(); localStorage.clear(); window.location.replace(this.href); });
+  }
 });
 
 window.addEventListener('pageshow', function(event) {
-  if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-    window.location.reload();
-  }
+  if (event.persisted || (window.performance && window.performance.navigation.type === 2)) window.location.reload();
 });
 </script>
 

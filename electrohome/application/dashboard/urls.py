@@ -35,5 +35,10 @@ urlpatterns = [
     path('promociones/<int:promo_id>/editar/', views.editar_promocion, name='editar_promocion'),
     path('promociones/<int:promo_id>/eliminar/', views.eliminar_promocion, name='eliminar_promocion'),
     path('envio-masivo/', views.envio_masivo, name='envio_masivo'),
+    
+    path('resenas/',                         views.resenas_list,    name='resenas'),
+path('resenas/<int:resena_id>/aprobar/', views.aprobar_resena,  name='aprobar_resena'),
+path('resenas/<int:resena_id>/rechazar/',views.rechazar_resena, name='rechazar_resena'),
+path('resenas/<int:resena_id>/eliminar/',views.eliminar_resena, name='eliminar_resena'),
 ]
 

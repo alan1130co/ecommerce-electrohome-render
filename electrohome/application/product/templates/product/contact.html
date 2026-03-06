@@ -20,147 +20,122 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
     <style>
-        /* ── DARK MODE HEADER ── */
-        [data-theme="dark"] header,
-        [data-theme="dark"] header.bg-blue-800 {
-            background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
-            border-bottom: 1px solid #21262d !important;
-            box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important;
-        }
+        [data-theme="dark"] header, [data-theme="dark"] header.bg-blue-800 { background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important; border-bottom: 1px solid #21262d !important; box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important; }
+        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @media (max-width: 640px) { input, select, textarea { font-size: 16px !important; } }
+        .hero-stats { display: inline-flex; align-items: center; gap: 1.5rem; background: rgba(255,255,255,0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 1rem 1.5rem; flex-wrap: wrap; justify-content: center; }
+        .hero-stats .divider { width: 1px; height: 40px; background: rgba(255,255,255,0.2); }
+        @media (max-width: 480px) { .hero-stats .divider { display: none; } .hero-stats { gap: 1rem; padding: 0.875rem 1rem; } }
 
-        /* ── Hero flotante ── */
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(-8px); }
-        }
-
-        /* ── Evitar zoom en inputs iOS ── */
-        @media (max-width: 640px) {
-            input, select, textarea { font-size: 16px !important; }
-        }
-
-        /* ── Hero stats: wrap en pantallas muy pequeñas ── */
-        .hero-stats {
-            display: inline-flex;
-            align-items: center;
-            gap: 1.5rem;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 16px;
-            padding: 1rem 1.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .hero-stats .divider {
-            width: 1px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
-        }
-
-        @media (max-width: 480px) {
-            .hero-stats .divider { display: none; }
-            .hero-stats { gap: 1rem; padding: 0.875rem 1rem; }
-        }
+      /* ============================================================
+         ★ MOBILE NAV
+         ============================================================ */
+      @media (max-width: 1023px) { header { display: none !important; } body { padding-bottom: 66px !important; } }
+      @media (min-width: 1024px) { #meh-header { display: none !important; } #meh-botnav { display: none !important; } #meh-overlay { display: none !important; } #meh-drawer { display: none !important; } }
+      #meh-header { position: sticky; top: 0; z-index: 999; background: #1e40af; padding: 10px 14px; display: flex; flex-direction: column; box-shadow: 0 2px 14px rgba(0,0,0,0.22); }
+      [data-theme="dark"] #meh-header { background: linear-gradient(180deg,#010409 0%,#0d1117 100%); border-bottom: 1px solid #21262d; }
+      .meh-top { display: flex; align-items: center; gap: 10px; }
+      .meh-logo { flex-shrink: 0; }
+      .meh-logo img { height: 33px; width: auto; display: block; }
+      .meh-top .meh-search { flex: 1; min-width: 0; }
+      .meh-search { display: flex; background: #fff; border-radius: 11px; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.15); box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+      [data-theme="dark"] .meh-search { background: #0d1117; border-color: #30363d; }
+      .meh-search input { flex: 1; min-width: 0; border: none; outline: none; padding: 11px 14px; font-size: 14px; background: transparent; color: #1a202c; font-family: inherit; }
+      [data-theme="dark"] .meh-search input { color: #e6edf3; }
+      .meh-search input::placeholder { color: #718096; }
+      .meh-search button { background: #f59e0b; border: none; padding: 0 18px; height: 44px; color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
+      .meh-search button:hover { background: #d97706; }
+      #meh-botnav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 998; height: 62px; background: #fff; border-top: 1px solid #e2e8f0; display: flex; align-items: stretch; box-shadow: 0 -4px 20px rgba(0,0,0,0.09); padding-bottom: env(safe-area-inset-bottom,0px); }
+      [data-theme="dark"] #meh-botnav { background: #0d1117; border-top-color: #21262d; }
+      .bn-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; text-decoration: none; background: none; border: none; cursor: pointer; color: #718096; font-family: inherit; padding: 6px 0 4px; position: relative; transition: color 0.18s; -webkit-tap-highlight-color: transparent; }
+      .bn-tab.bn-on { color: #2563eb; }
+      [data-theme="dark"] .bn-tab { color: #6e7681; }
+      [data-theme="dark"] .bn-tab.bn-on { color: #58a6ff; }
+      .bn-tab.bn-on::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 28px; height: 3px; background: #2563eb; border-radius: 0 0 4px 4px; }
+      [data-theme="dark"] .bn-tab.bn-on::before { background: #58a6ff; }
+      .bn-ico { font-size: 1.22rem; line-height: 1; position: relative; display: flex; align-items: center; justify-content: center; }
+      .bn-lbl { font-size: 9.5px; font-weight: 700; letter-spacing: 0.01em; line-height: 1; }
+      .bn-chip { position: absolute; top: -5px; right: -9px; background: #ef4444; color: #fff; font-size: 8px; font-weight: 800; min-width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #fff; padding: 0 2px; }
+      [data-theme="dark"] .bn-chip { border-color: #0d1117; }
+      .bn-tab.bn-cart .bn-ico { background: linear-gradient(135deg,#1e40af 0%,#2563eb 100%); border-radius: 50%; width: 46px; height: 46px; margin-top: -14px; box-shadow: 0 4px 16px rgba(37,99,235,0.45); color: #fff; font-size: 1.15rem; transition: transform 0.15s; }
+      .bn-tab.bn-cart:active .bn-ico { transform: scale(0.91); }
+      #meh-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(2px); }
+      #meh-overlay.open { opacity: 1; pointer-events: all; }
+      #meh-drawer { position: fixed; top: 0; right: -100%; width: min(82vw,310px); height: 100%; z-index: 1001; background: #fff; box-shadow: -8px 0 40px rgba(0,0,0,0.2); transition: right 0.3s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; overflow-y: auto; }
+      [data-theme="dark"] #meh-drawer { background: #0d1117; border-left: 1px solid #21262d; }
+      #meh-drawer.open { right: 0; }
+      .mdr-head { background: #1e40af; padding: 18px 16px 14px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+      [data-theme="dark"] .mdr-head { background: linear-gradient(135deg,#010409 0%,#0d1117 100%); border-bottom: 1px solid #21262d; }
+      .mdr-close { background: rgba(255,255,255,0.15); border: none; border-radius: 50%; width: 32px; height: 32px; color: #fff; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      .mdr-section { padding: 10px 18px 3px; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #718096; }
+      [data-theme="dark"] .mdr-section { color: #6e7681; }
+      .mdr-item { display: flex; align-items: center; gap: 13px; padding: 13px 18px; text-decoration: none; color: #1a202c; font-size: 0.9rem; font-weight: 600; border-bottom: 1px solid #e2e8f0; transition: background 0.15s, color 0.15s; cursor: pointer; background: none; border-left: none; border-right: none; border-top: none; width: 100%; text-align: left; font-family: inherit; }
+      [data-theme="dark"] .mdr-item { color: #e6edf3; border-color: #21262d; }
+      .mdr-item:hover { background: #f0f4f8; color: #2563eb; }
+      [data-theme="dark"] .mdr-item:hover { background: #161b22; color: #58a6ff; }
+      .mdr-ico { width: 34px; height: 34px; border-radius: 10px; background: rgba(37,99,235,0.09); color: #2563eb; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+      [data-theme="dark"] .mdr-ico { color: #58a6ff; }
+      .mdr-item.mdr-danger { color: #dc2626; }
+      .mdr-item.mdr-danger .mdr-ico { background: rgba(220,38,38,0.08); color: #dc2626; }
+      [data-theme="dark"] .mdr-item.mdr-danger { color: #f85149; }
+      [data-theme="dark"] .mdr-item.mdr-danger .mdr-ico { color: #f85149; background: rgba(248,81,73,0.1); }
+      .meh-avatar-btn { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#f59e0b 0%,#d97706 100%); border: 2px solid rgba(255,255,255,0.35); color: #fff; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="bg-gray-50">
 
-<!-- ═══════════════════════════════════════════
-     HEADER  (idéntico al de home / products_list)
-     ═══════════════════════════════════════════ -->
+<!-- ★ MOBILE HEADER -->
+<div id="meh-header">
+  <div class="meh-top">
+    <a href="{% url 'product:home' %}" class="meh-logo">
+      <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" />
+    </a>
+    <form action="{% url 'product:search' %}" method="GET" class="meh-search">
+      <input type="text" name="q" placeholder="Buscar productos..." value="{{ request.GET.q }}" autocomplete="off" />
+      <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </div>
+</div>
+
 <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500 sticky top-0 z-50">
   <nav class="container mx-auto px-4 py-3">
     <div class="flex justify-between items-center gap-4">
-
-      <!-- Logo -->
       <div class="flex items-center space-x-2 flex-shrink-0">
-        <a href="{% url 'product:home' %}">
-          <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome"
-               class="w-20 h-auto hover:scale-105 transition-transform duration-500" />
-        </a>
+        <a href="{% url 'product:home' %}"><img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" class="w-20 h-auto hover:scale-105 transition-transform duration-500" /></a>
       </div>
-
-      <!-- Buscador Desktop -->
-<div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
-  <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
-    <input type="text" name="q" placeholder="Buscar productos..."
-           class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
-           value="{{ request.GET.q }}" />
-    <button type="submit"
-            class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
-      <i class="fas fa-search"></i>
-    </button>
-  </form>
-</div>
-
-      <!-- Nav Desktop -->
+      <div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
+        <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
+          <input type="text" name="q" placeholder="Buscar productos..." class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800" value="{{ request.GET.q }}" />
+          <button type="submit" class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition"><i class="fas fa-search"></i></button>
+        </form>
+      </div>
       <div class="hidden lg:flex space-x-6">
-        <a href="{% url 'product:home' %}"         class="text-yellow-400 font-semibold">Inicio</a>
+        <a href="{% url 'product:home' %}" class="text-yellow-400 font-semibold">Inicio</a>
         <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 transition">Productos</a>
-        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 transition">Contacto</a>
+        <a href="{% url 'product:contact' %}" class="text-gray-50 hover:text-yellow-300 transition">Contacto</a>
       </div>
-
-      <!-- Controles derechos -->
       <div class="flex items-center space-x-3">
-
-        <!-- Botón Tema -->
         <button id="theme-toggle" class="theme-toggle-button" aria-label="Cambiar tema">
-          <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
+          <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-
-        <!-- Wishlist -->
         {% if user.is_authenticated %}
         <a href="{% url 'product:wishlist' %}" class="relative text-white hover:text-red-400 transition">
           <i class="fas fa-heart text-2xl"></i>
-          {% if user.wishlist.total_items > 0 %}
-          <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-            {{ user.wishlist.total_items }}
-          </span>
-          {% endif %}
+          {% if user.wishlist.total_items > 0 %}<span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">{{ user.wishlist.total_items }}</span>{% endif %}
         </a>
         {% endif %}
-
-        <!-- Carrito -->
         <a href="{% url 'product:cart' %}" class="relative text-white hover:text-yellow-300 transition">
           <i class="fas fa-shopping-cart text-2xl"></i>
-          <span id="cart-counter" class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-            {{ cart_items_count|default:0 }}
-          </span>
+          <span id="cart-counter" class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">{{ cart_items_count|default:0 }}</span>
         </a>
-
         {% if user.is_authenticated %}
-        <!-- Menú Usuario -->
         <div class="relative">
-          <button id="user-menu-btn" aria-label="Menú usuario" class="flex items-center justify-center">
-            {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
-          </button>
+          <button id="user-menu-btn" class="flex items-center justify-center">{{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}</button>
           <div id="user-dropdown" class="hidden absolute right-0 mt-3 z-50" style="width:270px;">
-            <div class="dropdown-header">
-              <div class="flex items-center gap-3">
-                <div class="dropdown-avatar">
-                  {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
-                </div>
-                <div>
-                  <div class="dropdown-name">
-                    {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
-                  </div>
-                  <div class="dropdown-badge"><i class="fas fa-user-check" style="font-size:.6rem;"></i> Cliente</div>
-                </div>
-              </div>
-            </div>
+            <div class="dropdown-header"><div class="flex items-center gap-3"><div class="dropdown-avatar">{{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}</div><div><div class="dropdown-name">{% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</div><div class="dropdown-badge"><i class="fas fa-user-check" style="font-size:.6rem;"></i> Cliente</div></div></div></div>
             <div style="padding:6px 0;">
-              <a href="{% url 'user:profile' %}"    class="dropdown-item"><span class="item-icon"><i class="fas fa-user"></i></span><span>Mi Perfil</span></a>
+              <a href="{% url 'user:profile' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-user"></i></span><span>Mi Perfil</span></a>
               <a href="{% url 'order:order_list' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-shopping-bag"></i></span><span>Mis Pedidos</span></a>
               <div class="dropdown-divider"></div>
               <a href="{% url 'user:logout' %}" class="dropdown-item logout"><span class="item-icon"><i class="fas fa-sign-out-alt"></i></span><span>Cerrar Sesión</span></a>
@@ -168,44 +143,26 @@
           </div>
         </div>
         {% else %}
-        <a href="{% url 'user:login' %}"    class="hidden md:inline-flex items-center gap-2 text-white hover:text-yellow-300 font-semibold text-sm transition"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+        <a href="{% url 'user:login' %}" class="hidden md:inline-flex items-center gap-2 text-white hover:text-yellow-300 font-semibold text-sm transition"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
         <a href="{% url 'user:register' %}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition text-sm">Registrarse</a>
         {% endif %}
-
-        <!-- Mobile Menu Btn -->
-        <button class="lg:hidden text-gray-50 hover:text-yellow-300" id="mobile-menu-button">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
+        <button class="lg:hidden text-gray-50 hover:text-yellow-300" id="mobile-menu-button"><i class="fas fa-bars text-xl"></i></button>
       </div>
     </div>
-
-   <!-- Buscador Mobile -->
     <div class="md:hidden mt-3">
-      <form action="{% url 'product:search' %}" method="GET">
-        <div class="flex w-full">
-          <input type="text" name="q" placeholder="Buscar productos..."
-                 class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
-                 value="{{ request.GET.q }}" />
-          <button type="submit"
-                  class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
-      </form>
+      <form action="{% url 'product:search' %}" method="GET"><div class="flex w-full"><input type="text" name="q" placeholder="Buscar productos..." class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800" value="{{ request.GET.q }}" /><button type="submit" class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition"><i class="fas fa-search"></i></button></div></form>
     </div>
-
-    <!-- Mobile Menu -->
     <div class="lg:hidden mt-4 pb-4 hidden" id="mobile-menu">
       <div class="flex flex-col space-y-2">
-        <a href="{% url 'product:home' %}"         class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-home mr-2"></i>Inicio</a>
+        <a href="{% url 'product:home' %}" class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-home mr-2"></i>Inicio</a>
         <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-tag mr-2"></i>Productos</a>
-        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-envelope mr-2"></i>Contacto</a>
+        <a href="{% url 'product:contact' %}" class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-envelope mr-2"></i>Contacto</a>
         <hr class="border-blue-600">
         {% if user.is_authenticated %}
-        <a href="{% url 'user:profile' %}"    class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-user mr-3"></i>Mi Perfil</a>
+        <a href="{% url 'user:profile' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-user mr-3"></i>Mi Perfil</a>
         <a href="{% url 'product:wishlist' %}" class="flex items-center text-white hover:text-red-300 py-2"><i class="fas fa-heart mr-3"></i>Lista de Deseos</a>
         <a href="{% url 'order:order_list' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-shopping-bag mr-3"></i>Mis Pedidos</a>
-        <a href="{% url 'user:logout' %}"      class="flex items-center text-red-300 hover:text-red-100 py-2"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
+        <a href="{% url 'user:logout' %}" class="flex items-center text-red-300 hover:text-red-100 py-2"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
         {% else %}
         <a href="{% url 'user:login' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-sign-in-alt mr-3"></i>Ingresar</a>
         {% endif %}
@@ -214,262 +171,189 @@
   </nav>
 </header>
 
-<!-- ═══════════════════════════════════════════
-     HERO
-     ═══════════════════════════════════════════ -->
+<!-- HERO -->
 <section style="position:relative;background:linear-gradient(135deg,#1e3a8a 0%,#1d4ed8 55%,#2563eb 100%);padding:3.5rem 1rem 4.5rem;overflow:hidden;">
   <div style="position:absolute;inset:0;background:radial-gradient(circle at 15% 50%,rgba(255,255,255,0.06) 0%,transparent 50%),radial-gradient(circle at 85% 20%,rgba(245,158,11,0.18) 0%,transparent 40%);"></div>
   <div class="container mx-auto px-4 text-center" style="position:relative;z-index:10;">
-    <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:20px;font-size:1.8rem;color:white;margin-bottom:1.25rem;box-shadow:0 8px 32px rgba(245,158,11,0.45);animation:floatIcon 3s ease-in-out infinite;">
-      <i class="fas fa-envelope"></i>
-    </div>
+    <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;background:linear-gradient(135deg,#f59e0b,#d97706);border-radius:20px;font-size:1.8rem;color:white;margin-bottom:1.25rem;box-shadow:0 8px 32px rgba(245,158,11,0.45);animation:floatIcon 3s ease-in-out infinite;"><i class="fas fa-envelope"></i></div>
     <h1 style="font-size:clamp(1.8rem,5vw,3rem);font-weight:900;color:#ffffff;margin-bottom:0.875rem;letter-spacing:-0.02em;">Contáctanos</h1>
-    <p style="font-size:1rem;color:rgba(255,255,255,0.8);max-width:480px;margin:0 auto 2rem;line-height:1.6;">
-      Estamos aquí para ayudarte. Envíanos tu mensaje y te responderemos pronto.
-    </p>
+    <p style="font-size:1rem;color:rgba(255,255,255,0.8);max-width:480px;margin:0 auto 2rem;line-height:1.6;">Estamos aquí para ayudarte. Envíanos tu mensaje y te responderemos pronto.</p>
     <div class="hero-stats">
-      <div style="display:flex;flex-direction:column;align-items:center;">
-        <span style="font-size:1.4rem;font-weight:800;color:#fbbf24;line-height:1;">24h</span>
-        <span style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">Tiempo de respuesta</span>
-      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;"><span style="font-size:1.4rem;font-weight:800;color:#fbbf24;line-height:1;">24h</span><span style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">Tiempo de respuesta</span></div>
       <div class="divider"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;">
-        <span style="font-size:1.4rem;font-weight:800;color:#fbbf24;line-height:1;">98%</span>
-        <span style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">Clientes satisfechos</span>
-      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;"><span style="font-size:1.4rem;font-weight:800;color:#fbbf24;line-height:1;">98%</span><span style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">Clientes satisfechos</span></div>
       <div class="divider"></div>
-      <div style="display:flex;flex-direction:column;align-items:center;">
-        <span style="font-size:1.4rem;font-weight:800;color:#fbbf24;line-height:1;">5★</span>
-        <span style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">Calificación promedio</span>
-      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;"><span style="font-size:1.4rem;font-weight:800;color:#fbbf24;line-height:1;">5★</span><span style="font-size:0.65rem;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.05em;margin-top:4px;">Calificación promedio</span></div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     MAIN
-     ═══════════════════════════════════════════ -->
 <main class="container mx-auto px-4 py-10">
-
-  <!-- Grid: 1 col en móvil, 2 en md+ -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-
-    <!-- ── FORMULARIO ── -->
+    <!-- FORMULARIO -->
     <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border-t-4 border-blue-700">
       <h2 class="text-2xl md:text-3xl font-bold mb-6 text-yellow-500">Envíanos un mensaje</h2>
-
-      {% if messages %}
-      {% for message in messages %}
+      {% if messages %}{% for message in messages %}
       <div class="mb-4 p-4 rounded-lg {% if message.tags == 'success' %}bg-green-100 border border-green-400 text-green-700{% else %}bg-red-100 border border-red-400 text-red-700{% endif %}">
         <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} mr-2"></i>{{ message }}
       </div>
-      {% endfor %}
-      {% endif %}
-
+      {% endfor %}{% endif %}
       <form method="POST" class="space-y-4">
         {% csrf_token %}
-
-        <div>
-          <label for="name" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user text-blue-600 mr-2"></i>Nombre Completo</label>
-          <input type="text" id="name" name="name" required placeholder="Tu nombre"
-                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition">
-        </div>
-
-        <div>
-          <label for="email" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-envelope text-blue-600 mr-2"></i>Correo Electrónico</label>
-          <input type="email" id="email" name="email" required placeholder="tu@email.com"
-                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition">
-        </div>
-
-        <div>
-          <label for="phone" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-phone text-blue-600 mr-2"></i>Teléfono (opcional)</label>
-          <input type="tel" id="phone" name="phone" placeholder="+57 300 123 4567"
-                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition">
-        </div>
-
-        <div>
-          <label for="subject" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-tag text-blue-600 mr-2"></i>Asunto</label>
-          <select id="subject" name="subject" required
-                  class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition">
-            <option value="">Selecciona un asunto</option>
-            <option value="consulta">Consulta General</option>
-            <option value="soporte">Soporte Técnico</option>
-            <option value="compra">Información de Compra</option>
-            <option value="garantia">Garantías</option>
-            <option value="envio">Envíos y Entregas</option>
-            <option value="otro">Otro</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="message" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-comment text-blue-600 mr-2"></i>Mensaje</label>
-          <textarea id="message" name="message" rows="5" required placeholder="Escribe tu mensaje aquí..."
-                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition resize-none"></textarea>
-        </div>
-
-        <button type="submit"
-                class="w-full bg-yellow-400 text-white font-bold py-4 rounded-lg hover:bg-blue-800 transition transform hover:scale-[1.02] shadow-lg">
-          <i class="fas fa-paper-plane mr-2"></i>Enviar Mensaje
-        </button>
+        <div><label for="name" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-user text-blue-600 mr-2"></i>Nombre Completo</label><input type="text" id="name" name="name" required placeholder="Tu nombre" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition"></div>
+        <div><label for="email" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-envelope text-blue-600 mr-2"></i>Correo Electrónico</label><input type="email" id="email" name="email" required placeholder="tu@email.com" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition"></div>
+        <div><label for="phone" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-phone text-blue-600 mr-2"></i>Teléfono (opcional)</label><input type="tel" id="phone" name="phone" placeholder="+57 300 123 4567" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition"></div>
+        <div><label for="subject" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-tag text-blue-600 mr-2"></i>Asunto</label><select id="subject" name="subject" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition"><option value="">Selecciona un asunto</option><option value="consulta">Consulta General</option><option value="soporte">Soporte Técnico</option><option value="compra">Información de Compra</option><option value="garantia">Garantías</option><option value="envio">Envíos y Entregas</option><option value="otro">Otro</option></select></div>
+        <div><label for="message" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-comment text-blue-600 mr-2"></i>Mensaje</label><textarea id="message" name="message" rows="5" required placeholder="Escribe tu mensaje aquí..." class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition resize-none"></textarea></div>
+        <button type="submit" class="w-full bg-yellow-400 text-white font-bold py-4 rounded-lg hover:bg-blue-800 transition transform hover:scale-[1.02] shadow-lg"><i class="fas fa-paper-plane mr-2"></i>Enviar Mensaje</button>
       </form>
     </div>
 
-    <!-- ── INFO + REDES + MAPA ── -->
+    <!-- INFO -->
     <div class="space-y-6">
-
-      <!-- Info de contacto -->
       <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border-l-4 border-blue-700">
         <h3 class="text-xl md:text-2xl font-bold mb-5 text-blue-800"><i class="fas fa-info-circle mr-2"></i>Información de Contacto</h3>
         <div class="space-y-4">
-          <div class="flex items-start space-x-4">
-            <div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-map-marker-alt text-blue-700 text-lg"></i></div>
-            <div><h4 class="font-bold text-gray-800">Dirección</h4><p class="text-gray-600 text-sm">Calle 1 #2-40<br>Cartagena de Indias, Colombia</p></div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-phone text-blue-700 text-lg"></i></div>
-            <div><h4 class="font-bold text-gray-800">Teléfono</h4><p class="text-gray-600 text-sm">+57 300 760 7645</p></div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-envelope text-blue-700 text-lg"></i></div>
-            <div><h4 class="font-bold text-gray-800">Email</h4><p class="text-gray-600 text-sm">info@electrohome.com</p></div>
-          </div>
-          <div class="flex items-start space-x-4">
-            <div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-clock text-blue-700 text-lg"></i></div>
-            <div><h4 class="font-bold text-gray-800">Horario</h4><p class="text-gray-600 text-sm">Lun - Vie: 8:00 AM – 6:00 PM<br>Sábados: 9:00 AM – 2:00 PM<br>Domingos: Cerrado</p></div>
-          </div>
+          <div class="flex items-start space-x-4"><div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-map-marker-alt text-blue-700 text-lg"></i></div><div><h4 class="font-bold text-gray-800">Dirección</h4><p class="text-gray-600 text-sm">Calle 1 #2-40<br>Cartagena de Indias, Colombia</p></div></div>
+          <div class="flex items-start space-x-4"><div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-phone text-blue-700 text-lg"></i></div><div><h4 class="font-bold text-gray-800">Teléfono</h4><p class="text-gray-600 text-sm">+57 300 760 7645</p></div></div>
+          <div class="flex items-start space-x-4"><div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-envelope text-blue-700 text-lg"></i></div><div><h4 class="font-bold text-gray-800">Email</h4><p class="text-gray-600 text-sm">info@electrohome.com</p></div></div>
+          <div class="flex items-start space-x-4"><div class="bg-blue-100 p-3 rounded-lg flex-shrink-0"><i class="fas fa-clock text-blue-700 text-lg"></i></div><div><h4 class="font-bold text-gray-800">Horario</h4><p class="text-gray-600 text-sm">Lun - Vie: 8:00 AM – 6:00 PM<br>Sábados: 9:00 AM – 2:00 PM<br>Domingos: Cerrado</p></div></div>
         </div>
       </div>
-
-      <!-- Redes sociales -->
       <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border-t-4 border-blue-700">
         <h3 class="text-xl md:text-2xl font-bold mb-2 text-blue-800"><i class="fas fa-share-alt mr-2"></i>Síguenos en Redes</h3>
         <p class="mb-5 text-gray-600 text-sm">Conéctate con nosotros</p>
         <div class="space-y-3">
-          <a href="https://facebook.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-blue-600 hover:bg-blue-50 transition group">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-facebook-f text-white"></i></div>
-              <div><p class="font-semibold text-gray-800 text-sm">Facebook</p><p class="text-xs text-gray-500">@electrohome</p></div>
-            </div>
-            <i class="fas fa-arrow-right text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i>
-          </a>
-          <a href="https://instagram.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-pink-500 hover:bg-pink-50 transition group">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-instagram text-white"></i></div>
-              <div><p class="font-semibold text-gray-800 text-sm">Instagram</p><p class="text-xs text-gray-500">@electrohome</p></div>
-            </div>
-            <i class="fas fa-arrow-right text-gray-400 group-hover:text-pink-600 group-hover:translate-x-1 transition-all"></i>
-          </a>
-          <a href="https://tiktok.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-gray-900 hover:bg-gray-50 transition group">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-tiktok text-white"></i></div>
-              <div><p class="font-semibold text-gray-800 text-sm">TikTok</p><p class="text-xs text-gray-500">@electrohome</p></div>
-            </div>
-            <i class="fas fa-arrow-right text-gray-400 group-hover:text-gray-900 group-hover:translate-x-1 transition-all"></i>
-          </a>
-          <a href="https://twitter.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-gray-900 hover:bg-gray-50 transition group">
-            <div class="flex items-center space-x-3">
-              <div class="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-x-twitter text-white"></i></div>
-              <div><p class="font-semibold text-gray-800 text-sm">Twitter / X</p><p class="text-xs text-gray-500">@electrohome</p></div>
-            </div>
-            <i class="fas fa-arrow-right text-gray-400 group-hover:text-gray-900 group-hover:translate-x-1 transition-all"></i>
-          </a>
+          <a href="https://facebook.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-blue-600 hover:bg-blue-50 transition group"><div class="flex items-center space-x-3"><div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-facebook-f text-white"></i></div><div><p class="font-semibold text-gray-800 text-sm">Facebook</p><p class="text-xs text-gray-500">@electrohome</p></div></div><i class="fas fa-arrow-right text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all"></i></a>
+          <a href="https://instagram.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-pink-500 hover:bg-pink-50 transition group"><div class="flex items-center space-x-3"><div class="w-10 h-10 bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-instagram text-white"></i></div><div><p class="font-semibold text-gray-800 text-sm">Instagram</p><p class="text-xs text-gray-500">@electrohome</p></div></div><i class="fas fa-arrow-right text-gray-400 group-hover:text-pink-600 group-hover:translate-x-1 transition-all"></i></a>
+          <a href="https://tiktok.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-gray-900 hover:bg-gray-50 transition group"><div class="flex items-center space-x-3"><div class="w-10 h-10 bg-black rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-tiktok text-white"></i></div><div><p class="font-semibold text-gray-800 text-sm">TikTok</p><p class="text-xs text-gray-500">@electrohome</p></div></div><i class="fas fa-arrow-right text-gray-400 group-hover:text-gray-900 group-hover:translate-x-1 transition-all"></i></a>
+          <a href="https://twitter.com" target="_blank" class="flex items-center justify-between p-3 border-2 border-gray-200 rounded-lg hover:border-gray-900 hover:bg-gray-50 transition group"><div class="flex items-center space-x-3"><div class="w-10 h-10 bg-gray-900 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"><i class="fab fa-x-twitter text-white"></i></div><div><p class="font-semibold text-gray-800 text-sm">Twitter / X</p><p class="text-xs text-gray-500">@electrohome</p></div></div><i class="fas fa-arrow-right text-gray-400 group-hover:text-gray-900 group-hover:translate-x-1 transition-all"></i></a>
         </div>
       </div>
-
-      <!-- Mapa -->
       <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border-t-4 border-blue-700">
         <h3 class="text-xl md:text-2xl font-bold mb-4 text-blue-800"><i class="fas fa-map mr-2"></i>Ubicación</h3>
-        <div class="bg-gray-100 rounded-lg flex items-center justify-center" style="height:200px;">
-          <div class="text-center">
-            <i class="fas fa-map-marked-alt text-5xl text-blue-700 mb-3"></i>
-            <p class="text-gray-600 font-semibold text-sm">Mapa de ubicación</p>
-          </div>
-        </div>
+        <div class="bg-gray-100 rounded-lg flex items-center justify-center" style="height:200px;"><div class="text-center"><i class="fas fa-map-marked-alt text-5xl text-blue-700 mb-3"></i><p class="text-gray-600 font-semibold text-sm">Mapa de ubicación</p></div></div>
       </div>
     </div>
   </div>
 </main>
 
-<!-- FOOTER -->
 <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-12 mt-10">
   <div class="container mx-auto px-6">
-    <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold text-white mb-3 tracking-wide">ElectroHome</h2>
-      <p class="text-gray-400 max-w-md mx-auto text-sm">La mejor tecnología para tu hogar. Compra fácil, rápido y con total seguridad.</p>
-    </div>
+    <div class="text-center mb-8"><h2 class="text-3xl font-bold text-white mb-3 tracking-wide">ElectroHome</h2><p class="text-gray-400 max-w-md mx-auto text-sm">La mejor tecnología para tu hogar.</p></div>
     <div class="flex justify-center space-x-8 mb-10">
-      <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i></a>
-      <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i></a>
-      <a href="https://tiktok.com"    target="_blank" class="transition transform hover:scale-110"><i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i></a>
-      <a href="https://twitter.com"   target="_blank" class="transition transform hover:scale-110"><i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i></a>
+      <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f text-2xl text-blue-500"></i></a>
+      <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram text-2xl text-pink-500"></i></a>
+      <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok text-2xl text-white"></i></a>
+      <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter text-2xl text-gray-200"></i></a>
     </div>
     <div class="flex flex-wrap justify-center space-x-6 text-sm mb-8">
-      <a href="#" class="hover:text-white transition">Inicio</a>
-      <a href="#" class="hover:text-white transition">Productos</a>
-      <a href="#" class="hover:text-white transition">Ofertas</a>
-      <a href="#" class="hover:text-white transition">Nosotros</a>
-      <a href="#" class="hover:text-white transition">Contacto</a>
+      <a href="#" class="hover:text-white transition">Inicio</a><a href="#" class="hover:text-white transition">Productos</a><a href="#" class="hover:text-white transition">Ofertas</a><a href="#" class="hover:text-white transition">Nosotros</a><a href="#" class="hover:text-white transition">Contacto</a>
     </div>
-    <div class="text-center text-gray-400 text-sm mb-8">
-      <p>📍 Calle 1 #2-40, Cartagena de Indias, Colombia</p>
-      <p>📞 +57 300 760 7645</p>
-      <p>✉️ <a href="mailto:info@electrohome.com" class="underline hover:text-blue-400">info@electrohome.com</a></p>
-    </div>
-    <div class="border-t border-gray-700 pt-6 text-center text-xs text-gray-500">
-      &copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.
-    </div>
+    <div class="text-center text-gray-400 text-sm mb-8"><p>📍 Calle 1 #2-40, Cartagena de Indias, Colombia</p><p>📞 +57 300 760 7645</p><p>✉️ <a href="mailto:info@electrohome.com" class="underline hover:text-blue-400">info@electrohome.com</a></p></div>
+    <div class="border-t border-gray-700 pt-6 text-center text-xs text-gray-500">&copy; 2025 <span class="text-white font-semibold">ElectroHome</span>. Todos los derechos reservados.</div>
   </div>
 </footer>
 
+<!-- ★ BOTTOM NAV -->
+<nav id="meh-botnav">
+  <a href="{% url 'product:home' %}" class="bn-tab"><span class="bn-ico"><i class="fas fa-home"></i></span><span class="bn-lbl">Inicio</span></a>
+  {% if user.is_authenticated %}
+  <a href="{% url 'product:wishlist' %}" class="bn-tab"><span class="bn-ico"><i class="fas fa-heart"></i>{% if user.wishlist.total_items > 0 %}<span class="bn-chip">{{ user.wishlist.total_items }}</span>{% endif %}</span><span class="bn-lbl">Favoritos</span></a>
+  {% else %}
+  <a href="{% url 'user:login' %}" class="bn-tab"><span class="bn-ico"><i class="fas fa-heart"></i></span><span class="bn-lbl">Favoritos</span></a>
+  {% endif %}
+  <a href="{% url 'product:cart' %}" class="bn-tab bn-cart"><span class="bn-ico"><i class="fas fa-shopping-cart"></i><span class="bn-chip" id="bn-cart-chip">{{ cart_items_count|default:0 }}</span></span><span class="bn-lbl">Carrito</span></a>
+  <a href="{% url 'product:products_list' %}" class="bn-tab"><span class="bn-ico"><i class="fas fa-tag"></i></span><span class="bn-lbl">Productos</span></a>
+  <button class="bn-tab" id="meh-open-drawer"><span class="bn-ico"><i class="fas fa-bars"></i></span><span class="bn-lbl">Menú</span></button>
+</nav>
+
+<div id="meh-overlay"></div>
+
+<!-- ★ DRAWER -->
+<div id="meh-drawer">
+  <div class="mdr-head">
+    {% if user.is_authenticated %}
+    <div style="display:flex;align-items:center;gap:11px;">
+      <div class="meh-avatar-btn">{{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}</div>
+      <div><div style="color:#fff;font-weight:800;font-size:0.9rem;">{% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</div><div style="color:rgba(255,255,255,0.55);font-size:0.72rem;margin-top:1px;">Cliente ElectroHome</div></div>
+    </div>
+    {% else %}
+    <div><div style="color:#fff;font-weight:800;font-size:0.95rem;">¡Hola! 👋</div><div style="color:rgba(255,255,255,0.6);font-size:0.75rem;margin-top:2px;">Inicia sesión para más opciones</div></div>
+    {% endif %}
+    <button class="mdr-close" id="meh-close-drawer"><i class="fas fa-times"></i></button>
+  </div>
+  <div style="padding:8px 0;">
+    {% if user.is_authenticated %}
+    <div class="mdr-section">Mi cuenta</div>
+    <a href="{% url 'user:profile' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-user"></i></span>Mi Perfil</a>
+    <a href="{% url 'order:order_list' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-shopping-bag"></i></span>Mis Pedidos</a>
+    <a href="{% url 'product:wishlist' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-heart"></i></span>Lista de Deseos{% if user.wishlist.total_items > 0 %}<span style="margin-left:auto;background:#ef4444;color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:20px;">{{ user.wishlist.total_items }}</span>{% endif %}</a>
+    <a href="{% url 'product:cart' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-shopping-cart"></i></span>Mi Carrito{% if cart_items_count > 0 %}<span style="margin-left:auto;background:#1e40af;color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:20px;">{{ cart_items_count }}</span>{% endif %}</a>
+    {% else %}
+    <div class="mdr-section">Cuenta</div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px;">
+      <a href="{% url 'user:login' %}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;font-weight:700;font-size:0.92rem;text-decoration:none;"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</a>
+      <a href="{% url 'user:register' %}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:12px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-weight:700;font-size:0.92rem;text-decoration:none;"><i class="fas fa-user-plus"></i> Registrarse gratis</a>
+    </div>
+    <a href="{% url 'product:cart' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-shopping-cart"></i></span>Ver Carrito</a>
+    {% endif %}
+    <div class="mdr-section">Navegación</div>
+    <a href="{% url 'product:home' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-home"></i></span>Inicio</a>
+    <a href="{% url 'product:products_list' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-tag"></i></span>Productos</a>
+    <a href="{% url 'product:contact' %}" class="mdr-item"><span class="mdr-ico"><i class="fas fa-envelope"></i></span>Contacto</a>
+    <div class="mdr-section">Preferencias</div>
+    <button class="mdr-item" id="meh-drawer-theme">
+      <span class="mdr-ico"><i class="fas fa-moon" id="mdr-theme-ico"></i></span>
+      <span id="mdr-theme-lbl">Modo oscuro</span>
+      <span id="mdr-theme-toggle-pill" style="margin-left:auto;width:40px;height:22px;border-radius:11px;background:#cbd5e0;display:flex;align-items:center;padding:2px;transition:background 0.3s;"><span id="mdr-theme-pill-dot" style="width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);transition:transform 0.3s;transform:translateX(0);"></span></span>
+    </button>
+    {% if user.is_authenticated %}
+    <div style="height:1px;background:#e2e8f0;margin:8px 16px;"></div>
+    <a href="{% url 'user:logout' %}" class="mdr-item mdr-danger" id="mdr-logout"><span class="mdr-ico"><i class="fas fa-sign-out-alt"></i></span>Cerrar Sesión</a>
+    {% endif %}
+  </div>
+</div>
+
 <script>
-function getCookie(name) {
-  let v = null;
-  if (document.cookie && document.cookie !== '') {
-    document.cookie.split(';').forEach(c => { c = c.trim(); if (c.startsWith(name + '=')) v = decodeURIComponent(c.slice(name.length + 1)); });
-  }
-  return v;
-}
-const csrftoken = getCookie('csrftoken');
+function getCookie(name){let v=null;if(document.cookie&&document.cookie!==''){const c=document.cookie.split(';');for(let i=0;i<c.length;i++){const ck=c[i].trim();if(ck.substring(0,name.length+1)===(name+'=')){v=decodeURIComponent(ck.substring(name.length+1));break;}}}return v;}
+const csrftoken=getCookie('csrftoken');
 
-function actualizarContadorCarrito(n) {
-  const el = document.getElementById('cart-counter');
-  if (el) { el.textContent = n; el.classList.add('animate-pulse'); setTimeout(() => el.classList.remove('animate-pulse'), 1000); }
-}
-
-function cargarContadorCarrito() {
-  fetch('/carrito/', { method:'GET', headers:{'X-Requested-With':'XMLHttpRequest'} })
-  .then(r => r.text()).then(html => {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const sc = doc.getElementById('cart-counter');
-    if (sc) actualizarContadorCarrito(sc.textContent);
-  }).catch(() => {});
-}
+function actualizarContadorCarrito(n){const el=document.getElementById('cart-counter');if(el){el.textContent=n;}const chip=document.getElementById('bn-cart-chip');if(chip){chip.textContent=n;chip.style.display=parseInt(n)===0?'none':'';};}
 
 document.addEventListener('DOMContentLoaded', () => {
-  cargarContadorCarrito();
+  fetch('/carrito/',{method:'GET',headers:{'X-Requested-With':'XMLHttpRequest'}}).then(r=>r.text()).then(html=>{const doc=new DOMParser().parseFromString(html,'text/html');const sc=doc.getElementById('cart-counter');if(sc)actualizarContadorCarrito(sc.textContent);}).catch(()=>{});
 
-  // Dropdown usuario
-  const btn = document.getElementById('user-menu-btn');
-  const dd  = document.getElementById('user-dropdown');
-  if (btn && dd) {
-    btn.addEventListener('click', e => { e.stopPropagation(); dd.classList.toggle('hidden'); });
-    document.addEventListener('click', e => { if (!btn.contains(e.target) && !dd.contains(e.target)) dd.classList.add('hidden'); });
-  }
+  const btn=document.getElementById('user-menu-btn'), dd=document.getElementById('user-dropdown');
+  if(btn&&dd){btn.addEventListener('click',e=>{e.stopPropagation();dd.classList.toggle('hidden');});document.addEventListener('click',e=>{if(!btn.contains(e.target)&&!dd.contains(e.target))dd.classList.add('hidden');});}
 
-  // Menú móvil
-  const mBtn  = document.getElementById('mobile-menu-button');
-  const mMenu = document.getElementById('mobile-menu');
-  if (mBtn && mMenu) mBtn.addEventListener('click', () => mMenu.classList.toggle('hidden'));
+  const mBtn=document.getElementById('mobile-menu-button'), mMenu=document.getElementById('mobile-menu');
+  if(mBtn&&mMenu)mBtn.addEventListener('click',()=>mMenu.classList.toggle('hidden'));
 
-  // Logout
-  document.querySelectorAll('a[href*="logout"]').forEach(l => {
-    l.addEventListener('click', e => { e.preventDefault(); sessionStorage.clear(); localStorage.clear(); window.location.replace(l.href); });
-  });
+  // ★ Drawer
+  const drawer=document.getElementById('meh-drawer'),overlay=document.getElementById('meh-overlay'),openBtn=document.getElementById('meh-open-drawer'),closeBtn=document.getElementById('meh-close-drawer');
+  function openDrawer(){drawer.classList.add('open');overlay.classList.add('open');document.body.style.overflow='hidden';}
+  function closeDrawer(){drawer.classList.remove('open');overlay.classList.remove('open');document.body.style.overflow='';}
+  if(openBtn)openBtn.addEventListener('click',openDrawer);
+  if(closeBtn)closeBtn.addEventListener('click',closeDrawer);
+  if(overlay)overlay.addEventListener('click',closeDrawer);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer&&drawer.classList.contains('open'))closeDrawer();});
+
+  function syncMobileTheme(){const dark=document.documentElement.getAttribute('data-theme')==='dark';const ico=document.getElementById('mdr-theme-ico');const lbl=document.getElementById('mdr-theme-lbl');const pill=document.getElementById('mdr-theme-toggle-pill');const dot=document.getElementById('mdr-theme-pill-dot');if(ico)ico.className=dark?'fas fa-sun':'fas fa-moon';if(lbl)lbl.textContent=dark?'Modo claro':'Modo oscuro';if(pill)pill.style.background=dark?'#2563eb':'#cbd5e0';if(dot)dot.style.transform=dark?'translateX(18px)':'translateX(0)';}
+  syncMobileTheme();
+  const mdrThemeBtn=document.getElementById('meh-drawer-theme');
+  if(mdrThemeBtn){mdrThemeBtn.addEventListener('click',()=>{document.getElementById('theme-toggle')?.click();setTimeout(syncMobileTheme,50);});}
+
+  const chip=document.getElementById('bn-cart-chip');
+  if(chip&&parseInt(chip.textContent)===0)chip.style.display='none';
+
+  const mdrLogout=document.getElementById('mdr-logout');
+  if(mdrLogout){mdrLogout.addEventListener('click',function(e){e.preventDefault();sessionStorage.clear();localStorage.clear();window.location.replace(this.href);});}
+
+  document.querySelectorAll('a[href*="logout"]').forEach(l=>{l.addEventListener('click',function(e){e.preventDefault();sessionStorage.clear();localStorage.clear();window.location.replace(l.href);});});
 });
 
-window.addEventListener('pageshow', e => {
-  if (e.persisted || (window.performance && window.performance.navigation.type === 2)) window.location.reload();
-});
+window.addEventListener('pageshow',e=>{if(e.persisted||(window.performance&&window.performance.navigation.type===2))window.location.reload();});
 </script>
 
 {% include 'chatbot/chatbot_widget.html' %}

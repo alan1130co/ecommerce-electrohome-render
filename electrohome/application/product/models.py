@@ -371,3 +371,42 @@ class Promocion(models.Model):
     def vigente(self):
         hoy = timezone.now().date()
         return self.activo and self.fecha_inicio <= hoy <= self.fecha_fin
+
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+class Resena(models.Model):
+    ESTADO_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('aprobada',  'Aprobada'),
+        ('rechazada', 'Rechazada'),
+    ]
+
+    producto     = models.ForeignKey('Producto', on_delete=models.CASCADE, related_name='resenas')
+    usuario      = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='resenas')
+    calificacion = models.PositiveSmallIntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
+    titulo       = models.CharField(max_length=120, blank=True)
+    comentario   = models.TextField(max_length=1000)
+    foto         = models.ImageField(upload_to='resenas/', blank=True, null=True)
+    estado       = models.CharField(max_length=12, choices=ESTADO_CHOICES, default='pendiente')
+    motivo_rechazo = models.CharField(max_length=255, blank=True)
+    creado_en    = models.DateTimeField(auto_now_add=True)
+    revisado_en  = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-creado_en']
+        unique_together = ('producto', 'usuario')
+        verbose_name = 'Reseña'
+        verbose_name_plural = 'Reseñas'
+
+    def __str__(self):
+        return f"{self.usuario.email} → {self.producto.nombre} ({self.calificacion}★)"
+
+    @property
+    def estrellas_llenas(self):
+        return range(self.calificacion)
+
+    @property
+    def estrellas_vacias(self):
+        return range(5 - self.calificacion)
