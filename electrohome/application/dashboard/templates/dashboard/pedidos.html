@@ -1,279 +1,186 @@
-<!--INDEX-->
 {% extends "dashboard/base.html" %}
 {% load static %}
 
-{% block title %}Panel de Control - ElectroHome{% endblock %}
+{% block title %}Pedidos - Dashboard{% endblock %}
 
 {% block content %}
 
-<div class="eh-page-header d-flex justify-content-between align-items-start">
+<div class="eh-page-header d-flex justify-content-between align-items-center">
     <div>
-        <h1 class="eh-page-title"><i class="fas fa-chart-line me-2" style="color:var(--yellow)"></i>Panel de Control</h1>
-        <p class="eh-page-subtitle">Resumen general de ElectroHome</p>
+        <h1 class="eh-page-title"><i class="fas fa-shopping-cart me-2" style="color:var(--yellow)"></i>Pedidos</h1>
+        <p class="eh-page-subtitle">
+            Total: <strong>{{ total_count }}</strong>
+            {% if estado_filtro %} — filtrando por <strong>{{ estado_filtro }}</strong>{% endif %}
+        </p>
     </div>
-    <div class="d-flex gap-2 flex-wrap">
-        <a href="{% url 'dashboard:reporte_pdf' %}?tipo=diario" class="eh-btn-danger">
-            <i class="fas fa-file-pdf"></i> Diario
-        </a>
-        <a href="{% url 'dashboard:reporte_pdf' %}?tipo=semanal" class="eh-btn-danger">
-            <i class="fas fa-file-pdf"></i> Semanal
-        </a>
-        <a href="{% url 'dashboard:reporte_pdf' %}?tipo=mensual" class="eh-btn-danger">
-            <i class="fas fa-file-pdf"></i> Mensual
-        </a>
+    <a href="{% url 'dashboard:index' %}" class="eh-btn-primary">
+        <i class="fas fa-arrow-left"></i> Dashboard
+    </a>
+</div>
+
+<!-- FILTROS -->
+<div class="d-flex gap-2 flex-wrap mb-4">
+    <a href="{% url 'dashboard:pedidos' %}"
+       style="padding:7px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;
+              {% if not estado_filtro %}background:linear-gradient(135deg,#0f172a,#1e3a8a);color:white;{% else %}background:#f1f5f9;color:#64748b;{% endif %}">
+        Todos
+    </a>
+    <a href="?status=pending"
+       style="padding:7px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;
+              {% if estado_filtro == 'pending' %}background:rgba(245,158,11,0.9);color:#0f172a;{% else %}background:#fef3c7;color:#d97706;{% endif %}">
+        Pendiente
+    </a>
+    <a href="?status=processing"
+       style="padding:7px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;
+              {% if estado_filtro == 'processing' %}background:rgba(6,182,212,0.9);color:white;{% else %}background:#cffafe;color:#0891b2;{% endif %}">
+        Procesando
+    </a>
+    <a href="?status=shipped"
+       style="padding:7px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;
+              {% if estado_filtro == 'shipped' %}background:rgba(29,78,216,0.9);color:white;{% else %}background:#dbeafe;color:#1d4ed8;{% endif %}">
+        Enviado
+    </a>
+    <a href="?status=delivered"
+       style="padding:7px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;
+              {% if estado_filtro == 'delivered' %}background:rgba(16,185,129,0.9);color:white;{% else %}background:#d1fae5;color:#059669;{% endif %}">
+        Entregado
+    </a>
+    <a href="?status=cancelled"
+       style="padding:7px 16px;border-radius:8px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;
+              {% if estado_filtro == 'cancelled' %}background:rgba(239,68,68,0.9);color:white;{% else %}background:#fee2e2;color:#dc2626;{% endif %}">
+        Cancelado
+    </a>
+</div>
+
+<div class="eh-card">
+    <div class="table-responsive">
+        <table class="eh-table">
+            <thead>
+                <tr>
+                    <th>Pedido</th>
+                    <th>Cliente</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for orden in page_obj %}
+                <tr>
+                    <td><span class="eh-badge eh-badge-blue">#{{ orden.order_number }}</span></td>
+                    <td>
+                        {% if orden.user %}<strong style="color:#1e3a8a;">{{ orden.user.get_full_name }}</strong>
+                        {% else %}<span style="color:#cbd5e1;">Anónimo</span>{% endif %}
+                    </td>
+                    <td><a href="mailto:{{ orden.email }}" style="color:var(--blue-mid);">{{ orden.email }}</a></td>
+                    <td>
+                        {% if orden.status == 'pending' %}<span class="eh-badge eh-badge-yellow">Pendiente</span>
+                        {% elif orden.status == 'processing' %}<span class="eh-badge eh-badge-cyan">Procesando</span>
+                        {% elif orden.status == 'shipped' %}<span class="eh-badge eh-badge-blue">Enviado</span>
+                        {% elif orden.status == 'delivered' %}<span class="eh-badge eh-badge-green">Entregado</span>
+                        {% elif orden.status == 'cancelled' %}<span class="eh-badge eh-badge-red">Cancelado</span>
+                        {% else %}<span class="eh-badge" style="background:#f1f5f9;color:#94a3b8;">{{ orden.get_status_display }}</span>
+                        {% endif %}
+                    </td>
+                    <td><strong style="color:#059669;">${{ orden.total }}</strong></td>
+                    <td style="color:#64748b;font-size:0.82rem;">{{ orden.created_at|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <button class="eh-btn-primary" style="padding:6px 12px;font-size:0.8rem;"
+                                onclick="abrirModal('{{ orden.id }}','{{ orden.order_number }}','{{ orden.status }}')">
+                            <i class="fas fa-edit"></i> Estado
+                        </button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" style="text-align:center;padding:3rem;color:#94a3b8;">
+                        <i class="fas fa-shopping-cart" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i>
+                        No hay pedidos registrados
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
-<!-- ACCESOS RÁPIDOS -->
-<div class="row g-3 mb-4">
-    <div class="col-6 col-md-3">
-        <a href="{% url 'dashboard:productos' %}" class="eh-access-card">
-            <span class="eh-access-icon">📦</span>
-            <div class="eh-access-title">Productos</div>
-            <div class="eh-access-sub">Administrar catálogo</div>
-            <span class="eh-badge eh-badge-blue">{{ total_productos }}</span>
-        </a>
-    </div>
-    <div class="col-6 col-md-3">
-        <a href="{% url 'dashboard:categorias' %}" class="eh-access-card">
-            <span class="eh-access-icon">📋</span>
-            <div class="eh-access-title">Categorías</div>
-            <div class="eh-access-sub">Organizar productos</div>
-            <span class="eh-badge eh-badge-yellow">{{ total_categorias }}</span>
-        </a>
-    </div>
-    <div class="col-6 col-md-3">
-        <a href="{% url 'dashboard:pedidos' %}" class="eh-access-card">
-            <span class="eh-access-icon">🛒</span>
-            <div class="eh-access-title">Pedidos</div>
-            <div class="eh-access-sub">Revisar órdenes</div>
-            <span class="eh-badge eh-badge-green">{{ total_pedidos }}</span>
-        </a>
-    </div>
-    <div class="col-6 col-md-3">
-        <a href="{% url 'dashboard:usuarios' %}" class="eh-access-card">
-            <span class="eh-access-icon">👥</span>
-            <div class="eh-access-title">Usuarios</div>
-            <div class="eh-access-sub">Gestión de clientes</div>
-            <span class="eh-badge eh-badge-red">{{ total_clientes }}</span>
-        </a>
+{% if page_obj.has_other_pages %}
+<div class="d-flex justify-content-center gap-2 mt-4">
+    {% if page_obj.has_previous %}
+    <a href="?page=1{% if estado_filtro %}&status={{ estado_filtro }}{% endif %}" class="eh-btn-primary" style="padding:6px 14px;">«</a>
+    <a href="?page={{ page_obj.previous_page_number }}{% if estado_filtro %}&status={{ estado_filtro }}{% endif %}" class="eh-btn-primary" style="padding:6px 14px;">‹</a>
+    {% endif %}
+    <span class="eh-btn-primary" style="padding:6px 14px;cursor:default;background:linear-gradient(135deg,#0f172a,#1e3a8a);">
+        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}{% if estado_filtro %}&status={{ estado_filtro }}{% endif %}" class="eh-btn-primary" style="padding:6px 14px;">›</a>
+    <a href="?page={{ page_obj.paginator.num_pages }}{% if estado_filtro %}&status={{ estado_filtro }}{% endif %}" class="eh-btn-primary" style="padding:6px 14px;">»</a>
+    {% endif %}
+</div>
+{% endif %}
+
+<!-- MODAL CAMBIAR ESTADO -->
+<div id="modal-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:3000;align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:16px;width:100%;max-width:400px;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.3);">
+        <div style="background:linear-gradient(135deg,#0f172a,#1e3a8a);padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;">
+            <h5 style="color:white;margin:0;font-weight:700;"><i class="fas fa-edit me-2" style="color:var(--yellow)"></i>Cambiar Estado</h5>
+            <button onclick="cerrarModal()" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.2rem;cursor:pointer;">✕</button>
+        </div>
+        <form method="post" id="form-estado" action="">
+            {% csrf_token %}
+            <div style="padding:1.5rem;">
+                <p style="color:#64748b;margin-bottom:1rem;font-size:0.9rem;">
+                    Pedido <strong id="modal-numero" style="color:#1e3a8a;"></strong>
+                </p>
+                <label style="font-size:0.8rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:6px;">
+                    Nuevo Estado
+                </label>
+                <select name="status" id="modal-select"
+                        style="width:100%;padding:10px 14px;border:2px solid #e2e8f0;border-radius:8px;
+                               font-size:0.9rem;color:#1e293b;outline:none;appearance:auto;
+                               transition:border-color 0.2s;"
+                        onfocus="this.style.borderColor='#1d4ed8'"
+                        onblur="this.style.borderColor='#e2e8f0'">
+                    <option value="pending">Pendiente</option>
+                    <option value="processing">Procesando</option>
+                    <option value="shipped">Enviado</option>
+                    <option value="delivered">Entregado</option>
+                    <option value="cancelled">Cancelado</option>
+                </select>
+            </div>
+            <div style="padding:1rem 1.5rem 1.5rem;display:flex;gap:0.75rem;justify-content:flex-end;">
+                <button type="button" onclick="cerrarModal()"
+                        style="padding:8px 20px;border-radius:8px;border:2px solid #e2e8f0;background:white;
+                               color:#64748b;font-weight:600;font-size:0.875rem;cursor:pointer;">
+                    Cancelar
+                </button>
+                <button type="submit" class="eh-btn-primary" style="padding:8px 20px;">
+                    <i class="fas fa-save"></i> Guardar
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
-<!-- MÉTRICAS -->
-<div class="row g-3 mb-4">
-    <div class="col-6 col-md-3">
-        <div class="eh-stat blue">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <div class="eh-stat-label">Total Ventas</div>
-                <div class="eh-stat-icon"><i class="fas fa-shopping-bag"></i></div>
-            </div>
-            <div class="eh-stat-value">{{ total_ventas }}</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="eh-stat green">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <div class="eh-stat-label">Ingresos Totales</div>
-                <div class="eh-stat-icon"><i class="fas fa-dollar-sign"></i></div>
-            </div>
-            <div class="eh-stat-value" style="font-size:1.4rem;">${{ ingresos_totales|floatformat:0 }}</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="eh-stat yellow">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <div class="eh-stat-label">Conversión</div>
-                <div class="eh-stat-icon"><i class="fas fa-chart-pie"></i></div>
-            </div>
-            <div class="eh-stat-value">{{ conversion }}%</div>
-        </div>
-    </div>
-    <div class="col-6 col-md-3">
-        <div class="eh-stat cyan">
-            <div class="d-flex justify-content-between align-items-start mb-2">
-                <div class="eh-stat-label">Vistas Productos</div>
-                <div class="eh-stat-icon"><i class="fas fa-eye"></i></div>
-            </div>
-            <div class="eh-stat-value">{{ total_vistas }}</div>
-        </div>
-    </div>
-</div>
-
-<!-- TOP PRODUCTOS -->
-<div class="row g-3 mb-4">
-    <div class="col-md-6">
-        <div class="eh-card h-100">
-            <div class="eh-card-header">
-                <i class="fas fa-trophy" style="color:var(--yellow)"></i> Productos Más Vendidos
-            </div>
-            <div class="p-0">
-                {% if top_productos %}
-                <table class="eh-table">
-                    <thead><tr><th>Producto</th><th style="text-align:right">Ventas</th></tr></thead>
-                    <tbody>
-                        {% for item in top_productos %}
-                        <tr>
-                            <td>{{ item.product__nombre }}</td>
-                            <td style="text-align:right"><span class="eh-badge eh-badge-green">{{ item.total }}</span></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <div style="padding:2rem;text-align:center;color:#94a3b8;">No hay ventas registradas aún</div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="eh-card h-100">
-            <div class="eh-card-header">
-                <i class="fas fa-eye" style="color:#06b6d4"></i> Productos Más Vistos
-            </div>
-            <div class="p-0">
-                {% if top_vistos %}
-                <table class="eh-table">
-                    <thead><tr><th>Producto</th><th style="text-align:right">Vistas</th></tr></thead>
-                    <tbody>
-                        {% for item in top_vistos %}
-                        <tr>
-                            <td>{{ item.product__nombre }}</td>
-                            <td style="text-align:right"><span class="eh-badge eh-badge-cyan">{{ item.total }}</span></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <div style="padding:2rem;text-align:center;color:#94a3b8;">No hay vistas registradas aún</div>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- GRÁFICA MENSUAL -->
-<div class="row g-3 mb-4">
-    <div class="col-12">
-        <div class="eh-card">
-            <div class="eh-card-header">
-                <i class="fas fa-chart-line" style="color:var(--yellow)"></i> Ingresos del Mes Actual
-            </div>
-            <div class="p-3" style="height:360px;position:relative;">
-                <canvas id="ventasChart"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- VENTAS HOY + SEMANA -->
-<div class="row g-3 mb-4">
-    <div class="col-md-4">
-        <div class="eh-card h-100">
-            <div class="eh-card-header">
-                <i class="fas fa-clock" style="color:var(--yellow)"></i> Ventas de Hoy
-            </div>
-            <div style="max-height:260px;overflow-y:auto;">
-                <table class="eh-table">
-                    <thead><tr><th>Hora</th><th style="text-align:center">Pedidos</th><th style="text-align:right">Ingresos</th></tr></thead>
-                    <tbody>
-                        {% for v in ventas_hoy %}
-                        <tr>
-                            <td>{{ v.hora }}</td>
-                            <td style="text-align:center"><span class="eh-badge eh-badge-blue">{{ v.count }}</span></td>
-                            <td style="text-align:right;font-weight:600;color:#059669;">${{ v.total|floatformat:0 }}</td>
-                        </tr>
-                        {% empty %}
-                        <tr><td colspan="3" style="text-align:center;padding:2rem;color:#94a3b8;">Sin ventas hoy</td></tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="eh-card h-100">
-            <div class="eh-card-header">
-                <i class="fas fa-chart-bar" style="color:var(--yellow)"></i> Ventas de la Semana Actual
-            </div>
-            <div class="p-3" style="height:280px;position:relative;">
-                <canvas id="semanalChart"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
 <script>
-    const labelsDiarios  = [{% for v in ventas_por_dia %}"{{ v.dia }}",{% endfor %}];
-    const totalesDiarios = [{% for v in ventas_por_dia %}{{ v.total }},{% endfor %}];
+function abrirModal(id, numero, estado) {
+    document.getElementById('modal-numero').textContent = '#' + numero;
+    document.getElementById('form-estado').action = `/dashboard/pedidos/${id}/estado/`;
+    document.getElementById('modal-select').value = estado;
+    const overlay = document.getElementById('modal-overlay');
+    overlay.style.display = 'flex';
+}
 
-    new Chart(document.getElementById('ventasChart').getContext('2d'), {
-        type: 'line',
-        data: {
-            labels: labelsDiarios,
-            datasets: [{
-                label: 'Ingresos ($)',
-                data: totalesDiarios,
-                borderColor: '#1d4ed8',
-                backgroundColor: 'rgba(29,78,216,0.08)',
-                borderWidth: 2.5,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 4,
-                pointBackgroundColor: '#f59e0b',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-                pointHoverRadius: 7,
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: true, position: 'top' },
-                tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toLocaleString('es-CO')}` } }
-            },
-            scales: {
-                x: { grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { maxTicksLimit: 15, maxRotation: 45 } },
-                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$' + v.toLocaleString('es-CO') } }
-            }
-        }
-    });
+function cerrarModal() {
+    document.getElementById('modal-overlay').style.display = 'none';
+}
 
-    const diasSemana    = [{% for d in dias_semana_actual %}"{{ d.dia }}",{% endfor %}];
-    const totalesSemana = [{% for d in dias_semana_actual %}{{ d.total }},{% endfor %}];
-
-    new Chart(document.getElementById('semanalChart').getContext('2d'), {
-        type: 'bar',
-        data: {
-            labels: diasSemana,
-            datasets: [{
-                label: 'Ingresos ($)',
-                data: totalesSemana,
-                backgroundColor: [
-                    'rgba(29,78,216,0.75)', 'rgba(16,185,129,0.75)', 'rgba(245,158,11,0.75)',
-                    'rgba(239,68,68,0.75)', 'rgba(6,182,212,0.75)', 'rgba(139,92,246,0.75)',
-                    'rgba(249,115,22,0.75)'
-                ],
-                borderRadius: 8,
-                borderSkipped: false,
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-                tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toLocaleString('es-CO')}` } }
-            },
-            scales: {
-                x: { grid: { display: false } },
-                y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { callback: v => '$' + v.toLocaleString('es-CO') } }
-            }
-        }
-    });
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) cerrarModal();
+});
 </script>
 
 {% endblock %}
