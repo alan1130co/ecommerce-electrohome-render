@@ -164,7 +164,28 @@ header a, header button:not(.theme-toggle-button):not(#user-menu-btn) {
   box-shadow: 0 8px 22px rgba(245,158,11,0.55);
 }
 
-/* Solo mostrar en desktop — esto NO usa !important para no luchar con Tailwind */
+/* Versión del botón para el menú móvil (hamburguesa) — SIEMPRE visible */
+.btn-registrarse-mobile {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 4px 14px rgba(245,158,11,0.4);
+  transition: all 0.2s ease;
+}
+.btn-registrarse-mobile:hover {
+  box-shadow: 0 8px 22px rgba(245,158,11,0.55);
+  transform: translateY(-1px);
+}
+
+/* Botones header: solo en desktop */
 @media (max-width: 1023px) {
   .btn-ingresar, .btn-registrarse { display: none !important; }
 }
@@ -645,8 +666,8 @@ body, header, footer, main, section,
               </div>
             </div>
             {% else %}
-            <a href="{% url 'user:login' %}" class="btn-ingresar text-white border border-white border-opacity-40 hover:bg-blue-700" style="display:inline-flex;"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
-            <a href="{% url 'user:register' %}" class="btn-registrarse text-white" style="display:inline-flex;"><i class="fas fa-user-plus"></i> Registrarse</a>
+            <a href="{% url 'user:login' %}" class="btn-ingresar text-white border border-white border-opacity-40 hover:bg-blue-700"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+            <a href="{% url 'user:register' %}" class="btn-registrarse text-white"><i class="fas fa-user-plus"></i> Registrarse</a>
             {% endif %}
 
             <!-- Mobile Menu Btn -->
@@ -684,7 +705,7 @@ body, header, footer, main, section,
             <a href="{% url 'user:logout' %}" class="nav-text flex items-center text-red-300 hover:text-red-100 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
             {% else %}
             <a href="{% url 'user:login' %}" class="nav-text flex items-center text-white hover:text-yellow-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-sign-in-alt mr-3"></i>Ingresar</a>
-            <a href="{% url 'user:register' %}" class="btn-registrarse mt-2 justify-center"><i class="fas fa-user-plus"></i>Registrarse</a>
+            <a href="{% url 'user:register' %}" class="btn-registrarse-mobile"><i class="fas fa-user-plus"></i>Registrarse</a>
             {% endif %}
           </div>
         </div>
@@ -709,10 +730,10 @@ body, header, footer, main, section,
         style="background-image: url('{% static 'img/home_fondo_img.webp' %}'); background-size: cover; background-position: center;">
         <div class="absolute inset-0 bg-black opacity-10"></div>
         <div class="container mx-auto px-4 text-center relative z-10">
-          <h1 class="text-5xl md:text-6xl font-bold mb-6">
-            Bienvenido a <span class="text-yellow-600">ElectroHome</span>
+          <h1 class="text-4xl md:text-6xl font-bold mb-6">
+            Bienvenido a <span class="text-yellow-400">ElectroHome</span>
           </h1>
-          <p class="text-xl md:text-2xl mb-8 opacity-90 text-yellow-400">Calidad y ahorro en un solo click</p>
+          <p class="text-2xl md:text-3xl mb-8 font-bold" style="color:#ff6b00;">Calidad y ahorro en un solo click</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#promociones" class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition duration-300 transform hover:scale-105">Ver Productos</a>
             <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-800 transition duration-300">Ofertas Especiales</button>
