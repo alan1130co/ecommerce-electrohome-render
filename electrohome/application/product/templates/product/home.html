@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <style>
-      /* ============================================================
+/* ============================================================
    VARIABLES DE TEMA
    ============================================================ */
 :root {
@@ -92,16 +92,14 @@
    BASE
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
-
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 0;
-  padding: 0;
+  margin: 0; padding: 0;
+  overflow-x: hidden; /* FIX: evita scroll horizontal global */
 }
 
 /* ============================================================
@@ -131,544 +129,233 @@ header a, header button:not(.theme-toggle-button):not(#user-menu-btn) {
   border-top: 1px solid #21262d;
 }
 
+.logo-principal {
+  width: 120px;
+  height: auto;
+  transition: transform 0.4s ease;
+}
+.logo-principal:hover { transform: scale(1.06); }
+
+.nav-text {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: color 0.2s ease !important;
+}
+.nav-text:hover { color: #fbbf24 !important; }
+.nav-text.activo { color: #fbbf24 !important; font-weight: 700 !important; }
+
+.btn-ingresar {
+  font-size: 0.95rem; font-weight: 600;
+  padding: 9px 20px; border-radius: 8px;
+  transition: none; align-items: center; gap: 7px;
+  border: none; background: transparent;
+}
+
+.btn-registrarse {
+  font-size: 0.95rem; font-weight: 700;
+  padding: 10px 22px; border-radius: 8px;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 4px 14px rgba(245,158,11,0.4);
+  transition: all 0.2s ease; align-items: center; gap: 7px;
+}
+.btn-registrarse:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(245,158,11,0.55);
+}
+
+/* Solo mostrar en desktop — esto NO usa !important para no luchar con Tailwind */
+@media (max-width: 1023px) {
+  .btn-ingresar, .btn-registrarse { display: none !important; }
+}
+@media (min-width: 1024px) {
+  .btn-ingresar { display: inline-flex; }
+  .btn-registrarse { display: inline-flex; }
+}
+
+.search-input-big { padding: 11px 18px !important; font-size: 0.95rem !important; border-radius: 10px 0 0 10px !important; }
+.search-btn-big { padding: 11px 20px !important; font-size: 0.95rem !important; border-radius: 0 10px 10px 0 !important; }
+.header-icon-lg { font-size: 1.35rem !important; }
+
 /* ============================================================
    BOTÓN DE TEMA
    ============================================================ */
 .theme-toggle-button {
-  position: relative;
-  width: 42px;
-  height: 42px;
-  background: var(--theme-btn-bg);
-  border: 1.5px solid var(--theme-btn-border);
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative; width: 46px; height: 46px;
+  background: var(--theme-btn-bg); border: 1.5px solid var(--theme-btn-border);
+  border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  flex-shrink: 0;
-  backdrop-filter: blur(8px);
-  overflow: hidden;
+  flex-shrink: 0; backdrop-filter: blur(8px); overflow: hidden;
 }
-
 .theme-toggle-button:hover {
-  transform: scale(1.08);
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.4);
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+  transform: scale(1.08); background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.4); box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
 }
-
-.theme-toggle-button svg {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.theme-toggle-button .sun-icon {
-  opacity: 1;
-  transform: rotate(0deg) scale(1);
-  color: #fbbf24;
-  filter: drop-shadow(0 0 4px rgba(251,191,36,0.6));
-}
-
-.theme-toggle-button .moon-icon {
-  opacity: 0;
-  transform: rotate(90deg) scale(0.3);
-  color: #94a3b8;
-}
-
-.theme-toggle-button.dark-mode .sun-icon {
-  opacity: 0;
-  transform: rotate(-90deg) scale(0.3);
-}
-
-.theme-toggle-button.dark-mode .moon-icon {
-  opacity: 1;
-  transform: rotate(0deg) scale(1);
-  color: #e2e8f0;
-  filter: drop-shadow(0 0 4px rgba(226,232,240,0.4));
-}
+.theme-toggle-button svg { position: absolute; width: 20px; height: 20px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.theme-toggle-button .sun-icon { opacity: 1; transform: rotate(0deg) scale(1); color: #fbbf24; filter: drop-shadow(0 0 4px rgba(251,191,36,0.6)); }
+.theme-toggle-button .moon-icon { opacity: 0; transform: rotate(90deg) scale(0.3); color: #94a3b8; }
+.theme-toggle-button.dark-mode .sun-icon { opacity: 0; transform: rotate(-90deg) scale(0.3); }
+.theme-toggle-button.dark-mode .moon-icon { opacity: 1; transform: rotate(0deg) scale(1); color: #e2e8f0; filter: drop-shadow(0 0 4px rgba(226,232,240,0.4)); }
 
 /* ============================================================
    USER DROPDOWN
    ============================================================ */
 #user-dropdown {
-  background: var(--dropdown-bg);
-  border: 1px solid var(--dropdown-border);
-  border-radius: 14px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05);
-  overflow: hidden;
-  transition: all 0.2s ease;
+  background: var(--dropdown-bg); border: 1px solid var(--dropdown-border);
+  border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05); overflow: hidden;
 }
-
-[data-theme="dark"] #user-dropdown {
-  background: #161b22;
-  border: 1px solid #30363d;
-  box-shadow: 0 0 0 1px rgba(240,246,252,0.05), 0 24px 64px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.5);
-}
-
-.dropdown-header {
-  background: var(--dropdown-header-bg);
-  padding: 18px 18px 16px;
-  border-bottom: 1px solid var(--dropdown-border);
-}
-
-[data-theme="dark"] .dropdown-header {
-  background: linear-gradient(135deg, #1c2330 0%, #161b22 100%);
-  border-bottom: 1px solid #21262d;
-}
-
-.dropdown-avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 800;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(245,158,11,0.4);
-}
-
-[data-theme="dark"] .dropdown-avatar {
-  background: linear-gradient(135deg, #f0b429 0%, #b45309 100%);
-  box-shadow: 0 2px 12px rgba(240,180,41,0.3);
-}
-
-.dropdown-name {
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--dropdown-text);
-  line-height: 1.2;
-}
-
-.dropdown-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  margin-top: 4px;
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  color: white;
-  box-shadow: 0 1px 4px rgba(37,99,235,0.3);
-}
-
-[data-theme="dark"] .dropdown-badge {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%);
-  box-shadow: 0 1px 6px rgba(29,78,216,0.4);
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 18px;
-  color: var(--dropdown-text) !important;
-  text-decoration: none;
-  transition: all 0.15s ease;
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-bottom: 1px solid transparent;
-  cursor: pointer;
-}
-
-.dropdown-item:hover {
-  background: var(--dropdown-item-hover) !important;
-  color: var(--accent-blue) !important;
-  padding-left: 22px;
-}
-
-[data-theme="dark"] .dropdown-item:hover {
-  background: #1c2330 !important;
-  color: #58a6ff !important;
-}
-
-.dropdown-item .item-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  background: var(--bg-tertiary);
-  color: var(--accent-blue);
-  transition: all 0.15s ease;
-  font-size: 0.85rem;
-}
-
-[data-theme="dark"] .dropdown-item .item-icon {
-  background: #21262d;
-  color: #58a6ff;
-}
-
-.dropdown-item:hover .item-icon {
-  background: rgba(37,99,235,0.1);
-  transform: scale(1.1);
-}
-
-[data-theme="dark"] .dropdown-item:hover .item-icon {
-  background: rgba(88,166,255,0.1);
-  color: #58a6ff;
-}
-
+[data-theme="dark"] #user-dropdown { background: #161b22; border: 1px solid #30363d; box-shadow: 0 0 0 1px rgba(240,246,252,0.05), 0 24px 64px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.5); }
+.dropdown-header { background: var(--dropdown-header-bg); padding: 18px 18px 16px; border-bottom: 1px solid var(--dropdown-border); }
+[data-theme="dark"] .dropdown-header { background: linear-gradient(135deg, #1c2330 0%, #161b22 100%); border-bottom: 1px solid #21262d; }
+.dropdown-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; box-shadow: 0 2px 8px rgba(245,158,11,0.4); }
+[data-theme="dark"] .dropdown-avatar { background: linear-gradient(135deg, #f0b429 0%, #b45309 100%); box-shadow: 0 2px 12px rgba(240,180,41,0.3); }
+.dropdown-name { font-weight: 700; font-size: 0.9rem; color: var(--dropdown-text); line-height: 1.2; }
+.dropdown-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 20px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; margin-top: 4px; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; box-shadow: 0 1px 4px rgba(37,99,235,0.3); }
+[data-theme="dark"] .dropdown-badge { background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%); box-shadow: 0 1px 6px rgba(29,78,216,0.4); }
+.dropdown-item { display: flex; align-items: center; gap: 12px; padding: 12px 18px; color: var(--dropdown-text) !important; text-decoration: none; transition: all 0.15s ease; font-size: 0.875rem; font-weight: 500; border-bottom: 1px solid transparent; cursor: pointer; }
+.dropdown-item:hover { background: var(--dropdown-item-hover) !important; color: var(--accent-blue) !important; padding-left: 22px; }
+[data-theme="dark"] .dropdown-item:hover { background: #1c2330 !important; color: #58a6ff !important; }
+.dropdown-item .item-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--bg-tertiary); color: var(--accent-blue); transition: all 0.15s ease; font-size: 0.85rem; }
+[data-theme="dark"] .dropdown-item .item-icon { background: #21262d; color: #58a6ff; }
+.dropdown-item:hover .item-icon { background: rgba(37,99,235,0.1); transform: scale(1.1); }
+[data-theme="dark"] .dropdown-item:hover .item-icon { background: rgba(88,166,255,0.1); color: #58a6ff; }
 .dropdown-item.logout { color: #dc2626 !important; }
-
-.dropdown-item.logout .item-icon {
-  color: #dc2626;
-  background: rgba(220,38,38,0.08);
-}
-
-.dropdown-item.logout:hover {
-  background: rgba(220,38,38,0.05) !important;
-  color: #dc2626 !important;
-  padding-left: 22px;
-}
-
+.dropdown-item.logout .item-icon { color: #dc2626; background: rgba(220,38,38,0.08); }
+.dropdown-item.logout:hover { background: rgba(220,38,38,0.05) !important; color: #dc2626 !important; padding-left: 22px; }
 [data-theme="dark"] .dropdown-item.logout { color: #f85149 !important; }
-
-[data-theme="dark"] .dropdown-item.logout .item-icon {
-  color: #f85149;
-  background: rgba(248,81,73,0.1);
-}
-
-[data-theme="dark"] .dropdown-item.logout:hover {
-  background: rgba(248,81,73,0.08) !important;
-  color: #f85149 !important;
-}
-
-.dropdown-divider {
-  height: 1px;
-  background: var(--dropdown-border);
-  margin: 4px 0;
-}
-
+[data-theme="dark"] .dropdown-item.logout .item-icon { color: #f85149; background: rgba(248,81,73,0.1); }
+[data-theme="dark"] .dropdown-item.logout:hover { background: rgba(248,81,73,0.08) !important; color: #f85149 !important; }
+.dropdown-divider { height: 1px; background: var(--dropdown-border); margin: 4px 0; }
 [data-theme="dark"] .dropdown-divider { background: #21262d; }
-
-#user-menu-btn {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-  border: 2px solid rgba(255,255,255,0.3);
-  color: white;
-  font-weight: 800;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(245,158,11,0.4);
-}
-
-#user-menu-btn:hover {
-  transform: scale(1.08);
-  border-color: rgba(255,255,255,0.6);
-  box-shadow: 0 4px 16px rgba(245,158,11,0.5);
-}
-
-[data-theme="dark"] #user-menu-btn {
-  background: linear-gradient(135deg, #f0b429 0%, #b45309 100%);
-  border-color: rgba(240,180,41,0.3);
-  box-shadow: 0 2px 12px rgba(240,180,41,0.3);
-}
+#user-menu-btn { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border: 2px solid rgba(255,255,255,0.3); color: white; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(245,158,11,0.4); }
+#user-menu-btn:hover { transform: scale(1.08); border-color: rgba(255,255,255,0.6); box-shadow: 0 4px 16px rgba(245,158,11,0.5); }
+[data-theme="dark"] #user-menu-btn { background: linear-gradient(135deg, #f0b429 0%, #b45309 100%); border-color: rgba(240,180,41,0.3); box-shadow: 0 2px 12px rgba(240,180,41,0.3); }
 
 /* ============================================================
-   SECCIONES
+   BANNER DE OFERTAS
+   ============================================================ */
+.offers-banner {
+  background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #111827 100%);
+  padding: 36px 0; position: relative; overflow: hidden;
+  border-top: 3px solid #f59e0b; border-bottom: 3px solid #f59e0b;
+}
+.offers-banner::before { content: ''; position: absolute; top: -80px; right: -80px; width: 360px; height: 360px; border-radius: 50%; background: rgba(245,158,11,0.07); pointer-events: none; }
+.offers-banner::after { content: ''; position: absolute; bottom: -60px; left: -40px; width: 260px; height: 260px; border-radius: 50%; background: rgba(245,158,11,0.04); pointer-events: none; }
+[data-theme="dark"] .offers-banner { background: linear-gradient(135deg, #050505 0%, #0f172a 50%, #050505 100%); }
+.offers-banner-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(245,158,11,0.18); border: 1.5px solid rgba(245,158,11,0.45); color: #fde68a; padding: 6px 18px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 16px; }
+.offers-banner h2 { font-size: clamp(1.4rem, 3vw, 2.2rem); font-weight: 900; color: #ffffff; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 10px; }
+.offers-banner h2 span { color: #fbbf24; }
+.offers-banner p { color: rgba(255,255,255,0.75); font-size: 0.95rem; margin-bottom: 20px; }
+.btn-banner-primary { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #fff !important; font-size: 0.95rem; font-weight: 800; padding: 11px 26px; border-radius: 10px; text-decoration: none; box-shadow: 0 4px 18px rgba(245,158,11,0.4); transition: all 0.25s ease; letter-spacing: 0.02em; }
+.btn-banner-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,158,11,0.55); }
+.btn-banner-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: #fff !important; font-size: 0.95rem; font-weight: 600; padding: 10px 22px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.4); text-decoration: none; transition: all 0.25s ease; }
+.btn-banner-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); transform: translateY(-2px); }
+.discount-cards { display: flex; flex-wrap: wrap; gap: 16px; justify-content: flex-end; }
+.discount-card { background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 14px 18px; text-align: center; backdrop-filter: blur(10px); transition: all 0.25s ease; min-width: 90px; }
+.discount-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-4px); border-color: rgba(245,158,11,0.5); }
+.discount-card-pct { font-size: 1.6rem; font-weight: 900; color: #fbbf24; line-height: 1; display: block; }
+.discount-card-label { font-size: 0.72rem; color: rgba(255,255,255,0.75); font-weight: 500; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* ============================================================
+   SECCIÓN DE CONFIANZA
+   ============================================================ */
+.trust-section { background: var(--bg-secondary); padding: 40px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+[data-theme="dark"] .trust-section { background: #0d1117; border-color: #21262d; }
+.trust-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 28px 20px; border-radius: 16px; border: 1.5px solid var(--border-color); background: var(--card-bg); box-shadow: var(--card-shadow); transition: all 0.3s ease; }
+.trust-card:hover { transform: translateY(-6px); box-shadow: var(--card-shadow-hover); border-color: var(--accent-blue); }
+[data-theme="dark"] .trust-card { background: linear-gradient(145deg, #161b22 0%, #1c2330 100%); border-color: #21262d; }
+[data-theme="dark"] .trust-card:hover { border-color: #388bfd; box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 24px rgba(56,139,253,0.12); }
+.trust-icon { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; margin-bottom: 16px; transition: transform 0.3s ease; }
+.trust-card:hover .trust-icon { transform: scale(1.12) rotate(-6deg); }
+.trust-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+[data-theme="dark"] .trust-title { color: #e6edf3; }
+.trust-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* ============================================================
+   SECCIONES / FONDO
    ============================================================ */
 section { background-color: var(--bg-primary); }
-
-[data-theme="dark"] body,
-[data-theme="dark"] main {
-  background: #0d1117 !important;
-  background-image: none !important;
-}
-
-[data-theme="dark"] section:not(.hero),
-[data-theme="dark"] section.bg-gradient-to-b:not(.hero),
-[data-theme="dark"] .bg-gradient-to-b:not(.hero) {
-  background: #0d1117 !important;
-  background-image: none !important;
-}
-
-[data-theme="dark"] .from-white:not(.hero),
-[data-theme="dark"] .via-gray-50:not(.hero),
-[data-theme="dark"] .to-gray-100:not(.hero) {
-  background: #0d1117 !important;
-  background-image: none !important;
-}
+[data-theme="dark"] body, [data-theme="dark"] main { background: #0d1117 !important; }
+[data-theme="dark"] section:not(.hero), [data-theme="dark"] section.bg-gradient-to-b:not(.hero), [data-theme="dark"] .bg-gradient-to-b:not(.hero) { background: #0d1117 !important; background-image: none !important; }
+[data-theme="dark"] .from-white:not(.hero), [data-theme="dark"] .via-gray-50:not(.hero), [data-theme="dark"] .to-gray-100:not(.hero) { background: #0d1117 !important; background-image: none !important; }
 
 /* ============================================================
    HERO
    ============================================================ */
 .hero { position: relative; }
-
-[data-theme="dark"] .hero::before { display: none !important; }
-
-[data-theme="dark"] .hero h1 {
-  color: #ffffff !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 8px 24px rgba(0,0,0,0.7);
-}
-
-[data-theme="dark"] .hero h1 .text-yellow-600 {
-  color: #fbbf24 !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 8px 24px rgba(0,0,0,0.7);
-}
-
-[data-theme="dark"] .hero p {
-  color: #fcd34d !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
-}
+[data-theme="dark"] .hero h1 { color: #ffffff !important; text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 8px 24px rgba(0,0,0,0.7); }
+[data-theme="dark"] .hero h1 .text-yellow-600 { color: #fbbf24 !important; text-shadow: 0 2px 8px rgba(0,0,0,0.9), 0 8px 24px rgba(0,0,0,0.7); }
+[data-theme="dark"] .hero p { color: #fcd34d !important; text-shadow: 0 2px 8px rgba(0,0,0,0.9); }
 
 /* ============================================================
    TARJETAS DE PRODUCTOS
    ============================================================ */
-.product-card, .carousel-card {
-  background-color: var(--card-bg);
-  border-color: var(--border-color);
-  box-shadow: var(--card-shadow);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.product-card:hover, .carousel-card:hover {
-  box-shadow: var(--card-shadow-hover);
-  transform: translateY(-6px);
-}
-
-[data-theme="dark"] .product-card,
-[data-theme="dark"] .carousel-card {
-  background: linear-gradient(145deg, #161b22 0%, #1c2330 100%);
-  border: 1px solid #21262d !important;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
-
-[data-theme="dark"] .product-card:hover,
-[data-theme="dark"] .carousel-card:hover {
-  border-color: #388bfd !important;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 24px rgba(56,139,253,0.15);
-  transform: translateY(-8px);
-}
-
-.product-image-container, .carousel-image-container {
-  background: var(--gradient-card);
-  position: relative;
-}
-
-[data-theme="dark"] .product-image-container,
-[data-theme="dark"] .carousel-image-container {
-  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%) !important;
-}
-
-[data-theme="dark"] .product-image-container img,
-[data-theme="dark"] .carousel-image-container img { filter: none !important; }
-
-.product-title, .carousel-title {
-  color: var(--text-primary);
-  transition: color 0.2s ease;
-}
-
-[data-theme="dark"] .product-title,
-[data-theme="dark"] .carousel-title { color: #e6edf3; }
-
-[data-theme="dark"] .product-card:hover .product-title,
-[data-theme="dark"] .carousel-card:hover .carousel-title { color: #58a6ff; }
-
+.product-card, .carousel-card { background-color: var(--card-bg); border-color: var(--border-color); box-shadow: var(--card-shadow); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; }
+.product-card:hover, .carousel-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-6px); }
+[data-theme="dark"] .product-card, [data-theme="dark"] .carousel-card { background: linear-gradient(145deg, #161b22 0%, #1c2330 100%); border: 1px solid #21262d !important; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+[data-theme="dark"] .product-card:hover, [data-theme="dark"] .carousel-card:hover { border-color: #388bfd !important; box-shadow: 0 16px 48px rgba(0,0,0,0.7), 0 0 24px rgba(56,139,253,0.15); transform: translateY(-8px); }
+.product-image-container, .carousel-image-container { background: var(--gradient-card); position: relative; }
+[data-theme="dark"] .product-image-container, [data-theme="dark"] .carousel-image-container { background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%) !important; }
+[data-theme="dark"] .product-image-container img, [data-theme="dark"] .carousel-image-container img { filter: none !important; }
+.product-title, .carousel-title { color: var(--text-primary); transition: color 0.2s ease; }
+[data-theme="dark"] .product-title, [data-theme="dark"] .carousel-title { color: #e6edf3; }
+[data-theme="dark"] .product-card:hover .product-title, [data-theme="dark"] .carousel-card:hover .carousel-title { color: #58a6ff; }
 .product-description, .carousel-description { color: var(--text-secondary); }
-
-.product-price-current {
-  color: var(--accent-blue);
-  font-weight: 800;
-}
-
-[data-theme="dark"] .product-price-current {
-  color: #f0b429 !important;
-  text-shadow: 0 1px 6px rgba(240,180,41,0.2);
-}
-
-.product-price-original {
-  color: var(--text-tertiary);
-  text-decoration: line-through;
-}
+.product-price-current { color: var(--accent-blue); font-weight: 800; }
+[data-theme="dark"] .product-price-current { color: #f0b429 !important; text-shadow: 0 1px 6px rgba(240,180,41,0.2); }
+.product-price-original { color: var(--text-tertiary); text-decoration: line-through; }
 
 /* ============================================================
    INPUTS
    ============================================================ */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-  background-color: var(--input-bg);
-  border-color: var(--input-border);
-  color: var(--input-text);
-  transition: all 0.2s ease;
-}
-
-[data-theme="dark"] input[type="text"],
-[data-theme="dark"] input[type="email"],
-[data-theme="dark"] input[type="password"],
-[data-theme="dark"] textarea {
-  background: #0d1117;
-  border: 1.5px solid #30363d;
-  color: #e6edf3;
-}
-
-[data-theme="dark"] input:focus,
-[data-theme="dark"] textarea:focus {
-  background: #161b22;
-  border-color: #388bfd;
-  box-shadow: 0 0 0 3px rgba(56,139,253,0.15);
-  outline: none;
-}
-
+input[type="text"], input[type="email"], input[type="password"], textarea { background-color: var(--input-bg); border-color: var(--input-border); color: var(--input-text); transition: all 0.2s ease; }
+[data-theme="dark"] input[type="text"], [data-theme="dark"] input[type="email"], [data-theme="dark"] input[type="password"], [data-theme="dark"] textarea { background: #0d1117; border: 1.5px solid #30363d; color: #e6edf3; }
+[data-theme="dark"] input:focus, [data-theme="dark"] textarea:focus { background: #161b22; border-color: #388bfd; box-shadow: 0 0 0 3px rgba(56,139,253,0.15); outline: none; }
 [data-theme="dark"] input::placeholder { color: #6e7681; }
 
 /* ============================================================
    FOOTER
    ============================================================ */
-footer {
-  background-color: var(--footer-bg) !important;
-  color: var(--footer-text);
-}
-
-[data-theme="dark"] footer {
-  background: #010409 !important;
-  border-top: 1px solid #21262d;
-}
-
+footer { background-color: var(--footer-bg) !important; color: var(--footer-text); }
+[data-theme="dark"] footer { background: #010409 !important; border-top: 1px solid #21262d; }
 [data-theme="dark"] footer h2 { color: #e6edf3 !important; }
-
-[data-theme="dark"] footer p,
-[data-theme="dark"] footer a { color: #8b949e; }
-
+[data-theme="dark"] footer p, [data-theme="dark"] footer a { color: #8b949e; }
 [data-theme="dark"] footer a:hover { color: #f0b429; }
 
 /* ============================================================
-   BOTONES
+   BOTONES PRODUCTO
    ============================================================ */
-[data-theme="dark"] .btn-details {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-  color: #ffffff;
-  border: 1px solid rgba(56,139,253,0.2);
-  box-shadow: 0 2px 8px rgba(29,78,216,0.3);
-}
-
-[data-theme="dark"] .btn-details:hover {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-  box-shadow: 0 6px 20px rgba(29,78,216,0.5);
-  transform: translateY(-2px);
-}
-
-[data-theme="dark"] .btn-buy {
-  background: linear-gradient(135deg, #f0b429 0%, #d97706 100%);
-  color: #0d1117;
-  font-weight: 700;
-  border: 1px solid rgba(240,180,41,0.2);
-  box-shadow: 0 2px 8px rgba(240,180,41,0.3);
-}
-
-[data-theme="dark"] .btn-buy:hover {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  box-shadow: 0 6px 20px rgba(240,180,41,0.5);
-  transform: translateY(-2px);
-}
-
-/* ============================================================
-   MENSAJES DJANGO
-   ============================================================ */
-[data-theme="dark"] .bg-blue-100 {
-  background: linear-gradient(135deg, #1c2330 0%, #161b22 100%) !important;
-  border: 1px solid #388bfd !important;
-  color: #79c0ff !important;
-}
-
-/* ============================================================
-   WISHLIST BTN
-   ============================================================ */
+[data-theme="dark"] .btn-details { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); color: #ffffff; border: 1px solid rgba(56,139,253,0.2); box-shadow: 0 2px 8px rgba(29,78,216,0.3); }
+[data-theme="dark"] .btn-details:hover { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); box-shadow: 0 6px 20px rgba(29,78,216,0.5); transform: translateY(-2px); }
+[data-theme="dark"] .btn-buy { background: linear-gradient(135deg, #f0b429 0%, #d97706 100%); color: #0d1117; font-weight: 700; border: 1px solid rgba(240,180,41,0.2); box-shadow: 0 2px 8px rgba(240,180,41,0.3); }
+[data-theme="dark"] .btn-buy:hover { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); box-shadow: 0 6px 20px rgba(240,180,41,0.5); transform: translateY(-2px); }
+[data-theme="dark"] .bg-blue-100 { background: linear-gradient(135deg, #1c2330 0%, #161b22 100%) !important; border: 1px solid #388bfd !important; color: #79c0ff !important; }
 [data-theme="dark"] .wishlist-btn { color: #6e7681; }
 [data-theme="dark"] .wishlist-btn:hover { color: #f85149; }
 [data-theme="dark"] .wishlist-btn.active { color: #f85149; }
-
-/* ============================================================
-   TÍTULOS DE SECCIÓN
-   ============================================================ */
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4 { color: #e6edf3 !important; }
-
-[data-theme="dark"] .text-blue-500,
-[data-theme="dark"] .text-blue-600 { color: #58a6ff !important; }
-
-[data-theme="dark"] .text-yellow-400,
-[data-theme="dark"] .text-yellow-600 { color: #f0b429 !important; }
-
-/* ============================================================
-   BADGES
-   ============================================================ */
-[data-theme="dark"] .bg-red-500 {
-  background: #da3633 !important;
-  box-shadow: 0 1px 6px rgba(218,54,51,0.4);
-}
-
-[data-theme="dark"] .discount-badge {
-  background: linear-gradient(135deg, #da3633 0%, #b91c1c 100%);
-  box-shadow: 0 2px 8px rgba(218,54,51,0.4);
-}
-
+[data-theme="dark"] h1, [data-theme="dark"] h2, [data-theme="dark"] h3, [data-theme="dark"] h4 { color: #e6edf3 !important; }
+[data-theme="dark"] .text-blue-500, [data-theme="dark"] .text-blue-600 { color: #58a6ff !important; }
+[data-theme="dark"] .text-yellow-400, [data-theme="dark"] .text-yellow-600 { color: #f0b429 !important; }
+[data-theme="dark"] .bg-red-500 { background: #da3633 !important; box-shadow: 0 1px 6px rgba(218,54,51,0.4); }
+[data-theme="dark"] .discount-badge { background: linear-gradient(135deg, #da3633 0%, #b91c1c 100%); box-shadow: 0 2px 8px rgba(218,54,51,0.4); }
 [data-theme="dark"] .product-stars { color: #f0b429; }
-
-/* ============================================================
-   BÚSQUEDA
-   ============================================================ */
-[data-theme="dark"] .bg-yellow-500 {
-  background: linear-gradient(135deg, #f0b429 0%, #d97706 100%) !important;
-}
-
-/* ============================================================
-   MODAL AUTH
-   ============================================================ */
-[data-theme="dark"] #auth-modal-content {
-  background: #161b22;
-  border: 1px solid #30363d;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.8);
-}
-
-[data-theme="dark"] #auth-modal-content .bg-gradient-to-r {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%) !important;
-}
-
-[data-theme="dark"] #auth-modal-content p,
-[data-theme="dark"] #auth-modal-content li { color: #8b949e; }
-
+[data-theme="dark"] .bg-yellow-500 { background: linear-gradient(135deg, #f0b429 0%, #d97706 100%) !important; }
+[data-theme="dark"] #auth-modal-content { background: #161b22; border: 1px solid #30363d; box-shadow: 0 24px 64px rgba(0,0,0,0.8); }
+[data-theme="dark"] #auth-modal-content .bg-gradient-to-r { background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%) !important; }
+[data-theme="dark"] #auth-modal-content p, [data-theme="dark"] #auth-modal-content li { color: #8b949e; }
 [data-theme="dark"] #auth-modal-content .text-gray-800 { color: #e6edf3 !important; }
-
 [data-theme="dark"] #auth-modal-content .border-gray-200 { border-color: #21262d !important; }
-
-/* ============================================================
-   SCROLLBAR
-   ============================================================ */
 [data-theme="dark"] ::-webkit-scrollbar { width: 10px; background: #0d1117; }
 [data-theme="dark"] ::-webkit-scrollbar-track { background: #161b22; }
-[data-theme="dark"] ::-webkit-scrollbar-thumb {
-  background: #30363d;
-  border-radius: 6px;
-  border: 2px solid #161b22;
-}
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 6px; border: 2px solid #161b22; }
 [data-theme="dark"] ::-webkit-scrollbar-thumb:hover { background: #388bfd; }
 
 /* ============================================================
-   TRANSICIONES SUAVES
+   TRANSICIONES
    ============================================================ */
 body, header, footer, main, section,
-.product-card, .carousel-card,
+.product-card, .carousel-card, .trust-card,
 .product-content, .carousel-content,
 .product-image-container, .carousel-image-container,
 .product-title, .carousel-title,
@@ -676,52 +363,34 @@ body, header, footer, main, section,
 .product-price-current, .btn-details, .btn-buy,
 #user-dropdown, .dropdown-item, .dropdown-header,
 .theme-toggle-button, input, textarea {
-  transition: background-color 0.2s ease, color 0.2s ease,
-              border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* ============================================================
-   ESTILOS ORIGINALES
+   CARDS BASE
    ============================================================ */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ============================================================
-   WISHLIST BTN - CORREGIDO (2rem igual que products_list)
-   ============================================================ */
 .wishlist-btn {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  font-size: 2rem;
-  z-index: 20;
-  padding: 0;
-  font-weight: bold;
-  line-height: 1;
-  color: #9ca3af;
+  position: absolute; top: 12px; left: 12px;
+  background: transparent; border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease; font-size: 2rem; z-index: 20;
+  padding: 0; font-weight: bold; line-height: 1; color: #9ca3af;
 }
-
 .wishlist-btn:hover { transform: scale(1.15); color: #ef4444; }
 .wishlist-btn.active { color: #ef4444; }
-
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  25% { transform: scale(1.2); }
-  50% { transform: scale(1.15); }
-}
-
+@keyframes heartbeat { 0%, 100% { transform: scale(1); } 25% { transform: scale(1.2); } 50% { transform: scale(1.15); } }
 .wishlist-btn.active { animation: heartbeat 0.5s ease; }
 
+/* ============================================================
+   PRODUCT CARD
+   ============================================================ */
 .product-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* FIX CLAVE: siempre columna, nunca fila */
+  width: 100%;
   height: 100%;
   border-radius: 1rem;
   overflow: hidden;
@@ -730,376 +399,297 @@ body, header, footer, main, section,
 
 .product-image-container {
   position: relative;
-  height: 280px;
+  width: 100%;
+  height: 260px;
   overflow: hidden;
   flex-shrink: 0;
 }
-
-.product-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 1rem;
-  transition: transform 0.5s ease;
-}
-
+.product-image-container img { width: 100%; height: 100%; object-fit: contain; padding: 1rem; transition: transform 0.5s ease; }
 .product-card:hover .product-image-container img { transform: scale(1.08); }
 
-.discount-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 0.875rem;
-  box-shadow: 0 4px 12px rgba(239,68,68,0.4);
-  z-index: 10;
-}
+.discount-badge { position: absolute; top: 12px; right: 12px; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.875rem; box-shadow: 0 4px 12px rgba(239,68,68,0.4); z-index: 10; }
 
-.product-content {
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  flex-grow: 1;
-  background-color: var(--card-bg);
-}
-
-.product-title {
-  font-size: 1.125rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 3.5rem;
-  line-height: 1.75rem;
-}
-
-.product-description {
-  font-size: 0.875rem;
-  margin-bottom: 0.75rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 2.5rem;
-  line-height: 1.25rem;
-}
-
-.product-rating {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  height: 1.5rem;
-}
-
+.product-content { display: flex; flex-direction: column; padding: 1.5rem; flex-grow: 1; background-color: var(--card-bg); }
+.product-title { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3.5rem; line-height: 1.75rem; }
+.product-description { font-size: 0.875rem; margin-bottom: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem; line-height: 1.25rem; }
+.product-rating { display: flex; align-items: center; margin-bottom: 1rem; height: 1.5rem; }
 .product-stars { color: #fbbf24; font-size: 1rem; margin-right: 0.5rem; }
 .product-reviews { color: #9ca3af; font-size: 0.75rem; }
-
-.product-pricing {
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 1.5rem;
-  min-height: 2.5rem;
-}
-
-.product-price-original {
-  color: #9ca3af;
-  text-decoration: line-through;
-  font-size: 0.875rem;
-  margin-right: 0.75rem;
-}
-
-.product-price-current {
-  font-size: 1.875rem;
-  font-weight: 800;
-  color: #1e40af;
-}
-
+.product-pricing { display: flex; align-items: baseline; margin-bottom: 1.5rem; min-height: 2.5rem; flex-wrap: wrap; gap: 0.25rem; }
+.product-price-original { color: #9ca3af; text-decoration: line-through; font-size: 0.875rem; margin-right: 0.75rem; }
+.product-price-current { font-size: 1.875rem; font-weight: 800; color: #1e40af; }
 .product-actions { display: flex; gap: 0.75rem; margin-top: auto; }
 
-.btn-details {
-  flex: 1;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  text-align: center;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
-  border: none;
-  cursor: pointer;
-}
+.btn-details { flex: 1; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; padding: 0.75rem 1rem; border-radius: 0.75rem; font-weight: 600; text-align: center; transition: all 0.3s ease; text-decoration: none; display: inline-block; border: none; cursor: pointer; }
+.btn-details:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(59,130,246,0.4); }
+.btn-buy { flex: 1; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; padding: 0.75rem 1rem; border-radius: 0.75rem; font-weight: 600; text-align: center; transition: all 0.3s ease; border: none; cursor: pointer; }
+.btn-buy:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(251,191,36,0.4); }
 
-.btn-details:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(59,130,246,0.4);
-}
-
-.btn-buy {
-  flex: 1;
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  color: white;
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  text-align: center;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-buy:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(251,191,36,0.4);
-}
-
-.carousel-card {
-  display: flex;
-  flex-direction: column;
-  min-width: 280px;
-  max-width: 320px;
-  height: 540px;
-  border-radius: 1rem;
-  border: 1px solid #BFDBFE;
-  overflow: hidden;
-}
-
-.carousel-image-container {
-  position: relative;
-  height: 220px;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.carousel-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 0.75rem;
-  transition: transform 0.5s ease;
-}
-
+/* ============================================================
+   CAROUSEL CARD
+   ============================================================ */
+.carousel-card { display: flex; flex-direction: column; min-width: 280px; max-width: 320px; height: 540px; border-radius: 1rem; border: 1px solid #BFDBFE; overflow: hidden; }
+.carousel-image-container { position: relative; height: 220px; overflow: hidden; flex-shrink: 0; }
+.carousel-image-container img { width: 100%; height: 100%; object-fit: contain; padding: 0.75rem; transition: transform 0.5s ease; }
 .carousel-card:hover .carousel-image-container img { transform: scale(1.1); }
-
-.carousel-content {
-  display: flex;
-  flex-direction: column;
-  padding: 1.25rem;
-  flex-grow: 1;
-  background-color: var(--card-bg);
-}
-
-.carousel-title {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 3rem;
-  line-height: 1.5rem;
-}
-
-.carousel-description {
-  font-size: 0.8rem;
-  margin-bottom: 0.75rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  min-height: 2.4rem;
-  line-height: 1.2rem;
-}
-
+.carousel-content { display: flex; flex-direction: column; padding: 1.25rem; flex-grow: 1; background-color: var(--card-bg); }
+.carousel-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3rem; line-height: 1.5rem; }
+.carousel-description { font-size: 0.8rem; margin-bottom: 0.75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.4rem; line-height: 1.2rem; }
 .carousel-rating { display: flex; align-items: center; margin-bottom: 0.75rem; height: 1.25rem; }
-.carousel-pricing { display: flex; align-items: baseline; margin-bottom: 1.25rem; min-height: 2.25rem; }
+.carousel-pricing { display: flex; align-items: baseline; margin-bottom: 1.25rem; min-height: 2.25rem; flex-wrap: wrap; gap: 0.25rem; }
 .carousel-actions { display: flex; gap: 0.5rem; margin-top: auto; }
+.carousel-actions .btn-details, .carousel-actions .btn-buy { padding: 0.625rem 0.875rem; font-size: 0.875rem; }
 
-.carousel-actions .btn-details,
-.carousel-actions .btn-buy { padding: 0.625rem 0.875rem; font-size: 0.875rem; }
+/* ============================================================
+   ★★★ RESPONSIVE COMPLETO ★★★
+   ============================================================ */
 
+/* --- MÓVIL < 640px --- */
 @media (max-width: 640px) {
-  .product-image-container { height: 240px; }
-  .product-title { font-size: 1rem; }
-  .product-price-current { font-size: 1.5rem; }
-  .carousel-card { min-width: 260px; max-width: 280px; height: 500px; }
-  .carousel-image-container { height: 200px; }
-  .theme-toggle-button { width: 38px; height: 38px; }
+
+  /* Evitar desbordamiento horizontal */
+  html, body, main { overflow-x: hidden !important; max-width: 100vw !important; }
+  .container { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+  /* Header — compacto en móvil */
+  .logo-principal { width: 85px !important; }
+  .theme-toggle-button { width: 36px !important; height: 36px !important; }
+  .header-icon-lg { font-size: 1.1rem !important; }
+  header nav > div > div.flex.items-center { gap: 0.4rem !important; }
+
+  /* Hero */
+  .hero { padding-top: 5rem !important; padding-bottom: 5rem !important; }
+  .hero h1 { font-size: 1.8rem !important; line-height: 1.2 !important; }
+  .hero p { font-size: 1rem !important; }
+
+  /* Trust section — 1 columna en pantallas muy chicas, 2 en el resto */
+  .trust-section .grid { grid-template-columns: 1fr 1fr !important; gap: 0.75rem !important; }
+  .trust-card { padding: 18px 12px !important; }
+  .trust-icon { width: 48px !important; height: 48px !important; font-size: 1.35rem !important; }
+  .trust-title { font-size: 0.85rem !important; }
+  .trust-desc { font-size: 0.75rem !important; }
+
+  /* Offers banner */
+  .offers-banner { padding: 28px 0 !important; }
+  .offers-banner h2 { font-size: 1.4rem !important; }
+  .offers-banner p { font-size: 0.85rem !important; margin-bottom: 14px !important; }
+  .btn-banner-primary, .btn-banner-secondary { padding: 10px 18px !important; font-size: 0.85rem !important; width: 100% !important; justify-content: center !important; }
+  .discount-cards { justify-content: center !important; gap: 8px !important; }
+  .discount-card { min-width: 70px !important; padding: 12px 10px !important; }
+  .discount-card-pct { font-size: 1.3rem !important; }
+
+  /* PRODUCTOS GRID — 1 sola columna */
+  #productos-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  /* PRODUCT CARD — vertical, ancho completo */
+  .product-card {
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  .product-image-container {
+    height: 220px !important;
+    width: 100% !important;
+  }
+
+  .product-content {
+    width: 100% !important;
+    padding: 1rem !important;
+  }
+
+  .product-title { font-size: 1rem !important; min-height: auto !important; }
+  .product-description { min-height: auto !important; }
+  .product-price-current { font-size: 1.4rem !important; }
+  .product-pricing { min-height: auto !important; margin-bottom: 1rem !important; }
+  .product-actions { flex-direction: row !important; gap: 0.5rem !important; }
+
+  /* Carousel */
+  .carousel-card { min-width: 250px !important; max-width: 270px !important; height: 490px !important; }
+  .carousel-image-container { height: 190px !important; }
+
+  /* Sobre ElectroHome */
+  .sobre-grid, .grid.grid-cols-1.md\:grid-cols-3 { grid-template-columns: 1fr !important; }
+  .stats-grid, .grid.grid-cols-2.md\:grid-cols-4 { grid-template-columns: 1fr 1fr !important; }
+
+  /* Funcionalidades box */
+  div[style*="padding:48px 40px"] { padding: 28px 16px !important; }
+  div[style*="font-size:1.9rem"] { font-size: 1.3rem !important; }
+
+  /* Footer */
+  footer .container { padding-left: 1rem !important; padding-right: 1rem !important; }
 }
 
-#auth-modal.show #auth-modal-content {
-  animation: modalSlideIn 0.3s ease-out forwards;
+/* --- MÓVIL PEQUEÑO < 400px --- */
+@media (max-width: 400px) {
+  .hero h1 { font-size: 1.5rem !important; }
+  .product-image-container { height: 180px !important; }
+  .trust-section .grid { grid-template-columns: 1fr !important; }
+  .discount-card { min-width: 60px !important; }
+  .btn-registrarse { padding: 7px 10px !important; font-size: 0.78rem !important; }
 }
 
-@keyframes modalSlideIn {
-  from { transform: scale(0.9) translateY(-20px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
+/* --- TABLET 641px - 1024px --- */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .logo-principal { width: 105px; }
+  .offers-banner { padding: 36px 0; }
+  .discount-cards { justify-content: center; }
+  .carousel-card { min-width: 260px; max-width: 290px; }
+
+  #productos-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
-#auth-modal.hide #auth-modal-content {
-  animation: modalSlideOut 0.2s ease-in forwards;
-}
-
-@keyframes modalSlideOut {
-  from { transform: scale(1) translateY(0); opacity: 1; }
-  to { transform: scale(0.9) translateY(-20px); opacity: 0; }
-}
+/* ============================================================
+   MODALES
+   ============================================================ */
+#auth-modal.show #auth-modal-content { animation: modalSlideIn 0.3s ease-out forwards; }
+@keyframes modalSlideIn { from { transform: scale(0.9) translateY(-20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+#auth-modal.hide #auth-modal-content { animation: modalSlideOut 0.2s ease-in forwards; }
+@keyframes modalSlideOut { from { transform: scale(1) translateY(0); opacity: 1; } to { transform: scale(0.9) translateY(-20px); opacity: 0; } }
     </style>
   </head>
 
   <body>
+
     <!-- HEADER -->
-   <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-500 sticky top-0 z-50">
-  <nav class="container mx-auto px-4 py-3">
-    <div class="flex justify-between items-center gap-4">
+    <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-400 sticky top-0 z-50">
+      <nav class="container mx-auto px-4 py-4">
+        <div class="flex justify-between items-center gap-2 min-w-0">
 
-      <!-- Logo -->
-      <div class="flex items-center space-x-2 flex-shrink-0">
-        <a href="{% url 'product:home' %}">
-          <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome"
-               class="w-20 h-auto hover:scale-105 transition-transform duration-500" />
-        </a>
-      </div>
+          <!-- Logo -->
+          <div class="flex items-center flex-shrink-0">
+            <a href="{% url 'product:home' %}">
+              <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" class="logo-principal" />
+            </a>
+          </div>
 
-      <!-- Buscador Desktop -->
-<div class="hidden md:flex flex-grow min-w-0 max-w-xl mx-4">
-  <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
-    <input type="text" name="q" placeholder="Buscar productos..."
-           class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
-           value="{{ request.GET.q }}" />
-    <button type="submit"
-            class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
-      <i class="fas fa-search"></i>
-    </button>
-  </form>
-</div>
+          <!-- Buscador Desktop -->
+          <div class="hidden md:flex flex-grow min-w-0 max-w-2xl mx-4">
+            <form action="{% url 'product:search' %}" method="GET" class="flex w-full">
+              <input type="text" name="q" placeholder="Buscar productos..."
+                     class="search-input-big flex-1 min-w-0 px-5 py-3 rounded-l-xl border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800 text-base"
+                     value="{{ request.GET.q }}" />
+              <button type="submit"
+                      class="search-btn-big flex-shrink-0 bg-yellow-500 text-white px-6 py-3 rounded-r-xl hover:bg-yellow-600 transition text-base font-semibold">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </div>
 
-      <!-- Nav Desktop -->
-      <div class="hidden lg:flex space-x-6">
-        <a href="{% url 'product:home' %}"         class="text-yellow-400 font-semibold">Inicio</a>
-        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 transition">Productos</a>
-        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 transition">Contacto</a>
-      </div>
+          <!-- Nav Desktop -->
+          <div class="hidden lg:flex items-center space-x-1">
+            <a href="{% url 'product:home' %}" class="nav-text px-4 py-2 rounded-lg transition {% if request.resolver_match.url_name == 'home' %}activo text-yellow-400{% else %}text-gray-100{% endif %}">Inicio</a>
+            <a href="{% url 'product:products_list' %}" class="nav-text px-4 py-2 rounded-lg transition {% if request.resolver_match.url_name == 'products_list' %}activo text-yellow-400{% else %}text-gray-100{% endif %}">Productos</a>
+            <a href="{% url 'product:contact' %}" class="nav-text px-4 py-2 rounded-lg transition {% if request.resolver_match.url_name == 'contact' %}activo text-yellow-400{% else %}text-gray-100{% endif %}">Contacto</a>
+          </div>
 
-      <!-- Controles derechos -->
-      <div class="flex items-center space-x-3">
+          <!-- Controles derechos -->
+          <div class="flex items-center space-x-2 flex-shrink-0">
 
-        <!-- Botón Tema -->
-        <button id="theme-toggle" class="theme-toggle-button" aria-label="Cambiar tema">
-          <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-          <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </button>
+            <!-- Botón Tema -->
+            <button id="theme-toggle" class="theme-toggle-button" aria-label="Cambiar tema">
+              <svg class="sun-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+              <svg class="moon-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </button>
 
-        <!-- Wishlist -->
-        {% if user.is_authenticated %}
-        <a href="{% url 'product:wishlist' %}" class="relative text-white hover:text-red-400 transition">
-          <i class="fas fa-heart text-2xl"></i>
-          {% if user.wishlist.total_items > 0 %}
-          <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-            {{ user.wishlist.total_items }}
-          </span>
-          {% endif %}
-        </a>
-        {% endif %}
+            <!-- Wishlist -->
+            {% if user.is_authenticated %}
+            <a href="{% url 'product:wishlist' %}" class="relative text-white hover:text-red-400 transition">
+              <i class="fas fa-heart header-icon-lg"></i>
+              {% if user.wishlist.total_items > 0 %}
+              <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-[20px] flex items-center justify-center px-1">{{ user.wishlist.total_items }}</span>
+              {% endif %}
+            </a>
+            {% endif %}
 
-        <!-- Carrito -->
-        <a href="{% url 'product:cart' %}" class="relative text-white hover:text-yellow-300 transition">
-          <i class="fas fa-shopping-cart text-2xl"></i>
-          <span id="cart-counter" class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-            {{ cart_items_count|default:0 }}
-          </span>
-        </a>
+            <!-- Carrito -->
+            <a href="{% url 'product:cart' %}" class="relative text-white hover:text-yellow-300 transition">
+              <i class="fas fa-shopping-cart header-icon-lg"></i>
+              <span id="cart-counter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-[20px] flex items-center justify-center px-1">{{ cart_items_count|default:0 }}</span>
+            </a>
 
-        {% if user.is_authenticated %}
-        <!-- Menú Usuario -->
-        <div class="relative">
-          <button id="user-menu-btn" aria-label="Menú usuario" class="flex items-center justify-center">
-            {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
-          </button>
-          <div id="user-dropdown" class="hidden absolute right-0 mt-3 z-50" style="width:270px;">
-            <div class="dropdown-header">
-              <div class="flex items-center gap-3">
-                <div class="dropdown-avatar">
-                  {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
-                </div>
-                <div>
-                  <div class="dropdown-name">
-                    {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+            {% if user.is_authenticated %}
+            <div class="relative">
+              <button id="user-menu-btn" aria-label="Menú usuario" class="flex items-center justify-center">
+                {{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}
+              </button>
+              <div id="user-dropdown" class="hidden absolute right-0 mt-3 z-50" style="width:270px;">
+                <div class="dropdown-header">
+                  <div class="flex items-center gap-3">
+                    <div class="dropdown-avatar">{{ user.first_name.0|default:user.username.0|upper }}{{ user.last_name.0|default:""|upper }}</div>
+                    <div>
+                      <div class="dropdown-name">{% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}</div>
+                      <div class="dropdown-badge"><i class="fas fa-user-check" style="font-size:.6rem;"></i> Cliente</div>
+                    </div>
                   </div>
-                  <div class="dropdown-badge"><i class="fas fa-user-check" style="font-size:.6rem;"></i> Cliente</div>
+                </div>
+                <div style="padding:6px 0;">
+                  <a href="{% url 'user:profile' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-user"></i></span><span>Mi Perfil</span></a>
+                  <a href="{% url 'order:order_list' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-shopping-bag"></i></span><span>Mis Pedidos</span></a>
+                  <div class="dropdown-divider"></div>
+                  <a href="{% url 'user:logout' %}" class="dropdown-item logout"><span class="item-icon"><i class="fas fa-sign-out-alt"></i></span><span>Cerrar Sesión</span></a>
                 </div>
               </div>
             </div>
-            <div style="padding:6px 0;">
-              <a href="{% url 'user:profile' %}"    class="dropdown-item"><span class="item-icon"><i class="fas fa-user"></i></span><span>Mi Perfil</span></a>
-              <a href="{% url 'order:order_list' %}" class="dropdown-item"><span class="item-icon"><i class="fas fa-shopping-bag"></i></span><span>Mis Pedidos</span></a>
-              <div class="dropdown-divider"></div>
-              <a href="{% url 'user:logout' %}" class="dropdown-item logout"><span class="item-icon"><i class="fas fa-sign-out-alt"></i></span><span>Cerrar Sesión</span></a>
-            </div>
+            {% else %}
+            <a href="{% url 'user:login' %}" class="btn-ingresar text-white border border-white border-opacity-40 hover:bg-blue-700" style="display:inline-flex;"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+            <a href="{% url 'user:register' %}" class="btn-registrarse text-white" style="display:inline-flex;"><i class="fas fa-user-plus"></i> Registrarse</a>
+            {% endif %}
+
+            <!-- Mobile Menu Btn -->
+            <button class="lg:hidden text-gray-50 hover:text-yellow-300 p-2 flex-shrink-0" id="mobile-menu-button">
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
           </div>
         </div>
-        {% else %}
-        <a href="{% url 'user:login' %}"    class="hidden md:inline-flex items-center gap-2 text-white hover:text-yellow-300 font-semibold text-sm transition"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
-        <a href="{% url 'user:register' %}" class="bg-yellow-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition text-sm">Registrarse</a>
-        {% endif %}
 
-        <!-- Mobile Menu Btn -->
-        <button class="lg:hidden text-gray-50 hover:text-yellow-300" id="mobile-menu-button">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
-      </div>
-    </div>
-
-   <!-- Buscador Mobile -->
-    <div class="md:hidden mt-3">
-      <form action="{% url 'product:search' %}" method="GET">
-        <div class="flex w-full">
-          <input type="text" name="q" placeholder="Buscar productos..."
-                 class="flex-1 min-w-0 px-4 py-2 rounded-l-lg border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800"
-                 value="{{ request.GET.q }}" />
-          <button type="submit"
-                  class="flex-shrink-0 bg-yellow-500 text-white px-4 py-2 rounded-r-lg hover:bg-yellow-600 transition">
-            <i class="fas fa-search"></i>
-          </button>
+        <!-- Buscador Mobile -->
+        <div class="md:hidden mt-4">
+          <form action="{% url 'product:search' %}" method="GET">
+            <div class="flex w-full">
+              <input type="text" name="q" placeholder="Buscar productos..."
+                     class="flex-1 min-w-0 px-4 py-3 rounded-l-xl border-2 border-blue-300 focus:border-yellow-400 focus:outline-none text-gray-800 text-base"
+                     value="{{ request.GET.q }}" />
+              <button type="submit" class="flex-shrink-0 bg-yellow-500 text-white px-5 py-3 rounded-r-xl hover:bg-yellow-600 transition text-base font-semibold">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
 
-    <!-- Mobile Menu -->
-    <div class="lg:hidden mt-4 pb-4 hidden" id="mobile-menu">
-      <div class="flex flex-col space-y-2">
-        <a href="{% url 'product:home' %}"         class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-home mr-2"></i>Inicio</a>
-        <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-tag mr-2"></i>Productos</a>
-        <a href="{% url 'product:contact' %}"       class="text-gray-50 hover:text-yellow-300 py-2"><i class="fas fa-envelope mr-2"></i>Contacto</a>
-        <hr class="border-blue-600">
-        {% if user.is_authenticated %}
-        <a href="{% url 'user:profile' %}"    class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-user mr-3"></i>Mi Perfil</a>
-        <a href="{% url 'product:wishlist' %}" class="flex items-center text-white hover:text-red-300 py-2"><i class="fas fa-heart mr-3"></i>Lista de Deseos</a>
-        <a href="{% url 'order:order_list' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-shopping-bag mr-3"></i>Mis Pedidos</a>
-        <a href="{% url 'user:logout' %}"      class="flex items-center text-red-300 hover:text-red-100 py-2"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
-        {% else %}
-        <a href="{% url 'user:login' %}" class="flex items-center text-white hover:text-yellow-300 py-2"><i class="fas fa-sign-in-alt mr-3"></i>Ingresar</a>
-        {% endif %}
-      </div>
-    </div>
-  </nav>
-</header>
+        <!-- Mobile Menu -->
+        <div class="lg:hidden mt-4 pb-4 hidden" id="mobile-menu">
+          <div class="flex flex-col space-y-1 pt-3 border-t border-blue-600">
+            <a href="{% url 'product:home' %}" class="nav-text text-gray-50 hover:text-yellow-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-home mr-2"></i>Inicio</a>
+            <a href="{% url 'product:products_list' %}" class="nav-text text-gray-50 hover:text-yellow-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-tag mr-2"></i>Productos</a>
+            <a href="{% url 'product:contact' %}" class="nav-text text-gray-50 hover:text-yellow-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-envelope mr-2"></i>Contacto</a>
+            <hr class="border-blue-600 my-1">
+            {% if user.is_authenticated %}
+            <a href="{% url 'user:profile' %}" class="nav-text flex items-center text-white hover:text-yellow-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-user mr-3"></i>Mi Perfil</a>
+            <a href="{% url 'product:wishlist' %}" class="nav-text flex items-center text-white hover:text-red-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-heart mr-3"></i>Lista de Deseos</a>
+            <a href="{% url 'order:order_list' %}" class="nav-text flex items-center text-white hover:text-yellow-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-shopping-bag mr-3"></i>Mis Pedidos</a>
+            <a href="{% url 'user:logout' %}" class="nav-text flex items-center text-red-300 hover:text-red-100 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-sign-out-alt mr-3"></i>Cerrar Sesión</a>
+            {% else %}
+            <a href="{% url 'user:login' %}" class="nav-text flex items-center text-white hover:text-yellow-300 py-3 px-3 rounded-lg hover:bg-blue-700 transition"><i class="fas fa-sign-in-alt mr-3"></i>Ingresar</a>
+            <a href="{% url 'user:register' %}" class="btn-registrarse mt-2 justify-center"><i class="fas fa-user-plus"></i>Registrarse</a>
+            {% endif %}
+          </div>
+        </div>
+      </nav>
+    </header>
 
     <!-- Mensajes Django -->
     {% if messages %}
@@ -1113,6 +703,7 @@ body, header, footer, main, section,
     {% endif %}
 
     <main>
+
       <!-- HERO -->
       <section class="hero relative text-white py-40 md:py-52 flex flex-col items-center justify-center text-center"
         style="background-image: url('{% static 'img/home_fondo_img.webp' %}'); background-size: cover; background-position: center;">
@@ -1121,21 +712,68 @@ body, header, footer, main, section,
           <h1 class="text-5xl md:text-6xl font-bold mb-6">
             Bienvenido a <span class="text-yellow-600">ElectroHome</span>
           </h1>
-          <p class="text-xl md:text-2xl mb-8 opacity-90 text-yellow-400">
-            Calidad y ahorro en un solo click
-          </p>
+          <p class="text-xl md:text-2xl mb-8 opacity-90 text-yellow-400">Calidad y ahorro en un solo click</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#promociones"
-              class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition duration-300 transform hover:scale-105">
-              Ver Productos
-            </a>
-            <button
-              class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-800 transition duration-300">
-              Ofertas Especiales
-            </button>
+            <a href="#promociones" class="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition duration-300 transform hover:scale-105">Ver Productos</a>
+            <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-800 transition duration-300">Ofertas Especiales</button>
           </div>
         </div>
       </section>
+
+      <!-- SECCIÓN DE CONFIANZA -->
+      <div class="trust-section">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-10">
+            <h2 class="text-3xl font-extrabold text-blue-600 mb-2">¿Por qué elegirnos?</h2>
+            <p style="color:var(--text-secondary);" class="text-base">Comprometidos con tu satisfacción en cada compra</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="trust-card">
+              <div class="trust-icon" style="background:rgba(37,99,235,0.1);">🚚</div>
+              <div class="trust-title">Envío rápido</div>
+              <div class="trust-desc">Recibe tu pedido en 24 a 48 horas en toda Colombia</div>
+            </div>
+            <div class="trust-card">
+              <div class="trust-icon" style="background:rgba(16,185,129,0.1);">🔒</div>
+              <div class="trust-title">Pago 100% seguro</div>
+              <div class="trust-desc">Tus datos siempre protegidos con tecnología SSL</div>
+            </div>
+            <div class="trust-card">
+              <div class="trust-icon" style="background:rgba(245,158,11,0.1);">↩️</div>
+              <div class="trust-title">Devoluciones</div>
+              <div class="trust-desc">30 días para cambios y devoluciones sin complicaciones</div>
+            </div>
+            <div class="trust-card">
+              <div class="trust-icon" style="background:rgba(139,92,246,0.1);">🎧</div>
+              <div class="trust-title">Soporte 24/7</div>
+              <div class="trust-desc">Siempre disponibles para resolver tus preguntas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BANNER DE OFERTAS -->
+      <div class="offers-banner">
+        <div class="container mx-auto px-4 relative z-10">
+          <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
+            <div class="text-center lg:text-left w-full lg:w-auto">
+              <div class="offers-banner-tag"><i class="fas fa-fire"></i> Ofertas por tiempo limitado</div>
+              <h2>Hasta <span>40% de descuento</span><br>en productos seleccionados</h2>
+              <p>No dejes pasar las mejores promociones de la temporada.<br>¡Compra hoy y ahorra más!</p>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <a href="{% url 'product:products_list' %}" class="btn-banner-primary"><i class="fas fa-tags"></i> Ver todas las ofertas</a>
+                <a href="#promociones" class="btn-banner-secondary"><i class="fas fa-arrow-down"></i> Productos destacados</a>
+              </div>
+            </div>
+            <div class="discount-cards">
+              <div class="discount-card"><span class="discount-card-pct">10%</span><span class="discount-card-label">Cocina</span></div>
+              <div class="discount-card"><span class="discount-card-pct">25%</span><span class="discount-card-label">Limpieza</span></div>
+              <div class="discount-card"><span class="discount-card-pct">40%</span><span class="discount-card-label">Electrónica</span></div>
+              <div class="discount-card"><span class="discount-card-pct">15%</span><span class="discount-card-label">Audio</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- PROMOCIONES ESPECIALES -->
       <section id="promociones" class="py-20 bg-gradient-to-b from-white via-gray-50 to-gray-100">
@@ -1180,9 +818,7 @@ body, header, footer, main, section,
               </div>
             </div>
             {% empty %}
-            <div class="col-span-3 text-center py-10">
-              <p class="text-gray-500 text-lg">No hay productos disponibles.</p>
-            </div>
+            <div class="col-span-3 text-center py-10"><p class="text-gray-500 text-lg">No hay productos disponibles.</p></div>
             {% endfor %}
           </div>
         </div>
@@ -1241,110 +877,124 @@ body, header, footer, main, section,
         </div>
       </section>
 
-      <!-- CARRUSEL LIMPIEZA -->
-      <section id="limpieza" class="py-20 bg-gradient-to-b from-white via-gray-50 to-gray-100">
-        <div class="container mx-auto px-4">
-          <div class="mb-10">
-            <h2 class="text-4xl font-bold text-blue-500 mb-2">Limpieza</h2>
-          </div>
-          <div class="relative">
-            <button id="scroll-left-limpieza" class="absolute left-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white p-3 rounded-full shadow-md hover:bg-yellow-600 transition z-10 hidden md:block">◀</button>
-            <div id="carousel-limpieza" class="flex overflow-x-auto space-x-6 scrollbar-hide scroll-smooth snap-x snap-mandatory pb-4 px-2">
-              {% for producto in productos_limpieza %}
-              <div class="carousel-card snap-start">
-                <div class="carousel-image-container">
-                  <button class="wishlist-btn" data-product-id="{{ producto.id }}" onclick="toggleWishlist(event, {{ producto.id }})">♡</button>
-                  {% if producto.imagen_principal %}
-                  <img src="{{ producto.imagen_principal }}" alt="{{ producto.nombre }}">
-                  {% else %}
-                  <img src="{% static 'img/productos/producto-ejemplo.jpg' %}" alt="{{ producto.nombre }}">
-                  {% endif %}
-                  {% if producto.descuento and producto.descuento > 0 %}
-                  <span class="discount-badge">-{{ producto.descuento }}%</span>
-                  {% endif %}
-                </div>
-                <div class="carousel-content">
-                  <h3 class="carousel-title">{{ producto.nombre }}</h3>
-                  <p class="carousel-description">{{ producto.descripcion|truncatewords:8 }}</p>
-                  <div class="carousel-rating">
-                    <div class="product-stars">⭐⭐⭐⭐⭐</div>
-                    <span class="product-reviews">(0)</span>
-                  </div>
-                  <div class="carousel-pricing">
-                    {% if producto.descuento and producto.descuento > 0 %}
-                    <span class="product-price-original">{{ producto.precio|formato_precio }}</span>
-                    <span class="product-price-current">{{ producto.precio_descuento|formato_precio }}</span>
-                    {% else %}
-                    <span class="product-price-current">{{ producto.precio|formato_precio }}</span>
-                    {% endif %}
-                  </div>
-                  <div class="carousel-actions">
-                    <a href="{% url 'product:product_detail' producto.id %}" class="btn-details">Detalles</a>
-                    <button class="btn-buy" onclick="agregarAlCarrito({{ producto.id }})">Comprar</button>
-                  </div>
-                </div>
-              </div>
-              {% empty %}
-              <div class="min-w-full text-center py-10"><p class="text-gray-500">No hay productos de limpieza disponibles.</p></div>
-              {% endfor %}
-            </div>
-            <button id="scroll-right-limpieza" class="absolute right-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white p-3 rounded-full shadow-md hover:bg-yellow-600 transition z-10 hidden md:block">▶</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- CARRUSEL COCINA -->
-      <section id="cocina" class="py-20 bg-gradient-to-b from-white via-gray-50 to-gray-100">
-        <div class="container mx-auto px-4">
-          <div class="mb-10">
-            <h2 class="text-4xl font-bold text-blue-500 mb-2">Cocina</h2>
-          </div>
-          <div class="relative">
-            <button id="scroll-left-cocina" class="absolute left-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white p-3 rounded-full shadow-md hover:bg-yellow-600 transition z-10 hidden md:block">◀</button>
-            <div id="carousel-cocina" class="flex overflow-x-auto space-x-6 scrollbar-hide scroll-smooth snap-x snap-mandatory pb-4 px-2">
-              {% for producto in productos_cocina %}
-              <div class="carousel-card snap-start">
-                <div class="carousel-image-container">
-                  <button class="wishlist-btn" data-product-id="{{ producto.id }}" onclick="toggleWishlist(event, {{ producto.id }})">♡</button>
-                  {% if producto.imagen_principal %}
-                  <img src="{{ producto.imagen_principal }}" alt="{{ producto.nombre }}">
-                  {% else %}
-                  <img src="{% static 'img/productos/producto-ejemplo.jpg' %}" alt="{{ producto.nombre }}">
-                  {% endif %}
-                  {% if producto.descuento and producto.descuento > 0 %}
-                  <span class="discount-badge">-{{ producto.descuento }}%</span>
-                  {% endif %}
-                </div>
-                <div class="carousel-content">
-                  <h3 class="carousel-title">{{ producto.nombre }}</h3>
-                  <p class="carousel-description">{{ producto.descripcion|truncatewords:8 }}</p>
-                  <div class="carousel-rating">
-                    <div class="product-stars">⭐⭐⭐⭐⭐</div>
-                    <span class="product-reviews">(0)</span>
-                  </div>
-                  <div class="carousel-pricing">
-                    {% if producto.descuento and producto.descuento > 0 %}
-                    <span class="product-price-original">{{ producto.precio|formato_precio }}</span>
-                    <span class="product-price-current">{{ producto.precio_descuento|formato_precio }}</span>
-                    {% else %}
-                    <span class="product-price-current">{{ producto.precio|formato_precio }}</span>
-                    {% endif %}
-                  </div>
-                  <div class="carousel-actions">
-                    <a href="{% url 'product:product_detail' producto.id %}" class="btn-details">Detalles</a>
-                    <button class="btn-buy" onclick="agregarAlCarrito({{ producto.id }})">Comprar</button>
-                  </div>
-                </div>
-              </div>
-              {% empty %}
-              <div class="min-w-full text-center py-10"><p class="text-gray-500">No hay productos de cocina disponibles.</p></div>
-              {% endfor %}
-            </div>
-            <button id="scroll-right-cocina" class="absolute right-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white p-3 rounded-full shadow-md hover:bg-yellow-600 transition z-10 hidden md:block">▶</button>
-          </div>
-        </div>
-      </section>
     </main>
+
+    <!-- SOBRE ELECTROHOME -->
+    <section style="background: var(--bg-secondary); padding: 80px 0; border-top: 1px solid var(--border-color);">
+      <div class="container mx-auto px-4">
+
+        <div class="text-center mb-14">
+          <span style="display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,0.08);border:1.5px solid rgba(37,99,235,0.2);color:#2563eb;padding:6px 18px;border-radius:50px;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:14px;">
+            <i class="fas fa-info-circle"></i> Sobre nosotros
+          </span>
+          <h2 class="text-4xl font-extrabold mb-4" style="color:var(--text-primary);">
+            ¿Qué es <span style="color:#2563eb;">Electro</span><span style="color:#f59e0b;">Home</span>?
+          </h2>
+          <p class="text-lg max-w-3xl mx-auto" style="color:var(--text-secondary); line-height:1.8;">
+            <strong style="color:var(--text-primary);">ElectroHome</strong> es tu tienda virtual de electrodomésticos en Colombia. Nacimos con una misión clara: llevarte los mejores productos para tu hogar con la comodidad de comprar desde donde estés, con precios justos, garantía real y atención de primera.
+          </p>
+        </div>
+
+        <!-- Qué hacemos — 3 columnas -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div style="background:var(--card-bg);border:1.5px solid var(--border-color);border-radius:20px;padding:32px 28px;box-shadow:var(--card-shadow);transition:all 0.3s ease;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 20px 48px rgba(0,0,0,0.13)';this.style.borderColor='#2563eb'" onmouseout="this.style.transform='';this.style.boxShadow='var(--card-shadow)';this.style.borderColor='var(--border-color)'">
+            <div style="width:60px;height:60px;background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px;">🏪</div>
+            <h3 style="font-size:1.2rem;font-weight:800;color:var(--text-primary);margin-bottom:10px;">Tu tienda de electrodomésticos</h3>
+            <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.7;">Contamos con un catálogo amplio de electrodomésticos para cocina, limpieza, audio y más. Productos seleccionados de marcas reconocidas con garantía y al mejor precio del mercado.</p>
+          </div>
+          <div style="background:var(--card-bg);border:1.5px solid var(--border-color);border-radius:20px;padding:32px 28px;box-shadow:var(--card-shadow);transition:all 0.3s ease;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 20px 48px rgba(0,0,0,0.13)';this.style.borderColor='#f59e0b'" onmouseout="this.style.transform='';this.style.boxShadow='var(--card-shadow)';this.style.borderColor='var(--border-color)'">
+            <div style="width:60px;height:60px;background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px;">⚡</div>
+            <h3 style="font-size:1.2rem;font-weight:800;color:var(--text-primary);margin-bottom:10px;">Compra fácil y rápida</h3>
+            <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.7;">Diseñamos una experiencia de compra simple e intuitiva. Busca, agrega al carrito, paga con seguridad y recibe en tu puerta. Sin complicaciones, sin filas, sin perder tiempo.</p>
+          </div>
+          <div style="background:var(--card-bg);border:1.5px solid var(--border-color);border-radius:20px;padding:32px 28px;box-shadow:var(--card-shadow);transition:all 0.3s ease;" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 20px 48px rgba(0,0,0,0.13)';this.style.borderColor='#10b981'" onmouseout="this.style.transform='';this.style.boxShadow='var(--card-shadow)';this.style.borderColor='var(--border-color)'">
+            <div style="width:60px;height:60px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px;">🤝</div>
+            <h3 style="font-size:1.2rem;font-weight:800;color:var(--text-primary);margin-bottom:10px;">Atención y confianza</h3>
+            <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.7;">Somos una tienda comprometida con el cliente. Te acompañamos desde que buscas el producto hasta que lo tienes en casa, con soporte real, devoluciones y total transparencia.</p>
+          </div>
+        </div>
+
+        <!-- Funcionalidades -->
+        <div style="background:linear-gradient(135deg,#111827 0%,#1f2937 50%,#111827 100%);border-radius:24px;padding:48px 40px;position:relative;overflow:hidden;border:2px solid rgba(245,158,11,0.2);">
+          <div style="position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(245,158,11,0.07);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(245,158,11,0.04);pointer-events:none;"></div>
+
+          <div class="text-center mb-10 relative z-10">
+            <h3 style="font-size:1.9rem;font-weight:900;color:#ffffff;margin-bottom:8px;">¿Qué te ofrece ElectroHome?</h3>
+            <p style="color:rgba(255,255,255,0.7);font-size:1rem;">Todo lo que necesitas para comprar tranquilo y con confianza</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 relative z-10">
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px 20px;text-align:center;transition:all 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.transform=''">
+              <div style="font-size:2rem;margin-bottom:12px;">🛒</div>
+              <div style="font-weight:700;color:#ffffff;font-size:0.95rem;margin-bottom:6px;">Carrito de compras</div>
+              <div style="color:rgba(255,255,255,0.65);font-size:0.82rem;line-height:1.5;">Agrega productos, controla cantidades y compra todo en un solo pedido fácilmente.</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px 20px;text-align:center;transition:all 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.transform=''">
+              <div style="font-size:2rem;margin-bottom:12px;">❤️</div>
+              <div style="font-weight:700;color:#ffffff;font-size:0.95rem;margin-bottom:6px;">Lista de deseos</div>
+              <div style="color:rgba(255,255,255,0.65);font-size:0.82rem;line-height:1.5;">Guarda los productos que te gustan y comprálos cuando quieras sin perderlos.</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px 20px;text-align:center;transition:all 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.transform=''">
+              <div style="font-size:2rem;margin-bottom:12px;">📦</div>
+              <div style="font-weight:700;color:#ffffff;font-size:0.95rem;margin-bottom:6px;">Seguimiento de pedidos</div>
+              <div style="color:rgba(255,255,255,0.65);font-size:0.82rem;line-height:1.5;">Consulta el estado de tus compras en tiempo real desde tu perfil personal.</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px 20px;text-align:center;transition:all 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.transform=''">
+              <div style="font-size:2rem;margin-bottom:12px;">🔍</div>
+              <div style="font-weight:700;color:#ffffff;font-size:0.95rem;margin-bottom:6px;">Búsqueda inteligente</div>
+              <div style="color:rgba(255,255,255,0.65);font-size:0.82rem;line-height:1.5;">Encuentra cualquier producto rápido por nombre, categoría o precio.</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px 20px;text-align:center;transition:all 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.transform=''">
+              <div style="font-size:2rem;margin-bottom:12px;">👤</div>
+              <div style="font-weight:700;color:#ffffff;font-size:0.95rem;margin-bottom:6px;">Perfil de usuario</div>
+              <div style="color:rgba(255,255,255,0.65);font-size:0.82rem;line-height:1.5;">Gestiona tus datos, historial de compras y preferencias desde un solo lugar.</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:24px 20px;text-align:center;transition:all 0.25s ease;" onmouseover="this.style.background='rgba(255,255,255,0.12)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.transform=''">
+              <div style="font-size:2rem;margin-bottom:12px;">💬</div>
+              <div style="font-weight:700;color:#ffffff;font-size:0.95rem;margin-bottom:6px;">Chatbot inteligente</div>
+              <div style="color:rgba(255,255,255,0.65);font-size:0.82rem;line-height:1.5;">Nuestro chatbot con IA responde tus preguntas y te ayuda a encontrar el producto ideal.</div>
+            </div>
+            <div style="background:rgba(139,92,246,0.15);border:1.5px solid rgba(139,92,246,0.45);border-radius:16px;padding:24px 20px;text-align:center;transition:all 0.25s ease;" onmouseover="this.style.background='rgba(139,92,246,0.28)';this.style.transform='translateY(-4px)'" onmouseout="this.style.background='rgba(139,92,246,0.15)';this.style.transform=''">
+              <div style="font-size:2rem;margin-bottom:12px;">🤖</div>
+              <div style="font-weight:700;color:#c4b5fd;font-size:0.95rem;margin-bottom:6px;">IA de recomendaciones</div>
+              <div style="color:rgba(255,255,255,0.75);font-size:0.82rem;line-height:1.5;">Nuestra IA aprende de tus gustos y compras para sugerirte exactamente lo que necesitas. Como un asesor personal disponible 24/7.</div>
+            </div>
+          </div>
+
+          <div class="text-center mt-10 relative z-10">
+            <a href="{% url 'user:register' %}"
+               style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);color:#fff;font-weight:800;font-size:1.05rem;padding:15px 40px;border-radius:14px;text-decoration:none;box-shadow:0 6px 24px rgba(245,158,11,0.45);transition:all 0.25s ease;"
+               onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 36px rgba(245,158,11,0.6)'"
+               onmouseout="this.style.transform='';this.style.boxShadow='0 6px 24px rgba(245,158,11,0.45)'">
+              <i class="fas fa-user-plus"></i> Crea tu cuenta gratis y empieza a comprar
+            </a>
+            <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin-top:10px;">Sin costo, sin compromisos. Solo tú y los mejores electrodomésticos.</p>
+          </div>
+        </div>
+
+        <!-- Stats rápidos -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+          <div style="text-align:center;padding:24px 16px;border-radius:16px;background:var(--card-bg);border:1.5px solid var(--border-color);box-shadow:var(--card-shadow);">
+            <div style="font-size:2.2rem;font-weight:900;color:#2563eb;line-height:1;">500+</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;">Productos disponibles</div>
+          </div>
+          <div style="text-align:center;padding:24px 16px;border-radius:16px;background:var(--card-bg);border:1.5px solid var(--border-color);box-shadow:var(--card-shadow);">
+            <div style="font-size:2.2rem;font-weight:900;color:#f59e0b;line-height:1;">10k+</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;">Clientes satisfechos</div>
+          </div>
+          <div style="text-align:center;padding:24px 16px;border-radius:16px;background:var(--card-bg);border:1.5px solid var(--border-color);box-shadow:var(--card-shadow);">
+            <div style="font-size:2.2rem;font-weight:900;color:#10b981;line-height:1;">48h</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;">Tiempo de entrega</div>
+          </div>
+          <div style="text-align:center;padding:24px 16px;border-radius:16px;background:var(--card-bg);border:1.5px solid var(--border-color);box-shadow:var(--card-shadow);">
+            <div style="font-size:2.2rem;font-weight:900;color:#8b5cf6;line-height:1;">4.9★</div>
+            <div style="font-size:0.82rem;color:var(--text-secondary);margin-top:4px;text-transform:uppercase;letter-spacing:0.05em;font-weight:600;">Calificación promedio</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
 
     <!-- FOOTER -->
     <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-12 mt-10">
@@ -1354,20 +1004,12 @@ body, header, footer, main, section,
           <p class="text-gray-400 max-w-md mx-auto text-sm">La mejor tecnología para tu hogar. Compra fácil, rápido y con total seguridad.</p>
         </div>
         <div class="flex justify-center space-x-8 mb-10">
-          <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110">
-            <i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i>
-          </a>
-          <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110">
-            <i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i>
-          </a>
-          <a href="https://tiktok.com" target="_blank" class="transition transform hover:scale-110">
-            <i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i>
-          </a>
-          <a href="https://twitter.com" target="_blank" class="transition transform hover:scale-110">
-            <i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i>
-          </a>
+          <a href="https://facebook.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-facebook-f text-2xl text-blue-500 hover:text-blue-400"></i></a>
+          <a href="https://instagram.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-instagram text-2xl text-pink-500 hover:text-pink-400"></i></a>
+          <a href="https://tiktok.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-tiktok text-2xl text-white hover:text-gray-300"></i></a>
+          <a href="https://twitter.com" target="_blank" class="transition transform hover:scale-110"><i class="fab fa-x-twitter text-2xl text-gray-200 hover:text-white"></i></a>
         </div>
-        <div class="flex flex-wrap justify-center space-x-6 text-sm mb-8">
+        <div class="flex flex-wrap justify-center gap-4 text-sm mb-8">
           <a href="#" class="hover:text-white transition">Inicio</a>
           <a href="#" class="hover:text-white transition">Productos</a>
           <a href="#" class="hover:text-white transition">Ofertas</a>
@@ -1398,18 +1040,10 @@ body, header, footer, main, section,
           </div>
         </div>
         <div class="p-8">
-          <p class="text-gray-700 text-center mb-6 text-lg">
-            Para guardar tus productos favoritos, <span class="font-bold text-blue-600">inicia sesión</span> o <span class="font-bold text-blue-600">regístrate</span>
-          </p>
+          <p class="text-gray-700 text-center mb-6 text-lg">Para guardar tus productos favoritos, <span class="font-bold text-blue-600">inicia sesión</span> o <span class="font-bold text-blue-600">regístrate</span></p>
           <div class="space-y-3">
-            <a href="{% url 'user:login' %}?next={{ request.path }}"
-              class="block w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-center hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg">
-              <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
-            </a>
-            <a href="{% url 'user:register' %}?next={{ request.path }}"
-              class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-4 rounded-lg font-bold text-center hover:from-yellow-600 hover:to-yellow-700 transition-all transform hover:scale-105 shadow-lg">
-              <i class="fas fa-user-plus mr-2"></i>Registrarse Gratis
-            </a>
+            <a href="{% url 'user:login' %}?next={{ request.path }}" class="block w-full bg-blue-600 text-white py-4 rounded-lg font-bold text-center hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg"><i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión</a>
+            <a href="{% url 'user:register' %}?next={{ request.path }}" class="block w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-4 rounded-lg font-bold text-center hover:from-yellow-600 hover:to-yellow-700 transition-all transform hover:scale-105 shadow-lg"><i class="fas fa-user-plus mr-2"></i>Registrarse Gratis</a>
           </div>
           <div class="mt-6 pt-6 border-t border-gray-200">
             <p class="text-sm font-semibold text-gray-800 mb-3">Beneficios de tener una cuenta:</p>
@@ -1426,9 +1060,6 @@ body, header, footer, main, section,
 
     <!-- JAVASCRIPT -->
     <script>
-    // ====================================
-    // SISTEMA DE TEMAS
-    // ====================================
     class ThemeManager {
       constructor() {
         this.themeKey = 'electrohome-theme';
@@ -1436,53 +1067,22 @@ body, header, footer, main, section,
         this.button = document.getElementById('theme-toggle');
         this.init();
       }
-
-      init() {
-        this.applyTheme(this.currentTheme);
-        if (this.button) {
-          this.button.addEventListener('click', () => this.toggleTheme());
-        }
-      }
-
+      init() { this.applyTheme(this.currentTheme); if (this.button) this.button.addEventListener('click', () => this.toggleTheme()); }
       getStoredTheme() { return localStorage.getItem(this.themeKey); }
       getSystemPreference() { return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
       setStoredTheme(theme) { localStorage.setItem(this.themeKey, theme); }
-
-      applyTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        this.currentTheme = theme;
-        this.setStoredTheme(theme);
-        this.updateButton();
-      }
-
-      toggleTheme() {
-        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
-        this.applyTheme(newTheme);
-      }
-
-      updateButton() {
-        if (!this.button) return;
-        if (this.currentTheme === 'dark') {
-          this.button.classList.add('dark-mode');
-        } else {
-          this.button.classList.remove('dark-mode');
-        }
-      }
+      applyTheme(theme) { document.documentElement.setAttribute('data-theme', theme); this.currentTheme = theme; this.setStoredTheme(theme); this.updateButton(); }
+      toggleTheme() { this.applyTheme(this.currentTheme === 'light' ? 'dark' : 'light'); }
+      updateButton() { if (!this.button) return; this.currentTheme === 'dark' ? this.button.classList.add('dark-mode') : this.button.classList.remove('dark-mode'); }
     }
 
-    // ====================================
-    // CARRITO
-    // ====================================
     function getCookie(name) {
       let cookieValue = null;
       if (document.cookie && document.cookie !== '') {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
           const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
+          if (cookie.substring(0, name.length + 1) === (name + '=')) { cookieValue = decodeURIComponent(cookie.substring(name.length + 1)); break; }
         }
       }
       return cookieValue;
@@ -1491,30 +1091,15 @@ body, header, footer, main, section,
     const csrftoken = getCookie('csrftoken');
 
     function agregarAlCarrito(productId, quantity = 1) {
-      fetch(`/carrito/agregar/${productId}/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': csrftoken },
-        body: `quantity=${quantity}`
-      })
+      fetch(`/carrito/agregar/${productId}/`, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': csrftoken }, body: `quantity=${quantity}` })
       .then(r => r.json())
-      .then(data => {
-        if (data.success) {
-          actualizarContadorCarrito(data.cart_total_items);
-          mostrarNotificacion('✅ ' + data.message, 'success');
-        } else {
-          mostrarNotificacion('❌ ' + data.message, 'error');
-        }
-      })
+      .then(data => { if (data.success) { actualizarContadorCarrito(data.cart_total_items); mostrarNotificacion('✅ ' + data.message, 'success'); } else mostrarNotificacion('❌ ' + data.message, 'error'); })
       .catch(() => mostrarNotificacion('❌ Error al agregar al carrito', 'error'));
     }
 
     function actualizarContadorCarrito(cantidad) {
       const el = document.getElementById('cart-counter');
-      if (el) {
-        el.textContent = cantidad;
-        el.classList.add('animate-pulse');
-        setTimeout(() => el.classList.remove('animate-pulse'), 1000);
-      }
+      if (el) { el.textContent = cantidad; el.classList.add('animate-pulse'); setTimeout(() => el.classList.remove('animate-pulse'), 1000); }
     }
 
     function mostrarNotificacion(mensaje, tipo) {
@@ -1528,93 +1113,49 @@ body, header, footer, main, section,
     function cargarContadorCarrito() {
       fetch('/carrito/', { method: 'GET', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
       .then(r => r.text())
-      .then(html => {
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-        const sc = doc.getElementById('cart-counter');
-        if (sc) actualizarContadorCarrito(sc.textContent);
-      })
-      .catch(() => {});
+      .then(html => { const doc = new DOMParser().parseFromString(html, 'text/html'); const sc = doc.getElementById('cart-counter'); if (sc) actualizarContadorCarrito(sc.textContent); }).catch(() => {});
     }
 
-    // ====================================
-    // WISHLIST
-    // ====================================
     function actualizarContadorWishlistEnHeader(totalItems) {
       const icon = document.querySelector('a[href*="wishlist"] i.fa-heart');
       if (!icon) return;
       const link = icon.parentElement;
       let badge = link.querySelector('span.absolute');
       if (totalItems > 0) {
-        if (!badge) {
-          badge = document.createElement('span');
-          badge.className = 'absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1';
-          link.appendChild(badge);
-        }
+        if (!badge) { badge = document.createElement('span'); badge.className = 'absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full min-w-[20px] h-[20px] flex items-center justify-center px-1'; link.appendChild(badge); }
         badge.textContent = totalItems;
-      } else {
-        if (badge) badge.remove();
-      }
+      } else { if (badge) badge.remove(); }
     }
 
     function toggleWishlist(event, productId) {
-      event.preventDefault();
-      event.stopPropagation();
+      event.preventDefault(); event.stopPropagation();
       const isAuthenticated = {{ user.is_authenticated|yesno:"true,false" }};
       if (!isAuthenticated) { showAuthModal(); return; }
       const btn = event.currentTarget;
-      if (btn.classList.contains('active')) {
-        removeFromWishlist(btn, productId);
-      } else {
-        addToWishlist(btn, productId);
-      }
+      btn.classList.contains('active') ? removeFromWishlist(btn, productId) : addToWishlist(btn, productId);
     }
 
     function addToWishlist(btn, productId) {
-      fetch(`/wishlist/add/${productId}/`, {
-        method: 'POST',
-        headers: { 'X-CSRFToken': csrftoken, 'Content-Type': 'application/json' }
-      })
+      fetch(`/wishlist/add/${productId}/`, { method: 'POST', headers: { 'X-CSRFToken': csrftoken, 'Content-Type': 'application/json' } })
       .then(r => r.json())
-      .then(data => {
-        if (data.success) {
-          btn.classList.add('active');
-          btn.textContent = '♥';
-          mostrarNotificacion('❤️ ' + data.message, 'success');
-          if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items);
-        }
-      })
+      .then(data => { if (data.success) { btn.classList.add('active'); btn.textContent = '♥'; mostrarNotificacion('❤️ ' + data.message, 'success'); if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items); } })
       .catch(() => mostrarNotificacion('❌ Error al agregar a wishlist', 'error'));
     }
 
     function removeFromWishlist(btn, productId) {
-      fetch(`/wishlist/remove/${productId}/`, {
-        method: 'POST',
-        headers: { 'X-CSRFToken': csrftoken, 'Content-Type': 'application/json' }
-      })
+      fetch(`/wishlist/remove/${productId}/`, { method: 'POST', headers: { 'X-CSRFToken': csrftoken, 'Content-Type': 'application/json' } })
       .then(r => r.json())
-      .then(data => {
-        if (data.success) {
-          btn.classList.remove('active');
-          btn.textContent = '♡';
-          mostrarNotificacion('💔 ' + data.message, 'success');
-          if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items);
-        }
-      })
+      .then(data => { if (data.success) { btn.classList.remove('active'); btn.textContent = '♡'; mostrarNotificacion('💔 ' + data.message, 'success'); if (data.total_items !== undefined) actualizarContadorWishlistEnHeader(data.total_items); } })
       .catch(() => mostrarNotificacion('❌ Error al eliminar de wishlist', 'error'));
     }
 
     function checkWishlistStatus(btn, productId) {
       fetch(`/wishlist/check/${productId}/`, { method: 'GET', headers: { 'X-CSRFToken': csrftoken } })
       .then(r => r.json())
-      .then(data => {
-        if (data.in_wishlist) { btn.classList.add('active'); btn.textContent = '♥'; }
-      })
+      .then(data => { if (data.in_wishlist) { btn.classList.add('active'); btn.textContent = '♥'; } })
       .catch(() => {});
     }
 
-    // ====================================
-    // MODAL
-    // ====================================
     function showAuthModal() {
       const modal = document.getElementById('auth-modal');
       modal.classList.remove('hidden');
@@ -1624,53 +1165,28 @@ body, header, footer, main, section,
 
     function closeAuthModal() {
       const modal = document.getElementById('auth-modal');
-      modal.classList.remove('show');
-      modal.classList.add('hide');
-      setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.classList.remove('hide');
-        document.body.style.overflow = '';
-      }, 200);
+      modal.classList.remove('show'); modal.classList.add('hide');
+      setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('hide'); document.body.style.overflow = ''; }, 200);
     }
 
-    // ====================================
-    // INICIALIZACIÓN
-    // ====================================
     document.addEventListener('DOMContentLoaded', function () {
       new ThemeManager();
 
-      // Dropdown usuario
       const userMenuBtn = document.getElementById('user-menu-btn');
       const userDropdown = document.getElementById('user-dropdown');
       if (userMenuBtn && userDropdown) {
-        userMenuBtn.addEventListener('click', e => {
-          e.stopPropagation();
-          userDropdown.classList.toggle('hidden');
-        });
-        document.addEventListener('click', e => {
-          if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
-            userDropdown.classList.add('hidden');
-          }
-        });
+        userMenuBtn.addEventListener('click', e => { e.stopPropagation(); userDropdown.classList.toggle('hidden'); });
+        document.addEventListener('click', e => { if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) userDropdown.classList.add('hidden'); });
       }
 
-      // Menú mobile
       const mobileBtn = document.getElementById('mobile-menu-button');
       const mobileMenu = document.getElementById('mobile-menu');
-      if (mobileBtn && mobileMenu) {
-        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-      }
+      if (mobileBtn && mobileMenu) mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 
-      // Carrito
       cargarContadorCarrito();
 
-      // Wishlist
-      document.querySelectorAll('.wishlist-btn').forEach(btn => {
-        const id = btn.dataset.productId;
-        if (id) checkWishlistStatus(btn, id);
-      });
+      document.querySelectorAll('.wishlist-btn').forEach(btn => { const id = btn.dataset.productId; if (id) checkWishlistStatus(btn, id); });
 
-      // Carruseles
       [
         { carousel: 'carousel-recom', left: 'scroll-left-recom', right: 'scroll-right-recom' },
         { carousel: 'carousel-limpieza', left: 'scroll-left-limpieza', right: 'scroll-right-limpieza' },
@@ -1679,32 +1195,20 @@ body, header, footer, main, section,
         const c = document.getElementById(carousel);
         const l = document.getElementById(left);
         const r = document.getElementById(right);
-        if (c && l && r) {
-          l.addEventListener('click', () => c.scrollBy({ left: -350, behavior: 'smooth' }));
-          r.addEventListener('click', () => c.scrollBy({ left: 350, behavior: 'smooth' }));
-        }
+        if (c && l && r) { l.addEventListener('click', () => c.scrollBy({ left: -350, behavior: 'smooth' })); r.addEventListener('click', () => c.scrollBy({ left: 350, behavior: 'smooth' })); }
       });
 
-      // Modal
       const authModal = document.getElementById('auth-modal');
       if (authModal) authModal.addEventListener('click', e => { if (e.target === authModal) closeAuthModal(); });
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuthModal(); });
 
-      // Logout
       document.querySelectorAll('a[href*="logout"]').forEach(link => {
-        link.addEventListener('click', function (e) {
-          e.preventDefault();
-          sessionStorage.clear();
-          localStorage.clear();
-          window.location.replace(this.href);
-        });
+        link.addEventListener('click', function (e) { e.preventDefault(); sessionStorage.clear(); localStorage.clear(); window.location.replace(this.href); });
       });
     });
 
     window.addEventListener('pageshow', event => {
-      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-        window.location.reload();
-      }
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) window.location.reload();
     });
     </script>
 
