@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Min, Max
 
-from .models import Producto, Categoria, Promocion
+from .models import Producto, Categoria, Promocion, BannerPromocion
 from .cart_services import CartService
 from .recommendations import (
     RecommendationEngine, 
@@ -53,6 +53,9 @@ def index(request):
             id__in=[p.id for p in productos_destacados]
         ).select_related('categoria').order_by('-fecha_creacion')[:6 - len(productos_destacados)]
         productos_destacados.extend(list(adicionales))
+
+    # Banners promocionales
+    banners = BannerPromocion.objects.filter(activo=True)
     
     context = {
         # Para sección "Promociones Especiales"
@@ -64,6 +67,9 @@ def index(request):
         
         # Categorías
         'categorias': Categoria.objects.filter(activo=True),
+
+        # Banners
+        'banners': banners,
     }
     
     return render(request, 'product/home.html', context)

@@ -410,3 +410,22 @@ class Resena(models.Model):
     @property
     def estrellas_vacias(self):
         return range(5 - self.calificacion)
+    
+    
+class BannerPromocion(models.Model):
+    titulo = models.CharField(max_length=120)
+    subtitulo = models.CharField(max_length=200, blank=True)
+    imagen = models.ImageField(upload_to='banners/')
+    url_destino = models.CharField(max_length=200, default='/productos/')
+    texto_boton = models.CharField(max_length=50, default='Ver ofertas')
+    color_boton = models.CharField(max_length=20, default='#f59e0b')
+    orden = models.PositiveSmallIntegerField(default=0)
+    activo = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['orden']
+        verbose_name = 'Banner Promocional'
+        verbose_name_plural = 'Banners Promocionales'
+
+    def __str__(self):
+        return self.titulo

@@ -336,4 +336,9 @@ class CartItemAdmin(admin.ModelAdmin):
         return format_html('<strong style="color: #28a745;">${:,.0f}</strong>', obj.subtotal)
     subtotal_display.short_description = 'Subtotal'
 
+from .models import BannerPromocion
 
+@admin.register(BannerPromocion)
+class BannerPromocionAdmin(admin.ModelAdmin):
+    list_display = ['titulo', 'orden', 'activo']
+    list_editable = ['orden', 'activo']
