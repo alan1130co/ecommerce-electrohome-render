@@ -21,8 +21,7 @@ print('Site configurado:', site.domain)
 "
 
 echo "Cargando productos..."
-python electrohome/manage.py loaddata productos_export.json --settings=electrohome.settings.production
-
+python electrohome/manage.py loaddata electrohome/application/product/fixtures/productos_export.json --settings=electrohome.settings.production
 echo "Build completado exitosamente."
 echo 'Actualizando imagenes en OrderItems...'
 python electrohome/manage.py fix_order_images
