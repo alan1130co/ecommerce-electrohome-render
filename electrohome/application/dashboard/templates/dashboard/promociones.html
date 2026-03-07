@@ -1,6 +1,7 @@
 {% extends "dashboard/base.html" %}
 {% block title %}Promociones - Dashboard{% endblock %}
 {% block content %}
+{% load custom_filters %}
 
 <div class="eh-page-header d-flex justify-content-between align-items-center">
     <div>
@@ -45,8 +46,8 @@
                     <td><strong style="color:#1e3a8a;">{{ promo.producto.nombre }}</strong></td>
                     <td><span class="eh-badge eh-badge-red">{{ promo.etiqueta }}</span></td>
                     <td><span class="eh-badge eh-badge-yellow">{{ promo.descuento_porcentaje }}%</span></td>
-                    <td style="color:#94a3b8;text-decoration:line-through;">${{ promo.producto.precio|floatformat:0 }}</td>
-                    <td><strong style="color:#059669;">${{ promo.precio_promocional|floatformat:0 }}</strong></td>
+                    `<td style="color:#94a3b8;text-decoration:line-through;">{{ promo.producto.precio|formato_precio }}</td>
+                    <td><strong style="color:#059669;">{{ promo.precio_promocional|formato_precio }}</strong></td>
                     <td style="color:#64748b;font-size:0.82rem;">{{ promo.fecha_inicio|date:"d/m/Y" }}</td>
                     <td style="color:#64748b;font-size:0.82rem;">{{ promo.fecha_fin|date:"d/m/Y" }}</td>
                     <td>

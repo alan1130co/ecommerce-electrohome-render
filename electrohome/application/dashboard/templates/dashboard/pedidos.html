@@ -1,5 +1,6 @@
 {% extends "dashboard/base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Pedidos - Dashboard{% endblock %}
 
@@ -84,7 +85,7 @@
                         {% else %}<span class="eh-badge" style="background:#f1f5f9;color:#94a3b8;">{{ orden.get_status_display }}</span>
                         {% endif %}
                     </td>
-                    <td><strong style="color:#059669;">${{ orden.total }}</strong></td>
+                    <td><strong style="color:#059669;">{{ orden.total|formato_precio }}</strong></td>
                     <td style="color:#64748b;font-size:0.82rem;">{{ orden.created_at|date:"d/m/Y H:i" }}</td>
                     <td>
                         <button class="eh-btn-primary" style="padding:6px 12px;font-size:0.8rem;"

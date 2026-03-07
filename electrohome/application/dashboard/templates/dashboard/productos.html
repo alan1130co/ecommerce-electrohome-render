@@ -1,5 +1,6 @@
 {% extends "dashboard/base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 {% block title %}Productos - Dashboard{% endblock %}
 
@@ -47,7 +48,7 @@
                         <span style="color:#cbd5e1;">—</span>
                         {% endif %}
                     </td>
-                    <td><strong style="color:#059669;">${{ producto.precio }}</strong></td>
+                    <td><strong style="color:#059669;">{{ producto.precio|formato_precio }}</strong></td>
                     <td>
                         {% if producto.stock > 20 %}
                         <span class="eh-badge eh-badge-green">{{ producto.stock }} u.</span>

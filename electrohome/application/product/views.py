@@ -14,6 +14,8 @@ from .recommendations import (
     track_product_view, 
     get_recommendations_for_cart
 )
+from application.order.models import Order, OrderItem
+from application.product.models import Resena
 
 
 @never_cache 
@@ -68,33 +70,49 @@ def index(request):
 
 
 def product_detail(request, product_id):
-    """Vista de detalle del producto CON TRACKING"""
     producto = get_object_or_404(
         Producto.objects.prefetch_related('galeria').select_related('categoria'), 
         id=product_id
     )
     
-    # ✅ REGISTRAR VISTA DEL PRODUCTO (para recomendaciones)
     track_product_view(request, producto)
     
-    # Obtener motor de recomendaciones
     user = request.user if request.user.is_authenticated else None
     engine = RecommendationEngine(user=user)
     
-    # Productos similares (misma categoría)
     productos_similares = engine.get_similar_products(producto, limit=4)
-    
-    # Productos frecuentemente comprados juntos
     productos_frecuentes = engine.get_frequently_bought_together(producto, limit=4)
     
-    # Si no hay productos frecuentes, usar productos de la misma categoría
     if not productos_frecuentes:
         productos_frecuentes = productos_similares[:4]
+
+    # ★ RESEÑAS
+    resenas = Resena.objects.filter(producto=producto, estado='aprobada').select_related('usuario')
+    total_resenas = resenas.count()
+    promedio = round(sum(r.calificacion for r in resenas) / total_resenas, 1) if total_resenas else 0
+
+    # ★ ¿Puede reseñar?
+    puede_resenar = False
+    ya_reseno = False
+    if request.user.is_authenticated:
+        from application.order.models import OrderItem
+        compro = OrderItem.objects.filter(
+            order__user=request.user,
+            order__status='delivered',
+            product=producto
+        ).exists()
+        ya_reseno = Resena.objects.filter(producto=producto, usuario=request.user).exists()
+        puede_resenar = compro and not ya_reseno
     
     context = {
         'producto': producto,
         'productos_relacionados': productos_similares,
         'productos_frecuentes': productos_frecuentes,
+        'resenas': resenas,
+        'total_resenas': total_resenas,
+        'promedio': promedio,
+        'puede_resenar': puede_resenar,
+        'ya_reseno': ya_reseno,
     }
     
     return render(request, 'product/product_detail.html', context)
@@ -382,3 +400,52 @@ def contact(request):
         return redirect('product:contact')
     
     return render(request, 'product/contact.html')
+
+@login_required
+def crear_resena(request, product_id):
+    producto = get_object_or_404(Producto, id=product_id)
+    from application.order.models import OrderItem
+    from application.product.models import Resena
+
+    compro = OrderItem.objects.filter(
+        order__user=request.user,
+        order__status='delivered',
+        product=producto
+    ).exists()
+
+    if not compro:
+        messages.error(request, 'Solo puedes reseñar productos que hayas recibido.')
+        return redirect('product:product_detail', product_id=product_id)
+
+    ya_reseno = Resena.objects.filter(producto=producto, usuario=request.user).exists()
+    if ya_reseno:
+        messages.info(request, 'Ya dejaste una reseña para este producto.')
+        return redirect('product:product_detail', product_id=product_id)
+
+    if request.method == 'POST':
+        calificacion = int(request.POST.get('calificacion', 0))
+        titulo = request.POST.get('titulo', '').strip()
+        comentario = request.POST.get('comentario', '').strip()
+        foto = request.FILES.get('foto')
+
+        if not (1 <= calificacion <= 5):
+            messages.error(request, 'La calificación debe ser entre 1 y 5.')
+            return redirect('product:product_detail', product_id=product_id)
+
+        if not comentario:
+            messages.error(request, 'El comentario no puede estar vacío.')
+            return redirect('product:product_detail', product_id=product_id)
+
+        Resena.objects.create(
+            producto=producto,
+            usuario=request.user,
+            calificacion=calificacion,
+            titulo=titulo,
+            comentario=comentario,
+            foto=foto,
+            estado='pendiente'
+        )
+        messages.success(request, '¡Gracias! Tu reseña está pendiente de aprobación.')
+        return redirect('product:product_detail', product_id=product_id)
+
+    return redirect('product:product_detail', product_id=product_id)

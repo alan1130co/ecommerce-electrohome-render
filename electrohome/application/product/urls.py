@@ -19,6 +19,7 @@ urlpatterns = [
     # Productos
     path('search/', views.search_view, name='search'),
     path('producto/<int:product_id>/', views.product_detail, name='product_detail'),
+    path('producto/<int:product_id>/resena/', views.crear_resena, name='crear_resena'),  # ← AGREGAR
     path('productos/', views.products_list, name='products_list'),
     
     # Contacto
