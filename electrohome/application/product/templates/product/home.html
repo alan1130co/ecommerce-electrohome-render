@@ -755,19 +755,44 @@ body, header, footer, main, section, .product-card, .carousel-card, .trust-card,
 
     <main>
     <!-- CARRUSEL BANNERS PROMOCIONALES -->
-{% if banners %}
 <section class="w-full overflow-hidden relative" id="promo-carousel-section">
   <div id="promo-carousel" class="flex transition-transform duration-500 ease-in-out">
-    {% for banner in banners %}
-    <div class="min-w-full relative" style="height:400px;background:#1e3a8a;">
-      <img src="{{ banner.imagen.url }}" alt="{{ banner.titulo }}"
-           class="w-full h-full"
-           style="object-fit:cover;object-position:center;display:block;" />
-      <!-- Solo enlace invisible, sin overlay de texto -->
-      <a href="{{ banner.url_destino }}"
-         style="position:absolute;inset:0;display:block;"></a>
+
+    <div class="min-w-full relative" style="height:400px;">
+      <a href="/productos/?categoria=2">
+        <img src="{% static 'img/banner_lavadora.webp' %}" alt="Lavadora"
+             class="w-full h-full" style="object-fit:cover;display:block;" />
+      </a>
     </div>
-    {% endfor %}
+
+    <div class="min-w-full relative" style="height:400px;">
+      <a href="/productos/?categoria=4">
+        <img src="{% static 'img/banner_nevera.webp' %}" alt="Nevera"
+             class="w-full h-full" style="object-fit:cover;display:block;" />
+      </a>
+    </div>
+
+    <div class="min-w-full relative" style="height:400px;">
+      <a href="/productos/?categoria=3">
+        <img src="{% static 'img/banner_consola.webp' %}" alt="Consolas"
+             class="w-full h-full" style="object-fit:cover;display:block;" />
+      </a>
+    </div>
+
+    <div class="min-w-full relative" style="height:400px;">
+      <a href="/productos/?categoria=3">
+        <img src="{% static 'img/banner_televisor.webp' %}" alt="Televisor"
+             class="w-full h-full" style="object-fit:cover;display:block;" />
+      </a>
+    </div>
+
+    <div class="min-w-full relative" style="height:400px;">
+      <a href="/productos/?categoria=2">
+        <img src="{% static 'img/banner_microonda.webp' %}" alt="Microondas"
+             class="w-full h-full" style="object-fit:cover;display:block;" />
+      </a>
+    </div>
+
   </div>
 
   <button onclick="movePromo(-1)"
@@ -792,32 +817,13 @@ body, header, footer, main, section, .product-card, .carousel-card, .trust-card,
 
   <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
               display:flex;gap:8px;z-index:10;" id="promo-dots">
-    {% for banner in banners %}
-    <button onclick="goToPromo({{ forloop.counter0 }})" class="promo-dot"
-            style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;
-                   background:{% if forloop.first %}#fff{% else %}transparent{% endif %};
-                   cursor:pointer;transition:all 0.2s;padding:0;">
-    </button>
-    {% endfor %}
+    <button onclick="goToPromo(0)" class="promo-dot" style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#fff;cursor:pointer;transition:all 0.2s;padding:0;"></button>
+    <button onclick="goToPromo(1)" class="promo-dot" style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all 0.2s;padding:0;"></button>
+    <button onclick="goToPromo(2)" class="promo-dot" style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all 0.2s;padding:0;"></button>
+    <button onclick="goToPromo(3)" class="promo-dot" style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all 0.2s;padding:0;"></button>
+    <button onclick="goToPromo(4)" class="promo-dot" style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;transition:all 0.2s;padding:0;"></button>
   </div>
 </section>
-{% endif %}
-
-      <!-- SECCIÓN DE CONFIANZA -->
-      <div class="trust-section">
-        <div class="container mx-auto px-4">
-          <div class="text-center mb-10">
-            <h2 class="text-3xl font-extrabold text-blue-600 mb-2">¿Por qué elegirnos?</h2>
-            <p style="color:var(--text-secondary);" class="text-base">Comprometidos con tu satisfacción en cada compra</p>
-          </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="trust-card"><div class="trust-icon" style="background:rgba(37,99,235,0.1);">🚚</div><div class="trust-title">Envío rápido</div><div class="trust-desc">Recibe tu pedido en 24 a 48 horas en toda Colombia</div></div>
-            <div class="trust-card"><div class="trust-icon" style="background:rgba(16,185,129,0.1);">🔒</div><div class="trust-title">Pago 100% seguro</div><div class="trust-desc">Tus datos siempre protegidos con tecnología SSL</div></div>
-            <div class="trust-card"><div class="trust-icon" style="background:rgba(245,158,11,0.1);">↩️</div><div class="trust-title">Devoluciones</div><div class="trust-desc">30 días para cambios y devoluciones sin complicaciones</div></div>
-            <div class="trust-card"><div class="trust-icon" style="background:rgba(139,92,246,0.1);">🎧</div><div class="trust-title">Soporte 24/7</div><div class="trust-desc">Siempre disponibles para resolver tus preguntas</div></div>
-          </div>
-        </div>
-      </div>
 
       <!-- BANNER DE OFERTAS -->
       <div class="offers-banner">
@@ -1335,7 +1341,7 @@ body, header, footer, main, section, .product-card, .carousel-card, .trust-card,
     });
     /* CARRUSEL BANNERS */
 let promoIndex = 0;
-let promoTotal = {{ banners|length }};
+let promoTotal = 5;
 let promoTimer = null;
 
 function movePromo(dir) {
