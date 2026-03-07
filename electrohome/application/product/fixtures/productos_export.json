@@ -3,8 +3,8 @@
   "model": "product.producto",
   "pk": 1,
   "fields": {
-    "nombre": "Aspiradora 2 En 1 Sólidos Líquidos 1 Galon 1HP",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Barril\r\n\r\nModelo : 20211201\r\n\r\nAncho : 26 cm\r\n\r\nAlto : 28 cm\r\n\r\nLargo : 26 cm",
+    "nombre": "Aspiradora 2 En 1 S≤lidos Lφquidos 1 Galon 1HP",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Barril\r\n\r\nòModelo : 20211201\r\n\r\nòAncho : 26 cm\r\n\r\nòAlto : 28 cm\r\n\r\nòLargo : 26 cm",
     "precio": "250000.00",
     "stock": 100,
     "categoria": 1,
@@ -16,7 +16,7 @@
     "capacidad": "3.78 litros",
     "potencia": "1 HP",
     "color": "Rojo",
-    "caracteristicas_destacadas": "Potente, compacta y versátil. Ideal como aspiradora portátil para líquidos y sólidos en hogar, taller o carro. Su motor de 1 HP ofrece gran potencia en tamaño reducido. Aspiradora compacta de 1 galón, ligera y resistente, perfecta para espacios pequeños. Incluye función sopladora, accesorios para múltiples superficies y fácil almacenamiento. Ideal para limpieza de vehículo, casa o taller.",
+    "caracteristicas_destacadas": "Potente, compacta y versßtil. Ideal como aspiradora portßtil para lφquidos y s≤lidos en hogar, taller o carro. Su motor de 1 HP ofrece gran potencia en tama±o reducido. Aspiradora compacta de 1 gal≤n, ligera y resistente, perfecta para espacios peque±os. Incluye funci≤n sopladora, accesorios para m·ltiples superficies y fßcil almacenamiento. Ideal para limpieza de vehφculo, casa o taller.",
     "garantia_meses": 12
   }
 },
@@ -25,7 +25,7 @@
   "pk": 2,
   "fields": {
     "nombre": "Aspiradora Inalambrica BLACK+DECKER con Iones de Litio, HLVA325J10-B3",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Aspiradoras verticales\r\n\r\nModelo : HLVA325J10-B3\r\n\r\nAncho : 41 cm\r\n\r\nAlto : 31 cm\r\n\r\nLargo : 20 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Aspiradoras verticales\r\n\r\nòModelo : HLVA325J10-B3\r\n\r\nòAncho : 41 cm\r\n\r\nòAlto : 31 cm\r\n\r\nòLargo : 20 cm",
     "precio": "310000.00",
     "stock": 100,
     "categoria": 1,
@@ -37,7 +37,7 @@
     "capacidad": "500 ml",
     "potencia": "21 kW",
     "color": "Negro",
-    "caracteristicas_destacadas": "Aspiradora de mano Black and Decker inalámbrica HLVA325J10-B3, mantiene libre de suciedad a los muebles, sillones, pisos, alfombras y cortinas. Su batería de ion-litio ligera proporciona una succión potente. La aspiradora de mano Black and Decker también cuenta con mango que está diseñado ergonómicamente para sentirse balanceado en su mano. La aspiradora de mano Black and Decker tiene una boquilla estrecha que ayuda alcanzar los lugares de difícil acceso y su cepillo plegable le permite desempolvar y limpiar el tapizado, el recipiente de suciedad es translucido para verificar fácilmente si es necesario vaciarlo y lavarlo para mejores resultados sin necesidad de tocar la suciedad.",
+    "caracteristicas_destacadas": "Aspiradora de mano Black and Decker inalßmbrica HLVA325J10-B3, mantiene libre de suciedad a los muebles, sillones, pisos, alfombras y cortinas. Su baterφa de ion-litio ligera proporciona una succi≤n potente. La aspiradora de mano Black and Decker tambiΘn cuenta con mango que estß dise±ado ergon≤micamente para sentirse balanceado en su mano. La aspiradora de mano Black and Decker tiene una boquilla estrecha que ayuda alcanzar los lugares de difφcil acceso y su cepillo plegable le permite desempolvar y limpiar el tapizado, el recipiente de suciedad es translucido para verificar fßcilmente si es necesario vaciarlo y lavarlo para mejores resultados sin necesidad de tocar la suciedad.",
     "garantia_meses": 24
   }
 },
@@ -45,8 +45,8 @@
   "model": "product.producto",
   "pk": 3,
   "fields": {
-    "nombre": "Aspiradora BLACK+DECKER Power Pro con Succión Continua y Filtro Lavable de 2.5 Litros VCBD8530",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Aspiradoras sin bolsa\r\n\r\nModelo : VCBD8530\r\n\r\nAncho : 45\r\n\r\nAlto : 34\r\n\r\nLargo : 31",
+    "nombre": "Aspiradora BLACK+DECKER Power Pro con Succi≤n Continua y Filtro Lavable de 2.5 Litros VCBD8530",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Aspiradoras sin bolsa\r\n\r\nòModelo : VCBD8530\r\n\r\nòAncho : 45\r\n\r\nòAlto : 34\r\n\r\nòLargo : 31",
     "precio": "460000.00",
     "stock": 100000,
     "categoria": 1,
@@ -58,7 +58,7 @@
     "capacidad": "2.5 Litros",
     "potencia": "2.000 Watts",
     "color": "Verde",
-    "caracteristicas_destacadas": "Aspira en pocas pasadas particulas de polvo pequeñas y grandes con la Aspiradora Power Pro de Black + Decker Depósito de 2.5 litros y Filtro removibles de fácil limpieza, no necesitas comprar bolsas de papel 2000 Watts de potencia para una Succión Continua sin interrupciones Sistema ciclónico, produce una potente y constante succion para remover el pelo de las mascotas y la suciedad Cable retráctil para fácil almacenamiento Incluye: Cepillo 2 en 1 para pisos y alfombras, 2 Tubos de extension, Manguera giratoria flexible, Cepillo esquinero,Filtro ciclónico lavable, Filtros HEPA lavable",
+    "caracteristicas_destacadas": "Aspira en pocas pasadas particulas de polvo peque±as y grandes con la Aspiradora Power Pro de Black + Decker Dep≤sito de 2.5 litros y Filtro removibles de fßcil limpieza, no necesitas comprar bolsas de papel 2000 Watts de potencia para una Succi≤n Continua sin interrupciones Sistema cicl≤nico, produce una potente y constante succion para remover el pelo de las mascotas y la suciedad Cable retrßctil para fßcil almacenamiento Incluye: Cepillo 2 en 1 para pisos y alfombras, 2 Tubos de extension, Manguera giratoria flexible, Cepillo esquinero,Filtro cicl≤nico lavable, Filtros HEPA lavable",
     "garantia_meses": 24
   }
 },
@@ -66,8 +66,8 @@
   "model": "product.producto",
   "pk": 4,
   "fields": {
-    "nombre": "Aspiradora Robótica 2 En 1 Negra",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Aspiradoras robot\r\n\r\nModelo : WRB-SMARTKLEAN\r\n\r\nAncho : 38 cm\r\n\r\nAlto : 45.5 cm\r\n\r\nLargo : 50 cm",
+    "nombre": "Aspiradora Rob≤tica 2 En 1 Negra",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Aspiradoras robot\r\n\r\nòModelo : WRB-SMARTKLEAN\r\n\r\nòAncho : 38 cm\r\n\r\nòAlto : 45.5 cm\r\n\r\nòLargo : 50 cm",
     "precio": "540000.00",
     "stock": 100,
     "categoria": 1,
@@ -79,7 +79,7 @@
     "capacidad": "600 ml",
     "potencia": "20 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Aspiradora y Trapeadora Robot Wurden 2 en 1 WRB-SMARTKLEAN\r\nOlvídate del aseo y la limpieza con la espectacular WRB-SMARTKLEAN de Wurden. Este maravilloso robot no solo funciona como aspiradora, sino también como mopa. Solo debes programar su funcionamiento, sentarte a descansar, y tu casa estará reluciente en minutos.\r\n\r\nModo auto limpieza\r\nElige uno de los 4 increíbles modos de limpieza, que se ajustan a tu necesidad. En el Modo Auto Limpieza / Limpieza en ZIGZAG, el robot utiliza un sistema de navegación con un giroscopio de alta precisión y aceleración. Adicionalmente, utiliza un sistema de algoritmos para calcular automáticamente la ruta de limpieza óptima y realizarla de manera efectiva.",
+    "caracteristicas_destacadas": "Aspiradora y Trapeadora Robot Wurden 2 en 1 WRB-SMARTKLEAN\r\nOlvφdate del aseo y la limpieza con la espectacular WRB-SMARTKLEAN de Wurden. Este maravilloso robot no solo funciona como aspiradora, sino tambiΘn como mopa. Solo debes programar su funcionamiento, sentarte a descansar, y tu casa estarß reluciente en minutos.\r\n\r\nModo auto limpieza\r\nElige uno de los 4 increφbles modos de limpieza, que se ajustan a tu necesidad. En el Modo Auto Limpieza / Limpieza en ZIGZAG, el robot utiliza un sistema de navegaci≤n con un giroscopio de alta precisi≤n y aceleraci≤n. Adicionalmente, utiliza un sistema de algoritmos para calcular automßticamente la ruta de limpieza ≤ptima y realizarla de manera efectiva.",
     "garantia_meses": 24
   }
 },
@@ -87,8 +87,8 @@
   "model": "product.producto",
   "pk": 5,
   "fields": {
-    "nombre": "Batidora De Pedestal Cusiné 6.5 Litros 660W Cobertura 360°",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Batidoras de pedestal\r\n\r\nReferencia del Producto en el Certificado/Empaque : Batidora De Pedestal Wecan 6.5 Ltrs 660w Cobertura 360°\r\n\r\nAncho : 36 cm\r\n\r\nAlto : 39 cm\r\n\r\nLargo : 16 cm",
+    "nombre": "Batidora De Pedestal CusinΘ 6.5 Litros 660W Cobertura 360░",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Batidoras de pedestal\r\n\r\nòReferencia del Producto en el Certificado/Empaque : Batidora De Pedestal Wecan 6.5 Ltrs 660w Cobertura 360░\r\n\r\nòAncho : 36 cm\r\n\r\nòAlto : 39 cm\r\n\r\nòLargo : 16 cm",
     "precio": "825000.00",
     "stock": 100,
     "categoria": 2,
@@ -100,7 +100,7 @@
     "capacidad": "6.5 litros",
     "potencia": "660 W",
     "color": "Plateado",
-    "caracteristicas_destacadas": "Capacidad del tazón: 6.5 litros (acero inoxidable) Potencia: 660W (Certificación ETL) Velocidades: 6 niveles + función de pulso Cobertura de mezcla: 360° para una integración uniforme Materiales: Estructura vertical resistente con engranajes metálicos ¡Ahorra tiempo y obtén resultados profesionales! Ya sea que la utilices en casa o en tu negocio, la Batidora de Pedestal Cusiné será tu mejor aliada para crear recetas increíbles con el mínimo esfuerzo.",
+    "caracteristicas_destacadas": "Capacidad del taz≤n: 6.5 litros (acero inoxidable) Potencia: 660W (Certificaci≤n ETL) Velocidades: 6 niveles + funci≤n de pulso Cobertura de mezcla: 360░ para una integraci≤n uniforme Materiales: Estructura vertical resistente con engranajes metßlicos íAhorra tiempo y obtΘn resultados profesionales! Ya sea que la utilices en casa o en tu negocio, la Batidora de Pedestal CusinΘ serß tu mejor aliada para crear recetas increφbles con el mφnimo esfuerzo.",
     "garantia_meses": 12
   }
 },
@@ -109,7 +109,7 @@
   "pk": 6,
   "fields": {
     "nombre": "Televisor 65 Pulgadas Oled 4K UHD Thinq Magic Remote Oled65b4psa",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Televisores oled\r\n\r\nSintonizador TDT : Si\r\n\r\nReferencia del Producto en el Certificado/Empaque : OLED65B4PSA\r\n\r\nModelo : OLED65B4PSA\r\n\r\nAncho : 144.9 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Televisores oled\r\n\r\nòSintonizador TDT : Si\r\n\r\nòReferencia del Producto en el Certificado/Empaque : OLED65B4PSA\r\n\r\nòModelo : OLED65B4PSA\r\n\r\nòAncho : 144.9 cm",
     "precio": "11999900.00",
     "stock": 100,
     "categoria": 3,
@@ -121,7 +121,7 @@
     "capacidad": null,
     "potencia": null,
     "color": null,
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n144.9 cm\r\nAlto\r\n83.2 cm\r\nProfundidad\r\n4.9 cm\r\nPeso\r\n17.1 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores oled\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\nOLED65B4PSA\r\nTipo de pantalla\r\nOLED\r\nCuenta con Wifi\r\nSi\r\nCuenta con conexión VGA\r\nNo\r\nCuenta con tecnología 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n2\r\nCantidad de puertos HDMI\r\n4\r\nConectividad TV\r\nBluetooth\r\nTamaño de la pantalla\r\n65 pulgadas\r\nSistema operativo\r\nWebOS\r\nPotencia parlante\r\n20 W\r\nSistema de sonido\r\n9.1\r\nTipo\r\nTelevisores oled\r\nVoltaje\r\n110 V\r\nFabricante\r\n\r\nModelo\r\nOLED65B4PSA\r\nMás detalles\r\n\r\nGarantía\r\n1 año\r\nCaracterísticas\r\nLG Líder en técnologia OLED por 11 años continuos IA para transformar tu entretenimiento Disfruta Colores vibrantes y negros profundos",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n144.9 cm\r\nAlto\r\n83.2 cm\r\nProfundidad\r\n4.9 cm\r\nPeso\r\n17.1 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores oled\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\nOLED65B4PSA\r\nTipo de pantalla\r\nOLED\r\nCuenta con Wifi\r\nSi\r\nCuenta con conexi≤n VGA\r\nNo\r\nCuenta con tecnologφa 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n2\r\nCantidad de puertos HDMI\r\n4\r\nConectividad TV\r\nBluetooth\r\nTama±o de la pantalla\r\n65 pulgadas\r\nSistema operativo\r\nWebOS\r\nPotencia parlante\r\n20 W\r\nSistema de sonido\r\n9.1\r\nTipo\r\nTelevisores oled\r\nVoltaje\r\n110 V\r\nFabricante\r\n\r\nModelo\r\nOLED65B4PSA\r\nMßs detalles\r\n\r\nGarantφa\r\n1 a±o\r\nCaracterφsticas\r\nLG Lφder en tΘcnologia OLED por 11 a±os continuos IA para transformar tu entretenimiento Disfruta Colores vibrantes y negros profundos",
     "garantia_meses": 12
   }
 },
@@ -130,7 +130,7 @@
   "pk": 7,
   "fields": {
     "nombre": "Televisor 50 Pulgadas 4K UHD Webos25 LG 50ua7300psb",
-    "descripcion": "Tipo : Televisores uhd\r\n\r\nSintonizador TDT : Si\r\n\r\nReferencia del Producto en el Certificado/Empaque : 50UA7300PSB\r\n\r\nModelo : 50UA7300PSB\r\n\r\nAncho : 111 cm",
+    "descripcion": "òTipo : Televisores uhd\r\n\r\nòSintonizador TDT : Si\r\n\r\nòReferencia del Producto en el Certificado/Empaque : 50UA7300PSB\r\n\r\nòModelo : 50UA7300PSB\r\n\r\nòAncho : 111 cm",
     "precio": "3099900.00",
     "stock": 100,
     "categoria": 3,
@@ -142,7 +142,7 @@
     "capacidad": null,
     "potencia": null,
     "color": null,
-    "caracteristicas_destacadas": "Ancho\r\n111 cm\r\nAlto\r\n64.5 cm\r\nProfundidad\r\n5.98 cm\r\nPeso\r\n8.3 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores uhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n50UA7300PSB\r\nTipo de pantalla\r\nLED\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnología 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n2\r\nCantidad de puertos HDMI\r\n3\r\nConectividad TV\r\nThinQ, Bluetooth, WiFi\r\nAño de lanzamiento\r\n2025\r\nTamaño de la pantalla\r\n1270 mm\r\nSistema operativo\r\nWebOS\r\nPotencia parlante\r\n20 W\r\nTipo\r\nTelevisores uhd\r\nSistema de sonido\r\n2.0 (estereofónico)\r\nVoltaje\r\n120 V\r\nFabricante\r\n\r\nModelo\r\n50UA7300PSB",
+    "caracteristicas_destacadas": "Ancho\r\n111 cm\r\nAlto\r\n64.5 cm\r\nProfundidad\r\n5.98 cm\r\nPeso\r\n8.3 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores uhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n50UA7300PSB\r\nTipo de pantalla\r\nLED\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnologφa 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n2\r\nCantidad de puertos HDMI\r\n3\r\nConectividad TV\r\nThinQ, Bluetooth, WiFi\r\nA±o de lanzamiento\r\n2025\r\nTama±o de la pantalla\r\n1270 mm\r\nSistema operativo\r\nWebOS\r\nPotencia parlante\r\n20 W\r\nTipo\r\nTelevisores uhd\r\nSistema de sonido\r\n2.0 (estereof≤nico)\r\nVoltaje\r\n120 V\r\nFabricante\r\n\r\nModelo\r\n50UA7300PSB",
     "garantia_meses": 12
   }
 },
@@ -151,7 +151,7 @@
   "pk": 8,
   "fields": {
     "nombre": "Cafetera Digital Programable BLACK+DECKER 12 TAZAS, CM1110B-LA",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Cafeteras por goteo\r\n\r\nModelo : CM1110B\r\n\r\nAncho : 40 cm\r\n\r\nAlto : 32 cm\r\n\r\nLargo : 25 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Cafeteras por goteo\r\n\r\nòModelo : CM1110B\r\n\r\nòAncho : 40 cm\r\n\r\nòAlto : 32 cm\r\n\r\nòLargo : 25 cm",
     "precio": "180000.00",
     "stock": 100,
     "categoria": 2,
@@ -163,7 +163,7 @@
     "capacidad": "2.4 kg",
     "potencia": "975 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Cafetera programable de 12 tazas., * Flujo de agua con tecnología Vortex, * Satura uniformemente los granos de café, * Puedes cambiar la intensidad de la infusión para obtener una taza de café más fuerte., * Tecnología Sneak-A-Cup permite servir una taza de café antes de que el resto de la cafetera se haya preparado., * Controles digitales QuickTouch para ajustar fácilmente el reloj y programar el sistema de preparación automática de café., * La taza equivale aproximadamente a 5 onzas (varía según la técnica de preparación)",
+    "caracteristicas_destacadas": "Cafetera programable de 12 tazas., * Flujo de agua con tecnologφa VortexÖ, * Satura uniformemente los granos de cafΘ, * Puedes cambiar la intensidad de la infusi≤n para obtener una taza de cafΘ mßs fuerte., * Tecnologφa Sneak-A-CupÖ permite servir una taza de cafΘ antes de que el resto de la cafetera se haya preparado., * Controles digitales QuickTouchÖ para ajustar fßcilmente el reloj y programar el sistema de preparaci≤n automßtica de cafΘ., * La taza equivale aproximadamente a 5 onzas (varφa seg·n la tΘcnica de preparaci≤n)",
     "garantia_meses": 24
   }
 },
@@ -172,7 +172,7 @@
   "pk": 9,
   "fields": {
     "nombre": "Televisor 50 Pulgadas QLED + Barra de Sonido HW-B400F Samsung",
-    "descripcion": "Tipo : Televisores qled\r\n\r\nSintonizador TDT : Si\r\n\r\nReferencia del Producto en el Certificado/Empaque : F-QN50Q7FAAKXZ\r\n\r\nModelo : F-QN50Q7FAAKXZ\r\n\r\nAncho : 112.03 cm",
+    "descripcion": "òTipo : Televisores qled\r\n\r\nòSintonizador TDT : Si\r\n\r\nòReferencia del Producto en el Certificado/Empaque : F-QN50Q7FAAKXZ\r\n\r\nòModelo : F-QN50Q7FAAKXZ\r\n\r\nòAncho : 112.03 cm",
     "precio": "3599900.00",
     "stock": 100,
     "categoria": 3,
@@ -184,7 +184,7 @@
     "capacidad": null,
     "potencia": null,
     "color": null,
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n112.03 cm\r\nAlto\r\n64.7 cm\r\nProfundidad\r\n6 cm\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores qled\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\nF-QN50Q7FAAKXZ\r\nTipo de pantalla\r\nQLED\r\nColor\r\nNegro\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnología 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n3\r\nTamaño de la pantalla\r\n50 pulgadas\r\nTipo\r\nTelevisores qled\r\nSistema de sonido\r\nOtro\r\nVoltaje\r\n240 V\r\nFabricante\r\n\r\nModelo\r\nF-QN50Q7FAAKXZ",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n112.03 cm\r\nAlto\r\n64.7 cm\r\nProfundidad\r\n6 cm\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores qled\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\nF-QN50Q7FAAKXZ\r\nTipo de pantalla\r\nQLED\r\nColor\r\nNegro\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnologφa 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n3\r\nTama±o de la pantalla\r\n50 pulgadas\r\nTipo\r\nTelevisores qled\r\nSistema de sonido\r\nOtro\r\nVoltaje\r\n240 V\r\nFabricante\r\n\r\nModelo\r\nF-QN50Q7FAAKXZ",
     "garantia_meses": 12
   }
 },
@@ -193,7 +193,7 @@
   "pk": 10,
   "fields": {
     "nombre": "Estufa de Piso 4 Puestos Gas Natural Plata ROMERO 50-T",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Estufas de piso a gas\r\n\r\nClase del Gasodomestico : Clase 1\r\n\r\nCategoria del gasodomestico : Categoría II2H3B/P\r\n\r\nAdvertencias de uso : Leer las instrucciones técnicas antes de instalar este calentador.\r\n\r\nPaís de Origen : Colombia",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Estufas de piso a gas\r\n\r\nòClase del Gasodomestico : Clase 1\r\n\r\nòCategoria del gasodomestico : Categorφa II2H3B/P\r\n\r\nòAdvertencias de uso : Leer las instrucciones tΘcnicas antes de instalar este calentador.\r\n\r\nòPaφs de Origen : Colombia",
     "precio": "697000.00",
     "stock": 99,
     "categoria": 2,
@@ -205,7 +205,7 @@
     "capacidad": "56.75 litros",
     "potencia": "9.4 kW",
     "color": "Negro",
-    "caracteristicas_destacadas": "Ahorra tiempo cocinando,fogón 35% mas potente,Visor del horno 65% mas amplio,Parrillas antideslizantes,seguridad para ti y tu familia,Mesa robusta en acero inóxidable,Encendido eléctrico en mesa,Parrillas antideslizantes,Nueva manija mas amplia, Nueva puerta.",
+    "caracteristicas_destacadas": "Ahorra tiempo cocinando,fog≤n 35% mas potente,Visor del horno 65% mas amplio,Parrillas antideslizantes,seguridad para ti y tu familia,Mesa robusta en acero in≤xidable,Encendido elΘctrico en mesa,Parrillas antideslizantes,Nueva manija mas amplia, Nueva puerta.",
     "garantia_meses": 36
   }
 },
@@ -214,7 +214,7 @@
   "pk": 11,
   "fields": {
     "nombre": "Televisor 65 Pulgadas UHD Un65u8000fkxzl Samsung",
-    "descripcion": "Tipo : Televisores uhd\r\n\r\nSintonizador TDT : Si\r\n\r\nReferencia del Producto en el Certificado/Empaque : Pilas Zinc-carbón\r\n\r\nModelo : UN65U8000FKXZL\r\n\r\nAncho : 144.41 cm",
+    "descripcion": "òTipo : Televisores uhd\r\n\r\nòSintonizador TDT : Si\r\n\r\nòReferencia del Producto en el Certificado/Empaque : Pilas Zinc-carb≤n\r\n\r\nòModelo : UN65U8000FKXZL\r\n\r\nòAncho : 144.41 cm",
     "precio": "4499900.00",
     "stock": 100,
     "categoria": 3,
@@ -226,7 +226,7 @@
     "capacidad": null,
     "potencia": null,
     "color": null,
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n144.41 cm\r\nAlto\r\n83.12 cm\r\nProfundidad\r\n7.68 cm\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores uhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\nPilas Zinc-carbón\r\nTipo de pantalla\r\nLED\r\nColor\r\nNegro\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnología 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n3\r\nTamaño de la pantalla\r\n65 pulgadas\r\nTipo\r\nTelevisores uhd\r\nSistema de sonido\r\nOtro\r\nVoltaje\r\n240 V\r\nFabricante\r\n\r\nModelo\r\nUN65U8000FKXZL",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n144.41 cm\r\nAlto\r\n83.12 cm\r\nProfundidad\r\n7.68 cm\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores uhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\nPilas Zinc-carb≤n\r\nTipo de pantalla\r\nLED\r\nColor\r\nNegro\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnologφa 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n3\r\nTama±o de la pantalla\r\n65 pulgadas\r\nTipo\r\nTelevisores uhd\r\nSistema de sonido\r\nOtro\r\nVoltaje\r\n240 V\r\nFabricante\r\n\r\nModelo\r\nUN65U8000FKXZL",
     "garantia_meses": 12
   }
 },
@@ -235,7 +235,7 @@
   "pk": 12,
   "fields": {
     "nombre": "Freidora de Aire Digital Oster Recubrimiento DiamondForce, con Ventana y Luz Interna, 6 Litros de Ca",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Freidoras sin aceite\r\n\r\nReferencia del Producto en el Certificado/Empaque : 2204924\r\n\r\nModelo : 2204924\r\n\r\nAncho : 32.8 cm\r\n\r\nAlto : 33.1 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Freidoras sin aceite\r\n\r\nòReferencia del Producto en el Certificado/Empaque : 2204924\r\n\r\nòModelo : 2204924\r\n\r\nòAncho : 32.8 cm\r\n\r\nòAlto : 33.1 cm",
     "precio": "478000.00",
     "stock": 100,
     "categoria": 2,
@@ -247,7 +247,7 @@
     "capacidad": "6 litros",
     "potencia": "1700 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Nuestro recubrimiento Oster® DiamondForce, que es hasta 12 veces más resistente a rayaduras y hasta 15 veces más fácil de limpiar*, asegurando durabilidad y facilidad de limpieza incomparables, Capacidad de 6L**, con ventana y luz interna para una supervisión precisa, y 10 programas automáticos, desde papas fritas hasta postres, Simplifica tu cocina con solo tocar un botón, Recordatorio automático para voltear la comida, *Hasta 12 veces más resistente a rayaduras y hasta 15 veces más fácil de limpiar vs recubrimiento GSCB-293V/GSCT-293V **capacidad calculada incluye bandeja removible",
+    "caracteristicas_destacadas": "Nuestro recubrimiento Oster« DiamondForce, que es hasta 12 veces mßs resistente a rayaduras y hasta 15 veces mßs fßcil de limpiar*, asegurando durabilidad y facilidad de limpieza incomparables, Capacidad de 6L**, con ventana y luz interna para una supervisi≤n precisa, y 10 programas automßticos, desde papas fritas hasta postres, Simplifica tu cocina con solo tocar un bot≤n, Recordatorio automßtico para voltear la comida, *Hasta 12 veces mßs resistente a rayaduras y hasta 15 veces mßs fßcil de limpiar vs recubrimiento GSCB-293V/GSCT-293V **capacidad calculada incluye bandeja removible",
     "garantia_meses": 12
   }
 },
@@ -256,7 +256,7 @@
   "pk": 13,
   "fields": {
     "nombre": "Horno Digital con Freidora de Aire 42 Litros de Capacidad Oster 10 Funciones pre-determinadas, Recub",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Hornos tostadores\r\n\r\nModelo : 123\r\n\r\nAncho : 54.8 cm\r\n\r\nAlto : 32.7 cm\r\n\r\nProfundidad : 49 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Hornos tostadores\r\n\r\nòModelo : 123\r\n\r\nòAncho : 54.8 cm\r\n\r\nòAlto : 32.7 cm\r\n\r\nòProfundidad : 49 cm",
     "precio": "172000.00",
     "stock": 100,
     "categoria": 2,
@@ -268,7 +268,7 @@
     "capacidad": "42 litros",
     "potencia": "1700 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "El Horno con puertas francesas y función de freidora de aire Oster® ahora es digital. Cocina las comidas preferidas de tu familia más rápido que nunca y sin comprometer sabor o nutrición. Además, cuenta con una capacidad extra grande de 421 y 10 funciones pre-determinadas.",
+    "caracteristicas_destacadas": "El Horno con puertas francesas y funci≤n de freidora de aire Oster« ahora es digital. Cocina las comidas preferidas de tu familia mßs rßpido que nunca y sin comprometer sabor o nutrici≤n. Ademßs, cuenta con una capacidad extra grande de 421 y 10 funciones pre-determinadas.",
     "garantia_meses": 12
   }
 },
@@ -276,8 +276,8 @@
   "model": "product.producto",
   "pk": 14,
   "fields": {
-    "nombre": "Televisor Hisense 55 Pulgadas Qled Uhd4k Smart Tv 55qv Dolby Visión",
-    "descripcion": "Tipo : Televisores uhd\r\n\r\nSintonizador TDT : Si\r\n\r\nReferencia del Producto en el Certificado/Empaque : 55Q6QV\r\n\r\nModelo : 55Q6QV\r\n\r\nAncho : 123.4 cm",
+    "nombre": "Televisor Hisense 55 Pulgadas Qled Uhd4k Smart Tv 55qv Dolby Visi≤n",
+    "descripcion": "òTipo : Televisores uhd\r\n\r\nòSintonizador TDT : Si\r\n\r\nòReferencia del Producto en el Certificado/Empaque : 55Q6QV\r\n\r\nòModelo : 55Q6QV\r\n\r\nòAncho : 123.4 cm",
     "precio": "3599900.00",
     "stock": 100,
     "categoria": 3,
@@ -289,7 +289,7 @@
     "capacidad": null,
     "potencia": null,
     "color": null,
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n123.4 cm\r\nAlto\r\n75.2 cm\r\nProfundidad\r\n7 cm\r\nPeso\r\n9.5 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores uhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n55Q6QV\r\nTipo de pantalla\r\nLED\r\nCuenta con bluetooth\r\nSi\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnología 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n2\r\nCantidad de puertos HDMI\r\n3\r\nTamaño de la pantalla\r\n55 pulgadas\r\nSistema operativo\r\nVIDAA\r\nTipo\r\nTelevisores uhd\r\nSistema de sonido\r\n2.0 (estereofónico)\r\nVoltaje\r\n120 V\r\nFabricante\r\n\r\nModelo\r\n55Q6QV",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n123.4 cm\r\nAlto\r\n75.2 cm\r\nProfundidad\r\n7 cm\r\nPeso\r\n9.5 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores uhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n55Q6QV\r\nTipo de pantalla\r\nLED\r\nCuenta con bluetooth\r\nSi\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnologφa 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n2\r\nCantidad de puertos HDMI\r\n3\r\nTama±o de la pantalla\r\n55 pulgadas\r\nSistema operativo\r\nVIDAA\r\nTipo\r\nTelevisores uhd\r\nSistema de sonido\r\n2.0 (estereof≤nico)\r\nVoltaje\r\n120 V\r\nFabricante\r\n\r\nModelo\r\n55Q6QV",
     "garantia_meses": 12
   }
 },
@@ -298,7 +298,7 @@
   "pk": 15,
   "fields": {
     "nombre": "Televisor Hisense 65 Pulgadas Qled Uhd 4k Smart Tv 65q6qv",
-    "descripcion": "Tipo : Televisores qled\r\n\r\nSintonizador TDT : Si\r\n\r\nReferencia del Producto en el Certificado/Empaque : 65Q6QV\r\n\r\nModelo : 65Q6QV\r\n\r\nAncho : 143.4 cm",
+    "descripcion": "òTipo : Televisores qled\r\n\r\nòSintonizador TDT : Si\r\n\r\nòReferencia del Producto en el Certificado/Empaque : 65Q6QV\r\n\r\nòModelo : 65Q6QV\r\n\r\nòAncho : 143.4 cm",
     "precio": "3289900.00",
     "stock": 100,
     "categoria": 3,
@@ -310,7 +310,7 @@
     "capacidad": null,
     "potencia": null,
     "color": null,
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n143.4 cm\r\nAlto\r\n84.3 cm\r\nProfundidad\r\n7.4 cm\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores qled\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n65Q6QV\r\nTipo de pantalla\r\nQLED\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnología 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n1\r\nAño de lanzamiento\r\n2025\r\nTamaño de la pantalla\r\n65 pulgadas\r\nSistema de sonido\r\n2.0 (estereofónico)\r\nTipo\r\nTelevisores qled\r\nVoltaje\r\n110 V\r\nFabricante\r\n\r\nModelo\r\n65Q6QV",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n143.4 cm\r\nAlto\r\n84.3 cm\r\nProfundidad\r\n7.4 cm\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores qled\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n65Q6QV\r\nTipo de pantalla\r\nQLED\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnologφa 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n1\r\nA±o de lanzamiento\r\n2025\r\nTama±o de la pantalla\r\n65 pulgadas\r\nSistema de sonido\r\n2.0 (estereof≤nico)\r\nTipo\r\nTelevisores qled\r\nVoltaje\r\n110 V\r\nFabricante\r\n\r\nModelo\r\n65Q6QV",
     "garantia_meses": 12
   }
 },
@@ -319,7 +319,7 @@
   "pk": 16,
   "fields": {
     "nombre": "Televisor Hisense 40 Pulgadas Full Hd Smart Tv",
-    "descripcion": "Tipo : Televisores fhd\r\n\r\nSintonizador TDT : Si\r\n\r\nReferencia del Producto en el Certificado/Empaque : 40A4NV\r\n\r\nModelo : 40A4NV\r\n\r\nAncho : 89.8 cm",
+    "descripcion": "òTipo : Televisores fhd\r\n\r\nòSintonizador TDT : Si\r\n\r\nòReferencia del Producto en el Certificado/Empaque : 40A4NV\r\n\r\nòModelo : 40A4NV\r\n\r\nòAncho : 89.8 cm",
     "precio": "1559900.00",
     "stock": 100,
     "categoria": 3,
@@ -331,7 +331,7 @@
     "capacidad": null,
     "potencia": null,
     "color": null,
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n89.8 cm\r\nAlto\r\n55.9 cm\r\nProfundidad\r\n7.8 cm\r\nPeso\r\n4.9 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores fhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n40A4NV\r\nTipo de pantalla\r\nLED\r\nCuenta con bluetooth\r\nSi\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnología 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n2\r\nConectividad TV\r\nBluetooth\r\nTamaño de la pantalla\r\n40 pulgadas\r\nSistema operativo\r\nVIDAA\r\nTipo\r\nTelevisores fhd\r\nSistema de sonido\r\n2.0 (estereofónico)\r\nVoltaje\r\n120 V\r\nFabricante\r\n\r\nModelo\r\n40A4NV",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n89.8 cm\r\nAlto\r\n55.9 cm\r\nProfundidad\r\n7.8 cm\r\nPeso\r\n4.9 kg\r\nEspecificaciones\r\n\r\nTipo\r\nTelevisores fhd\r\nSintonizador TDT\r\nSi\r\nReferencia del Producto en el Certificado/Empaque\r\n40A4NV\r\nTipo de pantalla\r\nLED\r\nCuenta con bluetooth\r\nSi\r\nCuenta con Wifi\r\nSi\r\nCuenta con tecnologφa 3D\r\nNo\r\nSmart TV\r\nSi\r\nCantidad de puertos USB\r\n1\r\nCantidad de puertos HDMI\r\n2\r\nConectividad TV\r\nBluetooth\r\nTama±o de la pantalla\r\n40 pulgadas\r\nSistema operativo\r\nVIDAA\r\nTipo\r\nTelevisores fhd\r\nSistema de sonido\r\n2.0 (estereof≤nico)\r\nVoltaje\r\n120 V\r\nFabricante\r\n\r\nModelo\r\n40A4NV",
     "garantia_meses": 12
   }
 },
@@ -339,8 +339,8 @@
   "model": "product.producto",
   "pk": 17,
   "fields": {
-    "nombre": "Parlante Portátil Bose S1 Pro+ Bluetooth",
-    "descripcion": "Tipo : Parlantes\r\n\r\nReferencia del Producto en el Certificado/Empaque : S1 Pro+\r\n\r\nModelo : S1 Pro+\r\n\r\nAncho : 21\r\n\r\nAlto : 31",
+    "nombre": "Parlante Portßtil Bose S1 Pro+ Bluetooth",
+    "descripcion": "òTipo : Parlantes\r\n\r\nòReferencia del Producto en el Certificado/Empaque : S1 Pro+\r\n\r\nòModelo : S1 Pro+\r\n\r\nòAncho : 21\r\n\r\nòAlto : 31",
     "precio": "3299900.00",
     "stock": 100,
     "categoria": 3,
@@ -352,7 +352,7 @@
     "capacidad": null,
     "potencia": "10 w",
     "color": "negro",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n21\r\nAlto\r\n31\r\nProfundidad\r\n25\r\nEspecificaciones\r\n\r\nTipo\r\nParlantes\r\nReferencia del Producto en el Certificado/Empaque\r\nS1 Pro+\r\nTipo de altavoces\r\nPortátil\r\nCuenta con control remoto\r\nNo\r\nCuenta con puertos USB\r\nSi\r\nCuenta con bluetooth\r\nSi\r\nRecargable\r\nSi\r\nPotencia\r\n10 W\r\nOpciones de conectividad\r\nBluetooth\r\nFormato de reproducción\r\nMP4\r\nFabricante\r\n\r\nModelo\r\nS1 Pro+",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n21\r\nAlto\r\n31\r\nProfundidad\r\n25\r\nEspecificaciones\r\n\r\nTipo\r\nParlantes\r\nReferencia del Producto en el Certificado/Empaque\r\nS1 Pro+\r\nTipo de altavoces\r\nPortßtil\r\nCuenta con control remoto\r\nNo\r\nCuenta con puertos USB\r\nSi\r\nCuenta con bluetooth\r\nSi\r\nRecargable\r\nSi\r\nPotencia\r\n10 W\r\nOpciones de conectividad\r\nBluetooth\r\nFormato de reproducci≤n\r\nMP4\r\nFabricante\r\n\r\nModelo\r\nS1 Pro+",
     "garantia_meses": 12
   }
 },
@@ -361,7 +361,7 @@
   "pk": 18,
   "fields": {
     "nombre": "Parlante Jbl Boombox 3 Negro",
-    "descripcion": "Tipo : Parlante\r\n\r\nReferencia del Producto en el Certificado/Empaque : JBL-BOOMBOX3-BK\r\n\r\nModelo : JBL-BOOMBOX3-BK\r\n\r\nAncho : 25.6 cm\r\n\r\nAlto : 32.4 cm",
+    "descripcion": "òTipo : Parlante\r\n\r\nòReferencia del Producto en el Certificado/Empaque : JBL-BOOMBOX3-BK\r\n\r\nòModelo : JBL-BOOMBOX3-BK\r\n\r\nòAncho : 25.6 cm\r\n\r\nòAlto : 32.4 cm",
     "precio": "2249900.00",
     "stock": 100,
     "categoria": 3,
@@ -373,7 +373,7 @@
     "capacidad": null,
     "potencia": "180 W",
     "color": "negro",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n25.6 cm\r\nAlto\r\n32.4 cm\r\nProfundidad\r\n56.5 cm\r\nEspecificaciones\r\n\r\nTipo\r\nParlante\r\nReferencia del Producto en el Certificado/Empaque\r\nJBL-BOOMBOX3-BK\r\nTipo de altavoces\r\nPortátil\r\nMaterial del cuerpo\r\nPlástico\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nNo\r\nCuenta con puertos USB\r\nSi\r\nCuenta con bluetooth\r\nSi\r\nRecargable\r\nSi\r\nPotencia\r\n180 W\r\nOpciones de conectividad\r\nBluetooth\r\nAlimentación\r\nBatería Recargable\r\nFormato de reproducción\r\nMP3, MP4, wma\r\nDuración batería\r\n10-24 horas\r\nFabricante\r\n\r\nModelo\r\nJBL-BOOMBOX3-BK",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n25.6 cm\r\nAlto\r\n32.4 cm\r\nProfundidad\r\n56.5 cm\r\nEspecificaciones\r\n\r\nTipo\r\nParlante\r\nReferencia del Producto en el Certificado/Empaque\r\nJBL-BOOMBOX3-BK\r\nTipo de altavoces\r\nPortßtil\r\nMaterial del cuerpo\r\nPlßstico\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nNo\r\nCuenta con puertos USB\r\nSi\r\nCuenta con bluetooth\r\nSi\r\nRecargable\r\nSi\r\nPotencia\r\n180 W\r\nOpciones de conectividad\r\nBluetooth\r\nAlimentaci≤n\r\nBaterφa Recargable\r\nFormato de reproducci≤n\r\nMP3, MP4, wma\r\nDuraci≤n baterφa\r\n10-24 horas\r\nFabricante\r\n\r\nModelo\r\nJBL-BOOMBOX3-BK",
     "garantia_meses": 12
   }
 },
@@ -382,7 +382,7 @@
   "pk": 19,
   "fields": {
     "nombre": "Minicomponente LG Xboom Rnc9 1800 Watts Negro Torre de Sonido",
-    "descripcion": "Tipo : Torre de sonido\r\n\r\nModelo : RNC9\r\n\r\nColor : Negro\r\n\r\nCuenta con puertos USB : Si\r\n\r\nPotencia : 1800 W",
+    "descripcion": "òTipo : Torre de sonido\r\n\r\nòModelo : RNC9\r\n\r\nòColor : Negro\r\n\r\nòCuenta con puertos USB : Si\r\n\r\nòPotencia : 1800 W",
     "precio": "2799900.00",
     "stock": 100,
     "categoria": 3,
@@ -394,7 +394,7 @@
     "capacidad": null,
     "potencia": "1800 W",
     "color": "negro",
-    "caracteristicas_destacadas": "Especificaciones\r\n\r\nTipo\r\nTorre de sonido\r\nColor\r\nNegro\r\nCuenta con puertos USB\r\nSi\r\nPotencia\r\n1800 W\r\nAño de lanzamiento\r\n2023\r\nFormato de reproducción\r\nMP3, wma\r\nCuenta con control remoto\r\nSi\r\nFabricante\r\n\r\nModelo\r\nRNC9",
+    "caracteristicas_destacadas": "Especificaciones\r\n\r\nTipo\r\nTorre de sonido\r\nColor\r\nNegro\r\nCuenta con puertos USB\r\nSi\r\nPotencia\r\n1800 W\r\nA±o de lanzamiento\r\n2023\r\nFormato de reproducci≤n\r\nMP3, wma\r\nCuenta con control remoto\r\nSi\r\nFabricante\r\n\r\nModelo\r\nRNC9",
     "garantia_meses": 12
   }
 },
@@ -402,8 +402,8 @@
   "model": "product.producto",
   "pk": 20,
   "fields": {
-    "nombre": "Consola PS5 PRO Digital 2TB Blanco | Incluye 1 control inalámbrico DualSense | Incluye Juego Preinst",
-    "descripcion": "Registro SIC\t900841977\r\nModelo\tPS5 HW PRO Digital - Latam\r\nPaís de origen\tChina\r\nTipo de consola\tPlaystation 5\r\nGarantía\t1 año\r\nConectividad/conexión\tWifi\r\nCondición del producto\tNuevo",
+    "nombre": "Consola PS5 PRO Digital 2TB Blanco | Incluye 1 control inalßmbrico DualSense | Incluye Juego Preinst",
+    "descripcion": "Registro SIC\t900841977\r\nModelo\tPS5 HW PRO Digital - Latam\r\nPaφs de origen\tChina\r\nTipo de consola\tPlaystation 5\r\nGarantφa\t1 a±o\r\nConectividad/conexi≤n\tWifi\r\nCondici≤n del producto\tNuevo",
     "precio": "4199900.00",
     "stock": 98,
     "categoria": 3,
@@ -415,7 +415,7 @@
     "capacidad": null,
     "potencia": null,
     "color": "blanco",
-    "caracteristicas_destacadas": "Capacidad de almacenamiento: 2 TB\r\nProcesador: AMD\r\nEntradas USB: 4\r\nEntradas HDMI: 1\r\nConectividad: WiFi/Ethernet/Bluetooth\r\nTipo de consola: Playstation 5\r\nModelo: PS5 HW PRO Digital - Latam\r\nHecho en: China\r\n¿Qué incluye?: Consola PS5 Pro, control inalámbrico DualSense , SSD de 2 TB, 2 pies de soporte horizontal, cable HDMI , cable de alimentación CA, materiales impresos, ASTRO s PLAYROOM (juego preinstalado\r\nMarca: PlayStation\r\nGarantía del proveedor: 1 año\r\nCondición del producto: Nuevo\r\nProcesador específico: AMD\r\nMarca procesador: AMD",
+    "caracteristicas_destacadas": "Capacidad de almacenamiento: 2 TB\r\nProcesador: AMD\r\nEntradas USB: 4\r\nEntradas HDMI: 1\r\nConectividad: WiFi/Ethernet/Bluetooth\r\nTipo de consola: Playstation 5\r\nModelo: PS5 HW PRO Digital - Latam\r\nHecho en: China\r\n┐QuΘ incluye?: Consola PS5 Pro, control inalßmbrico DualSense , SSD de 2 TB, 2 pies de soporte horizontal, cable HDMI , cable de alimentaci≤n CA, materiales impresos, ASTRO s PLAYROOM (juego preinstalado\r\nMarca: PlayStation\r\nGarantφa del proveedor: 1 a±o\r\nCondici≤n del producto: Nuevo\r\nProcesador especφfico: AMD\r\nMarca procesador: AMD",
     "garantia_meses": 12
   }
 },
@@ -424,7 +424,7 @@
   "pk": 21,
   "fields": {
     "nombre": "Lavavajillas 8 Puestos DW3908.1 Silver",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Lavavajillas eléctrico\r\n\r\nModelo : DW 3908\r\n\r\nAncho : 44.5 cm\r\n\r\nAlto : 82.5 cm\r\n\r\nProfundidad : 57 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Lavavajillas elΘctrico\r\n\r\nòModelo : DW 3908\r\n\r\nòAncho : 44.5 cm\r\n\r\nòAlto : 82.5 cm\r\n\r\nòProfundidad : 57 cm",
     "precio": "2000000.00",
     "stock": 100,
     "categoria": 1,
@@ -436,7 +436,7 @@
     "capacidad": "8 puestos",
     "potencia": "876 W",
     "color": "Plateado",
-    "caracteristicas_destacadas": "6 programas de lavado, pesado, normal, eco, cristal, rápido, enjuague, Indicador de error, 2 entradas, para agua caliente y agua fría, Bloqueo de funciones, Display, Indicador de tiempo de ciclo, 4 funciones extras como esterilizar, temperatura alta, secador con calor, diferido, 2 canastas una inferior y otra superior",
+    "caracteristicas_destacadas": "6 programas de lavado, pesado, normal, eco, cristal, rßpido, enjuague, Indicador de error, 2 entradas, para agua caliente y agua frφa, Bloqueo de funciones, Display, Indicador de tiempo de ciclo, 4 funciones extras como esterilizar, temperatura alta, secador con calor, diferido, 2 canastas una inferior y otra superior",
     "garantia_meses": 12
   }
 },
@@ -445,7 +445,7 @@
   "pk": 22,
   "fields": {
     "nombre": "Lavadora Carga Superior 12 Kg Eco Fuzzy",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Lavadoras carga superior\r\n\r\nModelo : EWIW12F6USVS\r\n\r\nAncho : 59 cm\r\n\r\nAlto : 96.5 cm\r\n\r\nProfundidad : 55 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Lavadoras carga superior\r\n\r\nòModelo : EWIW12F6USVS\r\n\r\nòAncho : 59 cm\r\n\r\nòAlto : 96.5 cm\r\n\r\nòProfundidad : 55 cm",
     "precio": "250000.00",
     "stock": 100,
     "categoria": 1,
@@ -457,7 +457,7 @@
     "capacidad": "12 kg",
     "potencia": "600 W",
     "color": "Plateado",
-    "caracteristicas_destacadas": "La Lavadora Electrolux 12kg Premium Care te ofrece alto desempeño de lavado, menor consumo de agua, de energía, sabe como cuidar tu ropa y tienes más tiempo para ti.",
+    "caracteristicas_destacadas": "La Lavadora Electrolux 12kg Premium Care te ofrece alto desempe±o de lavado, menor consumo de agua, de energφa, sabe como cuidar tu ropa y tienes mßs tiempo para ti.",
     "garantia_meses": 12
   }
 },
@@ -466,7 +466,7 @@
   "pk": 23,
   "fields": {
     "nombre": "Licuadora BLACK+DECKER DuraPro 550 Watts con 4 cuchillas BLBD210GB",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Licuadora de vaso vidrio\r\n\r\nModelo : BLBD210GB\r\n\r\nAncho : 10.6 cm\r\n\r\nAlto : 20.6 cm\r\n\r\nLargo : 40.4 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Licuadora de vaso vidrio\r\n\r\nòModelo : BLBD210GB\r\n\r\nòAncho : 10.6 cm\r\n\r\nòAlto : 20.6 cm\r\n\r\nòLargo : 40.4 cm",
     "precio": "147000.00",
     "stock": 100,
     "categoria": 2,
@@ -478,7 +478,7 @@
     "capacidad": "1.25 litros",
     "potencia": "550 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "La Licuadora de DURAPRO de 10 Velocidades de BLACK+DECKER es un clásico en la cocina. Con mayor función de pulso y 4 cuchillas de acero inoxidable, 2 veces más duraderas ** para eficiencia y funcionamiento. La jarra de 1.25 Lt de vidrio y tapa de doble abertura está diseñada para verter fácilmente y tiene capacidad suficiente para acomodar varias porciones de sus batidos favoritos y ¡más! Además",
+    "caracteristicas_destacadas": "La Licuadora de DURAPRO de 10 Velocidades de BLACK+DECKER es un clßsico en la cocina. Con mayor funci≤n de pulso y 4 cuchillas de acero inoxidable, 2 veces mßs duraderas ** para eficiencia y funcionamiento. La jarra de 1.25 Lt de vidrio y tapa de doble abertura estß dise±ada para verter fßcilmente y tiene capacidad suficiente para acomodar varias porciones de sus batidos favoritos y ímßs! Ademßs",
     "garantia_meses": 12
   }
 },
@@ -487,7 +487,7 @@
   "pk": 24,
   "fields": {
     "nombre": "Horno Microondas 0.7PC 120 V WM1807D Silver",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Hornos microondas\r\n\r\nModelo : WM1807D\r\n\r\nAncho : 45.5 cm\r\n\r\nAlto : 26.2 cm\r\n\r\nProfundidad : 31.5 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Hornos microondas\r\n\r\nòModelo : WM1807D\r\n\r\nòAncho : 45.5 cm\r\n\r\nòAlto : 26.2 cm\r\n\r\nòProfundidad : 31.5 cm",
     "precio": "530000.00",
     "stock": 100,
     "categoria": 2,
@@ -507,8 +507,8 @@
   "model": "product.producto",
   "pk": 26,
   "fields": {
-    "nombre": "Nevecón French Door 625 Litros RF22A4220SG/CO Gris",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Nevecones french door\r\n\r\nReferencia del Producto en el Certificado/Empaque : RF22A4220SG/CO\r\n\r\nModelo : RF22A4220SG/CO\r\n\r\nAncho : 88.6 cm\r\n\r\nAlto : 169.7 cm",
+    "nombre": "Nevec≤n French Door 625 Litros RF22A4220SG/CO Gris",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Nevecones french door\r\n\r\nòReferencia del Producto en el Certificado/Empaque : RF22A4220SG/CO\r\n\r\nòModelo : RF22A4220SG/CO\r\n\r\nòAncho : 88.6 cm\r\n\r\nòAlto : 169.7 cm",
     "precio": "7800000.00",
     "stock": 100,
     "categoria": 2,
@@ -520,7 +520,7 @@
     "capacidad": "625 litros",
     "potencia": null,
     "color": "Gris Oscuro",
-    "caracteristicas_destacadas": "Asegúrate mantener refrigerados tus alimentos. El sistema de enfriamiento envolvente enfría cada compartimento de manera uniforme de esquina a esquina, comprueba constantemente la temperatura y circula el aire fresco a través de orificios de ventilación estratégicamente ubicados. De este modo, todos los alimentos se mantienen a una temperatura óptima y se enfrían uniformemente en el interior.",
+    "caracteristicas_destacadas": "Aseg·rate mantener refrigerados tus alimentos. El sistema de enfriamiento envolvente enfrφa cada compartimento de manera uniforme de esquina a esquina, comprueba constantemente la temperatura y circula el aire fresco a travΘs de orificios de ventilaci≤n estratΘgicamente ubicados. De este modo, todos los alimentos se mantienen a una temperatura ≤ptima y se enfrφan uniformemente en el interior.",
     "garantia_meses": 12
   }
 },
@@ -529,7 +529,7 @@
   "pk": 27,
   "fields": {
     "nombre": "Plancha De Ropa a Vapor T-Fal Ultragliss Anti - Calc Plus, 1800 Watts, Auto OFF",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Planchas de ropa con vapor\r\n\r\nModelo : Ultragliss\r\n\r\nAncho : 13.5 cm\r\n\r\nAlto : 16 cm\r\n\r\nLargo : 31 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Planchas de ropa con vapor\r\n\r\nòModelo : Ultragliss\r\n\r\nòAncho : 13.5 cm\r\n\r\nòAlto : 16 cm\r\n\r\nòLargo : 31 cm",
     "precio": "428000.00",
     "stock": 99,
     "categoria": 1,
@@ -541,7 +541,7 @@
     "capacidad": null,
     "potencia": "1800 W",
     "color": "Azul",
-    "caracteristicas_destacadas": "Gran portencia de 1800 Watts, potente golpe de vapor de hasta 180 g/min, Tecnología Durilium Airglide que garantiza un deslizamiento insuperable y resultados impecables, Incluye un sistema que captura partículas de cal, asegurando un rendimiento duradero y protegiendo tus prendas",
+    "caracteristicas_destacadas": "Gran portencia de 1800 Watts, potente golpe de vapor de hasta 180 g/min, Tecnologφa Durilium Airglide que garantiza un deslizamiento insuperable y resultados impecables, Incluye un sistema que captura partφculas de cal, asegurando un rendimiento duradero y protegiendo tus prendas",
     "garantia_meses": 24
   }
 },
@@ -550,7 +550,7 @@
   "pk": 29,
   "fields": {
     "nombre": "Procesador de alimentos BLACK+DECKER 8 tazas y 2 velocidades + pulzo FP4342-0BDLA",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Procesadores de alimento\r\n\r\nColor : Negro\r\n\r\nCapacidad : 1.8 litros\r\n\r\nIncluye : disco para rallar y rebanar, cuchilla s de acero inoxidable, disco para cremado\r\n\r\nInalámbrico : No",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Procesadores de alimento\r\n\r\nòColor : Negro\r\n\r\nòCapacidad : 1.8 litros\r\n\r\nòIncluye : disco para rallar y rebanar, cuchilla s de acero inoxidable, disco para cremado\r\n\r\nòInalßmbrico : No",
     "precio": "280000.00",
     "stock": 100,
     "categoria": 2,
@@ -562,7 +562,7 @@
     "capacidad": "1.8 litros",
     "potencia": "800 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Prepara deliciosos platillos de una manera muy fácil y rápida con el Procesador de Alimentos de Black + Decker, 800 Watts de potencia máxima, 2 velocidades y Función de Pulso, Cuenta con cuchillas de acero inoxodable para picar y mezclar, Prepara comidas completas para toda la familia con el recipiente de plástico con capacidad de 8 tazas, Cuenta con accesorios para rallar, rebanar y desmenuzar",
+    "caracteristicas_destacadas": "Prepara deliciosos platillos de una manera muy fßcil y rßpida con el Procesador de Alimentos de Black + Decker, 800 Watts de potencia mßxima, 2 velocidades y Funci≤n de Pulso, Cuenta con cuchillas de acero inoxodable para picar y mezclar, Prepara comidas completas para toda la familia con el recipiente de plßstico con capacidad de 8 tazas, Cuenta con accesorios para rallar, rebanar y desmenuzar",
     "garantia_meses": 24
   }
 },
@@ -571,7 +571,7 @@
   "pk": 30,
   "fields": {
     "nombre": "Sanduchera Imusa Basic 2 puestos Negra",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Sanducheras\r\n\r\nModelo : Basic\r\n\r\nAncho : 33.6 cm\r\n\r\nAlto : 25.4 cm\r\n\r\nProfundidad : 51.3 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Sanducheras\r\n\r\nòModelo : Basic\r\n\r\nòAncho : 33.6 cm\r\n\r\nòAlto : 25.4 cm\r\n\r\nòProfundidad : 51.3 cm",
     "precio": "125000.00",
     "stock": 100,
     "categoria": 2,
@@ -592,7 +592,7 @@
   "pk": 31,
   "fields": {
     "nombre": "Consola Xbox Series S 512 GB",
-    "descripcion": "Registro SIC\t800091549\r\nIncluye\tControl Xbox Series S / Cable de Energía / Cable HDMI\r\nModelo\tRRS-00004\r\nPaís de origen\tChina\r\nTipo de consola\tXbox Series S\r\nGarantía\t1 año\r\nConectividad/conexión\tWifi\r\nCondición del producto\tNuevo",
+    "descripcion": "Registro SIC\t800091549\r\nIncluye\tControl Xbox Series S / Cable de Energφa / Cable HDMI\r\nModelo\tRRS-00004\r\nPaφs de origen\tChina\r\nTipo de consola\tXbox Series S\r\nGarantφa\t1 a±o\r\nConectividad/conexi≤n\tWifi\r\nCondici≤n del producto\tNuevo",
     "precio": "1949900.00",
     "stock": 100,
     "categoria": 3,
@@ -613,7 +613,7 @@
   "pk": 32,
   "fields": {
     "nombre": "Consola Xbox Series X 1TB Almacenamiento",
-    "descripcion": "Contenido:\r\n\r\n- Consola Xbox Series X \r\n- Control Originales Inalámbrico\r\n- Cable de Corriente\r\n- Instrucciones de Uso",
+    "descripcion": "Contenido:\r\n\r\n- Consola Xbox Series X \r\n- Control Originales Inalßmbrico\r\n- Cable de Corriente\r\n- Instrucciones de Uso",
     "precio": "3597000.00",
     "stock": 100,
     "categoria": 3,
@@ -625,7 +625,7 @@
     "capacidad": null,
     "potencia": null,
     "color": "negro",
-    "caracteristicas_destacadas": "Cámara posterior\tNo aplica\r\nTipo de consola\tXbox series x\r\nPaís de origen\tJapón\r\nGarantía\t6 meses\r\nConectividad/conexión\tInalámbrico,Wifi\r\nDetalle de la garantía\tdaño de fabrica, no por mal uso, caidas, etc.\r\nColor\tnegro\r\nResolución de pantalla\t4K UHD\r\nCondición del producto\tNuevo\r\nMemoria RAM\t16GB\r\nPotencia\t315 w\r\nVelocidad de procesamiento (GHz)\t3.8\r\nVelocidad de imagen\t120Hz\r\nProcesador específico txt\tAMD Ryzen Zen 2 de 8 núcleos a 3.8 GHz\r\nProcesador\tAMD Ryzen",
+    "caracteristicas_destacadas": "Cßmara posterior\tNo aplica\r\nTipo de consola\tXbox series x\r\nPaφs de origen\tJap≤n\r\nGarantφa\t6 meses\r\nConectividad/conexi≤n\tInalßmbrico,Wifi\r\nDetalle de la garantφa\tda±o de fabrica, no por mal uso, caidas, etc.\r\nColor\tnegro\r\nResoluci≤n de pantalla\t4K UHD\r\nCondici≤n del producto\tNuevo\r\nMemoria RAM\t16GB\r\nPotencia\t315 w\r\nVelocidad de procesamiento (GHz)\t3.8\r\nVelocidad de imagen\t120Hz\r\nProcesador especφfico txt\tAMD Ryzen Zen 2 de 8 n·cleos a 3.8 GHz\r\nProcesador\tAMD Ryzen",
     "garantia_meses": 12
   }
 },
@@ -634,7 +634,7 @@
   "pk": 33,
   "fields": {
     "nombre": "Trapeador de Vapor Multiusos 5 En 1 Limpiador de Mano Altura Ajustable",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Limpiadores a vapor\r\n\r\nModelo : MOP H2o X5\r\n\r\nAncho : 29 cm\r\n\r\nAlto : 120 cm\r\n\r\nLargo : 22 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Limpiadores a vapor\r\n\r\nòModelo : MOP H2o X5\r\n\r\nòAncho : 29 cm\r\n\r\nòAlto : 120 cm\r\n\r\nòLargo : 22 cm",
     "precio": "385000.00",
     "stock": 100,
     "categoria": 1,
@@ -646,7 +646,7 @@
     "capacidad": "350 ml",
     "potencia": null,
     "color": "Verde",
-    "caracteristicas_destacadas": "El limpiador a vapor Mop Express X9 es la solución práctica y efectiva para mantener tu hogar impecable. Gracias a su generador de vapor, elimina bacterias, hongos y suciedad en segundos sin necesidad de productos químicos, cuidando tu salud y la de tu familia. Su diseño triangular y flexible permite llegar a todos los rincones, mientras que su función 2 en 1 lo hace versátil: úsalo en pisos de todo tipo o convierte el mango en una herramienta ideal para baños, cocinas y más. Con accesorios incluidos como microfibras, boquilla Jet y limpiador de alfombras, ofrece una limpieza profunda y completa. Ligero y fácil de manejar, garantiza resultados rápidos, seguros y saludables en cada uso.",
+    "caracteristicas_destacadas": "El limpiador a vapor Mop Express X9 es la soluci≤n prßctica y efectiva para mantener tu hogar impecable. Gracias a su generador de vapor, elimina bacterias, hongos y suciedad en segundos sin necesidad de productos quφmicos, cuidando tu salud y la de tu familia. Su dise±o triangular y flexible permite llegar a todos los rincones, mientras que su funci≤n 2 en 1 lo hace versßtil: ·salo en pisos de todo tipo o convierte el mango en una herramienta ideal para ba±os, cocinas y mßs. Con accesorios incluidos como microfibras, boquilla ôJetö y limpiador de alfombras, ofrece una limpieza profunda y completa. Ligero y fßcil de manejar, garantiza resultados rßpidos, seguros y saludables en cada uso.",
     "garantia_meses": 1
   }
 },
@@ -654,8 +654,8 @@
   "model": "product.producto",
   "pk": 34,
   "fields": {
-    "nombre": "Lavadora Secadora Carga Frontal Eléctrica 11,5 Kg WD11T4046BX/CO Inoxidable",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Lavadora secadora 2 en 1\r\n\r\nReferencia del Producto en el Certificado/Empaque : WD11T4046BX/CO\r\n\r\nModelo : WD11T4046BX/CO\r\n\r\nAncho : 60 cm\r\n\r\nAlto : 85 cm",
+    "nombre": "Lavadora Secadora Carga Frontal ElΘctrica 11,5 Kg WD11T4046BX/CO Inoxidable",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Lavadora secadora 2 en 1\r\n\r\nòReferencia del Producto en el Certificado/Empaque : WD11T4046BX/CO\r\n\r\nòModelo : WD11T4046BX/CO\r\n\r\nòAncho : 60 cm\r\n\r\nòAlto : 85 cm",
     "precio": "4100000.00",
     "stock": 100,
     "categoria": 1,
@@ -667,7 +667,7 @@
     "capacidad": "11.5 kg",
     "potencia": null,
     "color": "Plateado",
-    "caracteristicas_destacadas": "20 años de garantía en el motor Digital Inverter; Desodoriza y desinfecta tu ropa hasta un 99.9% de bacterias; QuickDrive reduce el tiempo de lavado hasta en un 50 %; Drum Clean elimina el 99.9 % de bacterias y olores; Bubble Soak ayuda a eliminar manchas dificiles",
+    "caracteristicas_destacadas": "20 a±os de garantφa en el motor Digital Inverter; Desodoriza y desinfecta tu ropa hasta un 99.9% de bacterias; QuickDrive reduce el tiempo de lavado hasta en un 50 %; Drum Clean elimina el 99.9 % de bacterias y olores; Bubble Soak ayuda a eliminar manchas dificiles",
     "garantia_meses": 12
   }
 },
@@ -676,7 +676,7 @@
   "pk": 35,
   "fields": {
     "nombre": "Consola Nintendo Switch 2 + Juego Mario Kart World Bundle",
-    "descripcion": "Nombre del fabricante o importador\tJUEGOS DE VIDEO COLOMBIA S.A. S\r\nModo de fabricación\tIndustrial\r\nForma de uso\tNintendo Switch 2\r\nCuidado del producto\tEvitar caídas o golpes fuertes, Mantener alejado de temperaturas extremas y humedad, Limpiar con un paño suave y seco, no usar productos abrasivos",
+    "descripcion": "Nombre del fabricante o importador\tJUEGOS DE VIDEO COLOMBIA S.A. S\r\nModo de fabricaci≤n\tIndustrial\r\nForma de uso\tNintendo Switch 2\r\nCuidado del producto\tEvitar caφdas o golpes fuertes, Mantener alejado de temperaturas extremas y humedad, Limpiar con un pa±o suave y seco, no usar productos abrasivos",
     "precio": "3119900.00",
     "stock": 100,
     "categoria": 3,
@@ -688,7 +688,7 @@
     "capacidad": null,
     "potencia": null,
     "color": "NEGRO",
-    "caracteristicas_destacadas": "Registro SIC\t830503734\r\nIncluye\t1\r\nModelo\tNintendo Switch 2\r\nPaís de origen\tJapón\r\nTipo de consola\tNintendo Switch\r\nGarantía\t1 año\r\nCondición del producto\tNuevo\r\nMaterial de la cubierta\tPlástico\r\nRestricciones de uso\tNo exponer a líquidos o humedad. Evitar golpes y caídas. Usar con cargadores y accesorios originales. Revisar las instrucciones de uso del fabricante.\r\nAncho\t10.70 cm\r\nLargo\t22.00 cm",
+    "caracteristicas_destacadas": "Registro SIC\t830503734\r\nIncluye\t1\r\nModelo\tNintendo Switch 2\r\nPaφs de origen\tJap≤n\r\nTipo de consola\tNintendo Switch\r\nGarantφa\t1 a±o\r\nCondici≤n del producto\tNuevo\r\nMaterial de la cubierta\tPlßstico\r\nRestricciones de uso\tNo exponer a lφquidos o humedad. Evitar golpes y caφdas. Usar con cargadores y accesorios originales. Revisar las instrucciones de uso del fabricante.\r\nAncho\t10.70 cm\r\nLargo\t22.00 cm",
     "garantia_meses": 12
   }
 },
@@ -697,7 +697,7 @@
   "pk": 36,
   "fields": {
     "nombre": "Tostadora Black+Decker de 2 Rebanadas Tr7827-1wdla",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Tostadores\r\n\r\nModelo : TR7827-1WDLA\r\n\r\nAncho : 16.4 cm\r\n\r\nAlto : 17.5 cm\r\n\r\nProfundidad : 28 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Tostadores\r\n\r\nòModelo : TR7827-1WDLA\r\n\r\nòAncho : 16.4 cm\r\n\r\nòAlto : 17.5 cm\r\n\r\nòProfundidad : 28 cm",
     "precio": "95000.00",
     "stock": 100,
     "categoria": 2,
@@ -709,7 +709,7 @@
     "capacidad": "2 Unidades",
     "potencia": "750 W",
     "color": "Blanco",
-    "caracteristicas_destacadas": "Eleva tus desayunos con esta tostadora de 2 rebanadas. Ajusta el tostado con sus 7 configuraciones y disfruta de ranuras extra anchas para todo tipo de pan. Funciones intuitivas y una bandeja para migas aseguran comodidad y limpieza en cada uso. ¡Haz de lo cotidiano algo extraordinario!",
+    "caracteristicas_destacadas": "Eleva tus desayunos con esta tostadora de 2 rebanadas. Ajusta el tostado con sus 7 configuraciones y disfruta de ranuras extra anchas para todo tipo de pan. Funciones intuitivas y una bandeja para migas aseguran comodidad y limpieza en cada uso. íHaz de lo cotidiano algo extraordinario!",
     "garantia_meses": 24
   }
 },
@@ -718,7 +718,7 @@
   "pk": 37,
   "fields": {
     "nombre": "Ventilador Samurai Tropical Plus Pedestal, 3 Velocidades, Negro",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Ventiladores de pedestal\r\n\r\nModelo : Tropical Plus\r\n\r\nAncho : 30\r\n\r\nAlto : 51\r\n\r\nProfundidad : 49",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Ventiladores de pedestal\r\n\r\nòModelo : Tropical Plus\r\n\r\nòAncho : 30\r\n\r\nòAlto : 51\r\n\r\nòProfundidad : 49",
     "precio": "317000.00",
     "stock": 100,
     "categoria": 4,
@@ -730,7 +730,7 @@
     "capacidad": null,
     "potencia": "70 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Las mallas del Ventilador Tropical Plus Negro son muy seguras ya que no entran en contacto con sus helices. Además, su malla frontal es removible, facilitanto la limpieza. El Ventilador Tropical Plus Negro cuenta con una oscilación vertical para una mayor y mejor distibución del aire. El Ventilador Tropical Plus Negro cuenta con un fácil y seguro sistema que permite ajustar la inclinación vertical.",
+    "caracteristicas_destacadas": "Las mallas del Ventilador Tropical Plus Negro son muy seguras ya que no entran en contacto con sus helices. Ademßs, su malla frontal es removible, facilitanto la limpieza. El Ventilador Tropical Plus Negro cuenta con una oscilaci≤n vertical para una mayor y mejor distibuci≤n del aire. El Ventilador Tropical Plus Negro cuenta con un fßcil y seguro sistema que permite ajustar la inclinaci≤n vertical.",
     "garantia_meses": 24
   }
 },
@@ -738,7 +738,7 @@
   "model": "product.producto",
   "pk": 38,
   "fields": {
-    "nombre": "Consola Nintendo Switch | Incluye Juego Mario Kart 8 Deluxe + 3 Meses Suscripción Nintendo Online |",
+    "nombre": "Consola Nintendo Switch | Incluye Juego Mario Kart 8 Deluxe + 3 Meses Suscripci≤n Nintendo Online |",
     "descripcion": "Registro SIC\t830503734\r\nGrupo de edad\tTodas las edades\r\nNombre comercial\tNintendo Switch\r\nNombre del fabricante o importador\tNintendo\r\nReferencia del Producto en el Certificado/Empaque\tHPD-S-",
     "precio": "1599900.00",
     "stock": 100,
@@ -751,7 +751,7 @@
     "capacidad": null,
     "potencia": null,
     "color": "Neon,Rojo y Azul",
-    "caracteristicas_destacadas": "Incluye\tIncluye Juego Mario Kart 8 Deluxe + 3 Meses Suscripción Nintendo Online | 2 Joy-Con Neon, Rojo y Azul | 32GB de almacenamiento\r\nTamaño de la pantalla\t6.2\r\nModelo\tHPD-S-KABSA\r\nCantidad de controles\t2\r\nCámara posterior\tNo Aplica\r\nPaís de origen\tJapón\r\nTipo de consola\tNintendo Switch\r\nGarantía\t1 año\r\nConectividad/conexión\tWifi\r\nColor\tNeon, Rojo y Azul\r\nCondición del producto\tNuevo\r\nMaterial de la cubierta\tPlástico\r\nSistema operativo específico\tSin os\r\nSistema operativo\tSin os\r\nEdad recomendada de uso\t12 a más\r\nRestricciones de uso\tNo exponer a líquidos o humedad. Evitar golpes y caídas. Usar con cargadores y accesorios originales. Revisar las instrucciones de uso del fabricante.\r\nProcesador específico txt\tNVIDIA Custom Tegra\r\nProcesador\tNVIDIA Tegra\r\nInformación adicional\r\nConsola MK8\r\nConsola MK8\r\nCompite a través del mundo de Mario y sus amigos\r\nEste paquete incluye todo lo que necesitas para comenzar tus aventuras de Super Mario¿, incluyendo una consola Nintendo Switch¿ con controles Joy-Con¿ rojo neón y azul neón. Además, disfruta de un valor añadido* de USD 68.00 gracias a un código de descarga para el juego Mario Kart¿ 8 Deluxe y una suscripción individual por 3 meses a Nintendo Switch Online.\r\n\r\nConsola MK8\r\nQuema llantas a través de las pistas del Reino Champiñón\r\nEn el juego Mario Kart 8 Deluxe podrás seleccionar entre un elenco de 42 personajes. ¡Corre bajo el agua, en el cielo, de cabeza y sin gravedad, y llega a la meta en 48 pistas! Compite con jugadores de todo el mundo con Nintendo Switch Online Con la suscripción** a Nintendo Switch Online incluida hasta 12 jugadores podrán jugar juntos en línea en los modos Grand Prix, Carrera vs. y Batalla. Además, podrás disfrutar del juego en línea en títulos multijugador como Splatoon¿ 3. La suscripción también te brinda acceso a un catálogo de más de 100 juegos clásicos de Super NES¿, NES¿ y Game Boy¿, ofertas exclusivas y más.\r\n\r\nGarantía del proveedor\r\n1 año.\r\nInformación adicional\r\nIncluye:\r\nConsola Nintendo Switch\r\nBase de Nintendo Switch\r\nJoy-Con izquierdo del color rojo neón\r\nJoy-Con derecho del color azul neón\r\nCorreas de los controles Joy-Con\r\nArmazón para controles Joy-Con\r\nCable HDMI de alta velocidad\r\nAdaptador de corriente de Nintendo Switch\r\nUn código de descarga gratuita para el juego Mario Kart 8 Deluxe\r\nUn código de descarga gratuita para canjearse por una suscripción individual por 3 meses a Nintendo Switch Online.\r\nProducto ambientado, solo incluye productos especificados en la descripción. Para cambios o devoluciones te invitamos a leer nuestras políticas",
+    "caracteristicas_destacadas": "Incluye\tIncluye Juego Mario Kart 8 Deluxe + 3 Meses Suscripci≤n Nintendo Online | 2 Joy-Con Neon, Rojo y Azul | 32GB de almacenamiento\r\nTama±o de la pantalla\t6.2\r\nModelo\tHPD-S-KABSA\r\nCantidad de controles\t2\r\nCßmara posterior\tNo Aplica\r\nPaφs de origen\tJap≤n\r\nTipo de consola\tNintendo Switch\r\nGarantφa\t1 a±o\r\nConectividad/conexi≤n\tWifi\r\nColor\tNeon, Rojo y Azul\r\nCondici≤n del producto\tNuevo\r\nMaterial de la cubierta\tPlßstico\r\nSistema operativo especφfico\tSin os\r\nSistema operativo\tSin os\r\nEdad recomendada de uso\t12 a mßs\r\nRestricciones de uso\tNo exponer a lφquidos o humedad. Evitar golpes y caφdas. Usar con cargadores y accesorios originales. Revisar las instrucciones de uso del fabricante.\r\nProcesador especφfico txt\tNVIDIA Custom Tegra\r\nProcesador\tNVIDIA Tegra\r\nInformaci≤n adicional\r\nConsola MK8\r\nConsola MK8\r\nCompite a travΘs del mundo de Mario y sus amigos\r\nEste paquete incluye todo lo que necesitas para comenzar tus aventuras de Super Mario┐, incluyendo una consola Nintendo Switch┐ con controles Joy-Con┐ rojo ne≤n y azul ne≤n. Ademßs, disfruta de un valor a±adido* de USD 68.00 gracias a un c≤digo de descarga para el juego Mario Kart┐ 8 Deluxe y una suscripci≤n individual por 3 meses a Nintendo Switch Online.\r\n\r\nConsola MK8\r\nQuema llantas a travΘs de las pistas del Reino Champi±≤n\r\nEn el juego Mario Kart 8 Deluxe podrßs seleccionar entre un elenco de 42 personajes. íCorre bajo el agua, en el cielo, de cabeza y sin gravedad, y llega a la meta en 48 pistas! Compite con jugadores de todo el mundo con Nintendo Switch Online Con la suscripci≤n** a Nintendo Switch Online incluida hasta 12 jugadores podrßn jugar juntos en lφnea en los modos Grand Prix, Carrera vs. y Batalla. Ademßs, podrßs disfrutar del juego en lφnea en tφtulos multijugador como Splatoon┐ 3. La suscripci≤n tambiΘn te brinda acceso a un catßlogo de mßs de 100 juegos clßsicos de Super NES┐, NES┐ y Game Boy┐, ofertas exclusivas y mßs.\r\n\r\nGarantφa del proveedor\r\n1 a±o.\r\nInformaci≤n adicional\r\nIncluye:\r\nConsola Nintendo Switch\r\nBase de Nintendo Switch\r\nJoy-Con izquierdo del color rojo ne≤n\r\nJoy-Con derecho del color azul ne≤n\r\nCorreas de los controles Joy-Con\r\nArmaz≤n para controles Joy-Con\r\nCable HDMI de alta velocidad\r\nAdaptador de corriente de Nintendo Switch\r\nUn c≤digo de descarga gratuita para el juego Mario Kart 8 Deluxe\r\nUn c≤digo de descarga gratuita para canjearse por una suscripci≤n individual por 3 meses a Nintendo Switch Online.\r\nProducto ambientado, solo incluye productos especificados en la descripci≤n. Para cambios o devoluciones te invitamos a leer nuestras polφticas",
     "garantia_meses": 12
   }
 },
@@ -759,8 +759,8 @@
   "model": "product.producto",
   "pk": 39,
   "fields": {
-    "nombre": "Consola PS5 Slim Digital + 2 Videojuegos | 1TB de Almacenamiento | Edición Digital | PlayStation 5 |",
-    "descripcion": "Incluye\t1\r\nModelo\tCFI-2015\r\nPaís de origen\tChina\r\nTipo de consola\tPlaystation 5\r\nCondición del producto\tNuevo\r\nMaterial de la cubierta\tPlástico\r\nRestricciones de uso\tNo lo dejes expuesto al sol, calor extremo ni humedad.\r\nAncho\t13,1cm\r\nLargo\t35,9cm",
+    "nombre": "Consola PS5 Slim Digital + 2 Videojuegos | 1TB de Almacenamiento | Edici≤n Digital | PlayStation 5 |",
+    "descripcion": "Incluye\t1\r\nModelo\tCFI-2015\r\nPaφs de origen\tChina\r\nTipo de consola\tPlaystation 5\r\nCondici≤n del producto\tNuevo\r\nMaterial de la cubierta\tPlßstico\r\nRestricciones de uso\tNo lo dejes expuesto al sol, calor extremo ni humedad.\r\nAncho\t13,1cm\r\nLargo\t35,9cm",
     "precio": "2699900.00",
     "stock": 98,
     "categoria": 3,
@@ -772,7 +772,7 @@
     "capacidad": null,
     "potencia": null,
     "color": "blanco",
-    "caracteristicas_destacadas": "Nombre del fabricante o importador\tSolutions 2GO\r\nModo de fabricación\tIndustrial\r\nForma de uso\tEntretenimiento .Conectar a televisor por HDMI y a la corriente. Encender y seguir configuración inicial. Descargar juegos. Usar controles inalámbricos o con cable. Revisar las instrucciones de uso del fabricante.\r\nCuidado del producto\tColoca la consola en un lugar bien ventilado, sobre una superficie plana y estable.No tapes las rejillas ni pongas objetos encima de la consola.No la coloques sobre alfombras o superficies blandas que puedan obstruir las rejillas de ventilación.Usa siempre el cable de corriente original",
+    "caracteristicas_destacadas": "Nombre del fabricante o importador\tSolutions 2GO\r\nModo de fabricaci≤n\tIndustrial\r\nForma de uso\tEntretenimiento .Conectar a televisor por HDMI y a la corriente. Encender y seguir configuraci≤n inicial. Descargar juegos. Usar controles inalßmbricos o con cable. Revisar las instrucciones de uso del fabricante.\r\nCuidado del producto\tColoca la consola en un lugar bien ventilado, sobre una superficie plana y estable.No tapes las rejillas ni pongas objetos encima de la consola.No la coloques sobre alfombras o superficies blandas que puedan obstruir las rejillas de ventilaci≤n.Usa siempre el cable de corriente original",
     "garantia_meses": 12
   }
 },
@@ -781,7 +781,7 @@
   "pk": 40,
   "fields": {
     "nombre": "Secador de cabello Remington Sapphire Luxe D5805",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Secadores de cabello\r\n\r\nModelo : D5805- 110F\r\n\r\nAncho : 9.8 cm\r\n\r\nAlto : 22.5 cm\r\n\r\nLargo : 29 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Secadores de cabello\r\n\r\nòModelo : D5805- 110F\r\n\r\nòAncho : 9.8 cm\r\n\r\nòAlto : 22.5 cm\r\n\r\nòLargo : 29 cm",
     "precio": "190000.00",
     "stock": 100,
     "categoria": 5,
@@ -793,7 +793,7 @@
     "capacidad": null,
     "potencia": "1900 W",
     "color": "Azul",
-    "caracteristicas_destacadas": "Rejilla revestida de cerámica avanzada con zafiros reales para obtener resultados suaves. Acondicionamiento iónico Potente motor de 1900 W 3 ajustes de temperatura / 2 velocidades Concentrador de secado rápido Difusor Ráfaga de aire frío Gancho para colgar Rejilla trasera extraíble y fácil de limpiar",
+    "caracteristicas_destacadas": "Rejilla revestida de cerßmica avanzada con zafiros reales para obtener resultados suaves. Acondicionamiento i≤nico Potente motor de 1900 W 3 ajustes de temperatura / 2 velocidades Concentrador de secado rßpido Difusor Rßfaga de aire frφo Gancho para colgar Rejilla trasera extraφble y fßcil de limpiar",
     "garantia_meses": 36
   }
 },
@@ -802,7 +802,7 @@
   "pk": 41,
   "fields": {
     "nombre": "JBL | Parlante Bluetooth Jbl Flip 7 Negro",
-    "descripcion": "Cuidado del producto\tEvitar caídas desde zonas muy altas\r\nNombre del fabricante o importador\tJBL\r\nModo de fabricación\tIndustrial\r\nRequiere Serial Number\tSi\r\nDimensiones\t22cm x 11cm x 10cm\r\nModelo\tFLIP 7",
+    "descripcion": "Cuidado del producto\tEvitar caφdas desde zonas muy altas\r\nNombre del fabricante o importador\tJBL\r\nModo de fabricaci≤n\tIndustrial\r\nRequiere Serial Number\tSi\r\nDimensiones\t22cm x 11cm x 10cm\r\nModelo\tFLIP 7",
     "precio": "599900.00",
     "stock": 100,
     "categoria": 3,
@@ -814,7 +814,7 @@
     "capacidad": null,
     "potencia": "25 w",
     "color": "negro",
-    "caracteristicas_destacadas": "Características\tCuenta con bluetooth,Resistente al agua\r\nPaís de origen\tChina\r\nGarantía\t1 año\r\nColor\tNegro\r\nCuenta con bluetooth\tSí\r\nCondición del producto\tNuevo\r\nCantidad de paquetes\t1\r\nMaterial\tPlástico\r\nPotencia\t25w\r\nRestricciones de uso\tEvitar caídas desde zonas muy altas\r\nAlto\t22cm\r\nAncho\t10cm\r\nLargo\t11cm",
+    "caracteristicas_destacadas": "Caracterφsticas\tCuenta con bluetooth,Resistente al agua\r\nPaφs de origen\tChina\r\nGarantφa\t1 a±o\r\nColor\tNegro\r\nCuenta con bluetooth\tSφ\r\nCondici≤n del producto\tNuevo\r\nCantidad de paquetes\t1\r\nMaterial\tPlßstico\r\nPotencia\t25w\r\nRestricciones de uso\tEvitar caφdas desde zonas muy altas\r\nAlto\t22cm\r\nAncho\t10cm\r\nLargo\t11cm",
     "garantia_meses": 12
   }
 },
@@ -823,7 +823,7 @@
   "pk": 42,
   "fields": {
     "nombre": "Mini Plancha Cabello Ceramica Inova Rizada Portatil Pelo Morada",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Secadores de cabello\r\n\r\nModelo : SX8006\r\n\r\nGarantía : 1 mes\r\n\r\nPotencia : 20 W\r\n\r\nNiveles de temperatura : 2",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Secadores de cabello\r\n\r\nòModelo : SX8006\r\n\r\nòGarantφa : 1 mes\r\n\r\nòPotencia : 20 W\r\n\r\nòNiveles de temperatura : 2",
     "precio": "32000.00",
     "stock": 100,
     "categoria": 5,
@@ -844,7 +844,7 @@
   "pk": 43,
   "fields": {
     "nombre": "Ventilador Samurai Turbo Silence Compact 3 en 1, 3 Velocidades, Negro",
-    "descripcion": "Tipo : Ventiladores 3 en 1\r\n\r\nModelo : Turbo Silence Compact 3en1\r\n\r\nAncho : 30 cm\r\n\r\nAlto : 41 cm\r\n\r\nProfundidad : 26.5",
+    "descripcion": "òTipo : Ventiladores 3 en 1\r\n\r\nòModelo : Turbo Silence Compact 3en1\r\n\r\nòAncho : 30 cm\r\n\r\nòAlto : 41 cm\r\n\r\nòProfundidad : 26.5",
     "precio": "269900.00",
     "stock": 100,
     "categoria": 4,
@@ -856,7 +856,7 @@
     "capacidad": null,
     "potencia": "60 w",
     "color": "negro",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n30 cm\r\nAlto\r\n41 cm\r\nProfundidad\r\n26.5\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores 3 en 1\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\n3 en 1\r\nDiámetro de giro\r\n120 cm\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilación\r\nSi\r\nCuenta con temporizador\r\nNo\r\nCuenta con aspersor de agua\r\nNo\r\nCantidad de aspas\r\n6\r\nNúmero de velocidades\r\n3\r\nVoltaje\r\n120 V, 240 V\r\nUbicación\r\nComedor, Dormitorios, Exterior espacios pequeños, Interior, Interiores espacios amplios, Interiores espacios pequeños, Oficinas, Salas, Terraza\r\nPotencia\r\n60 W\r\nAlimentación\r\nEléctrica\r\nFabricante\r\n\r\nModelo\r\nTurbo Silence Compact 3en1",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n30 cm\r\nAlto\r\n41 cm\r\nProfundidad\r\n26.5\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores 3 en 1\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\n3 en 1\r\nDißmetro de giro\r\n120 cm\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilaci≤n\r\nSi\r\nCuenta con temporizador\r\nNo\r\nCuenta con aspersor de agua\r\nNo\r\nCantidad de aspas\r\n6\r\nN·mero de velocidades\r\n3\r\nVoltaje\r\n120 V, 240 V\r\nUbicaci≤n\r\nComedor, Dormitorios, Exterior espacios peque±os, Interior, Interiores espacios amplios, Interiores espacios peque±os, Oficinas, Salas, Terraza\r\nPotencia\r\n60 W\r\nAlimentaci≤n\r\nElΘctrica\r\nFabricante\r\n\r\nModelo\r\nTurbo Silence Compact 3en1",
     "garantia_meses": 18
   }
 },
@@ -865,7 +865,7 @@
   "pk": 44,
   "fields": {
     "nombre": "Afeitador Corporal para Hombre Vivitar 3 Cabezales Rojo",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Máquinas de afeitar\r\n\r\nModelo : PGV005RED\r\n\r\nPotencia : 1 W\r\n\r\nVoltaje : 110 V\r\n\r\nGarantía : 3 meses",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Mßquinas de afeitar\r\n\r\nòModelo : PGV005RED\r\n\r\nòPotencia : 1 W\r\n\r\nòVoltaje : 110 V\r\n\r\nòGarantφa : 3 meses",
     "precio": "100000.00",
     "stock": 100,
     "categoria": 5,
@@ -877,7 +877,7 @@
     "capacidad": null,
     "potencia": "1 W",
     "color": "Rojo",
-    "caracteristicas_destacadas": "Para uso en seco, cuchillas de acero inoxidable de alta calidad que brindan corte de precisión. Tres cabezales intercambiables y dos guías ajustables le brindan un control preciso. Funciona con una batería AA (no incluida). Para pelo barba y vello incluye: Afeitadora de aluminio Peine de barba Peine de rastrojo Recortador para vello de orejas, nariz y cejas Manual de usuario. Las cuchillas de acero inoxidable de alta calidad garantizan un ajuste preciso El agarre ergonómico facilita el manejo Requiere 2 pilas AAA (no incluidas) Fácil de limpiar Compacto y liviano para una fácil portabilidad.",
+    "caracteristicas_destacadas": "Para uso en seco, cuchillas de acero inoxidable de alta calidad que brindan corte de precisi≤n. Tres cabezales intercambiables y dos guφas ajustables le brindan un control preciso. Funciona con una baterφa AA (no incluida). Para pelo barba y vello incluye: Afeitadora de aluminio Peine de barba Peine de rastrojo Recortador para vello de orejas, nariz y cejas Manual de usuario. Las cuchillas de acero inoxidable de alta calidad garantizan un ajuste preciso El agarre ergon≤mico facilita el manejo Requiere 2 pilas AAA (no incluidas) Fßcil de limpiar Compacto y liviano para una fßcil portabilidad.",
     "garantia_meses": 3
   }
 },
@@ -886,7 +886,7 @@
   "pk": 45,
   "fields": {
     "nombre": "Home Elements | Ventilador Maxiflow Elite Pared Blanco",
-    "descripcion": "Tipo : Ventiladores de pared o muro\r\n\r\nReferencia del Producto en el Certificado/Empaque : 299900706\r\n\r\nModelo : HEMFEWRP18B\r\n\r\nAncho : 37 cm\r\n\r\nAlto : 56 cm",
+    "descripcion": "òTipo : Ventiladores de pared o muro\r\n\r\nòReferencia del Producto en el Certificado/Empaque : 299900706\r\n\r\nòModelo : HEMFEWRP18B\r\n\r\nòAncho : 37 cm\r\n\r\nòAlto : 56 cm",
     "precio": "249900.00",
     "stock": 100,
     "categoria": 4,
@@ -898,7 +898,7 @@
     "capacidad": null,
     "potencia": "85 w",
     "color": "blanco",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n37 cm\r\nAlto\r\n56 cm\r\nProfundidad\r\n49 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de pared o muro\r\nReferencia del Producto en el Certificado/Empaque\r\n299900706\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\nMural\r\nDiámetro de giro\r\n18 pulgadas\r\nColor\r\nBlanco\r\nIncluye\r\nRejillas, Aspa, Cuerpo, Tapa logo, Tuerca de aspa\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilación\r\nSi\r\nCuenta con temporizador\r\nNo\r\nCuenta con aspersor de agua\r\nNo\r\nCantidad de aspas\r\n6\r\nNúmero de velocidades\r\n3\r\nVoltaje\r\n120 V\r\nUbicación\r\nBaños, Cocina, Comedor, Dormitorios, Interior, Interiores espacios amplios, Interiores espacios pequeños, Invernadero, Lavandería, Living, Otros, Pasillo, Terraza, Salas\r\nPotencia\r\n85 W\r\nAlimentación\r\nEléctrica\r\nFabricante\r\n\r\nModelo\r\nHEMFEWRP18B",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n37 cm\r\nAlto\r\n56 cm\r\nProfundidad\r\n49 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de pared o muro\r\nReferencia del Producto en el Certificado/Empaque\r\n299900706\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\nMural\r\nDißmetro de giro\r\n18 pulgadas\r\nColor\r\nBlanco\r\nIncluye\r\nRejillas, Aspa, Cuerpo, Tapa logo, Tuerca de aspa\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilaci≤n\r\nSi\r\nCuenta con temporizador\r\nNo\r\nCuenta con aspersor de agua\r\nNo\r\nCantidad de aspas\r\n6\r\nN·mero de velocidades\r\n3\r\nVoltaje\r\n120 V\r\nUbicaci≤n\r\nBa±os, Cocina, Comedor, Dormitorios, Interior, Interiores espacios amplios, Interiores espacios peque±os, Invernadero, Lavanderφa, Living, Otros, Pasillo, Terraza, Salas\r\nPotencia\r\n85 W\r\nAlimentaci≤n\r\nElΘctrica\r\nFabricante\r\n\r\nModelo\r\nHEMFEWRP18B",
     "garantia_meses": 16
   }
 },
@@ -906,8 +906,8 @@
   "model": "product.producto",
   "pk": 46,
   "fields": {
-    "nombre": "Depiladora Eléctrica Gemei 4 En 1 Gm-7006",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Máquinas cortapelo\r\n\r\nModelo : GM7006\r\n\r\nAncho : 20 cm\r\n\r\nAlto : 6 cm\r\n\r\nLargo : 20 cm",
+    "nombre": "Depiladora ElΘctrica Gemei 4 En 1 Gm-7006",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Mßquinas cortapelo\r\n\r\nòModelo : GM7006\r\n\r\nòAncho : 20 cm\r\n\r\nòAlto : 6 cm\r\n\r\nòLargo : 20 cm",
     "precio": "100000.00",
     "stock": 100,
     "categoria": 5,
@@ -928,7 +928,7 @@
   "pk": 47,
   "fields": {
     "nombre": "Wurden Ventilador Industrial 2 En 1 Acero 30 Pulgadas",
-    "descripcion": "Tipo : Ventiladores industriales\r\n\r\nModelo : GIF-30-2B1\r\n\r\nTipo de panel de control : Manual\r\n\r\nTipo de ventilador : Pedestal\r\n\r\nColor : Negro",
+    "descripcion": "òTipo : Ventiladores industriales\r\n\r\nòModelo : GIF-30-2B1\r\n\r\nòTipo de panel de control : Manual\r\n\r\nòTipo de ventilador : Pedestal\r\n\r\nòColor : Negro",
     "precio": "799900.00",
     "stock": 100,
     "categoria": 4,
@@ -940,7 +940,7 @@
     "capacidad": null,
     "potencia": "260 w",
     "color": "negro",
-    "caracteristicas_destacadas": "Especificaciones\r\n\r\nTipo\r\nVentiladores industriales\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\nPedestal\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilación\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nNúmero de velocidades\r\n3\r\nVoltaje\r\n220 V, 110 V\r\nUbicación\r\nInterior, Exterior\r\nAlimentación\r\nEléctrica\r\nFabricante\r\n\r\nModelo\r\nGIF-30-2B1",
+    "caracteristicas_destacadas": "Especificaciones\r\n\r\nTipo\r\nVentiladores industriales\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\nPedestal\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilaci≤n\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nN·mero de velocidades\r\n3\r\nVoltaje\r\n220 V, 110 V\r\nUbicaci≤n\r\nInterior, Exterior\r\nAlimentaci≤n\r\nElΘctrica\r\nFabricante\r\n\r\nModelo\r\nGIF-30-2B1",
     "garantia_meses": 12
   }
 },
@@ -949,7 +949,7 @@
   "pk": 48,
   "fields": {
     "nombre": "Ventilador de Torre Samurai Eole Ultra 3 Velocidades Con Control remoto Negro",
-    "descripcion": "Tipo : Ventiladores de torre\r\n\r\nModelo : Eole Ultra\r\n\r\nAncho : 19.9\r\n\r\nAlto : 114\r\n\r\nProfundidad : 19.9 cm",
+    "descripcion": "òTipo : Ventiladores de torre\r\n\r\nòModelo : Eole Ultra\r\n\r\nòAncho : 19.9\r\n\r\nòAlto : 114\r\n\r\nòProfundidad : 19.9 cm",
     "precio": "529900.00",
     "stock": 100,
     "categoria": 4,
@@ -961,7 +961,7 @@
     "capacidad": null,
     "potencia": "40 w",
     "color": "negro",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n19.9\r\nAlto\r\n114\r\nProfundidad\r\n19.9 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de torre\r\nTipo de panel de control\r\nDigital\r\nTipo de ventilador\r\nDe torre\r\nColor\r\nNegro\r\nIncluye\r\nControl\r\nCuenta con control remoto\r\nSi\r\nCuenta con oscilación\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nNúmero de velocidades\r\n3\r\nVoltaje\r\n110 V\r\nUbicación\r\nDormitorios, Interior, Oficinas, Living\r\nPotencia\r\n40 W\r\nNivel de ruido\r\n55 dBA\r\nAlimentación\r\nEléctrica\r\nFabricante\r\n\r\nModelo\r\nEole Ultra",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n19.9\r\nAlto\r\n114\r\nProfundidad\r\n19.9 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de torre\r\nTipo de panel de control\r\nDigital\r\nTipo de ventilador\r\nDe torre\r\nColor\r\nNegro\r\nIncluye\r\nControl\r\nCuenta con control remoto\r\nSi\r\nCuenta con oscilaci≤n\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nN·mero de velocidades\r\n3\r\nVoltaje\r\n110 V\r\nUbicaci≤n\r\nDormitorios, Interior, Oficinas, Living\r\nPotencia\r\n40 W\r\nNivel de ruido\r\n55 dBA\r\nAlimentaci≤n\r\nElΘctrica\r\nFabricante\r\n\r\nModelo\r\nEole Ultra",
     "garantia_meses": 14
   }
 },
@@ -970,7 +970,7 @@
   "pk": 49,
   "fields": {
     "nombre": "Wurden Ventilador de Torre 39 Pulgadas",
-    "descripcion": "Tipo : Ventiladores de torre\r\n\r\nModelo : FZ30-48SR-LA\r\n\r\nAncho : 30 cm\r\n\r\nAlto : 98.5 cm\r\n\r\nProfundidad : 30 cm",
+    "descripcion": "òTipo : Ventiladores de torre\r\n\r\nòModelo : FZ30-48SR-LA\r\n\r\nòAncho : 30 cm\r\n\r\nòAlto : 98.5 cm\r\n\r\nòProfundidad : 30 cm",
     "precio": "249900.00",
     "stock": 99,
     "categoria": 4,
@@ -982,7 +982,7 @@
     "capacidad": null,
     "potencia": "45 w",
     "color": "negro",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n30 cm\r\nAlto\r\n98.5 cm\r\nProfundidad\r\n30 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de torre\r\nTipo de panel de control\r\nDigital\r\nTipo de ventilador\r\nDe torre\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nSi\r\nCuenta con oscilación\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nCantidad de aspas\r\n0\r\nNúmero de velocidades\r\n3\r\nVoltaje\r\n110 V\r\nPotencia\r\n45 W\r\nFabricante\r\n\r\nModelo\r\nFZ30-48SR-LA",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n30 cm\r\nAlto\r\n98.5 cm\r\nProfundidad\r\n30 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de torre\r\nTipo de panel de control\r\nDigital\r\nTipo de ventilador\r\nDe torre\r\nColor\r\nNegro\r\nCuenta con control remoto\r\nSi\r\nCuenta con oscilaci≤n\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nCantidad de aspas\r\n0\r\nN·mero de velocidades\r\n3\r\nVoltaje\r\n110 V\r\nPotencia\r\n45 W\r\nFabricante\r\n\r\nModelo\r\nFZ30-48SR-LA",
     "garantia_meses": 14
   }
 },
@@ -991,7 +991,7 @@
   "pk": 50,
   "fields": {
     "nombre": "Cepillo de aire Remington Wet2style AS15A-110F",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Planchas de cabello\r\n\r\nModelo : AS15A (110) F\r\n\r\nAncho : 10\r\n\r\nAlto : 34\r\n\r\nProfundidad : 17 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Planchas de cabello\r\n\r\nòModelo : AS15A (110) F\r\n\r\nòAncho : 10\r\n\r\nòAlto : 34\r\n\r\nòProfundidad : 17 cm",
     "precio": "250000.00",
     "stock": 100,
     "categoria": 5,
@@ -1003,7 +1003,7 @@
     "capacidad": null,
     "potencia": "1200 W",
     "color": "Salmon",
-    "caracteristicas_destacadas": "Barril recubierto de cerámica con 90% más de Iones* para un peinado resistente al frizz, Cepillo con Cerdas Mixtas, 1200 Watts, 3 temperaturas, 2 velocidades, Botón para aire frío, Cable giratorio con longitud de 1.8 m, Te permite acercarte a la raíz para obtener el máximo volumen y movimiento",
+    "caracteristicas_destacadas": "Barril recubierto de cerßmica con 90% mßs de Iones* para un peinado resistente al frizz, Cepillo con Cerdas Mixtas, 1200 Watts, 3 temperaturas, 2 velocidades, Bot≤n para aire frφo, Cable giratorio con longitud de 1.8 m, Te permite acercarte a la raφz para obtener el mßximo volumen y movimiento",
     "garantia_meses": 24
   }
 },
@@ -1012,7 +1012,7 @@
   "pk": 51,
   "fields": {
     "nombre": "Recco Ventilador de Torre 81cm 3 Velocidades 65 Blanco FZ30",
-    "descripcion": "Tipo : Ventiladores de torre\r\n\r\nModelo : FZ30-48YT\r\n\r\nAncho : 12 cm\r\n\r\nAlto : 81.5 cm\r\n\r\nProfundidad : 17 cm",
+    "descripcion": "òTipo : Ventiladores de torre\r\n\r\nòModelo : FZ30-48YT\r\n\r\nòAncho : 12 cm\r\n\r\nòAlto : 81.5 cm\r\n\r\nòProfundidad : 17 cm",
     "precio": "196900.00",
     "stock": 100,
     "categoria": 4,
@@ -1024,7 +1024,7 @@
     "capacidad": null,
     "potencia": "45 w",
     "color": "blanco",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n12 cm\r\nAlto\r\n81.5 cm\r\nProfundidad\r\n17 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de torre\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\nDe torre\r\nColor\r\nBlanco\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilación\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nNúmero de velocidades\r\n3\r\nVoltaje\r\n220 V, 110 V\r\nUbicación\r\nInterior\r\nPotencia\r\n45 W\r\nAlimentación\r\nEléctrica\r\nFabricante\r\n\r\nModelo\r\nFZ30-48YT",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n12 cm\r\nAlto\r\n81.5 cm\r\nProfundidad\r\n17 cm\r\nEspecificaciones\r\n\r\nTipo\r\nVentiladores de torre\r\nTipo de panel de control\r\nManual\r\nTipo de ventilador\r\nDe torre\r\nColor\r\nBlanco\r\nCuenta con control remoto\r\nNo\r\nCuenta con oscilaci≤n\r\nSi\r\nCuenta con temporizador\r\nSi\r\nCuenta con aspersor de agua\r\nNo\r\nN·mero de velocidades\r\n3\r\nVoltaje\r\n220 V, 110 V\r\nUbicaci≤n\r\nInterior\r\nPotencia\r\n45 W\r\nAlimentaci≤n\r\nElΘctrica\r\nFabricante\r\n\r\nModelo\r\nFZ30-48YT",
     "garantia_meses": 16
   }
 },
@@ -1033,7 +1033,7 @@
   "pk": 52,
   "fields": {
     "nombre": "Mabe |  Aire Acondicionado Inverter 115v 12000 Btu Blanco Mmi12cabwccbc1",
-    "descripcion": "Tipo : Aire acondicionado split inverter\r\n\r\nReferencia del Producto en el Certificado/Empaque : MMI12CABWCCBC1\r\n\r\nAncho : 80.50 cm\r\n\r\nAlto : 20.00 cm\r\n\r\nTipo de aire acondicionado : Inverter",
+    "descripcion": "òTipo : Aire acondicionado split inverter\r\n\r\nòReferencia del Producto en el Certificado/Empaque : MMI12CABWCCBC1\r\n\r\nòAncho : 80.50 cm\r\n\r\nòAlto : 20.00 cm\r\n\r\nòTipo de aire acondicionado : Inverter",
     "precio": "1599900.00",
     "stock": 99,
     "categoria": 4,
@@ -1045,7 +1045,7 @@
     "capacidad": "12000 BTU",
     "potencia": "115 v",
     "color": "blanco",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n80.50 cm\r\nAlto\r\n20.00 cm\r\nEspecificaciones\r\n\r\nTipo\r\nAire acondicionado split inverter\r\nReferencia del Producto en el Certificado/Empaque\r\nMMI12CABWCCBC1\r\nTipo de aire acondicionado\r\nInverter\r\nTipo de refrigerante\r\nR410A\r\nTipo de filtro\r\nPolvo\r\nCapacidad de refrigeración\r\n12000 BTU\r\nColor\r\nBlanco\r\nIncluye\r\nControl remoto y kit de instalacion\r\nCuenta con control remoto\r\nSi\r\nVoltaje\r\n115 V\r\nSistema de enfriamiento\r\nCompresor\r\nUbicación\r\nExterior, Interior\r\nPotencia\r\n115 V\r\nAlimentación\r\nEléctrico\r\nAño de lanzamiento\r\n2024\r\nGarantía detalle\r\nGarantia De 10 Años En El Compresor, 2 Años En Componentes",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n80.50 cm\r\nAlto\r\n20.00 cm\r\nEspecificaciones\r\n\r\nTipo\r\nAire acondicionado split inverter\r\nReferencia del Producto en el Certificado/Empaque\r\nMMI12CABWCCBC1\r\nTipo de aire acondicionado\r\nInverter\r\nTipo de refrigerante\r\nR410A\r\nTipo de filtro\r\nPolvo\r\nCapacidad de refrigeraci≤n\r\n12000 BTU\r\nColor\r\nBlanco\r\nIncluye\r\nControl remoto y kit de instalacion\r\nCuenta con control remoto\r\nSi\r\nVoltaje\r\n115 V\r\nSistema de enfriamiento\r\nCompresor\r\nUbicaci≤n\r\nExterior, Interior\r\nPotencia\r\n115 V\r\nAlimentaci≤n\r\nElΘctrico\r\nA±o de lanzamiento\r\n2024\r\nGarantφa detalle\r\nGarantia De 10 A±os En El Compresor, 2 A±os En Componentes",
     "garantia_meses": 16
   }
 },
@@ -1054,7 +1054,7 @@
   "pk": 53,
   "fields": {
     "nombre": "Recco| Aire Acondicionado On/Off 9000 BTU 220 V",
-    "descripcion": "Tipo : Mini Split On/Off\r\n\r\nAncho : 25 cm\r\n\r\nAlto : 20 cm\r\n\r\nTipo de aire acondicionado : Minisplit\r\n\r\nTipo de refrigerante : R410A",
+    "descripcion": "òTipo : Mini Split On/Off\r\n\r\nòAncho : 25 cm\r\n\r\nòAlto : 20 cm\r\n\r\nòTipo de aire acondicionado : Minisplit\r\n\r\nòTipo de refrigerante : R410A",
     "precio": "1299900.00",
     "stock": 99,
     "categoria": 4,
@@ -1066,7 +1066,7 @@
     "capacidad": "9000",
     "potencia": "950",
     "color": "blanco",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n25 cm\r\nAlto\r\n20 cm\r\nEspecificaciones\r\n\r\nTipo\r\nMini Split On/Off\r\nTipo de aire acondicionado\r\nMinisplit\r\nTipo de refrigerante\r\nR410A\r\nCapacidad de refrigeración\r\n9000\r\nColor\r\nBlanco\r\nCuenta con Wifi\r\nSi\r\nCuenta con control remoto\r\nNo\r\nSistema de enfriamiento\r\nCompresor\r\nUbicación\r\nInterior\r\nPotencia\r\n950\r\nAlimentación\r\nEléctrica\r\nEficiencia energética\r\nE\r\nConsumo energético\r\n125 kWh/mes",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n25 cm\r\nAlto\r\n20 cm\r\nEspecificaciones\r\n\r\nTipo\r\nMini Split On/Off\r\nTipo de aire acondicionado\r\nMinisplit\r\nTipo de refrigerante\r\nR410A\r\nCapacidad de refrigeraci≤n\r\n9000\r\nColor\r\nBlanco\r\nCuenta con Wifi\r\nSi\r\nCuenta con control remoto\r\nNo\r\nSistema de enfriamiento\r\nCompresor\r\nUbicaci≤n\r\nInterior\r\nPotencia\r\n950\r\nAlimentaci≤n\r\nElΘctrica\r\nEficiencia energΘtica\r\nE\r\nConsumo energΘtico\r\n125 kWh/mes",
     "garantia_meses": 16
   }
 },
@@ -1074,8 +1074,8 @@
   "model": "product.producto",
   "pk": 54,
   "fields": {
-    "nombre": "Maquina De Peluquería Wahl Deluxe Groom Pro",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Máquinas de afeitar\r\n\r\nReferencia del Producto en el Certificado/Empaque : 79305-3608\r\n\r\nModelo : 79305-3608\r\n\r\nCuenta con resistencia al agua : No\r\n\r\nIncluye : Maquina de motilar de 5000 revoluciones. Protector de cuchilla.",
+    "nombre": "Maquina De Peluquerφa Wahl Deluxe Groom Pro",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Mßquinas de afeitar\r\n\r\nòReferencia del Producto en el Certificado/Empaque : 79305-3608\r\n\r\nòModelo : 79305-3608\r\n\r\nòCuenta con resistencia al agua : No\r\n\r\nòIncluye : Maquina de motilar de 5000 revoluciones. Protector de cuchilla.",
     "precio": "215000.00",
     "stock": 99,
     "categoria": 5,
@@ -1087,7 +1087,7 @@
     "capacidad": null,
     "potencia": "110 W",
     "color": "Plateado",
-    "caracteristicas_destacadas": "Disfruta de un kit de barbería profesional en su hogar, que le permitirá llevar siempre un corte perfecto de cabello, barba y eliminar vellos de orejas y nariz. Las cuchillas de acero al carbono autofilantes están precisamente afiladas para que se mantengan de ese modo por más tiempo. El control de guía ajustable con el pulgar permite múltiple estilos de corte con el simple giro de la palanca.",
+    "caracteristicas_destacadas": "Disfruta de un kit de barberφa profesional en su hogar, que le permitirß llevar siempre un corte perfecto de cabello, barba y eliminar vellos de orejas y nariz. Las cuchillas de acero al carbono autofilantes estßn precisamente afiladas para que se mantengan de ese modo por mßs tiempo. El control de guφa ajustable con el pulgar permite m·ltiple estilos de corte con el simple giro de la palanca.",
     "garantia_meses": 12
   }
 },
@@ -1096,7 +1096,7 @@
   "pk": 55,
   "fields": {
     "nombre": "Mabe Aire Acondicionado Inverter Premium 220 V 12000 BTU Negro Espejo Mmi12cdmccc10",
-    "descripcion": "Tipo : Aire acondicionado split inverter\r\n\r\nReferencia del Producto en el Certificado/Empaque : MMI12CDMCCC10\r\n\r\nAncho : 80.50 cm\r\n\r\nAlto : 20 cm\r\n\r\nTipo de aire acondicionado : Inverter",
+    "descripcion": "òTipo : Aire acondicionado split inverter\r\n\r\nòReferencia del Producto en el Certificado/Empaque : MMI12CDMCCC10\r\n\r\nòAncho : 80.50 cm\r\n\r\nòAlto : 20 cm\r\n\r\nòTipo de aire acondicionado : Inverter",
     "precio": "2999900.00",
     "stock": 100,
     "categoria": 4,
@@ -1108,7 +1108,7 @@
     "capacidad": "12000 BTU",
     "potencia": "220 v",
     "color": "gris",
-    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n80.50 cm\r\nAlto\r\n20 cm\r\nEspecificaciones\r\n\r\nTipo\r\nAire acondicionado split inverter\r\nReferencia del Producto en el Certificado/Empaque\r\nMMI12CDMCCC10\r\nTipo de aire acondicionado\r\nInverter\r\nTipo de refrigerante\r\nR32\r\nTipo de filtro\r\nPolvo, Pelusa\r\nCapacidad de refrigeración\r\n12.000 BTU\r\nColor\r\nEspejo\r\nIncluye\r\nKit de instalacion\r\nCuenta con control remoto\r\nSi\r\nVoltaje\r\n220 V\r\nSistema de enfriamiento\r\nCompresor\r\nUbicación\r\nExterior, Interior\r\nPotencia\r\n220 V\r\nAlimentación\r\nEléctrico\r\nEficiencia energética\r\nA\r\nAño de lanzamiento\r\n2024\r\nConsumo energético\r\n132.66 kWh/mes",
+    "caracteristicas_destacadas": "Dimensiones\r\n\r\nAncho\r\n80.50 cm\r\nAlto\r\n20 cm\r\nEspecificaciones\r\n\r\nTipo\r\nAire acondicionado split inverter\r\nReferencia del Producto en el Certificado/Empaque\r\nMMI12CDMCCC10\r\nTipo de aire acondicionado\r\nInverter\r\nTipo de refrigerante\r\nR32\r\nTipo de filtro\r\nPolvo, Pelusa\r\nCapacidad de refrigeraci≤n\r\n12.000 BTU\r\nColor\r\nEspejo\r\nIncluye\r\nKit de instalacion\r\nCuenta con control remoto\r\nSi\r\nVoltaje\r\n220 V\r\nSistema de enfriamiento\r\nCompresor\r\nUbicaci≤n\r\nExterior, Interior\r\nPotencia\r\n220 V\r\nAlimentaci≤n\r\nElΘctrico\r\nEficiencia energΘtica\r\nA\r\nA±o de lanzamiento\r\n2024\r\nConsumo energΘtico\r\n132.66 kWh/mes",
     "garantia_meses": 16
   }
 },
@@ -1116,8 +1116,8 @@
   "model": "product.producto",
   "pk": 56,
   "fields": {
-    "nombre": "Nevera No frost 448 litros Manija Integrada Panel Digital Dispensador de Agua Negro Cósmico",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Nevera congelador superior o arriba\r\n\r\nReferencia del Producto en el Certificado/Empaque : NEV ALC 448 SE PD DA MI NC INV\r\n\r\nModelo : HAV7164NT44\r\n\r\nAncho : 71 cm\r\n\r\nAlto : 185.6 cm",
+    "nombre": "Nevera No frost 448 litros Manija Integrada Panel Digital Dispensador de Agua Negro C≤smico",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Nevera congelador superior o arriba\r\n\r\nòReferencia del Producto en el Certificado/Empaque : NEV ALC 448 SE PD DA MI NC INV\r\n\r\nòModelo : HAV7164NT44\r\n\r\nòAncho : 71 cm\r\n\r\nòAlto : 185.6 cm",
     "precio": "3400000.00",
     "stock": 100,
     "categoria": 2,
@@ -1129,7 +1129,7 @@
     "capacidad": "422 litros",
     "potencia": null,
     "color": "Gris",
-    "caracteristicas_destacadas": "Especificaciones técnicas  Jaladera tipo Full Grip  Gas Refrigerante R600a  Voltaje: 115V / 60Hz En puerta de congelador  1 anaquel completo \"Ice Twist\" desmoldador de hielos En interior de congelador  1 parrilla de alambrón En puerta de enfriador  Despachador de agua 2 L  1 anaquel completo  1 anaquel para botellas  1 anaquel medio En interior de enfriador  2 bandejas de cristal templado  Cajón legumbrero con tapa de cristal templado  Luz interior LED",
+    "caracteristicas_destacadas": "Especificaciones tΘcnicas ò Jaladera tipo Full Grip ò Gas Refrigerante R600a ò Voltaje: 115V / 60Hz En puerta de congelador ò 1 anaquel completo ò\"Ice Twist\" desmoldador de hielos En interior de congelador ò 1 parrilla de alambr≤n En puerta de enfriador ò Despachador de agua 2 L ò 1 anaquel completo ò 1 anaquel para botellas ò 1 anaquel medio En interior de enfriador ò 2 bandejas de cristal templado ò Caj≤n legumbrero con tapa de cristal templado ò Luz interior LED",
     "garantia_meses": 12
   }
 },
@@ -1137,8 +1137,8 @@
   "model": "product.producto",
   "pk": 57,
   "fields": {
-    "nombre": "Nevera No frost 448 litros Manija Integrada Panel Digital Dispensador de Agua Negro Cósmico",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Nevera congelador superior o arriba\r\n\r\nReferencia del Producto en el Certificado/Empaque : NEV ALC 448 SE PD DA MI NC INV\r\n\r\nModelo : HAV7164NT44\r\n\r\nAncho : 71 cm\r\n\r\nAlto : 185.6 cm",
+    "nombre": "Nevera No frost 448 litros Manija Integrada Panel Digital Dispensador de Agua Negro C≤smico",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Nevera congelador superior o arriba\r\n\r\nòReferencia del Producto en el Certificado/Empaque : NEV ALC 448 SE PD DA MI NC INV\r\n\r\nòModelo : HAV7164NT44\r\n\r\nòAncho : 71 cm\r\n\r\nòAlto : 185.6 cm",
     "precio": "3400000.00",
     "stock": 97,
     "categoria": 2,
@@ -1150,7 +1150,7 @@
     "capacidad": "428 litros",
     "potencia": "120 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Motor inverter, mas silencioso y duradero, eficiencia energética tipo A. Función inteligente Smart Pro, sensa la temperatura ambiente y gradúa sus niveles de temperatura para asegurar la conservación de los alimentos. Sistema de conservación Haceb Himalaya, alarga la vida de los alimentos y los mantiene frescos por mas tiempo. Iluminación LED frontal en congelador y conservador, para ver hasta el último rincón de tu nevera. Garantía y confianza para una experiencia sin preocupaciones.",
+    "caracteristicas_destacadas": "Motor inverter, mas silencioso y duradero, eficiencia energΘtica tipo A. Funci≤n inteligente Smart Pro, sensa la temperatura ambiente y grad·a sus niveles de temperatura para asegurar la conservaci≤n de los alimentos. Sistema de conservaci≤n Haceb Himalaya, alarga la vida de los alimentos y los mantiene frescos por mas tiempo. Iluminaci≤n LED frontal en congelador y conservador, para ver hasta el ·ltimo rinc≤n de tu nevera. Garantφa y confianza para una experiencia sin preocupaciones.",
     "garantia_meses": 12
   }
 },
@@ -1159,7 +1159,7 @@
   "pk": 58,
   "fields": {
     "nombre": "Licuadora Profesional 5 Velocidades Procesador de Alimentos 8 Tazas",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Licuadoras de vaso plástico\r\n\r\nModelo : BN801\r\n\r\nAncho : 26.5\r\n\r\nAlto : 30.22\r\n\r\nLargo : 43.60",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Licuadoras de vaso plßstico\r\n\r\nòModelo : BN801\r\n\r\nòAncho : 26.5\r\n\r\nòAlto : 30.22\r\n\r\nòLargo : 43.60",
     "precio": "1000000.00",
     "stock": 99,
     "categoria": 2,
@@ -1171,7 +1171,7 @@
     "capacidad": "1.8 litros",
     "potencia": "1.400 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Licuadora mas procesador y accesorios Ninja base de motor de 1400 vatios picos, 72 onzas. Jarra de trituración total, (2) 24 onzas. Copas de una sola pieza con tapas de boquilla, montaje de cuchillas de extracción profesional, cuenco de procesador de precisión de 8 tazas, ensamblaje de cuchilla apilada, hoja de cortar, hoja de masa, guía de inspiración de 30 recetas",
+    "caracteristicas_destacadas": "Licuadora mas procesador y accesorios Ninja base de motor de 1400 vatios picos, 72 onzas. Jarra de trituraci≤n total, (2) 24 onzas. Copas de una sola pieza con tapas de boquilla, montaje de cuchillas de extracci≤n profesional, cuenco de procesador de precisi≤n de 8 tazas, ensamblaje de cuchilla apilada, hoja de cortar, hoja de masa, guφa de inspiraci≤n de 30 recetas",
     "garantia_meses": 12
   }
 },
@@ -1180,7 +1180,7 @@
   "pk": 59,
   "fields": {
     "nombre": "Olla Multifuncional BLACK+DECKER de 5.7 Litros PR100B",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Ollas multifuncionales\r\n\r\nReferencia del Producto en el Certificado/Empaque : PR100B\r\n\r\nModelo : PR100B\r\n\r\nAncho : 32.5 cm\r\n\r\nAlto : 35.2 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Ollas multifuncionales\r\n\r\nòReferencia del Producto en el Certificado/Empaque : PR100B\r\n\r\nòModelo : PR100B\r\n\r\nòAncho : 32.5 cm\r\n\r\nòAlto : 35.2 cm",
     "precio": "600000.00",
     "stock": 97,
     "categoria": 2,
@@ -1192,7 +1192,7 @@
     "capacidad": "5.7 litros",
     "potencia": null,
     "color": "Negro",
-    "caracteristicas_destacadas": "Elaborar diferentes platillos es tan fácil como colocar los ingredientes y presionar un botón con la Olla Express Eléctrica de Black + Decker. La Olla de Presión te ayuda a cocinar con gran rapidez al sellar el calor, el vapor y el sabor durante el proceso de cocción. Cuenta con siete funciones de presión para preparar todos sus favoritos: arroz, frijoles, todo tipo de carne, sopas, guisos y mucho más. También puedes dorar carne a la perfección con la función de dorar antes de cocinarla con presión. Cuenta con otras funciones tales como cocción lenta tradicional (temperatura alta y baja) y mantener los alimentos calientes.",
+    "caracteristicas_destacadas": "Elaborar diferentes platillos es tan fßcil como colocar los ingredientes y presionar un bot≤n con la Olla Express ElΘctrica de Black + Decker. La Olla de Presi≤n te ayuda a cocinar con gran rapidez al sellar el calor, el vapor y el sabor durante el proceso de cocci≤n. Cuenta con siete funciones de presi≤n para preparar todos sus favoritos: arroz, frijoles, todo tipo de carne, sopas, guisos y mucho mßs. TambiΘn puedes dorar carne a la perfecci≤n con la funci≤n de dorar antes de cocinarla con presi≤n. Cuenta con otras funciones tales como cocci≤n lenta tradicional (temperatura alta y baja) y mantener los alimentos calientes.",
     "garantia_meses": 24
   }
 },
@@ -1200,8 +1200,8 @@
   "model": "product.producto",
   "pk": 65,
   "fields": {
-    "nombre": "Parlante Recargable Con Trípode 30W Rms+Microfono",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Parlante Recargable\r\n\r\nReferencia del Producto en el Certificado/Empaque : DR-82957\r\n\r\nModelo : DR-82957\r\n\r\nAncho : 29.3 cm\r\n\r\nAlto : 49 cm",
+    "nombre": "Parlante Recargable Con Trφpode 30W Rms+Microfono",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Parlante Recargable\r\n\r\nòReferencia del Producto en el Certificado/Empaque : DR-82957\r\n\r\nòModelo : DR-82957\r\n\r\nòAncho : 29.3 cm\r\n\r\nòAlto : 49 cm",
     "precio": "130000.00",
     "stock": 98,
     "categoria": 3,
@@ -1213,7 +1213,7 @@
     "capacidad": null,
     "potencia": "30 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Parlante Recargable 30W RMS, Incluye trípode y micrófono alámbrico, Luces LED Audio rítmicas, Entrada para micrófono 6.3mm, Parlante de 8, Reproducción de sonido: Conexión Bluetooth 5.3, Puerto de entrada 3.5 mm, Puerto de lectura USB y Micro SD (32GB máx.), Radio FM, Batería: 1500 mAh, Alcance de conexión: 10 metros",
+    "caracteristicas_destacadas": "Parlante Recargable 30W RMS, Incluye trφpode y micr≤fono alßmbrico, Luces LED Audio rφtmicas, Entrada para micr≤fono 6.3mm, Parlante de 8ô, Reproducci≤n de sonido: Conexi≤n Bluetooth 5.3, Puerto de entrada 3.5 mm, Puerto de lectura USB y Micro SD (32GB mßx.), Radio FM, Baterφa: 1500 mAh, Alcance de conexi≤n: 10 metros",
     "garantia_meses": 12
   }
 },
@@ -1222,7 +1222,7 @@
   "pk": 66,
   "fields": {
     "nombre": "Freidora De Aire Imusa Easy Fry Mega 7.5L, Digital",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Freidoras sin aceite\r\n\r\nModelo : 2024\r\n\r\nAncho : 35.5\r\n\r\nAlto : 35.5\r\n\r\nProfundidad : 44",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Freidoras sin aceite\r\n\r\nòModelo : 2024\r\n\r\nòAncho : 35.5\r\n\r\nòAlto : 35.5\r\n\r\nòProfundidad : 44",
     "precio": "800000.00",
     "stock": 97,
     "categoria": 2,
@@ -1234,7 +1234,7 @@
     "capacidad": "7.5 litros",
     "potencia": "1520 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Extra capacidad 8 porciones, Tecnología de aire caliente con 8 programas automáticos, Cocina con poco o nada de aceite, 15 años de reparabilidad, temperatura ajustable, Cesta antiadherente, Temporizador ajustable hasta 60 minutos con apagado automático",
+    "caracteristicas_destacadas": "Extra capacidad 8 porciones, Tecnologφa de aire caliente con 8 programas automßticos, Cocina con poco o nada de aceite, 15 a±os de reparabilidad, temperatura ajustable, Cesta antiadherente, Temporizador ajustable hasta 60 minutos con apagado automßtico",
     "garantia_meses": 24
   }
 },
@@ -1243,7 +1243,7 @@
   "pk": 67,
   "fields": {
     "nombre": "Licuadora Profesional 1000W Ninja Crushing TECH BL610",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Licuadoras de vaso plástico\r\n\r\nModelo : BL610\r\n\r\nAncho : 19.5\r\n\r\nAlto : 30\r\n\r\nLargo : 24.13 cm",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Licuadoras de vaso plßstico\r\n\r\nòModelo : BL610\r\n\r\nòAncho : 19.5\r\n\r\nòAlto : 30\r\n\r\nòLargo : 24.13 cm",
     "precio": "450000.00",
     "stock": 94,
     "categoria": 2,
@@ -1255,7 +1255,7 @@
     "capacidad": "1.4 litros",
     "potencia": "700 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "72 oz XL jarra con pico vertedor No-deslizamiento de la base batidora de la Cocina es apta para lavavajillas Super-potente pulveriza hielo en la nieve en los envía, reduce frutas frescas y jugo de hace batidos en los minutos Cuchillas no centrifuga a menos que la tapa esté bien asegurada en su lugar Total de Trituración Tecnología que ofrece un rápido y eficiente de los resultados 3 diferentes velocidades de fusión Ninja licuadora BL610 es libre de BPA electrodomésticos de Cocina con un diseño elegante, impacto del diseño de esfuerzo untertop colocación",
+    "caracteristicas_destacadas": "72 oz XL jarra con pico vertedor No-deslizamiento de la base batidora de la Cocina es apta para lavavajillas Super-potente pulveriza hielo en la nieve en los envφa, reduce frutas frescas y jugo de hace batidos en los minutos Cuchillas no centrifuga a menos que la tapa estΘ bien asegurada en su lugar Total de Trituraci≤nÖ Tecnologφa que ofrece un rßpido y eficiente de los resultados 3 diferentes velocidades de fusi≤n Ninja licuadora BL610 es libre de BPA electrodomΘsticos de Cocina con un dise±o elegante, impacto del dise±o de esfuerzo untertop colocaci≤n",
     "garantia_meses": 12
   }
 },
@@ -1263,8 +1263,8 @@
   "model": "product.producto",
   "pk": 68,
   "fields": {
-    "nombre": "Máquina Cortapelo Combo Cut Wahl con Cable 22 Piezas Gris",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Máquinas cortapelo\r\n\r\nModelo : 9314-2608\r\n\r\nColor : Gris-Naranja\r\n\r\nGarantía : 1 año",
+    "nombre": "Mßquina Cortapelo Combo Cut Wahl con Cable 22 Piezas Gris",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Mßquinas cortapelo\r\n\r\nòModelo : 9314-2608\r\n\r\nòColor : Gris-Naranja\r\n\r\nòGarantφa : 1 a±o",
     "precio": "170000.00",
     "stock": 95,
     "categoria": 5,
@@ -1276,7 +1276,7 @@
     "capacidad": null,
     "potencia": null,
     "color": "Naranja",
-    "caracteristicas_destacadas": "Alta potencia de succión y su ajuste automático de la potencia según el tipo de superficie, Elimina con gran facilidad los pelos de tu mascota gracias a que cuenta con animal Kit, Duración de batería hasta 45 min, Cuenta con posibilidad de trapear superficies gracias a que se le puede instalar el accesorio aqua head, Cuenta con 3 niveles de potencia: ECO - AUTO- BOOST",
+    "caracteristicas_destacadas": "Alta potencia de succi≤n y su ajuste automßtico de la potencia seg·n el tipo de superficie, Elimina con gran facilidad los pelos de tu mascota gracias a que cuenta con animal Kit, Duraci≤n de baterφa hasta 45 min, Cuenta con posibilidad de trapear superficies gracias a que se le puede instalar el accesorio aqua head, Cuenta con 3 niveles de potencia: ECO - AUTO- BOOST",
     "garantia_meses": 24
   }
 },
@@ -1284,8 +1284,8 @@
   "model": "product.producto",
   "pk": 69,
   "fields": {
-    "nombre": "Aspiradora Inalámbrica T-Fal X-FORCE FLEX 9.60, 250 Watts, Batería 45min, Accesorio Mascota",
-    "descripcion": "Especificaciones principales\r\n\r\nTipo : Aspiradoras verticales\r\n\r\nModelo : X-FORCE\r\n\r\nAncho : 13.0 cm\r\n\r\nAlto : 30.4 cm\r\n\r\nLargo : 78.0 cm",
+    "nombre": "Aspiradora Inalßmbrica T-Fal X-FORCE FLEX 9.60, 250 Watts, Baterφa 45min, Accesorio Mascota",
+    "descripcion": "Especificaciones principales\r\n\r\nòTipo : Aspiradoras verticales\r\n\r\nòModelo : X-FORCE\r\n\r\nòAncho : 13.0 cm\r\n\r\nòAlto : 30.4 cm\r\n\r\nòLargo : 78.0 cm",
     "precio": "1200000.00",
     "stock": 94,
     "categoria": 1,
@@ -1297,7 +1297,7 @@
     "capacidad": "730 mL",
     "potencia": "250 W",
     "color": "Negro",
-    "caracteristicas_destacadas": "Alta potencia de succión y su ajuste automático de la potencia según el tipo de superficie, Elimina con gran facilidad los pelos de tu mascota gracias a que cuenta con animal Kit, Duración de batería hasta 45 min, Cuenta con posibilidad de trapear superficies gracias a que se le puede instalar el accesorio aqua head, Cuenta con 3 niveles de potencia: ECO - AUTO- BOOST",
+    "caracteristicas_destacadas": "Alta potencia de succi≤n y su ajuste automßtico de la potencia seg·n el tipo de superficie, Elimina con gran facilidad los pelos de tu mascota gracias a que cuenta con animal Kit, Duraci≤n de baterφa hasta 45 min, Cuenta con posibilidad de trapear superficies gracias a que se le puede instalar el accesorio aqua head, Cuenta con 3 niveles de potencia: ECO - AUTO- BOOST",
     "garantia_meses": 24
   }
 },
@@ -1305,8 +1305,8 @@
   "model": "product.producto",
   "pk": 70,
   "fields": {
-    "nombre": "Marine Collage Youtheory Colágeno Marino Comprimidos - 2.500 Mg Co",
-    "descripcion": "Youtheory Colágeno Marino Comprimidos - 2.500 Mg Co",
+    "nombre": "Marine Collage Youtheory Colßgeno Marino Comprimidos - 2.500 Mg Co",
+    "descripcion": "Youtheory Colßgeno Marino Comprimidos - 2.500 Mg Co",
     "precio": "370000.00",
     "stock": 100,
     "categoria": 6,
@@ -1326,8 +1326,8 @@
   "model": "product.producto",
   "pk": 71,
   "fields": {
-    "nombre": "ASTAXANTHIN A Jun88 Yp Carlyle Astaxantina 12 Mg 120 Cápsulas Jun88 A",
-    "descripcion": "A Jun88 Yp Carlyle Astaxantina 12 Mg 120 Cápsulas Jun88 A",
+    "nombre": "ASTAXANTHIN A Jun88 Yp Carlyle Astaxantina 12 Mg 120 Cßpsulas Jun88 A",
+    "descripcion": "A Jun88 Yp Carlyle Astaxantina 12 Mg 120 Cßpsulas Jun88 A",
     "precio": "350000.00",
     "stock": 100,
     "categoria": 6,
@@ -1347,8 +1347,8 @@
   "model": "product.producto",
   "pk": 72,
   "fields": {
-    "nombre": "Krill oil Deal Supplement Aceite De Krill Antártico, 1.000 Mg Por...",
-    "descripcion": "Deal Supplement Aceite De Krill Antártico, 1.000 Mg Por...",
+    "nombre": "Krill oil Deal Supplement Aceite De Krill Antßrtico, 1.000 Mg Por...",
+    "descripcion": "Deal Supplement Aceite De Krill Antßrtico, 1.000 Mg Por...",
     "precio": "378000.00",
     "stock": 100,
     "categoria": 6,
@@ -1368,8 +1368,8 @@
   "model": "product.producto",
   "pk": 73,
   "fields": {
-    "nombre": "Heiltropfen Azul de Metileno 2% Grado Farmacéutico 100ml Frasco Gotero",
-    "descripcion": "Azul de Metileno 2% Grado Farmacéutico 100ml Frasco Gotero",
+    "nombre": "Heiltropfen Azul de Metileno 2% Grado FarmacΘutico 100ml Frasco Gotero",
+    "descripcion": "Azul de Metileno 2% Grado FarmacΘutico 100ml Frasco Gotero",
     "precio": "280000.00",
     "stock": 100,
     "categoria": 6,
@@ -1389,8 +1389,8 @@
   "model": "product.producto",
   "pk": 74,
   "fields": {
-    "nombre": "Shilajit 10.000 mg, 60 cápsulas",
-    "descripcion": "Shilajit 10.000 mg, 60 cápsulas",
+    "nombre": "Shilajit 10.000 mg, 60 cßpsulas",
+    "descripcion": "Shilajit 10.000 mg, 60 cßpsulas",
     "precio": "298000.00",
     "stock": 100,
     "categoria": 6,
@@ -1440,7 +1440,7 @@
   "model": "product.categoria",
   "pk": 4,
   "fields": {
-    "nombre": "Climatización",
+    "nombre": "Climatizaci≤n",
     "descripcion": "",
     "activo": true,
     "fecha_creacion": "2025-11-28T18:04:17.695Z"
@@ -1461,7 +1461,7 @@
   "pk": 6,
   "fields": {
     "nombre": "Salud",
-    "descripcion": "Categoría dedicada a productos de salud y bienestar, como equipos de cuidado personal y dispositivos para el hogar.",
+    "descripcion": "Categorφa dedicada a productos de salud y bienestar, como equipos de cuidado personal y dispositivos para el hogar.",
     "activo": true,
     "fecha_creacion": "2026-03-07T04:40:31.251Z"
   }
@@ -1474,7 +1474,7 @@
     "subtitulo": "Hasta 40% OFF en lavadoras",
     "imagen": "banners/banner3.jpg.png",
     "url_destino": "/producto/productos/?categoria=2s/",
-    "texto_boton": "¡Comprar ahora!",
+    "texto_boton": "íComprar ahora!",
     "color_boton": "#f59e0b",
     "orden": 1,
     "activo": true
@@ -1488,7 +1488,7 @@
     "subtitulo": "Frescura garantizada para tu hogar",
     "imagen": "banners/banner5_V6yyheZ.jpg.jpg",
     "url_destino": "/productos//productos/?categoria=4",
-    "texto_boton": "¡Comprar ahora!",
+    "texto_boton": "íComprar ahora!",
     "color_boton": "#f59e0b",
     "orden": 2,
     "activo": true
@@ -1502,7 +1502,7 @@
     "subtitulo": "Gaming Zone, lo mejor en consolas",
     "imagen": "banners/banner1.jpg.png",
     "url_destino": "/productos/?categoria=3",
-    "texto_boton": "¡Comprar ahora!",
+    "texto_boton": "íComprar ahora!",
     "color_boton": "#f59e0b",
     "orden": 3,
     "activo": true
@@ -1513,10 +1513,10 @@
   "pk": 4,
   "fields": {
     "titulo": "Banner televisor",
-    "subtitulo": "Entretenimiento sin límites",
+    "subtitulo": "Entretenimiento sin lφmites",
     "imagen": "banners/banner4.jpg.png",
     "url_destino": "/productos/?categoria=3",
-    "texto_boton": "¡Comprar ahora!",
+    "texto_boton": "íComprar ahora!",
     "color_boton": "#f59e0b",
     "orden": 4,
     "activo": true
@@ -1527,10 +1527,10 @@
   "pk": 5,
   "fields": {
     "titulo": "Banner Microondas",
-    "subtitulo": "Cocina más rápido y fácil",
+    "subtitulo": "Cocina mßs rßpido y fßcil",
     "imagen": "banners/banner2.jpg.png",
     "url_destino": "/product/productos/?categoria=2os/",
-    "texto_boton": "¡Ver oferta!",
+    "texto_boton": "íVer oferta!",
     "color_boton": "#f59e0b",
     "orden": 5,
     "activo": true
