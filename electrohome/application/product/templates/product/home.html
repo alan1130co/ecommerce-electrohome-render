@@ -629,6 +629,64 @@ body, header, footer, main, section, .product-card, .carousel-card, .trust-card,
 @keyframes modalSlideOut { from { transform: scale(1) translateY(0); opacity: 1; } to { transform: scale(0.9) translateY(-20px); opacity: 0; } }
 
 
+/* ============================================================
+   FIX BANNER CAROUSEL — altura mayor en desktop
+   ============================================================ */
+@media (min-width: 1024px) {
+  #promo-carousel-section .min-w-full {
+    height: 540px !important;
+  }
+  #promo-carousel-section img {
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  #promo-carousel-section .min-w-full {
+    height: 580px !important;
+  }
+}
+
+/* FIX BANNER CAROUSEL — móvil */
+@media (max-width: 1023px) {
+  #promo-carousel-section {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #promo-carousel-section .min-w-full {
+    height: 220px !important;
+    margin: 0 !important;
+  }
+  #promo-carousel-section img {
+    object-fit: cover !important;
+    object-position: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+  }
+  #promo-carousel {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+/* Quitar espacio blanco entre header y banner en móvil */
+@media (max-width: 1023px) {
+  #promo-carousel-section {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  main {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+@media (max-width: 1023px) {
+  #promo-carousel-section {
+    background: var(--bg-primary) !important;
+  }
+}
+
     </style>
   </head>
 
@@ -825,25 +883,18 @@ body, header, footer, main, section, .product-card, .carousel-card, .trust-card,
   </div>
 </section>
 
-      <!-- BANNER DE OFERTAS -->
-      <div class="offers-banner">
-        <div class="container mx-auto px-4 relative z-10">
-          <div class="flex flex-col lg:flex-row items-center justify-between gap-10">
-            <div class="text-center lg:text-left w-full lg:w-auto">
-              <div class="offers-banner-tag"><i class="fas fa-fire"></i> Ofertas por tiempo limitado</div>
-              <h2>Hasta <span>40% de descuento</span><br>en productos seleccionados</h2>
-              <p>No dejes pasar las mejores promociones de la temporada.<br>¡Compra hoy y ahorra más!</p>
-              <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <a href="{% url 'product:products_list' %}" class="btn-banner-primary"><i class="fas fa-tags"></i> Ver todas las ofertas</a>
-                <a href="#promociones" class="btn-banner-secondary"><i class="fas fa-arrow-down"></i> Productos destacados</a>
-              </div>
-            </div>
-            <div class="discount-cards">
-              <div class="discount-card"><span class="discount-card-pct">10%</span><span class="discount-card-label">Cocina</span></div>
-              <div class="discount-card"><span class="discount-card-pct">25%</span><span class="discount-card-label">Limpieza</span></div>
-              <div class="discount-card"><span class="discount-card-pct">40%</span><span class="discount-card-label">Electrónica</span></div>
-              <div class="discount-card"><span class="discount-card-pct">15%</span><span class="discount-card-label">Audio</span></div>
-            </div>
+      <!-- SECCIÓN DE CONFIANZA -->
+      <div class="trust-section">
+        <div class="container mx-auto px-4">
+          <div class="text-center mb-10">
+            <h2 class="text-3xl font-extrabold text-blue-600 mb-2">¿Por qué elegirnos?</h2>
+            <p style="color:var(--text-secondary);" class="text-base">Comprometidos con tu satisfacción en cada compra</p>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="trust-card"><div class="trust-icon" style="background:rgba(37,99,235,0.1);">🚚</div><div class="trust-title">Envío rápido</div><div class="trust-desc">Recibe tu pedido en 24 a 48 horas en toda Colombia</div></div>
+            <div class="trust-card"><div class="trust-icon" style="background:rgba(16,185,129,0.1);">🔒</div><div class="trust-title">Pago 100% seguro</div><div class="trust-desc">Tus datos siempre protegidos con tecnología SSL</div></div>
+            <div class="trust-card"><div class="trust-icon" style="background:rgba(245,158,11,0.1);">↩️</div><div class="trust-title">Devoluciones</div><div class="trust-desc">30 días para cambios y devoluciones sin complicaciones</div></div>
+            <div class="trust-card"><div class="trust-icon" style="background:rgba(139,92,246,0.1);">🎧</div><div class="trust-title">Soporte 24/7</div><div class="trust-desc">Siempre disponibles para resolver tus preguntas</div></div>
           </div>
         </div>
       </div>
