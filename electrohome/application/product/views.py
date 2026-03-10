@@ -130,6 +130,11 @@ def product_detail(request, product_id):
 
 def cart_view(request):
     """Vista del carrito de compras CON RECOMENDACIONES"""
+    # Guardar session_key para recuperarla después del login con Google
+    if not request.user.is_authenticated and request.session.session_key:
+        request.session['_cart_session_key'] = request.session.session_key
+        request.session.save()
+    
     cart_service = CartService(request)
     cart_summary = cart_service.get_cart_summary()
     
