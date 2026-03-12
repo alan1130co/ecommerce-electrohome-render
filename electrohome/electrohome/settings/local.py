@@ -4,7 +4,7 @@ import os
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY')
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 # ===== CONFIGURACIÓN DE BASE DE DATOS POSTGRESQL =====
 DATABASES = {

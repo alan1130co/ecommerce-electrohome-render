@@ -41,7 +41,6 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     animation: chatbot-pulse 2.5s ease-in-out infinite !important;
 }
-
 @media (max-width: 1023px) {
     #eh-chatbot-toggle { bottom: 78px !important; }
 }
@@ -82,7 +81,7 @@
 #eh-chatbot-body::-webkit-scrollbar-track { background: transparent !important; }
 #eh-chatbot-body::-webkit-scrollbar-thumb { background: #D1D5DB !important; border-radius: 10px !important; }
 #eh-chatbot-body::-webkit-scrollbar-thumb:hover { background: #9CA3AF !important; }
-.message { padding: 12px 16px !important; border-radius: 16px !important; max-width: 80% !important; line-height: 1.5 !important; font-size: 14px !important; word-wrap: break-word !important; animation: slideIn 0.3s cubic-bezier(0.4,0,0.2,1) !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important; }
+.message { padding: 12px 16px !important; border-radius: 16px !important; max-width: 80% !important; line-height: 1.5 !important; font-size: 14px !important; word-wrap: break-word !important; animation: slideIn 0.3s cubic-bezier(0.4,0,0.2,1) !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important; white-space: pre-wrap !important; }
 @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 .user-message { background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%) !important; color: white !important; align-self: flex-end !important; border-bottom-right-radius: 6px !important; }
 .bot-message { background: white; color: #1F2937; align-self: flex-start !important; border-bottom-left-radius: 6px !important; border: 1px solid #E5E7EB; }
@@ -104,7 +103,6 @@
 #quick-replies { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; padding: 0 20px 10px 20px !important; background: #F9FAFB; }
 .quick-reply-btn { background: white; border: 2px solid #E5E7EB; color: #374151; padding: 8px 14px !important; border-radius: 20px !important; font-size: 13px !important; font-weight: 500 !important; cursor: pointer !important; transition: all 0.2s ease !important; }
 .quick-reply-btn:hover { background: #F3F4F6 !important; border-color: #3B82F6 !important; color: #2563EB !important; }
-
 #eh-chatbot-toggle, #eh-chatbot-container, #eh-chatbot-container * { box-sizing: border-box !important; }
 [data-theme="dark"] #eh-chatbot-container { background: #161b22 !important; border: 1px solid #30363d !important; box-shadow: 0 20px 60px rgba(0,0,0,0.7) !important; }
 [data-theme="dark"] #eh-chatbot-body { background: #0d1117 !important; }
@@ -119,6 +117,7 @@
 [data-theme="dark"] #eh-chatbot-input::placeholder { color: #6e7681 !important; opacity: 1 !important; }
 [data-theme="dark"] #eh-chatbot-input:focus { background: #161b22 !important; border-color: #388bfd !important; box-shadow: 0 0 0 3px rgba(56,139,253,0.15) !important; }
 </style>
+
 <button id="eh-chatbot-toggle" title="Abrir asistente virtual" aria-label="Chatbot">💬</button>
 <div id="eh-chatbot-container">
     <div id="eh-chatbot-header">
@@ -138,9 +137,11 @@
         <button id="eh-chatbot-send" aria-label="Enviar mensaje">Enviar</button>
     </div>
 </div>
+
 <script>
 (function(){
     'use strict';
+
     const CHATBOT_CONFIG = {
         {% if user.is_authenticated %}
         userName: '{{ user.first_name|escapejs }}',
@@ -155,85 +156,156 @@
         supportPhone: '+57 300 760 7645',
         whatsappLink: 'https://wa.me/573007607645'
     };
-    let ctx = { topic: null, needsHuman: false, lastIntent: null, messageCount: 0 };
+
+    // ID de sesión único por visita
+    const SESSION_ID = 'sess-' + Math.random().toString(36).substr(2, 9);
+
+    let ctx = { messageCount: 0 };
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function getCookie(name) {
+        const v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return v ? v[2] : null;
+    }
+
     document.addEventListener('DOMContentLoaded', function(){
-        const toggle = document.getElementById('eh-chatbot-toggle');
+        const toggle    = document.getElementById('eh-chatbot-toggle');
         const container = document.getElementById('eh-chatbot-container');
-        const close = document.getElementById('eh-chatbot-close');
-        const send = document.getElementById('eh-chatbot-send');
-        const input = document.getElementById('eh-chatbot-input');
-        const body = document.getElementById('eh-chatbot-body');
-        const qr = document.getElementById('quick-replies');
-        if(!toggle||!container) return;
-        function openChat(){ container.classList.add('open'); if(ctx.messageCount===0) initChat(); setTimeout(()=>input.focus(),300); }
-        function closeChat(){ container.classList.remove('open'); }
-        function addMsg(text,sender,isHTML){
-            const m=document.createElement('div');
-            m.className='message '+sender+'-message';
-            if(isHTML) m.innerHTML=text; else m.textContent=text;
-            body.appendChild(m); body.scrollTop=body.scrollHeight; ctx.messageCount++;
+        const close     = document.getElementById('eh-chatbot-close');
+        const send      = document.getElementById('eh-chatbot-send');
+        const input     = document.getElementById('eh-chatbot-input');
+        const body      = document.getElementById('eh-chatbot-body');
+        const qr        = document.getElementById('quick-replies');
+
+        if (!toggle || !container) return;
+
+        // ── UI helpers ────────────────────────────────────────────────────────
+        function openChat()  { container.classList.add('open'); if (ctx.messageCount === 0) initChat(); setTimeout(() => input.focus(), 300); }
+        function closeChat() { container.classList.remove('open'); }
+
+        function addMsg(text, sender, isHTML) {
+            const m = document.createElement('div');
+            m.className = 'message ' + sender + '-message';
+            if (isHTML) m.innerHTML = text; else m.textContent = text;
+            body.appendChild(m);
+            body.scrollTop = body.scrollHeight;
+            ctx.messageCount++;
         }
-        function showTyping(){ const t=document.createElement('div'); t.className='typing-indicator'; t.id='typing'; t.innerHTML='<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>'; body.appendChild(t); body.scrollTop=body.scrollHeight; }
-        function hideTyping(){ const t=document.getElementById('typing'); if(t) t.remove(); }
-        function showQR(replies){ qr.innerHTML=''; replies.forEach(r=>{ const b=document.createElement('button'); b.className='quick-reply-btn'; b.textContent=r.text; b.onclick=()=>{ input.value=r.value; sendMsg(); qr.style.display='none'; }; qr.appendChild(b); }); qr.style.display='flex'; }
-        function initChat(){
-            addMsg(greeting(),'bot');
-            setTimeout(()=>showQR([
-                {text:'🛍️ Ver productos',value:'Quiero ver productos'},
-                {text:'📦 Rastrear pedido',value:'Rastrear mi pedido'},
-                {text:'💳 Métodos de pago',value:'Cómo puedo pagar'},
-                {text:'📞 Contactar asesor',value:'Necesito hablar con un asesor'}
-            ]),500);
+
+        function showTyping() {
+            const t = document.createElement('div');
+            t.className = 'typing-indicator';
+            t.id = 'typing';
+            t.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            body.appendChild(t);
+            body.scrollTop = body.scrollHeight;
         }
-        function greeting(){
-            const h=new Date().getHours();
-            const t=h<12?'Buenos días':h<18?'Buenas tardes':'Buenas noches';
-            const n=CHATBOT_CONFIG.userName||'amigo/a';
-            return CHATBOT_CONFIG.isAuthenticated ? t+', '+n+'! 👋 Soy tu asistente virtual de ElectroHome. ¿En qué puedo ayudarte hoy?' : t+'! 👋 Soy tu asistente virtual de ElectroHome. ¿En qué puedo ayudarte?';
+
+        function hideTyping() {
+            const t = document.getElementById('typing');
+            if (t) t.remove();
         }
-        function intent(msg){
-            const m=msg.toLowerCase().trim();
-            if(m.match(/^(hola|hey|buenos|buenas|saludos|hi|hello)$/)) return 'greeting';
-            if(m.match(/producto|comprar|precio|nevera|lavadora|cocina|licuadora|televisor|tv|aire|ventilador|catálogo/)) return 'products';
-            if(m.match(/pedido|orden|envío|entrega|rastreo|rastrear|seguimiento|tracking/)) return 'orders';
-            if(m.match(/pago|pagar|tarjeta|transferencia|pse|efectivo|cuotas|financiación/)) return 'payment';
-            if(m.match(/devol|reembolso|cambio|cancelar|defecto|dañado|roto/)) return 'returns';
-            if(m.match(/garantía|falla|no funciona|se dañó|reparación|servicio técnico/)) return 'warranty';
-            if(m.match(/error.*pago|cobr.*doble|problema.*pago/)) return 'payment_error';
-            if(m.match(/asesor|humano|hablar|llamar|contacto|whatsapp/)) return 'contact';
-            if(m.match(/ayuda|necesito|cómo/)) return 'help';
-            if(m.match(/gracias|chao|adiós|bye|hasta luego/)) return 'bye';
-            return 'unknown';
+
+        function showQR(replies) {
+            qr.innerHTML = '';
+            replies.forEach(r => {
+                const b = document.createElement('button');
+                b.className = 'quick-reply-btn';
+                b.textContent = r.text;
+                b.onclick = () => { input.value = r.value; sendMsg(); qr.style.display = 'none'; };
+                qr.appendChild(b);
+            });
+            qr.style.display = 'flex';
         }
-        function respond(msg){
-            const i=intent(msg);
-            const wh='<button class="action-button" onclick="window.open(\''+CHATBOT_CONFIG.whatsappLink+'?text=Hola\',\'_blank\')">💬 WhatsApp</button>';
-            switch(i){
-                case 'greeting': return greeting();
-                case 'products': return '¡Excelente! 🛍️ Tenemos neveras, lavadoras, cocinas, licuadoras, televisores y más.\n\n<a href="/productos/" class="action-button" target="_blank">Ver catálogo</a>\n\n¿Qué producto buscas?';
-                case 'orders': return CHATBOT_CONFIG.isAuthenticated ? 'Puedes ver tus pedidos aquí:\n\n<a href="/pedidos/" class="action-button" target="_blank">Mis pedidos</a>\n\n¿Tienes tu número de orden?' : 'Para rastrear tu pedido inicia sesión:\n\n<a href="/login/" class="action-button" target="_blank">Iniciar sesión</a>';
-                case 'payment': return 'Aceptamos 💳:\n\n✅ Tarjetas Visa/Mastercard\n✅ PSE\n✅ Efectivo contra entrega\n✅ Hasta 12 cuotas sin intereses\n\n🔒 100% seguro';
-                case 'returns': return 'Para devoluciones contáctanos:\n\n'+wh+'\n\n📞 '+CHATBOT_CONFIG.supportPhone+'\nLun-Sáb 8AM-6PM';
-                case 'warranty': return 'Para garantías y soporte técnico:\n\n'+wh+'\n\n📞 '+CHATBOT_CONFIG.supportPhone+'\n✉️ '+CHATBOT_CONFIG.supportEmail;
-                case 'payment_error': addMsg('⚠️ CASO PRIORITARIO','system'); return 'Problema de pago urgente 🚨\n\n'+wh+'\n\n📞 '+CHATBOT_CONFIG.supportPhone+'\n\nTen a mano tu comprobante de pago.';
-                case 'contact': return wh+'\n\n📞 '+CHATBOT_CONFIG.supportPhone+'\n✉️ '+CHATBOT_CONFIG.supportEmail+'\n📍 Calle 1 #2-40, Cartagena\n🕐 Lun-Sáb 8AM-6PM';
-                case 'help': return 'Puedo ayudarte con 🤝:\n• 🛍️ Productos\n• 📦 Pedidos\n• 💳 Pagos\n• 🔄 Devoluciones\n• 🛡️ Garantías\n• 📞 Asesores';
-                case 'bye': return '¡Hasta pronto, '+(CHATBOT_CONFIG.userName||'amigo/a')+'! 👋 ¡Que tengas un excelente día! 😊';
-                default: return 'No entendí bien tu pregunta 🤔\n\nPuedo ayudarte con productos, pedidos, pagos, devoluciones o garantías.\n\n¿Puedes reformularla?';
+
+        // ── Saludo inicial ────────────────────────────────────────────────────
+        function greeting() {
+            const h = new Date().getHours();
+            const t = h < 12 ? 'Buenos días' : h < 18 ? 'Buenas tardes' : 'Buenas noches';
+            const n = CHATBOT_CONFIG.userName || 'amigo/a';
+            return CHATBOT_CONFIG.isAuthenticated
+                ? t + ', ' + n + '! 👋 Soy tu asistente virtual de ElectroHome. ¿En qué puedo ayudarte hoy?'
+                : t + '! 👋 Soy tu asistente virtual de ElectroHome. ¿En qué puedo ayudarte?';
+        }
+
+        function initChat() {
+            addMsg(greeting(), 'bot');
+            setTimeout(() => showQR([
+                { text: '🛍️ Ver productos',    value: 'Quiero ver productos' },
+                { text: '📦 Rastrear pedido',   value: 'Rastrear mi pedido' },
+                { text: '💳 Métodos de pago',   value: 'Cómo puedo pagar' },
+                { text: '📞 Contactar asesor',  value: 'Necesito hablar con un asesor' }
+            ]), 500);
+        }
+
+        // ── Envío del mensaje → Claude API ────────────────────────────────────
+        async function sendMsg() {
+            const text = input.value.trim();
+            if (!text) return;
+
+            send.disabled  = true;
+            input.disabled = true;
+            qr.style.display = 'none';
+
+            addMsg(text, 'user');
+            input.value = '';
+            showTyping();
+
+            try {
+                const res = await fetch('/chatbot/api/message/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ message: text, session_id: SESSION_ID })
+                });
+
+                const data = await res.json();
+                hideTyping();
+
+                if (data.success) {
+                    addMsg(data.response, 'bot', true);
+                    if (data.redirect_url) {
+                        setTimeout(() => { window.location.href = data.redirect_url; }, 1500);
+                    }
+                } else {
+                    addMsg('Hubo un error al procesar tu mensaje. Intenta de nuevo.', 'bot');
+                }
+
+            } catch (e) {
+                hideTyping();
+                addMsg('Error de conexión. Por favor intenta de nuevo.', 'bot');
+                console.error('Chatbot error:', e);
             }
+
+            send.disabled  = false;
+            input.disabled = false;
+            input.focus();
         }
-        function sendMsg(){
-            const text=input.value.trim(); if(!text) return;
-            send.disabled=true; input.disabled=true; qr.style.display='none';
-            addMsg(text,'user'); input.value=''; showTyping();
-            setTimeout(()=>{ hideTyping(); addMsg(respond(text),'bot',true); send.disabled=false; input.disabled=false; input.focus(); }, 800+Math.random()*700);
-        }
-        toggle.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); openChat(); });
-        close.addEventListener('click',e=>{ e.preventDefault(); e.stopPropagation(); closeChat(); });
-        send.addEventListener('click',sendMsg);
-        input.addEventListener('keypress',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); sendMsg(); } });
-        let fc=0;
-        const fs=setInterval(()=>{ if(toggle&&fc<15){ toggle.style.setProperty('display','flex','important'); toggle.style.setProperty('visibility','visible','important'); toggle.style.setProperty('opacity','1','important'); toggle.style.setProperty('position','fixed','important'); toggle.style.setProperty('bottom', window.innerWidth < 1024 ? '78px' : '20px','important'); toggle.style.setProperty('right','20px','important'); toggle.style.setProperty('z-index','2147483647','important'); fc++; } else clearInterval(fs); },100);
+
+        // ── Event listeners ───────────────────────────────────────────────────
+        toggle.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); openChat(); });
+        close.addEventListener('click',  e => { e.preventDefault(); e.stopPropagation(); closeChat(); });
+        send.addEventListener('click', sendMsg);
+        input.addEventListener('keypress', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); } });
+
+        // Forzar visibilidad del botón flotante
+        let fc = 0;
+        const fs = setInterval(() => {
+            if (toggle && fc < 15) {
+                toggle.style.setProperty('display', 'flex', 'important');
+                toggle.style.setProperty('visibility', 'visible', 'important');
+                toggle.style.setProperty('opacity', '1', 'important');
+                toggle.style.setProperty('position', 'fixed', 'important');
+                toggle.style.setProperty('bottom', window.innerWidth < 1024 ? '78px' : '20px', 'important');
+                toggle.style.setProperty('right', '20px', 'important');
+                toggle.style.setProperty('z-index', '2147483647', 'important');
+                fc++;
+            } else {
+                clearInterval(fs);
+            }
+        }, 100);
     });
 })();
 </script>
