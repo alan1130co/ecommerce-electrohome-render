@@ -157,10 +157,25 @@
         whatsappLink: 'https://wa.me/573007607645'
     };
 
-    // ID de sesión único por visita
-    const SESSION_ID = 'sess-' + Math.random().toString(36).substr(2, 9);
+   // Sesión persistente entre páginas
+let SESSION_ID;
+if (CHATBOT_CONFIG.isAuthenticated) {
+    SESSION_ID = 'user-{{ user.id }}';
+    localStorage.setItem('eh_session_id', SESSION_ID);
+} else {
+    const stored = localStorage.getItem('eh_session_id');
+    if (stored && stored.startsWith('user-')) {
+        // Se deslogueó → borrar sesión anterior y empezar limpio
+        localStorage.removeItem('eh_session_id');
+    }
+    SESSION_ID = localStorage.getItem('eh_session_id');
+    if (!SESSION_ID) {
+        SESSION_ID = 'sess-' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('eh_session_id', SESSION_ID);
+    }
+}
 
-    let ctx = { messageCount: 0 };
+let ctx = { messageCount: 0 };
 
     // ── Helpers ──────────────────────────────────────────────────────────────
     function getCookie(name) {
@@ -228,15 +243,29 @@
                 : t + '! 👋 Soy tu asistente virtual de ElectroHome. ¿En qué puedo ayudarte?';
         }
 
-        function initChat() {
-            addMsg(greeting(), 'bot');
-            setTimeout(() => showQR([
-                { text: '🛍️ Ver productos',    value: 'Quiero ver productos' },
-                { text: '📦 Rastrear pedido',   value: 'Rastrear mi pedido' },
-                { text: '💳 Métodos de pago',   value: 'Cómo puedo pagar' },
-                { text: '📞 Contactar asesor',  value: 'Necesito hablar con un asesor' }
-            ]), 500);
+        async function initChat() {
+    try {
+        const res  = await fetch('/chatbot/historial/' + SESSION_ID + '/');
+        const data = await res.json();
+
+        if (data.history && data.history.length > 0) {
+            // Hay conversación previa → cargarla
+            data.history.forEach(m => {
+                addMsg(m.content, m.role === 'user' ? 'user' : 'bot');
+            });
+            return; // No mostrar saludo
         }
+    } catch(e) { /* Si falla, mostrar saludo normal */ }
+
+    // Conversación nueva → saludo + botones
+    addMsg(greeting(), 'bot');
+    setTimeout(() => showQR([
+        { text: '🛍️ Ver productos',   value: 'Quiero ver productos' },
+        { text: '📦 Rastrear pedido',  value: 'Rastrear mi pedido' },
+        { text: '💳 Métodos de pago',  value: 'Cómo puedo pagar' },
+        { text: '📞 Contactar asesor', value: 'Necesito hablar con un asesor' }
+    ]), 500);
+}
 
         // ── Envío del mensaje → Claude API ────────────────────────────────────
         async function sendMsg() {

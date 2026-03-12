@@ -327,9 +327,15 @@ def products_list(request):
     productos = Producto.objects.filter(activo=True).select_related('categoria')
     
     # FILTROS
+    # Acepta nombre de categoría (desde el chatbot) o ID numérico (desde los templates)
     categoria_id = request.GET.get('categoria')
     if categoria_id:
-        productos = productos.filter(categoria_id=categoria_id)
+        if categoria_id.isdigit():
+            # Viene desde un template con ID numérico → filtrar por ID
+            productos = productos.filter(categoria_id=categoria_id)
+        else:
+            # Viene desde el chatbot con nombre → filtrar por nombre
+            productos = productos.filter(categoria__nombre__iexact=categoria_id)
     
     search_query = request.GET.get('q')
     if search_query:
