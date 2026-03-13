@@ -17,7 +17,6 @@ from .knowledge_base import get_store_context, FAQS, STORE_INFO
 #  CONFIGURACIÓN DE CATEGORÍAS
 # ══════════════════════════════════════════════════════════════════════════════
 
-# ── Las 7 categorías reales de Electrohome ────────────────────────────────────
 CATEGORY_URLS = {
     'cocina':          '/productos/?categoria=Cocina',
     'climatizacion':   '/productos/?categoria=Climatizaci%C3%B3n',
@@ -36,7 +35,6 @@ CATEGORY_DISPLAY = {
     'salud':           'Salud',
 }
 
-# Nombre exacto en BD (campo category del modelo Product)
 CATEGORY_DB_NAME = {
     'cocina':          'Cocina',
     'climatizacion':   'Climatización',
@@ -46,10 +44,6 @@ CATEGORY_DB_NAME = {
     'salud':           'Salud',
 }
 
-# Lo que el usuario puede decir → categoría interna
-# CLAVE: neveras/refrigeradores → Cocina (así están en tu BD)
-#         lavadoras/aspiradoras → Limpieza
-#         tv/parlantes/consolas → Entretenimiento
 CATEGORY_KEYWORDS = {
     'cocina': [
         'nevera', 'neveras', 'refrigerador', 'refrigeradora', 'frigorifico', 'frigorífico',
@@ -95,7 +89,6 @@ CATEGORY_KEYWORDS = {
     ],
 }
 
-# Palabras que indican pregunta ESPECÍFICA (→ buscar en BD)
 SPECIFIC_QUERY_WORDS = [
     'cuánto cuesta', 'cuanto cuesta', 'cuánto vale', 'cuanto vale',
     'precio de', 'precio del', 'el precio', 'costo de', 'valor de',
@@ -103,7 +96,7 @@ SPECIFIC_QUERY_WORDS = [
     'tienen el', 'tienen la', 'disponible el', 'disponible la',
     'especificaciones', 'ficha técnica', 'ficha tecnica',
     'características de', 'caracteristicas de',
-    # Marcas del catálogo
+    # Marcas
     'samsung', 'lg', 'haceb', 'mabe', 'whirlpool', 'hisense', 'sony',
     'nintendo', 'xbox', 'playstation',
     'black+decker', 'blackdecker', 'oster', 'challenger', 'electrolux',
@@ -113,7 +106,6 @@ SPECIFIC_QUERY_WORDS = [
     'litros', 'pulgadas', 'watts', 'kilos', 'kg', 'btu', 'hp',
 ]
 
-# ── Temas que SIEMPRE van al asesor ───────────────────────────────────────────
 ASESOR_TRIGGERS = {
     'devolucion_dinero': [
         'devolver el dinero', 'reembolso', 'devolucion de dinero', 'devolución de dinero',
@@ -135,11 +127,11 @@ ASESOR_TRIGGERS = {
         'error en el pago', 'disputa de pago',
     ],
     'contacto_asesor': [
-    'quiero un asesor', 'hablar con un asesor', 'contactar asesor',
-    'necesito un asesor', 'hablar con alguien', 'asesor humano',
-    'quiero hablar con una persona', 'comunicarme con un asesor',
-    'necesito hablar con un asesor',
-],
+        'quiero un asesor', 'hablar con un asesor', 'contactar asesor',
+        'necesito un asesor', 'hablar con alguien', 'asesor humano',
+        'quiero hablar con una persona', 'comunicarme con un asesor',
+        'necesito hablar con un asesor',
+    ],
 }
 
 ORDER_KEYWORDS = [
@@ -147,6 +139,23 @@ ORDER_KEYWORDS = [
     'donde esta mi pedido', 'como va mi pedido', 'estado de mi pedido',
     'numero de orden', 'buscar mi pedido',
 ]
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+#  HELPERS DE SEGURIDAD DE TIPOS
+# ══════════════════════════════════════════════════════════════════════════════
+
+def _safe_str(value, max_len=None):
+    """Convierte cualquier valor a string de forma segura."""
+    if value is None:
+        return ''
+    if isinstance(value, list):
+        value = ', '.join(str(x) for x in value)
+    else:
+        value = str(value)
+    if max_len:
+        value = value[:max_len]
+    return value
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -199,6 +208,8 @@ def chat_message(request):
 
     except Exception as e:
         print(f"❌ Error en chat_message: {e}")
+        import traceback
+        traceback.print_exc()
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
 
 
@@ -236,7 +247,6 @@ def route_message(user_message, history, conversation):
         result = search_products_db(msg_lower, user_message)
         if result:
             return result, None, False
-        # Si no encontró nada en BD, caer al catálogo si hay categoría detectada
         cat_key, cat_url = _detect_category(msg_lower)
         if cat_key:
             return _not_found_redirect(cat_key, cat_url), cat_url, False
@@ -251,15 +261,10 @@ def route_message(user_message, history, conversation):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  DETECCIÓN: ¿PREGUNTA GENERAL O ESPECÍFICA?
+#  DETECCIÓN DE TIPO DE CONSULTA
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _is_specific_product_query(msg_lower):
-    """
-    Retorna True si el mensaje hace una pregunta específica sobre un producto
-    (precio puntual, marca, modelo, disponibilidad de uno concreto, specs).
-    Retorna False si es una pregunta general de categoría.
-    """
     return any(kw in msg_lower for kw in SPECIFIC_QUERY_WORDS)
 
 
@@ -268,10 +273,6 @@ def _is_specific_product_query(msg_lower):
 # ══════════════════════════════════════════════════════════════════════════════
 
 def search_products_db(msg_lower, original_message):
-    """
-    Busca en el modelo Producto real (application.product.models).
-    Campos: nombre, precio, marca, descripcion, stock, activo, categoria__nombre
-    """
     from django.db.models import Q
 
     stopwords = {
@@ -286,14 +287,12 @@ def search_products_db(msg_lower, original_message):
     if not words:
         return None
 
-    # Filtro por categoría si se detecta
     cat_key, _ = _detect_category(msg_lower)
     cat_filter = Q()
     if cat_key:
         db_name = CATEGORY_DB_NAME.get(cat_key, cat_key)
         cat_filter = Q(categoria__nombre__iexact=db_name)
 
-    # Buscar por palabras en nombre, marca y descripción
     q = Q()
     for word in words:
         q |= Q(nombre__icontains=word)
@@ -302,7 +301,6 @@ def search_products_db(msg_lower, original_message):
 
     productos = Producto.objects.filter(cat_filter & q, activo=True).distinct()[:5]
 
-    # Si con categoría no encontró, buscar sin filtro
     if not productos.exists() and cat_key:
         productos = Producto.objects.filter(q, activo=True).distinct()[:5]
 
@@ -316,30 +314,33 @@ def search_products_db(msg_lower, original_message):
 
 
 def _format_producto_detail(p):
-    """Formato detallado para 1 producto del modelo Producto real."""
-    stock_text = "✅ Disponible" if p.stock > 0 else "❌ Agotado"
+    """Formato detallado para 1 producto. Usa _safe_str para evitar errores de tipo."""
+    stock_text  = "✅ Disponible" if p.stock > 0 else "❌ Agotado"
     stock_units = f" ({p.stock} unidades)" if p.stock > 0 else ""
 
     lines = [
-        f"🛍️ **{p.nombre}**\n",
+        f"🛍️ **{_safe_str(p.nombre)}**\n",
         f"💰 **Precio:** ${p.precio:,.0f}",
         f"📦 **Stock:** {stock_text}{stock_units}",
     ]
+
     if p.marca:
-        lines.append(f"🏷️ **Marca:** {p.marca}")
+        lines.append(f"🏷️ **Marca:** {_safe_str(p.marca)}")
     if p.categoria:
-        lines.append(f"📂 **Categoría:** {p.categoria.nombre}")
+        lines.append(f"📂 **Categoría:** {_safe_str(p.categoria.nombre)}")
     if p.capacidad:
-        lines.append(f"📐 **Capacidad:** {p.capacidad}")
+        lines.append(f"📐 **Capacidad:** {_safe_str(p.capacidad)}")
     if p.potencia:
-        lines.append(f"⚡ **Potencia:** {p.potencia}")
+        lines.append(f"⚡ **Potencia:** {_safe_str(p.potencia)}")
     if p.garantia_meses:
-        lines.append(f"🛡️ **Garantía:** {p.garantia_meses} meses")
+        lines.append(f"🛡️ **Garantía:** {_safe_str(p.garantia_meses)} meses")
     if p.caracteristicas_destacadas:
-        lines.append(f"✨ **Características:** {p.caracteristicas_destacadas[:100]}")
+        # FIX: caracteristicas_destacadas puede ser lista o string
+        caract = _safe_str(p.caracteristicas_destacadas, max_len=120)
+        lines.append(f"✨ **Características:** {caract}")
 
     lines.append("\n¿Quieres verlo completo en el catálogo o tienes otra pregunta? 😊")
-    return "\n".join(l for l in lines if l)
+    return "\n".join(str(l) for l in lines if l)
 
 
 def _format_producto_list(productos):
@@ -347,9 +348,10 @@ def _format_producto_list(productos):
     resp = f"Encontré **{productos.count()} productos** que coinciden:\n\n"
     for p in productos:
         stock_icon = "✅" if p.stock > 0 else "❌"
-        marca = f" | 🏷️ {p.marca}" if p.marca else ""
+        marca      = f" | 🏷️ {_safe_str(p.marca)}" if p.marca else ""
+        nombre     = _safe_str(p.nombre)
         resp += (
-            f"{stock_icon} **{p.nombre}**\n"
+            f"{stock_icon} **{nombre}**\n"
             f"   💰 ${p.precio:,.0f}{marca}  |  📦 Stock: {p.stock}\n\n"
         )
     resp += "¿Quieres más detalles de alguno? Dime el nombre o la referencia. 😊"
@@ -357,16 +359,16 @@ def _format_producto_list(productos):
 
 
 def _not_found_redirect(cat_key, cat_url):
-    """Cuando se buscó en BD pero no se encontró → redirigir al catálogo."""
+    display = CATEGORY_DISPLAY.get(cat_key, cat_key)
     return (
         f"No encontré ese producto exacto en nuestro inventario actual. 😕\n\n"
-        f"Pero tenemos más opciones en **{cat_key}** — te muestro el catálogo completo "
+        f"Pero tenemos más opciones en **{display}** — te muestro el catálogo completo "
         f"con todos los modelos y precios actualizados. 👇"
     )
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  CLAUDE API — conversación natural con historial y contexto de productos
+#  CLAUDE API
 # ══════════════════════════════════════════════════════════════════════════════
 
 def call_claude_api(user_message, history):
@@ -374,6 +376,7 @@ def call_claude_api(user_message, history):
 
     api_key = getattr(settings, 'ANTHROPIC_API_KEY', None)
     if not api_key:
+        print("❌ ANTHROPIC_API_KEY no configurada en settings")
         return _fallback_response()
 
     system_prompt = f"""Eres "Electro", el asistente virtual de Electrohome, tienda colombiana de electrodomésticos.
@@ -427,15 +430,15 @@ FORMATO:
         resp = requests.post(
             'https://api.anthropic.com/v1/messages',
             headers={
-                'Content-Type': 'application/json',
-                'x-api-key': api_key,
+                'Content-Type':      'application/json',
+                'x-api-key':         api_key,
                 'anthropic-version': '2023-06-01',
             },
             json={
-                'model': 'claude-sonnet-4-5',
+                'model':      'claude-sonnet-4-6',  # ✅ MODELO ACTUALIZADO
                 'max_tokens': 400,
-                'system': system_prompt,
-                'messages': messages_payload,
+                'system':     system_prompt,
+                'messages':   messages_payload,
             },
             timeout=12,
         )
@@ -447,6 +450,7 @@ FORMATO:
         return _fallback_response()
 
     except requests.exceptions.Timeout:
+        print("❌ Claude API timeout")
         return _fallback_response()
     except Exception as e:
         print(f"❌ Claude error: {e}")
@@ -523,7 +527,7 @@ def _extract_and_lookup(user_message, history):
             q &= Q(customer_name__icontains=part)
         orders = Order.objects.filter(q).order_by('-created_at')[:5]
 
-    if not orders.exists():
+    if not orders or not orders.exists():
         dato = email or phone or name
         return (
             f"Busqué con **{dato}** pero no encontré pedidos. 🔍\n\n"
@@ -536,12 +540,18 @@ def _extract_and_lookup(user_message, history):
         return _format_order(orders.first())
 
     resp = f"Encontré **{orders.count()} pedidos** asociados:\n\n"
-    emojis = {'pending':'⏳','confirmed':'✅','processing':'📦',
-               'shipped':'🚚','delivered':'🎉','cancelled':'❌'}
+    emojis = {
+        'pending':    '⏳',
+        'confirmed':  '✅',
+        'processing': '📦',
+        'shipped':    '🚚',
+        'delivered':  '🎉',
+        'cancelled':  '❌',
+    }
     for i, o in enumerate(orders, 1):
         resp += (
-            f"**{i}. #{o.order_number}** — {o.product_name} "
-            f"{emojis.get(o.status,'📋')} _{o.created_at.strftime('%d/%m/%Y')}_\n"
+            f"**{i}. #{o.order_number}** — {_safe_str(o.product_name)} "
+            f"{emojis.get(o.status, '📋')} _{o.created_at.strftime('%d/%m/%Y')}_\n"
         )
     resp += "\n¿De cuál quieres más detalles? 😊"
     return resp
@@ -568,19 +578,19 @@ def _format_order(order):
     }
     emoji, texto = status_map.get(order.status, ('📋', order.status))
     lines = [
-        f"📦 **Pedido #{order.order_number}**\n",
+        f"📦 **Pedido #{_safe_str(order.order_number)}**\n",
         f"{emoji} **Estado:** {texto}",
-        f"🛍️ **Producto:** {order.product_name}",
+        f"🛍️ **Producto:** {_safe_str(order.product_name)}",
         f"📅 **Fecha de compra:** {order.created_at.strftime('%d/%m/%Y')}",
     ]
     if order.tracking_number:
-        lines.append(f"🔢 **Guía de envío:** {order.tracking_number}")
+        lines.append(f"🔢 **Guía de envío:** {_safe_str(order.tracking_number)}")
     if order.estimated_delivery:
         lines.append(f"📅 **Entrega estimada:** {order.estimated_delivery.strftime('%d/%m/%Y')}")
     if order.customer_name:
-        lines.append(f"👤 **Cliente:** {order.customer_name}")
+        lines.append(f"👤 **Cliente:** {_safe_str(order.customer_name)}")
     lines.append("\n¿Necesitas algo más? 😊")
-    return "\n".join(lines)
+    return "\n".join(str(l) for l in lines)
 
 
 # ── Helpers extracción de datos personales ────────────────────────────────────
@@ -607,7 +617,7 @@ def _find_name(text):
 
 
 # ══════════════════════════════════════════════════════════════════════════════
-#  CATEGORÍAS DE PRODUCTO (pregunta general → catálogo)
+#  CATEGORÍAS DE PRODUCTO
 # ══════════════════════════════════════════════════════════════════════════════
 
 def _detect_category(msg_lower):
@@ -618,16 +628,15 @@ def _detect_category(msg_lower):
 
 
 def _product_category_response(cat_key, cat_url):
-    """Respuesta para pregunta GENERAL — redirige al catálogo."""
-    db_name = CATEGORY_DB_NAME.get(cat_key, cat_key)
-    display = CATEGORY_DISPLAY.get(cat_key, cat_key)
+    db_name  = CATEGORY_DB_NAME.get(cat_key, cat_key)
+    display  = CATEGORY_DISPLAY.get(cat_key, cat_key)
 
     productos = Producto.objects.filter(
         categoria__nombre__iexact=db_name, activo=True
     ).select_related('categoria')[:3]
 
     if productos.exists():
-        nombres = ', '.join(p.nombre.split()[:4] for p in productos)
+        nombres = ', '.join(_safe_str(p.nombre).split()[:4] for p in productos)
         return (
             f"¡Claro! Tenemos varias opciones en **{display}**. "
             f"Por ejemplo: {nombres}... y más. "
@@ -659,16 +668,18 @@ def _respond_needs_agent(motivo):
         'contacto_asesor':     "¡Con gusto! Te conecto con uno de nuestros asesores. 😊",
     }
     intro = intros.get(motivo, "Este tema requiere la atención de un asesor. 😊")
+    horarios = _safe_str(STORE_INFO.get('horarios', ''))
     return (
         f"{intro}\n\n"
         f"📞 <b>Contáctanos ahora:</b>\n"
-        f"🕒 {STORE_INFO['horarios']}\n\n"
+        f"🕒 {horarios}\n\n"
         f"<a href='https://wa.me/573007607645' target='_blank' "
         f"style='display:inline-block;background:linear-gradient(135deg,#25D366,#128C7E);"
         f"color:white;padding:10px 20px;border-radius:10px;text-decoration:none;"
         f"font-weight:700;font-size:14px;margin-top:8px;'>"
         f"💬 Hablar por WhatsApp</a>"
     )
+
 
 # ══════════════════════════════════════════════════════════════════════════════
 #  HISTORIAL
@@ -680,7 +691,11 @@ def get_conversation_history(request, session_id):
         conversation = Conversation.objects.get(session_id=session_id)
         messages = conversation.messages.all().order_by('timestamp')
         history = [
-            {'role': m.role, 'content': m.content, 'timestamp': m.timestamp.isoformat()}
+            {
+                'role':      m.role,
+                'content':   m.content,
+                'timestamp': m.timestamp.isoformat(),
+            }
             for m in messages
         ]
         return JsonResponse({'history': history})

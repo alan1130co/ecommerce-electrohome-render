@@ -4,6 +4,8 @@ import dj_database_url
 
 DEBUG = False
 
+ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY')
+
 # ===== SITE ID PARA RAILWAY =====
 SITE_ID = 7
 
