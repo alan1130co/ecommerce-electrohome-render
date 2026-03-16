@@ -339,56 +339,141 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <!-- SIDEBAR FILTROS -->
-        <aside class="lg:col-span-1">
-            <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
-                <h2 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
-                    <i class="fas fa-filter mr-2"></i> Filtros
-                </h2>
-                <form method="GET" action="{% url 'product:products_list' %}" id="filter-form">
-                    {% if filtros_activos.orden %}<input type="hidden" name="orden" value="{{ filtros_activos.orden }}">{% endif %}
-                    <div class="mb-6">
-                        <h3 class="font-bold text-gray-800 mb-3">Categorías</h3>
-                        <div class="space-y-2">
-                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                <input type="radio" name="categoria" value="" {% if not filtros_activos.categoria %}checked{% endif %} onchange="this.form.submit()" class="mr-2">
-                                <span class="text-gray-700">Todas</span>
-                            </label>
-                            {% for categoria in categorias %}
-                            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
-                                <input type="radio" name="categoria" value="{{ categoria.id }}" {% if filtros_activos.categoria == categoria.id|stringformat:"s" %}checked{% endif %} onchange="this.form.submit()" class="mr-2">
-                                <span class="text-gray-700">{{ categoria.nombre }}</span>
-                            </label>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="mb-6">
-                        <h3 class="font-bold text-gray-800 mb-3">Rango de Precio</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="text-sm text-gray-600">Mínimo</label>
-                                <input type="number" name="precio_min" value="{{ filtros_activos.precio_min|default:'' }}" placeholder="${{ precio_range.min_precio|floatformat:0 }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="text-sm text-gray-600">Máximo</label>
-                                <input type="number" name="precio_max" value="{{ filtros_activos.precio_max|default:'' }}" placeholder="${{ precio_range.max_precio|floatformat:0 }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-6">
+   <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+    <!-- ✅ ASIDE COMPLETO -->
+    <aside class="lg:col-span-1">
+        <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
+            <h2 class="text-xl font-bold text-blue-800 mb-4 flex items-center">
+                <i class="fas fa-filter mr-2"></i> Filtros
+            </h2>
+            <form method="GET" action="{% url 'product:products_list' %}" id="filter-form">
+                {% if filtros_activos.orden %}<input type="hidden" name="orden" value="{{ filtros_activos.orden }}">{% endif %}
+
+                <!-- ✅ ACORDEÓN AQUÍ DENTRO -->
+                <div class="mb-6">
+                    <h3 class="font-bold text-gray-800 mb-3">Categorías</h3>
+                    <div class="space-y-1">
                         <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
-                            <input type="checkbox" name="disponible" value="1" {% if filtros_activos.disponible == '1' %}checked{% endif %} onchange="this.form.submit()" class="mr-2">
-                            <span class="text-gray-700 font-semibold">Solo disponibles</span>
+                            <input type="radio" name="categoria" value="" {% if not filtros_activos.categoria %}checked{% endif %} onchange="this.form.submit()" class="mr-2">
+                            <span class="text-gray-700 font-semibold">Todas</span>
                         </label>
+                        {% for categoria in categorias %}
+                        <div class="categoria-grupo">
+                            {% if categoria.subcategorias.all %}
+                            <button type="button"
+                                onclick="toggleCategoria('cat-{{ categoria.id }}')"
+                                class="w-full flex items-center justify-between p-2 rounded hover:bg-blue-50 transition">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="categoria" value="{{ categoria.id }}"
+                                        {% if filtros_activos.categoria == categoria.id|stringformat:"s" %}checked{% endif %}
+                                        onchange="this.form.submit()"
+                                        onclick="event.stopPropagation()"
+                                        class="mr-1">
+                                    <span class="text-gray-800 font-bold text-sm">{{ categoria.nombre }}</span>
+                                </div>
+                                <i class="fas fa-chevron-down text-gray-400 text-xs transition-transform duration-200" id="icon-cat-{{ categoria.id }}"></i>
+                            </button>
+                            <div id="cat-{{ categoria.id }}" class="hidden pl-4 mt-1 space-y-1 border-l-2 border-blue-100 ml-4">
+                                <label class="flex items-center cursor-pointer hover:bg-blue-50 p-2 rounded">
+                                    <input type="radio" name="categoria" value="{{ categoria.id }}"
+                                        {% if filtros_activos.categoria == categoria.id|stringformat:"s" %}checked{% endif %}
+                                        onchange="this.form.submit()" class="mr-2">
+                                    <span class="text-blue-600 text-sm font-semibold">Todas las de {{ categoria.nombre }}</span>
+                                </label>
+                                {% for sub in categoria.subcategorias.all %}
+                                <label class="flex items-center cursor-pointer hover:bg-blue-50 p-2 rounded">
+                                    <input type="radio" name="categoria" value="{{ sub.id }}"
+                                        {% if filtros_activos.categoria == sub.id|stringformat:"s" %}checked{% endif %}
+                                        onchange="this.form.submit()" class="mr-2">
+                                    <span class="text-gray-600 text-sm">↳ {{ sub.nombre }}</span>
+                                </label>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <label class="flex items-center cursor-pointer hover:bg-blue-50 p-2 rounded">
+                                <input type="radio" name="categoria" value="{{ categoria.id }}"
+                                    {% if filtros_activos.categoria == categoria.id|stringformat:"s" %}checked{% endif %}
+                                    onchange="this.form.submit()" class="mr-2">
+                                <span class="text-gray-800 font-bold text-sm">{{ categoria.nombre }}</span>
+                            </label>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
                     </div>
-                    <div class="space-y-2">
-                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Aplicar Filtros</button>
-                        <a href="{% url 'product:products_list' %}" class="block w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-bold text-center hover:bg-gray-300 transition">Limpiar Filtros</a>
+                </div>
+
+                <!-- RANGO DE PRECIO -->
+                <div class="mb-6">
+                    <h3 class="font-bold text-gray-800 mb-3">Rango de Precio</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-sm text-gray-600">Mínimo</label>
+                            <input type="number" name="precio_min" value="{{ filtros_activos.precio_min|default:'' }}" placeholder="${{ precio_range.min_precio|floatformat:0 }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="text-sm text-gray-600">Máximo</label>
+                            <input type="number" name="precio_max" value="{{ filtros_activos.precio_max|default:'' }}" placeholder="${{ precio_range.max_precio|floatformat:0 }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                        </div>
                     </div>
-                </form>
+                </div>
+
+                <!-- SOLO DISPONIBLES -->
+                <div class="mb-6">
+                    <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                        <input type="checkbox" name="disponible" value="1" {% if filtros_activos.disponible == '1' %}checked{% endif %} onchange="this.form.submit()" class="mr-2">
+                        <span class="text-gray-700 font-semibold">Solo disponibles</span>
+                    </label>
+                </div>
+
+                <!-- BOTONES -->
+                <div class="space-y-2">
+                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Aplicar Filtros</button>
+                    <a href="{% url 'product:products_list' %}" class="block w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-bold text-center hover:bg-gray-300 transition">Limpiar Filtros</a>
+                </div>
+
+            </form>
+        </div>
+    </aside>
+
+    <!-- GRID DE PRODUCTOS -->
+    <div class="lg:col-span-3">
+        ...
+    </div>
+
+</div>
+
+            <!-- RANGO DE PRECIO -->
+            <div class="mb-6">
+                <h3 class="font-bold text-gray-800 mb-3">Rango de Precio</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="text-sm text-gray-600">Mínimo</label>
+                        <input type="number" name="precio_min" value="{{ filtros_activos.precio_min|default:'' }}" placeholder="${{ precio_range.min_precio|floatformat:0 }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="text-sm text-gray-600">Máximo</label>
+                        <input type="number" name="precio_max" value="{{ filtros_activos.precio_max|default:'' }}" placeholder="${{ precio_range.max_precio|floatformat:0 }}" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none">
+                    </div>
+                </div>
             </div>
-        </aside>
+
+            <!-- SOLO DISPONIBLES -->
+            <div class="mb-6">
+                <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                    <input type="checkbox" name="disponible" value="1" {% if filtros_activos.disponible == '1' %}checked{% endif %} onchange="this.form.submit()" class="mr-2">
+                    <span class="text-gray-700 font-semibold">Solo disponibles</span>
+                </label>
+            </div>
+
+            <!-- BOTONES -->
+            <div class="space-y-2">
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Aplicar Filtros</button>
+                <a href="{% url 'product:products_list' %}" class="block w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-bold text-center hover:bg-gray-300 transition">Limpiar Filtros</a>
+            </div>
+        </form>
+    </div>
+</aside>
 
         <!-- GRID DE PRODUCTOS -->
         <div class="lg:col-span-3">
@@ -806,6 +891,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
 window.addEventListener('pageshow', function(event) {
   if (event.persisted || (window.performance && window.performance.navigation.type === 2)) window.location.reload();
+});
+</script>
+
+<script>
+function toggleCategoria(id) {
+    const panel = document.getElementById(id);
+    const icon  = document.getElementById('icon-' + id);
+    const abierto = !panel.classList.contains('hidden');
+
+    // Cerrar todos los demás
+    document.querySelectorAll('.categoria-grupo [id^="cat-"]').forEach(p => {
+        p.classList.add('hidden');
+    });
+    document.querySelectorAll('[id^="icon-cat-"]').forEach(i => {
+        i.style.transform = 'rotate(0deg)';
+    });
+
+    // Abrir o cerrar el actual
+    if (!abierto) {
+        panel.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+    }
+}
+
+// Auto-abrir si hay una subcategoría activa
+document.addEventListener('DOMContentLoaded', function() {
+    const checkedRadio = document.querySelector('input[name="categoria"]:checked');
+    if (checkedRadio) {
+        const panel = checkedRadio.closest('[id^="cat-"]');
+        if (panel) {
+            panel.classList.remove('hidden');
+            const icon = document.getElementById('icon-' + panel.id);
+            if (icon) icon.style.transform = 'rotate(180deg)';
+        }
+    }
 });
 </script>
 

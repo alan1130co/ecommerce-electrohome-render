@@ -385,7 +385,7 @@ def products_list(request):
         max_precio=Max('precio')
     )
     
-    categorias = Categoria.objects.filter(activo=True)
+    categorias = Categoria.objects.filter(activo=True, parent__isnull=True).prefetch_related('subcategorias')
     
     context = {
         'productos': productos_paginados,
