@@ -1,321 +1,321 @@
 [
-{
-  "model": "product.categoria",
-  "pk": 1,
-  "fields": {
-    "nombre": "Limpieza",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2025-11-26T03:44:30.898Z",
-    "parent": null
+  {
+    "model": "product.categoria",
+    "pk": 1,
+    "fields": {
+      "nombre": "Limpieza",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2025-11-26T03:44:30.898Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 2,
+    "fields": {
+      "nombre": "Cocina",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2025-11-26T03:44:37.128Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 3,
+    "fields": {
+      "nombre": "Entretenimiento",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2025-11-26T03:44:47.549Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 4,
+    "fields": {
+      "nombre": "Climatizaci\u00f3n",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2025-11-28T18:04:17.695Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 5,
+    "fields": {
+      "nombre": "Cuidado personal",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2025-11-28T18:04:33.414Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 6,
+    "fields": {
+      "nombre": "Salud y Suplementos",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-07T04:40:31.251Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 7,
+    "fields": {
+      "nombre": "Aires Acondicionados",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T19:39:22.292Z",
+      "parent": 4
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 8,
+    "fields": {
+      "nombre": "Ventiladores",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T19:39:22.294Z",
+      "parent": 4
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 9,
+    "fields": {
+      "nombre": "Licuadoras y Procesadores",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:07:00.135Z",
+      "parent": 2
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 10,
+    "fields": {
+      "nombre": "Freidoras de Aire y Hornos",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:07:00.136Z",
+      "parent": 2
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 11,
+    "fields": {
+      "nombre": "Electrodom\u00e9sticos peque\u00f1os",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:07:00.136Z",
+      "parent": 2
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 12,
+    "fields": {
+      "nombre": "Grandes electrodom\u00e9sticos",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:07:00.136Z",
+      "parent": 2
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 13,
+    "fields": {
+      "nombre": "Cabello",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:10:56.378Z",
+      "parent": 5
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 14,
+    "fields": {
+      "nombre": "Afeitado y Depilaci\u00f3n",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:10:56.379Z",
+      "parent": 5
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 15,
+    "fields": {
+      "nombre": "Antioxidantes",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:11:44.968Z",
+      "parent": 6
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 16,
+    "fields": {
+      "nombre": "Col\u00e1geno y Prote\u00ednas",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:11:44.968Z",
+      "parent": 6
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 17,
+    "fields": {
+      "nombre": "Otros suplementos",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:11:44.969Z",
+      "parent": 6
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 18,
+    "fields": {
+      "nombre": "Televisores",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:13:47.346Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 19,
+    "fields": {
+      "nombre": "LED / Full HD",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:13:47.347Z",
+      "parent": 18
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 20,
+    "fields": {
+      "nombre": "QLED 4K",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:13:47.347Z",
+      "parent": 18
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 21,
+    "fields": {
+      "nombre": "OLED 4K",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:13:47.348Z",
+      "parent": 18
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 22,
+    "fields": {
+      "nombre": "Aspiradoras",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:14:34.219Z",
+      "parent": 1
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 23,
+    "fields": {
+      "nombre": "Lavadoras",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:14:34.219Z",
+      "parent": 1
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 24,
+    "fields": {
+      "nombre": "Otros",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:14:34.220Z",
+      "parent": 1
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 25,
+    "fields": {
+      "nombre": "Consolas",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:15:01.856Z",
+      "parent": 3
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 26,
+    "fields": {
+      "nombre": "Parlantes y Audio",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:15:01.857Z",
+      "parent": 3
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 27,
+    "fields": {
+      "nombre": "Refrigeraci\u00f3n",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:15:42.250Z",
+      "parent": null
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 28,
+    "fields": {
+      "nombre": "Neveras",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:15:42.251Z",
+      "parent": 27
+    }
+  },
+  {
+    "model": "product.categoria",
+    "pk": 29,
+    "fields": {
+      "nombre": "Nevecones",
+      "descripcion": "",
+      "activo": true,
+      "fecha_creacion": "2026-03-16T20:15:42.252Z",
+      "parent": 27
+    }
   }
-},
-{
-  "model": "product.categoria",
-  "pk": 2,
-  "fields": {
-    "nombre": "Cocina",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2025-11-26T03:44:37.128Z",
-    "parent": null
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 3,
-  "fields": {
-    "nombre": "Entretenimiento",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2025-11-26T03:44:47.549Z",
-    "parent": null
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 4,
-  "fields": {
-    "nombre": "Climatización",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2025-11-28T18:04:17.695Z",
-    "parent": null
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 5,
-  "fields": {
-    "nombre": "Cuidado personal",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2025-11-28T18:04:33.414Z",
-    "parent": null
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 6,
-  "fields": {
-    "nombre": "Salud y Suplementos",
-    "descripcion": "Categoría dedicada a productos de salud y bienestar, como equipos de cuidado personal y dispositivos para el hogar.",
-    "activo": true,
-    "fecha_creacion": "2026-03-07T04:40:31.251Z",
-    "parent": null
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 7,
-  "fields": {
-    "nombre": "Aires Acondicionados",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T19:39:22.292Z",
-    "parent": 4
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 8,
-  "fields": {
-    "nombre": "Ventiladores",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T19:39:22.294Z",
-    "parent": 4
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 9,
-  "fields": {
-    "nombre": "Licuadoras y Procesadores",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:07:00.135Z",
-    "parent": 2
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 10,
-  "fields": {
-    "nombre": "Freidoras de Aire y Hornos",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:07:00.136Z",
-    "parent": 2
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 11,
-  "fields": {
-    "nombre": "Electrodomésticos pequeños",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:07:00.136Z",
-    "parent": 2
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 12,
-  "fields": {
-    "nombre": "Grandes electrodomésticos",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:07:00.136Z",
-    "parent": 2
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 13,
-  "fields": {
-    "nombre": "Cabello",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:10:56.378Z",
-    "parent": 5
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 14,
-  "fields": {
-    "nombre": "Afeitado y Depilación",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:10:56.379Z",
-    "parent": 5
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 15,
-  "fields": {
-    "nombre": "Antioxidantes",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:11:44.968Z",
-    "parent": 6
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 16,
-  "fields": {
-    "nombre": "Colágeno y Proteínas",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:11:44.968Z",
-    "parent": 6
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 17,
-  "fields": {
-    "nombre": "Otros suplementos",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:11:44.969Z",
-    "parent": 6
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 18,
-  "fields": {
-    "nombre": "Televisores",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:13:47.346Z",
-    "parent": null
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 19,
-  "fields": {
-    "nombre": "LED / Full HD",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:13:47.347Z",
-    "parent": 18
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 20,
-  "fields": {
-    "nombre": "QLED 4K",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:13:47.347Z",
-    "parent": 18
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 21,
-  "fields": {
-    "nombre": "OLED 4K",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:13:47.348Z",
-    "parent": 18
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 22,
-  "fields": {
-    "nombre": "Aspiradoras",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:14:34.219Z",
-    "parent": 1
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 23,
-  "fields": {
-    "nombre": "Lavadoras",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:14:34.219Z",
-    "parent": 1
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 24,
-  "fields": {
-    "nombre": "Otros",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:14:34.220Z",
-    "parent": 1
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 25,
-  "fields": {
-    "nombre": "Consolas",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:15:01.856Z",
-    "parent": 3
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 26,
-  "fields": {
-    "nombre": "Parlantes y Audio",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:15:01.857Z",
-    "parent": 3
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 27,
-  "fields": {
-    "nombre": "Refrigeración",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:15:42.250Z",
-    "parent": null
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 28,
-  "fields": {
-    "nombre": "Neveras",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:15:42.251Z",
-    "parent": 27
-  }
-},
-{
-  "model": "product.categoria",
-  "pk": 29,
-  "fields": {
-    "nombre": "Nevecones",
-    "descripcion": "",
-    "activo": true,
-    "fecha_creacion": "2026-03-16T20:15:42.252Z",
-    "parent": 27
-  }
-}
 ]
