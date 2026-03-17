@@ -1655,8 +1655,29 @@ body, header, footer, main, section,
       const openBtn  = document.getElementById('meh-open-drawer');
       const closeBtn = document.getElementById('meh-close-drawer');
 
-      function openDrawer()  { drawer.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow = 'hidden'; }
-      function closeDrawer() { drawer.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow = ''; }
+      let _scrollY = 0;
+
+function openDrawer() {
+    _scrollY = window.scrollY;
+    document.body.style.top = '-' + _scrollY + 'px';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+}
+
+function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    window.scrollTo(0, _scrollY);
+}
 
       if (openBtn)  openBtn.addEventListener('click', openDrawer);
       if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
