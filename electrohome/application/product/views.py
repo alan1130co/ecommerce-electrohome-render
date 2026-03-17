@@ -331,8 +331,14 @@ def products_list(request):
     categoria_id = request.GET.get('categoria')
     if categoria_id:
         if categoria_id.isdigit():
-            # Viene desde un template con ID numérico → filtrar por ID
-            productos = productos.filter(categoria_id=categoria_id)
+            try:
+                cat = Categoria.objects.get(pk=categoria_id)
+                # Si tiene subcategorías, incluir la categoría padre y todas sus hijas
+                subcategoria_ids = list(cat.subcategorias.values_list('id', flat=True))
+                todos_ids = [cat.id] + subcategoria_ids
+                productos = productos.filter(categoria_id__in=todos_ids)
+            except Categoria.DoesNotExist:
+                productos = productos.none()
         else:
             # Viene desde el chatbot con nombre → filtrar por nombre
             productos = productos.filter(categoria__nombre__iexact=categoria_id)
