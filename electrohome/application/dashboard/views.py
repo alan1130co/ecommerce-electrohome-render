@@ -630,12 +630,15 @@ def resenas_list(request):
         'rechazada': Resena.objects.filter(estado='rechazada').count(),
     }
 
+    import os
+    cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME', '')
+
     return render(request, 'dashboard/resenas.html', {
         'page_obj': page_obj,
         'estado':   estado,
         'conteos':  conteos,
+        'cloud_name': cloud_name,
     })
-
 
 @supervisor_required
 def aprobar_resena(request, resena_id):

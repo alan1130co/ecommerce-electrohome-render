@@ -96,14 +96,14 @@
         </div>
 
         <!-- Foto -->
-        {% if resena.foto %}
-        <div class="mb-3">
-          <img src="{{ resena.foto.url }}" alt="Foto reseña"
-               style="height:120px;width:auto;border-radius:10px;border:1px solid #e2e8f0;cursor:pointer;object-fit:cover;"
-               onclick="abrirFoto('{{ resena.foto.url }}')" />
-          <div class="text-muted mt-1" style="font-size:0.75rem;"><i class="fas fa-camera me-1"></i>Foto del usuario</div>
-        </div>
-        {% endif %}
+{% if resena.foto %}
+<div class="mb-3">
+  <img src="https://res.cloudinary.com/{{ cloud_name }}/image/upload/{{ resena.foto.name }}" alt="Foto reseña"
+       style="height:120px;width:auto;border-radius:10px;border:1px solid #e2e8f0;cursor:pointer;object-fit:cover;"
+       onclick="abrirFoto('https://res.cloudinary.com/{{ cloud_name }}/image/upload/{{ resena.foto.name }}')" />
+  <div class="text-muted mt-1" style="font-size:0.75rem;"><i class="fas fa-camera me-1"></i>Foto del usuario</div>
+</div>
+{% endif %}
 
         <!-- Motivo rechazo -->
         {% if resena.estado == 'rechazada' and resena.motivo_rechazo %}
