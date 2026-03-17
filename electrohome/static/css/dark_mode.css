@@ -790,6 +790,16 @@ input, textarea, select {
 [data-theme="dark"] #auth-modal-content .text-gray-800  { color: #e6edf3 !important; }
 [data-theme="dark"] #auth-modal-content .border-gray-200 { border-color: #21262d !important; }
 
+/* Botones modal auth - azul y naranja */
+.btn-modal-login {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+}
+.btn-modal-register {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+}
+
 /* ============================================================
    PROFILE / PERFIL
    ============================================================ */
@@ -973,4 +983,18 @@ input, textarea, select {
 [data-theme="dark"] #eh-chatbot-input::placeholder {
   color: #6e7681 !important;
   opacity: 1 !important;
+}
+/* ============================================================
+   MODAL AUTH - BOTONES FORZADOS
+   ============================================================ */
+.btn-modal-login,
+.btn-modal-login:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+}
+
+.btn-modal-register,
+.btn-modal-register:hover {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
 }
