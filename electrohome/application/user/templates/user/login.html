@@ -5,7 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+  (function(){
+    var t = localStorage.getItem('electrohome-theme') ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
+<link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
     <title>Iniciar Sesión - ElectroHome</title>
+
     
     <!-- TailwindCSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -210,5 +219,6 @@
             });
         }
     </script>
+    <script src="{% static 'js/dark_mode.js' %}"></script>
 </body>
 </html>

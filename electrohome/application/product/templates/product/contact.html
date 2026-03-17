@@ -80,6 +80,14 @@
       [data-theme="dark"] .mdr-item.mdr-danger { color: #f85149; }
       [data-theme="dark"] .mdr-item.mdr-danger .mdr-ico { color: #f85149; background: rgba(248,81,73,0.1); }
       .meh-avatar-btn { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#f59e0b 0%,#d97706 100%); border: 2px solid rgba(255,255,255,0.35); color: #fff; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; }
+     [data-theme="dark"] #contact-submit {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+    box-shadow: 0 4px 16px rgba(29,78,216,0.5) !important;
+}
+[data-theme="dark"] #contact-submit:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+    box-shadow: 0 8px 24px rgba(37,99,235,0.6) !important;
+}
     </style>
 </head>
 <body class="bg-gray-50">
@@ -205,7 +213,7 @@
         <div><label for="phone" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-phone text-blue-600 mr-2"></i>Teléfono (opcional)</label><input type="tel" id="phone" name="phone" placeholder="+57 300 123 4567" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition"></div>
         <div><label for="subject" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-tag text-blue-600 mr-2"></i>Asunto</label><select id="subject" name="subject" required class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition"><option value="">Selecciona un asunto</option><option value="consulta">Consulta General</option><option value="soporte">Soporte Técnico</option><option value="compra">Información de Compra</option><option value="garantia">Garantías</option><option value="envio">Envíos y Entregas</option><option value="otro">Otro</option></select></div>
         <div><label for="message" class="block text-gray-700 font-semibold mb-1"><i class="fas fa-comment text-blue-600 mr-2"></i>Mensaje</label><textarea id="message" name="message" rows="5" required placeholder="Escribe tu mensaje aquí..." class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none transition resize-none"></textarea></div>
-        <button type="submit" class="w-full bg-yellow-400 text-white font-bold py-4 rounded-lg hover:bg-blue-800 transition transform hover:scale-[1.02] shadow-lg"><i class="fas fa-paper-plane mr-2"></i>Enviar Mensaje</button>
+        <button type="submit" id="contact-submit" class="w-full text-white font-bold py-4 rounded-lg transition transform hover:scale-[1.02] shadow-lg" style="background:linear-gradient(135deg,#f97316 0%,#ea580c 100%);">Enviar Mensaje </button>
       </form>
     </div>
 
