@@ -144,6 +144,36 @@
             animation: shake 0.5s;
             border-color: #ef4444 !important;
         }
+        /* Agregar dentro del <style> de register.html */
+[data-theme="dark"] .custom-input {
+    background-color: #0d1117 !important;
+    border-color: #30363d !important;
+    color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .custom-input::placeholder {
+    color: #6e7681 !important;
+}
+
+[data-theme="dark"] .custom-input:focus {
+    background-color: #161b22 !important;
+    border-color: #388bfd !important;
+}
+
+[data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 {
+    background: rgba(56,139,253,0.08) !important;
+    border-color: #388bfd !important;
+}
+
+[data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 p {
+    color: #58a6ff !important;
+}
+
+[data-theme="dark"] .text-gray-600 { color: #8b949e !important; }
+[data-theme="dark"] .text-gray-700 { color: #8b949e !important; }
+[data-theme="dark"] .border-gray-200 { border-color: #21262d !important; }
+[data-theme="dark"] .border-t-2.border-gray-200 { border-color: #21262d !important; }
+
     </style>
 </head>
 <body class="bg-gray-50">
@@ -163,18 +193,18 @@
 
     <main class="container mx-auto px-4 py-16">
         <div class="max-w-2xl mx-auto">
-            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            <div class="rounded-2xl shadow-2xl" style="background:var(--card-bg);border:1px solid var(--border-color);box-shadow:0 25px 60px rgba(0,0,0,0.5);"></div>
                 <!-- Header -->
-                <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-center">
+                <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-center rounded-t-2xl">
                     <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                         <i class="fas fa-user-plus text-blue-600 text-6xl"></i>
                     </div>
                     <h1 class="text-3xl font-bold text-white">Crear Cuenta</h1>
-                    <p class="text-blue-100 mt-2">Únete a ElectroHome y disfruta de grandes ofertas</p>
+                   <p class="text-white mt-2">Únete a ElectroHome y disfruta de grandes ofertas</p>
                 </div>
 
                 <!-- Contenido -->
-                <div class="p-8">
+                <div class="p-8 rounded-b-2xl" style="background:var(--card-bg);">
                     <!-- Mensajes -->
                     {% if messages %}
                     <div class="mb-6">
@@ -195,7 +225,7 @@
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                             <div>
-                                <label class="block text-gray-700 font-bold mb-2">
+                                <label class="block font-bold mb-2" style="color:var(--text-primary);"></label>
                                     <i class="fas fa-user text-blue-600 mr-2"></i>
                                     Nombre *
                                 </label>
@@ -394,10 +424,11 @@
                             </div>
                         </div>
 
-                        <button type="submit" 
-                                class="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 px-6 py-4 rounded-xl font-bold hover:from-blue-600 hover:to-blue-700 hover:text-white transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl">
+                        <!-- DESPUÉS -->
+<button type="submit" 
+        class="w-full bg-gradient-to-r from-orange-400 to-orange-600 text-white px-6 py-4 rounded-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl">
                             <i class="fas fa-user-plus mr-2"></i>
-                            Crear Cuenta
+                            Registrarse
                         </button>
                     </form>
 

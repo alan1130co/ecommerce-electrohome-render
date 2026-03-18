@@ -124,6 +124,18 @@
           display: flex; flex-direction: column;
           box-shadow: 0 2px 14px rgba(0,0,0,0.22);
         }
+        /* Botones modal auth - máxima especificidad */
+#auth-modal-content .btn-modal-login,
+#auth-modal-content .btn-modal-login:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: #ffffff !important;
+}
+
+#auth-modal-content .btn-modal-register,
+#auth-modal-content .btn-modal-register:hover {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+  color: #ffffff !important;
+}
         [data-theme="dark"] #meh-header { background: linear-gradient(180deg,#010409 0%,#0d1117 100%); border-bottom: 1px solid #21262d; }
         .meh-top { display: flex; align-items: center; gap: 10px; }
         .meh-logo { flex-shrink: 0; }
@@ -178,17 +190,24 @@
         .mdr-item.mdr-danger .mdr-ico { background: rgba(220,38,38,0.08); color: #dc2626; }
         [data-theme="dark"] .mdr-item.mdr-danger { color: #f85149; }
         [data-theme="dark"] .mdr-item.mdr-danger .mdr-ico { color: #f85149; background: rgba(248,81,73,0.1); }
-        /* Botones modal auth */
-.btn-modal-login,
-.btn-modal-login:hover {
+      
+/* MÁXIMA ESPECIFICIDAD — Modal auth buttons */
+html body #auth-modal .btn-modal-login,
+html body #auth-modal .btn-modal-login:hover,
+html[data-theme="dark"] body #auth-modal .btn-modal-login,
+html[data-theme="dark"] body #auth-modal .btn-modal-login:hover {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
   color: #ffffff !important;
+  border: none !important;
 }
 
-.btn-modal-register,
-.btn-modal-register:hover {
+html body #auth-modal .btn-modal-register,
+html body #auth-modal .btn-modal-register:hover,
+html[data-theme="dark"] body #auth-modal .btn-modal-register,
+html[data-theme="dark"] body #auth-modal .btn-modal-register:hover {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
   color: #ffffff !important;
+  border: none !important;
 }
     </style>
 </head>
@@ -655,6 +674,60 @@
 
 </main>
 
+ <!-- MODAL AUTH -->
+<div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all scale-95 opacity-0" id="auth-modal-content">
+    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-t-2xl relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-200 transition">
+        <i class="fas fa-times text-2xl"></i>
+      </button>
+      <div class="text-center">
+        <i class="fas fa-heart text-5xl mb-3 animate-pulse"></i>
+        <h3 class="text-2xl font-bold">¡Guarda tus Favoritos!</h3>
+      </div>
+    </div>
+    <div class="p-8">
+      <p class="text-gray-700 text-center mb-6 text-lg">
+        Para guardar tus productos favoritos, 
+        <span class="font-bold text-blue-600">inicia sesión</span> o 
+        <span class="font-bold text-blue-600">regístrate</span>
+      </p>
+      <div class="space-y-3">
+  <!-- DESPUÉS — igual que home.html -->
+<a href="{% url 'user:login' %}?next={{ request.path }}" 
+   class="btn-modal-login block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
+  <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+</a>
+<a href="{% url 'user:register' %}?next={{ request.path }}" 
+   class="btn-modal-register block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
+  <i class="fas fa-user-plus mr-2"></i>Registrarse Gratis
+</a>
+</div>
+      <div class="mt-6 pt-6 border-t border-gray-200">
+        <p class="text-sm font-semibold text-gray-800 mb-3">Beneficios de tener una cuenta:</p>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+            <span>Guarda tus productos favoritos</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+            <span>Seguimiento de pedidos en tiempo real</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+            <span>Ofertas y descuentos exclusivos</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
+            <span>Compra más rápida con datos guardados</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer class="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-200 py-12 mt-10">
   <div class="container mx-auto px-6">
@@ -799,58 +872,7 @@
   </div>
 </div>
 
-<!  <!-- MODAL AUTH -->
-<div id="auth-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-  <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all scale-95 opacity-0" id="auth-modal-content">
-    <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-t-2xl relative">
-      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-white hover:text-gray-200 transition">
-        <i class="fas fa-times text-2xl"></i>
-      </button>
-      <div class="text-center">
-        <i class="fas fa-heart text-5xl mb-3 animate-pulse"></i>
-        <h3 class="text-2xl font-bold">¡Guarda tus Favoritos!</h3>
-      </div>
-    </div>
-    <div class="p-8">
-      <p class="text-gray-700 text-center mb-6 text-lg">
-        Para guardar tus productos favoritos, 
-        <span class="font-bold text-blue-600">inicia sesión</span> o 
-        <span class="font-bold text-blue-600">regístrate</span>
-      </p>
-      <div class="space-y-3">
-        <a href="{% url 'user:login' %}?next={{ request.path }}" 
-           class="btn-modal-login block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
-          <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
-        </a>
-        <a href="{% url 'user:register' %}?next={{ request.path }}" 
-           class="btn-modal-register block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
-          <i class="fas fa-user-plus mr-2"></i>Registrarse Gratis
-        </a>
-      </div>
-      <div class="mt-6 pt-6 border-t border-gray-200">
-        <p class="text-sm font-semibold text-gray-800 mb-3">Beneficios de tener una cuenta:</p>
-        <ul class="space-y-2 text-sm text-gray-600">
-          <li class="flex items-start">
-            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-            <span>Guarda tus productos favoritos</span>
-          </li>
-          <li class="flex items-start">
-            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-            <span>Seguimiento de pedidos en tiempo real</span>
-          </li>
-          <li class="flex items-start">
-            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-            <span>Ofertas y descuentos exclusivos</span>
-          </li>
-          <li class="flex items-start">
-            <i class="fas fa-check-circle text-green-500 mr-2 mt-0.5"></i>
-            <span>Compra más rápida con datos guardados</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <script>
 const IS_AUTHENTICATED = {{ user.is_authenticated|yesno:"true,false" }};

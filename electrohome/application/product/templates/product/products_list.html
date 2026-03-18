@@ -124,17 +124,23 @@
       .mdr-item.mdr-danger .mdr-ico { background: rgba(220,38,38,0.08); color: #dc2626; }
       [data-theme="dark"] .mdr-item.mdr-danger { color: #f85149; }
       [data-theme="dark"] .mdr-item.mdr-danger .mdr-ico { color: #f85149; background: rgba(248,81,73,0.1); }
-      /* Botones modal auth */
-.btn-modal-login,
-.btn-modal-login:hover {
+/* MÁXIMA ESPECIFICIDAD — Modal auth buttons */
+html body #auth-modal .btn-modal-login,
+html body #auth-modal .btn-modal-login:hover,
+html[data-theme="dark"] body #auth-modal .btn-modal-login,
+html[data-theme="dark"] body #auth-modal .btn-modal-login:hover {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
   color: #ffffff !important;
+  border: none !important;
 }
 
-.btn-modal-register,
-.btn-modal-register:hover {
+html body #auth-modal .btn-modal-register,
+html body #auth-modal .btn-modal-register:hover,
+html[data-theme="dark"] body #auth-modal .btn-modal-register,
+html[data-theme="dark"] body #auth-modal .btn-modal-register:hover {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
   color: #ffffff !important;
+  border: none !important;
 }
     </style>
 </head>
@@ -679,14 +685,15 @@
         <span class="font-bold text-blue-600">regístrate</span>
       </p>
       <div class="space-y-3">
-        <a href="{% url 'user:login' %}?next={{ request.path }}" 
-           class="btn-modal-login block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
-          <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
-        </a>
-        <a href="{% url 'user:register' %}?next={{ request.path }}" 
-           class="btn-modal-register block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
-          <i class="fas fa-user-plus mr-2"></i>Registrarse Gratis
-        </a>
+        <!-- DESPUÉS — igual que home.html -->
+<a href="{% url 'user:login' %}?next={{ request.path }}" 
+   class="btn-modal-login block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
+  <i class="fas fa-sign-in-alt mr-2"></i>Iniciar Sesión
+</a>
+<a href="{% url 'user:register' %}?next={{ request.path }}" 
+   class="btn-modal-register block w-full text-white py-4 rounded-lg font-bold text-center transition-all transform hover:scale-105 shadow-lg">
+  <i class="fas fa-user-plus mr-2"></i>Registrarse Gratis
+</a>
       </div>
       <div class="mt-6 pt-6 border-t border-gray-200">
         <p class="text-sm font-semibold text-gray-800 mb-3">Beneficios de tener una cuenta:</p>
