@@ -19,162 +19,110 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    
-    <style>
-        /* Estilos personalizados para los inputs */
-        .custom-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background-color: #f9fafb;
-        }
-        
-        .custom-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-        
-        .custom-input:hover {
-            border-color: #cbd5e1;
-        }
-        
-        /* Estilos para la barra de fuerza */
-        .strength-bar {
-            height: 6px;
-            border-radius: 3px;
-            transition: all 0.3s ease;
-        }
-        
-        .strength-weak { 
-            background: linear-gradient(90deg, #ef4444 0%, #f87171 100%); 
-            width: 25%;
-        }
-        
-        .strength-medium { 
-            background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%); 
-            width: 50%;
-        }
-        
-        .strength-strong { 
-            background: linear-gradient(90deg, #10b981 0%, #34d399 100%); 
-            width: 75%;
-        }
-        
-        .strength-very-strong { 
-            background: linear-gradient(90deg, #059669 0%, #10b981 100%); 
-            width: 100%;
-        }
-        
-        /* Animación para los checkmarks */
-        @keyframes checkmark {
-            0% { transform: scale(0) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(180deg); }
-            100% { transform: scale(1) rotate(360deg); }
-        }
-        
-        .checkmark-animation {
-            animation: checkmark 0.3s ease;
-        }
-        
-        /* Requisito cumplido */
-        .requirement-met {
-            color: #10b981;
-            font-weight: 600;
-        }
-        
-        .requirement-not-met {
-            color: #6b7280;
-        }
-        
-        /* Estilos para errores de campo */
-        .input-error {
-            border-color: #ef4444 !important;
-            background-color: #fef2f2 !important;
-        }
-        
-        .input-error:focus {
-            border-color: #dc2626 !important;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
-        }
-        
-        .error-message {
-            display: flex;
-            align-items-center;
-            margin-top: 8px;
-            padding: 8px 12px;
-            background-color: #fef2f2;
-            border-left: 3px solid #ef4444;
-            border-radius: 6px;
-            animation: slideDown 0.3s ease;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .input-success {
-            border-color: #10b981 !important;
-        }
-        
-        .input-success:focus {
-            border-color: #059669 !important;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
-        }
-        
-        /* Animación de shake para inputs inválidos */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-            20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-        
-        .shake {
-            animation: shake 0.5s;
-            border-color: #ef4444 !important;
-        }
-        /* Agregar dentro del <style> de register.html */
-[data-theme="dark"] .custom-input {
-    background-color: #0d1117 !important;
-    border-color: #30363d !important;
-    color: #e6edf3 !important;
-}
+<style>
+    /* ── Inputs ── */
+    .custom-input {
+        width: 100%; padding: 12px 16px;
+        border: 2px solid #e5e7eb; border-radius: 10px;
+        font-size: 16px; transition: all 0.3s ease;
+        background-color: #f9fafb;
+    }
+    .custom-input:focus {
+        outline: none; border-color: #3b82f6;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+    }
+    .custom-input:hover { border-color: #cbd5e1; }
 
-[data-theme="dark"] .custom-input::placeholder {
-    color: #6e7681 !important;
-}
+    /* ── Barra de fuerza ── */
+    .strength-bar { height: 6px; border-radius: 3px; transition: all 0.3s ease; }
+    .strength-weak { background: linear-gradient(90deg,#ef4444,#f87171); width:25%; }
+    .strength-medium { background: linear-gradient(90deg,#f59e0b,#fbbf24); width:50%; }
+    .strength-strong { background: linear-gradient(90deg,#10b981,#34d399); width:75%; }
+    .strength-very-strong { background: linear-gradient(90deg,#059669,#10b981); width:100%; }
 
-[data-theme="dark"] .custom-input:focus {
-    background-color: #161b22 !important;
-    border-color: #388bfd !important;
-}
+    /* ── Animaciones ── */
+    @keyframes checkmark {
+        0%   { transform: scale(0) rotate(0deg); }
+        50%  { transform: scale(1.2) rotate(180deg); }
+        100% { transform: scale(1) rotate(360deg); }
+    }
+    .checkmark-animation { animation: checkmark 0.3s ease; }
 
-[data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 {
-    background: rgba(56,139,253,0.08) !important;
-    border-color: #388bfd !important;
-}
+    @keyframes slideDown {
+        from { opacity:0; transform:translateY(-10px); }
+        to   { opacity:1; transform:translateY(0); }
+    }
 
-[data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 p {
-    color: #58a6ff !important;
-}
+    @keyframes shake {
+        0%,100% { transform:translateX(0); }
+        10%,30%,50%,70%,90% { transform:translateX(-5px); }
+        20%,40%,60%,80% { transform:translateX(5px); }
+    }
 
-[data-theme="dark"] .text-gray-600 { color: #8b949e !important; }
-[data-theme="dark"] .text-gray-700 { color: #8b949e !important; }
-[data-theme="dark"] .border-gray-200 { border-color: #21262d !important; }
-[data-theme="dark"] .border-t-2.border-gray-200 { border-color: #21262d !important; }
+    /* ── Requisitos ── */
+    .requirement-met { color: #10b981; font-weight: 600; }
+    .requirement-not-met { color: #6b7280; }
 
-    </style>
+    /* ── Errores ── */
+    .input-error { border-color: #ef4444 !important; background-color: #fef2f2 !important; }
+    .input-error:focus { border-color: #dc2626 !important; box-shadow: 0 0 0 3px rgba(239,68,68,0.1) !important; }
+    .error-message {
+        display: flex; margin-top: 8px; padding: 8px 12px;
+        background-color: #fef2f2; border-left: 3px solid #ef4444;
+        border-radius: 6px; animation: slideDown 0.3s ease;
+    }
+    .input-success { border-color: #10b981 !important; }
+    .input-success:focus { border-color: #059669 !important; box-shadow: 0 0 0 3px rgba(16,185,129,0.1) !important; }
+    .shake { animation: shake 0.5s; border-color: #ef4444 !important; }
+
+    /* ── Botón submit — AZUL claro / NARANJA oscuro ── */
+    .btn-submit {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+        color: #ffffff !important;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .btn-submit:hover {
+        background: linear-gradient(135deg, #1d4ed8, #1e3a8a) !important;
+        color: #ffffff !important;
+    }
+    [data-theme="dark"] .btn-submit {
+        background: linear-gradient(135deg, #f97316, #ea580c) !important;
+        color: #ffffff !important;
+    }
+    [data-theme="dark"] .btn-submit:hover {
+        background: linear-gradient(135deg, #fb923c, #f97316) !important;
+        color: #ffffff !important;
+    }
+
+    /* ── Dark mode ── */
+    [data-theme="dark"] .custom-input {
+        background-color: #0d1117 !important;
+        border-color: #30363d !important;
+        color: #e6edf3 !important;
+    }
+    [data-theme="dark"] .custom-input::placeholder { color: #6e7681 !important; }
+    [data-theme="dark"] .custom-input:focus {
+        background-color: #161b22 !important;
+        border-color: #388bfd !important;
+    }
+    [data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 {
+        background: rgba(56,139,253,0.08) !important;
+        border-color: #388bfd !important;
+    }
+    [data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 p { color: #58a6ff !important; }
+    [data-theme="dark"] .text-gray-600,
+    [data-theme="dark"] .text-gray-700 { color: #8b949e !important; }
+    [data-theme="dark"] .border-gray-200,
+    [data-theme="dark"] .border-t-2.border-gray-200 { border-color: #21262d !important; }
+    [data-theme="dark"] .bg-white.border-2 {
+        background: #1c2330 !important;
+        border-color: #30363d !important;
+        color: #e6edf3 !important;
+    }
+    [data-theme="dark"] .border-t-2.border-gray-300 { border-color: #21262d !important; }
+    [data-theme="dark"] span.bg-white { background: #161b22 !important; }
+</style>
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -425,11 +373,10 @@
                         </div>
 
                         <!-- DESPUÉS -->
-<button type="submit" 
-        class="w-full bg-gradient-to-r from-orange-400 to-orange-600 text-white px-6 py-4 rounded-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl">
-                            <i class="fas fa-user-plus mr-2"></i>
-                            Registrarse
-                        </button>
+<button type="submit" class="btn-submit w-full px-6 py-4 rounded-xl font-bold transform hover:scale-105 shadow-lg">
+    <i class="fas fa-user-plus mr-2"></i>
+    Crear Cuenta
+</button>
                     </form>
 
                     <!-- Separador -->

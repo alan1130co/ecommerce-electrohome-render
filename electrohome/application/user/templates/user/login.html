@@ -21,6 +21,47 @@
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Botón submit — azul en modo claro, naranja en modo oscuro */
+        .btn-submit {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+            color: #ffffff !important;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e3a8a) !important;
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .btn-submit {
+            background: linear-gradient(135deg, #f97316, #ea580c) !important;
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .btn-submit:hover {
+            background: linear-gradient(135deg, #fb923c, #f97316) !important;
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .rounded-2xl {
+            background: #161b22 !important;
+            border: 1px solid #21262d !important;
+        }
+        [data-theme="dark"] .custom-input {
+            background-color: #0d1117 !important;
+            border-color: #30363d !important;
+            color: #e6edf3 !important;
+        }
+        [data-theme="dark"] .custom-input::placeholder { color: #6e7681 !important; }
+        [data-theme="dark"] .text-gray-600,
+        [data-theme="dark"] .text-gray-700 { color: #8b949e !important; }
+        [data-theme="dark"] .border-gray-200 { border-color: #21262d !important; }
+        [data-theme="dark"] .bg-white.border-2 {
+            background: #1c2330 !important;
+            border-color: #30363d !important;
+            color: #e6edf3 !important;
+        }
+        [data-theme="dark"] .border-t-2.border-gray-300 { border-color: #21262d !important; }
+        [data-theme="dark"] span.bg-white { background: #161b22 !important; }
+    </style>
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -141,10 +182,10 @@
                             </a>
                         </div>
 
-                        <button type="submit" 
-        class="w-full bg-gradient-to-r from-orange-400 to-orange-600 text-white px-6 py-3 rounded-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            Iniciar Sesión
-                        </button>
+ <button type="submit" class="btn-submit w-full px-6 py-3 rounded-xl font-bold transform hover:scale-105 shadow-lg">
+    <i class="fas fa-sign-in-alt mr-2"></i>
+    Iniciar Sesión
+</button>
                     </form>
 
                     <!-- Separador -->
