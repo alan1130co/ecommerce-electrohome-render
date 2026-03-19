@@ -19,6 +19,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/dark_mode.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <style>
         [data-theme="dark"] header, [data-theme="dark"] header.bg-blue-800 { background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important; border-bottom: 1px solid #21262d !important; box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important; }
         @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
@@ -118,9 +119,9 @@
         </form>
       </div>
       <div class="hidden lg:flex space-x-6">
-        <a href="{% url 'product:home' %}" class="text-yellow-400 font-semibold">Inicio</a>
+        <a href="{% url 'product:home' %}" class="text-gray-50 hover:text-yellow-300 transition">Inicio</a>
         <a href="{% url 'product:products_list' %}" class="text-gray-50 hover:text-yellow-300 transition">Productos</a>
-        <a href="{% url 'product:contact' %}" class="text-gray-50 hover:text-yellow-300 transition">Contacto</a>
+        <a href="{% url 'product:contact' %}" class="text-yellow-400 font-semibold">Contacto</a>
       </div>
       <div class="flex items-center space-x-3">
         <button id="theme-toggle" class="theme-toggle-button" aria-label="Cambiar tema">

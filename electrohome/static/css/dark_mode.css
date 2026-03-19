@@ -1,7 +1,5 @@
 /* ============================================================
-   ELECTROHOME — DARK MODE UNIVERSAL v4.0
-   Pega este archivo completo en tu dark_mode.css
-   (reemplaza el anterior)
+   ELECTROHOME — DARK MODE UNIVERSAL v5.0
    ============================================================ */
 
 /* ============================================================
@@ -29,8 +27,10 @@
   --accent-yellow:     #f59e0b;
   --dropdown-bg:       #ffffff;
   --dropdown-border:   #e2e8f0;
+  --dropdown-header-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
   --dropdown-item-hover: #f0f7ff;
   --dropdown-text:     #1a202c;
+  --dropdown-subtext:  #64748b;
   --theme-btn-bg:      rgba(255,255,255,0.15);
   --theme-btn-border:  rgba(255,255,255,0.3);
 }
@@ -57,14 +57,16 @@
   --accent-yellow:     #f0b429;
   --dropdown-bg:       #161b22;
   --dropdown-border:   #30363d;
+  --dropdown-header-bg: linear-gradient(135deg, #1c2330 0%, #161b22 100%);
   --dropdown-item-hover: #1c2330;
   --dropdown-text:     #e6edf3;
+  --dropdown-subtext:  #8b949e;
   --theme-btn-bg:      rgba(255,255,255,0.07);
   --theme-btn-border:  rgba(255,255,255,0.12);
 }
 
 /* ============================================================
-   2. BASE — body, html, main
+   2. BASE
    ============================================================ */
 body {
   background-color: var(--bg-primary);
@@ -81,7 +83,7 @@ body {
 }
 
 /* ============================================================
-   3. FONDOS — clases Tailwind más usadas en las páginas
+   3. FONDOS
    ============================================================ */
 [data-theme="dark"] .bg-white             { background: #161b22 !important; }
 [data-theme="dark"] .bg-gray-50           { background: #0d1117 !important; }
@@ -92,7 +94,6 @@ body {
 [data-theme="dark"] .bg-blue-50           { background: rgba(56,139,253,0.08) !important; }
 [data-theme="dark"] .bg-blue-100          { background: rgba(56,139,253,0.12) !important; }
 
-/* Gradientes de fondo en secciones */
 [data-theme="dark"] section,
 [data-theme="dark"] .bg-gradient-to-b,
 [data-theme="dark"] .bg-gradient-to-r,
@@ -104,7 +105,7 @@ body {
 }
 
 /* ============================================================
-   4. TIPOGRAFÍA — texto claro en modo oscuro
+   4. TIPOGRAFÍA
    ============================================================ */
 [data-theme="dark"] h1,
 [data-theme="dark"] h2,
@@ -153,7 +154,7 @@ body {
 [data-theme="dark"] .divide-gray-200 > * + * { border-color: #21262d !important; }
 
 /* ============================================================
-   6. TARJETAS — cualquier div con rounded + shadow o bg-white
+   6. TARJETAS
    ============================================================ */
 [data-theme="dark"] .rounded-lg.shadow,
 [data-theme="dark"] .rounded-lg.shadow-md,
@@ -169,7 +170,16 @@ body {
   box-shadow: 0 4px 24px rgba(0,0,0,0.5) !important;
 }
 
-/* Product cards con clase específica */
+/* EXCEPCIÓN: el dropdown NO debe ser afectado por la regla de tarjetas */
+[data-theme="dark"] #user-dropdown.rounded-lg,
+[data-theme="dark"] #user-dropdown.rounded-xl,
+[data-theme="dark"] #user-dropdown.rounded-2xl,
+[data-theme="dark"] #user-dropdown {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  box-shadow: 0 0 0 1px rgba(240,246,252,0.05), 0 24px 64px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.5) !important;
+}
+
 [data-theme="dark"] .product-card,
 [data-theme="dark"] .carousel-card {
   background: linear-gradient(145deg, #161b22 0%, #1c2330 100%) !important;
@@ -244,7 +254,6 @@ body {
   box-shadow: 0 6px 20px rgba(240,180,41,0.5);
 }
 
-/* Botones Tailwind genéricos */
 [data-theme="dark"] .bg-blue-600,
 [data-theme="dark"] .bg-blue-700          { background: #1d4ed8 !important; color: #fff !important; }
 [data-theme="dark"] .bg-yellow-500,
@@ -257,20 +266,24 @@ body {
 [data-theme="dark"] .bg-red-500,
 [data-theme="dark"] .bg-red-600           { background: #da3633 !important; color: #fff !important; }
 
-/* Botón gris (cancelar, volver, etc.) */
 [data-theme="dark"] .bg-gray-200:not(section):not(div):not(aside),
 [data-theme="dark"] a.bg-gray-200,
 [data-theme="dark"] button.bg-gray-200     { background: #1c2330 !important; color: #e6edf3 !important; }
 [data-theme="dark"] .hover\:bg-gray-300:hover { background: #21262d !important; }
 
 /* ============================================================
-   9. HEADER
+   9. HEADER — overflow visible para que el dropdown no se corte
    ============================================================ */
+header {
+  overflow: visible !important;
+}
+
 [data-theme="dark"] header,
 [data-theme="dark"] header[class*="bg-"]  {
   background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
   border-bottom: 1px solid #21262d !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.5) !important;
+  overflow: visible !important;
 }
 [data-theme="dark"] #meh-header {
   background: linear-gradient(180deg, #010409 0%, #0d1117 100%);
@@ -340,7 +353,6 @@ body {
 [data-theme="dark"] #cart-tax,
 [data-theme="dark"] #cart-total           { color: #f0b429 !important; }
 
-/* Cantidad de ítems — inputs tipo number en carrito */
 [data-theme="dark"] input[type="number"]  {
   background: #0d1117 !important;
   border-color: #30363d !important;
@@ -356,7 +368,6 @@ body {
 [data-theme="dark"] .order-item           { background: #161b22 !important; border: 1px solid #21262d !important; }
 [data-theme="dark"] .order-card:hover     { border-color: #388bfd !important; }
 
-/* Breadcrumb */
 [data-theme="dark"] nav[aria-label="breadcrumb"] a { color: #58a6ff !important; }
 [data-theme="dark"] nav[aria-label="breadcrumb"] span { color: #6e7681 !important; }
 
@@ -389,7 +400,7 @@ body {
 [data-theme="dark"] .bg-blue-50 .text-blue-600 { color: #58a6ff !important; }
 
 /* ============================================================
-   17. SIDEBAR / FILTROS (products list)
+   17. SIDEBAR / FILTROS — overflow visible para no cortar dropdown
    ============================================================ */
 [data-theme="dark"] aside .bg-white,
 [data-theme="dark"] aside > div,
@@ -400,6 +411,11 @@ body {
 [data-theme="dark"] aside label:hover     { background: #1c2330 !important; color: #58a6ff !important; }
 [data-theme="dark"] aside input[type="radio"],
 [data-theme="dark"] aside input[type="checkbox"] { accent-color: #388bfd; }
+
+aside {
+  position: relative;
+  z-index: 1;
+}
 
 /* Paginación */
 [data-theme="dark"] .flex.justify-center a {
@@ -422,7 +438,6 @@ body {
 [data-theme="dark"] .wishlist-btn-detail:hover,
 [data-theme="dark"] .wishlist-btn-detail.active { color: #f85149 !important; }
 
-/* Precio principal en detalle */
 [data-theme="dark"] span.text-4xl.font-bold,
 [data-theme="dark"] span.text-3xl.font-bold { color: #f0b429 !important; }
 [data-theme="dark"] span.text-4xl.font-bold.text-red-600 { color: #f85149 !important; }
@@ -455,20 +470,221 @@ body {
 [data-theme="dark"] #auth-modal-content .border-gray-200 { border-color: #21262d !important; }
 
 /* ============================================================
-   21. DROPDOWN USUARIO
+   21. DROPDOWN USUARIO — ESTILOS COMPLETOS PARA TODAS LAS PÁGINAS
    ============================================================ */
-[data-theme="dark"] #user-dropdown        { background: #161b22 !important; border-color: #30363d !important; }
-[data-theme="dark"] .dropdown-header      { background: linear-gradient(135deg, #1c2330 0%, #161b22 100%) !important; border-color: #21262d !important; }
-[data-theme="dark"] .dropdown-name        { color: #e6edf3 !important; }
-[data-theme="dark"] .dropdown-item        { color: #e6edf3 !important; }
-[data-theme="dark"] .dropdown-item:hover  { background: #1c2330 !important; color: #58a6ff !important; }
-[data-theme="dark"] .dropdown-item .item-icon { background: #21262d !important; color: #58a6ff !important; }
+
+/* ── Botón circular con iniciales ── */
+#user-menu-btn {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  border: 2px solid rgba(255,255,255,0.3) !important;
+  color: white !important;
+  font-weight: 800 !important;
+  font-size: 0.95rem !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 8px rgba(245,158,11,0.4) !important;
+  transition: all 0.2s ease !important;
+  flex-shrink: 0 !important;
+}
+#user-menu-btn:hover {
+  transform: scale(1.08) !important;
+  border-color: rgba(255,255,255,0.6) !important;
+  box-shadow: 0 4px 16px rgba(245,158,11,0.5) !important;
+}
+
+[data-theme="dark"] #user-menu-btn {
+  background: linear-gradient(135deg, #f0b429 0%, #b45309 100%) !important;
+  border-color: rgba(240,180,41,0.3) !important;
+  box-shadow: 0 2px 12px rgba(240,180,41,0.3) !important;
+}
+
+/* ── Contenedor relativo del dropdown — nunca debe cortar ── */
+header .relative {
+  overflow: visible !important;
+}
+
+/* ── Panel del dropdown ── */
+#user-dropdown {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05) !important;
+  overflow: hidden !important;
+  z-index: 99999 !important;
+  position: absolute !important;
+}
+
+[data-theme="dark"] #user-dropdown {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  box-shadow: 0 0 0 1px rgba(240,246,252,0.05), 0 24px 64px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.5) !important;
+}
+
+/* ── Header del dropdown ── */
+.dropdown-header {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%) !important;
+  padding: 18px 18px 16px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="dark"] .dropdown-header {
+  background: linear-gradient(135deg, #1c2330 0%, #161b22 100%) !important;
+  border-bottom: 1px solid #21262d !important;
+}
+
+/* ── Avatar dentro del dropdown ── */
+.dropdown-avatar {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  font-weight: 800 !important;
+  font-size: 1.1rem !important;
+  flex-shrink: 0 !important;
+  box-shadow: 0 2px 8px rgba(245,158,11,0.4) !important;
+}
+
+[data-theme="dark"] .dropdown-avatar {
+  background: linear-gradient(135deg, #f0b429 0%, #b45309 100%) !important;
+  box-shadow: 0 2px 12px rgba(240,180,41,0.3) !important;
+}
+
+/* ── Nombre y badge ── */
+.dropdown-name {
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  color: #1a202c !important;
+  line-height: 1.2 !important;
+}
+
+[data-theme="dark"] .dropdown-name { color: #e6edf3 !important; }
+
+.dropdown-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 2px 8px !important;
+  border-radius: 20px !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  margin-top: 4px !important;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  color: white !important;
+  box-shadow: 0 1px 4px rgba(37,99,235,0.3) !important;
+}
+
+[data-theme="dark"] .dropdown-badge {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%) !important;
+  box-shadow: 0 1px 6px rgba(29,78,216,0.4) !important;
+}
+
+/* ── Items del dropdown ── */
+.dropdown-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 18px !important;
+  color: #1a202c !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  border-bottom: 1px solid transparent !important;
+}
+
+.dropdown-item:hover {
+  background: #f0f7ff !important;
+  color: #2563eb !important;
+  padding-left: 22px !important;
+}
+
+[data-theme="dark"] .dropdown-item {
+  color: #e6edf3 !important;
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+  background: #1c2330 !important;
+  color: #58a6ff !important;
+  padding-left: 22px !important;
+}
+
+/* ── Icono dentro de cada item ── */
+.item-icon {
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  background: #e8edf2 !important;
+  color: #2563eb !important;
+  transition: all 0.15s ease !important;
+  font-size: 0.85rem !important;
+}
+
+[data-theme="dark"] .item-icon {
+  background: #21262d !important;
+  color: #58a6ff !important;
+}
+
+.dropdown-item:hover .item-icon {
+  background: rgba(37,99,235,0.1) !important;
+  transform: scale(1.1) !important;
+}
+
+[data-theme="dark"] .dropdown-item:hover .item-icon {
+  background: rgba(88,166,255,0.1) !important;
+  color: #58a6ff !important;
+}
+
+/* ── Item de logout ── */
+.dropdown-item.logout {
+  color: #dc2626 !important;
+}
+.dropdown-item.logout .item-icon {
+  color: #dc2626 !important;
+  background: rgba(220,38,38,0.08) !important;
+}
+.dropdown-item.logout:hover {
+  background: rgba(220,38,38,0.05) !important;
+  color: #dc2626 !important;
+  padding-left: 22px !important;
+}
+
 [data-theme="dark"] .dropdown-item.logout { color: #f85149 !important; }
-[data-theme="dark"] .dropdown-item.logout .item-icon { color: #f85149 !important; background: rgba(248,81,73,0.1) !important; }
-[data-theme="dark"] .dropdown-divider     { background: #21262d !important; }
+[data-theme="dark"] .dropdown-item.logout .item-icon {
+  color: #f85149 !important;
+  background: rgba(248,81,73,0.1) !important;
+}
+[data-theme="dark"] .dropdown-item.logout:hover {
+  background: rgba(248,81,73,0.08) !important;
+  color: #f85149 !important;
+}
+
+/* ── Divisor ── */
+.dropdown-divider {
+  height: 1px !important;
+  background: #e2e8f0 !important;
+  margin: 4px 0 !important;
+}
+
+[data-theme="dark"] .dropdown-divider { background: #21262d !important; }
 
 /* ============================================================
-   22. TRUST SECTION / CARDS DE ÍCONOS
+   22. TRUST SECTION
    ============================================================ */
 [data-theme="dark"] .trust-section        { background: #0d1117 !important; border-color: #21262d !important; }
 [data-theme="dark"] .trust-card {
@@ -517,29 +733,24 @@ body, header, footer, main, section, aside,
 [data-theme="dark"] .quick-reply-btn:hover   { background: #1c2330 !important; border-color: #388bfd !important; color: #58a6ff !important; }
 
 /* ============================================================
-   26. LOGIN & REGISTER — FIXES
+   26. LOGIN & REGISTER
    ============================================================ */
-
-/* Card principal login/register */
 [data-theme="dark"] .bg-white.rounded-2xl,
 [data-theme="dark"] .rounded-2xl.shadow-2xl {
   background: #161b22 !important;
   border: 1px solid #21262d !important;
 }
 
-/* Header azul del card — mantener gradiente */
 [data-theme="dark"] .bg-gradient-to-r.from-blue-800.to-blue-600,
 [data-theme="dark"] .bg-gradient-to-r.from-blue-600.to-blue-800 {
   background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%) !important;
 }
 
-/* Labels en login/register */
 [data-theme="dark"] .block.text-gray-700.font-bold,
 [data-theme="dark"] label.block.text-gray-700 {
   color: #8b949e !important;
 }
 
-/* Inputs custom del register */
 [data-theme="dark"] .custom-input {
   background: #0d1117 !important;
   border: 2px solid #30363d !important;
@@ -552,7 +763,6 @@ body, header, footer, main, section, aside,
 }
 [data-theme="dark"] .custom-input::placeholder { color: #6e7681 !important; }
 
-/* Botón "Crear Cuenta" y "Iniciar Sesión" — amarillo/azul siempre */
 [data-theme="dark"] button[type="submit"].w-full,
 [data-theme="dark"] button[type="submit"].bg-gradient-to-r {
   background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
@@ -564,14 +774,12 @@ body, header, footer, main, section, aside,
   box-shadow: 0 6px 20px rgba(240,180,41,0.4) !important;
 }
 
-/* Separador "O inicia sesión con email" */
 [data-theme="dark"] .relative.my-6 .border-t-2 { border-color: #21262d !important; }
 [data-theme="dark"] .relative.my-6 span {
   background: #161b22 !important;
   color: #6e7681 !important;
 }
 
-/* Botón Google */
 [data-theme="dark"] .bg-white.border-2.border-gray-300 {
   background: #1c2330 !important;
   border-color: #30363d !important;
@@ -582,14 +790,10 @@ body, header, footer, main, section, aside,
   border-color: #388bfd !important;
 }
 
-/* Checkbox recordarme */
 [data-theme="dark"] .flex.items-center.text-gray-700 span { color: #8b949e !important; }
-
-/* Links de pie "¿Ya tienes cuenta?" */
 [data-theme="dark"] .mt-6.pt-6.border-t-2 { border-color: #21262d !important; }
 [data-theme="dark"] .mt-6.pt-6.border-t-2 p { color: #8b949e !important; }
 
-/* Requisitos de contraseña — caja azul */
 [data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 {
   background: rgba(56,139,253,0.08) !important;
   border-color: #388bfd !important;
@@ -598,10 +802,8 @@ body, header, footer, main, section, aside,
 [data-theme="dark"] .requirement-not-met { color: #6e7681 !important; }
 [data-theme="dark"] .requirement-met { color: #3fb950 !important; }
 
-/* Barra de fuerza fondo */
 [data-theme="dark"] .bg-gray-200.rounded-full { background: #21262d !important; }
 
-/* Mensajes de error/éxito del formulario */
 [data-theme="dark"] .bg-red-50.border-l-4 {
   background: rgba(248,81,73,0.1) !important;
   border-color: #f85149 !important;
@@ -613,18 +815,15 @@ body, header, footer, main, section, aside,
 [data-theme="dark"] .text-red-700 { color: #f85149 !important; }
 [data-theme="dark"] .text-green-700 { color: #3fb950 !important; }
 
-/* Error message box inline */
 [data-theme="dark"] .error-message {
   background: rgba(248,81,73,0.1) !important;
   border-left-color: #f85149 !important;
 }
 [data-theme="dark"] .error-message span { color: #f85149 !important; }
-
-/* Info teléfono */
 [data-theme="dark"] .text-xs.text-gray-500 { color: #6e7681 !important; }
 
 /* ============================================================
-   27. THEME TOGGLE BUTTON — FIX SOL/LUNA
+   27. THEME TOGGLE BUTTON
    ============================================================ */
 .theme-toggle-button {
   position: relative;
@@ -643,27 +842,20 @@ body, header, footer, main, section, aside,
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .theme-toggle-button .sun-icon {
-  opacity: 1;
-  transform: rotate(0deg) scale(1);
-  color: #fbbf24;
+  opacity: 1; transform: rotate(0deg) scale(1); color: #fbbf24;
 }
 .theme-toggle-button .moon-icon {
-  opacity: 0;
-  transform: rotate(90deg) scale(0.3);
-  color: #94a3b8;
+  opacity: 0; transform: rotate(90deg) scale(0.3); color: #94a3b8;
 }
 .theme-toggle-button.dark-mode .sun-icon {
-  opacity: 0;
-  transform: rotate(-90deg) scale(0.3);
+  opacity: 0; transform: rotate(-90deg) scale(0.3);
 }
 .theme-toggle-button.dark-mode .moon-icon {
-  opacity: 1;
-  transform: rotate(0deg) scale(1);
-  color: #e2e8f0;
+  opacity: 1; transform: rotate(0deg) scale(1); color: #e2e8f0;
 }
 
 /* ============================================================
-   28. MODAL AUTH — BOTONES SIEMPRE CON COLOR
+   28. MODAL AUTH — BOTONES
    ============================================================ */
 .btn-modal-login,
 .btn-modal-login:hover {
@@ -681,3 +873,40 @@ body, header, footer, main, section, aside,
 [data-theme="dark"] #auth-modal-content .text-gray-800 { color: #e6edf3 !important; }
 [data-theme="dark"] #auth-modal-content .border-gray-200 { border-color: #21262d !important; }
 [data-theme="dark"] #auth-modal-content ul li span { color: #8b949e !important; }
+
+/* ============================================================
+   FIX DASHBOARD — ÍCONOS SOL/LUNA
+   ============================================================ */
+
+/* Modo claro — sol visible, luna oculta */
+#dash-meh-header .theme-toggle-button .sun-icon,
+#dash-drawer     .theme-toggle-button .sun-icon,
+.eh-header       .theme-toggle-button .sun-icon {
+  opacity: 1 !important;
+  transform: rotate(0deg) scale(1) !important;
+  display: block !important;
+}
+#dash-meh-header .theme-toggle-button .moon-icon,
+#dash-drawer     .theme-toggle-button .moon-icon,
+.eh-header       .theme-toggle-button .moon-icon {
+  opacity: 0 !important;
+  transform: rotate(90deg) scale(0.3) !important;
+  display: none !important;
+}
+
+/* Modo oscuro — luna visible, sol oculto */
+[data-theme="dark"] #dash-meh-header .theme-toggle-button .sun-icon,
+[data-theme="dark"] #dash-drawer     .theme-toggle-button .sun-icon,
+[data-theme="dark"] .eh-header       .theme-toggle-button .sun-icon {
+  opacity: 0 !important;
+  transform: rotate(-90deg) scale(0.3) !important;
+  display: none !important;
+}
+[data-theme="dark"] #dash-meh-header .theme-toggle-button .moon-icon,
+[data-theme="dark"] #dash-drawer     .theme-toggle-button .moon-icon,
+[data-theme="dark"] .eh-header       .theme-toggle-button .moon-icon {
+  opacity: 1 !important;
+  transform: rotate(0deg) scale(1) !important;
+  display: block !important;
+  color: #e2e8f0 !important;
+}

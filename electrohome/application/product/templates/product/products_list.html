@@ -142,6 +142,44 @@ html[data-theme="dark"] body #auth-modal .btn-modal-register:hover {
   color: #ffffff !important;
   border: none !important;
 }
+/* ============================================================
+   FIX DROPDOWN USUARIO — products_list
+   ============================================================ */
+
+/* El header nunca debe cortar su propio contenido */
+header {
+  overflow: visible !important;
+}
+
+/* El contenedor relativo del botón usuario */
+header .relative {
+  overflow: visible !important;
+}
+
+/* Dropdown por encima de TODO, incluyendo el sidebar sticky */
+#user-dropdown {
+  position: absolute !important;
+  z-index: 99999 !important;
+  overflow: visible !important;
+}
+
+/* Fix modo oscuro */
+[data-theme="dark"] #user-dropdown {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.8) !important;
+}
+
+/* El aside NO debe crear un stacking context nuevo */
+aside {
+  position: relative;
+  z-index: 1 !important;
+}
+
+/* El sticky del aside tampoco debe bloquear */
+aside > div {
+  overflow: visible !important;
+}
     </style>
 </head>
 <body class="bg-gray-50">
