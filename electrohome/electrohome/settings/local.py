@@ -6,20 +6,17 @@ import os
 DEBUG = True
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY')
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
+
 # ===== CONFIGURACIÓN DE BASE DE DATOS POSTGRESQL =====
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'electrohome',  
-        'USER': 'postgres',
-        'PASSWORD': 'Alan1130Pass',  
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
 
-# ===== CONFIGURACIÓN DE CACHÉ PARA RECOMENDACIONES (DESARROLLO) =====
-# Opción 1: Caché en memoria local (NO REQUIERE REDIS - Fácil para desarrollo)
+# ===== CONFIGURACIÓN DE CACHÉ =====
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -30,24 +27,8 @@ CACHES = {
     }
 }
 
-# Opción 2: Redis (DESCOMENTA si instalaste Redis para mejor performance)
-# Instalar: pip install django-redis redis
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django_redis.cache.RedisCache',
-#         'LOCATION': 'redis://127.0.0.1:6379/1',
-#         'OPTIONS': {
-#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-#             'IGNORE_EXCEPTIONS': True,  # No romper la app si Redis falla
-#         },
-#         'KEY_PREFIX': 'electrohome_dev',
-#         'TIMEOUT': 3600,
-#     }
-# }
-
-# Configuración de timeouts de caché para recomendaciones
-RECOMMENDATION_CACHE_TIMEOUT = 3600  # 1 hora
-CACHE_MIDDLEWARE_SECONDS = 300  # 5 minutos
+RECOMMENDATION_CACHE_TIMEOUT = 3600
+CACHE_MIDDLEWARE_SECONDS = 300
 
 # ===== CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS =====
 STATIC_URL = 'static/'
@@ -56,57 +37,34 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# ===== CONFIGURACIÓN DE ARCHIVOS MEDIA (IMÁGENES) =====
+# ===== CONFIGURACIÓN DE ARCHIVOS MEDIA =====
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# ===== CONFIGURACIÓN CSRF PARA DESARROLLO =====
+# ===== CONFIGURACIÓN CSRF =====
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
-CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:8000',
-    'http://localhost:8000'
-]
+CSRF_COOKIE_SAMESITE = 'Lax'
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
 
 # ===== CONFIGURACIÓN DE SESIONES =====
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_AGE = 86400  # 24 horas
+SESSION_COOKIE_AGE = 86400
 SESSION_SAVE_EVERY_REQUEST = False
 
-# ===== CONFIGURACIÓN PARA DESARROLLO =====
-CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
-
-# ===== CONFIGURACIÓN DE EMAIL =====
-# Para desarrollo (muestra emails en consola)
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# Para producción con Gmail (ACTIVAR ESTO)
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')  # Leer desde .env
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # Leer desde .env
-DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
-SERVER_EMAIL = config('EMAIL_HOST_USER')
-
-PASSWORD_RESET_TIMEOUT = 86400  # 24 horas
-# Para producción con Gmail (descomenta cuando lo necesites):
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='tu_email@gmail.com')
-# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='tu_contraseña_app')
-# DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER', default='tu_email@gmail.com')
-
-PASSWORD_RESET_TIMEOUT = 86400  # 24 horas
+# ===== CONFIGURACIÓN DE EMAIL CON RESEND =====
+EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
+ANYMAIL = {
+    'RESEND_API_KEY': config('RESEND_API_KEY'),
+}
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@electrohome.com')
+SERVER_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@electrohome.com')
+PASSWORD_RESET_TIMEOUT = 86400
 
 # ===== CONFIGURACIÓN DE RECOMENDACIONES =====
 RECOMMENDATION_CONFIG = {
-    'CACHE_TIMEOUT': 3600,  # 1 hora
+    'CACHE_TIMEOUT': 3600,
     'MIN_RATINGS_FOR_BEST_RATED': 3,
     'GLOBAL_AVERAGE_RATING': 3.5,
     'SIMILAR_USERS_LIMIT': 20,
@@ -115,107 +73,7 @@ RECOMMENDATION_CONFIG = {
     'VIEW_DUPLICATE_THRESHOLD_MINUTES': 5,
 }
 
-# ===== LOGGING PARA DEBUGGING =====
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'WARNING',  # ✅ Cambiado de INFO a WARNING
-        },
-        'application': {
-            'handlers': ['console'],
-            'level': 'WARNING',  # ✅ Cambiado de DEBUG a WARNING
-        },
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'WARNING',  # ✅ Cambiado de DEBUG a WARNING - esto oculta las queries SQL
-        },
-    },
-}
-
-# ===== DJANGO DEBUG TOOLBAR (OPCIONAL - MUY ÚTIL) =====
-# Instalar: pip install django-debug-toolbar
-# Descomentar para activar:
-"""
-INSTALLED_APPS += ['debug_toolbar']
-MIDDLEWARE = ['debug_toolbar.middleware.DebugToolbarMiddleware'] + MIDDLEWARE
-INTERNAL_IPS = ['127.0.0.1']
-
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,
-    'SHOW_COLLAPSED': True,
-}
-"""
-
-
-
-# Configuración de allauth para Google
-SOCIALACCOUNT_QUERY_EMAIL = True
-SOCIALACCOUNT_EMAIL_REQUIRED = True
-SOCIALACCOUNT_STORE_TOKENS = True
-
-# ✅ ESTO ES LO QUE NECESITAS AGREGAR - ELIMINA LA PÁGINA INTERMEDIA
-SOCIALACCOUNT_LOGIN_ON_GET = True
-
-# Configuración adicional de Google OAuth
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
-# Configuración de login/signup automático
-SOCIALACCOUNT_AUTO_SIGNUP = True
-ACCOUNT_EMAIL_VERIFICATION = 'none'  # No requiere verificación para Google
-SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-
-# ===== CONFIGURACIÓN DE WOMPI =====
-WOMPI_PUBLIC_KEY = config('WOMPI_PUBLIC_KEY')
-WOMPI_PRIVATE_KEY = config('WOMPI_PRIVATE_KEY')
-WOMPI_ENVIRONMENT = config('WOMPI_ENVIRONMENT', default='test')
-
-if WOMPI_ENVIRONMENT == 'prod':
-    WOMPI_API_URL = 'https://production.wompi.co/v1'
-else:
-    WOMPI_API_URL = 'https://sandbox.wompi.co/v1'
-
-# URL base de tu sitio (para redirect después del pago)
-SITE_URL = 'http://127.0.0.1:8000'
-
-# ===== CLOUDINARY (LOCAL) =====
-INSTALLED_APPS += ['cloudinary_storage', 'cloudinary']
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': config('CLOUDINARY_API_KEY'),
-    'API_SECRET': config('CLOUDINARY_API_SECRET'),
-}
-
+# ===== LOGGING =====
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -229,3 +87,49 @@ LOGGING = {
         'level': 'WARNING',
     },
 }
+
+# ===== ALLAUTH / GOOGLE =====
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_STORE_TOKENS = True
+SOCIALACCOUNT_LOGIN_ON_GET = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+# ===== WOMPI =====
+WOMPI_PUBLIC_KEY = config('WOMPI_PUBLIC_KEY')
+WOMPI_PRIVATE_KEY = config('WOMPI_PRIVATE_KEY')
+WOMPI_ENVIRONMENT = config('WOMPI_ENVIRONMENT', default='test')
+
+if WOMPI_ENVIRONMENT == 'prod':
+    WOMPI_API_URL = 'https://production.wompi.co/v1'
+else:
+    WOMPI_API_URL = 'https://sandbox.wompi.co/v1'
+
+SITE_URL = 'https://electrohome.site'
+
+# ===== CLOUDINARY =====
+INSTALLED_APPS += ['cloudinary_storage', 'cloudinary', 'anymail']
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
+}
+
+# ===== SEGURIDAD =====
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SITE_ID = 7
+CSRF_TRUSTED_ORIGINS = ['https://electrohome.site', 'https://www.electrohome.site']
