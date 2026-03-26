@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Min, Max
 
-from .models import Producto, Categoria, Promocion, BannerPromocion
+from .models import Producto, Categoria, Promocion, BannerPromocion, ProductView
 from .cart_services import CartService
 from .recommendations import (
     RecommendationEngine, 
@@ -20,58 +20,129 @@ from application.product.models import Resena
 
 @never_cache 
 def index(request):
-    """
-    Vista principal del home con recomendaciones personalizadas
-    """
-    # Inicializar motor de recomendaciones
+    from django.db.models import Count, Sum
+    from django.utils import timezone
+    
     user = request.user if request.user.is_authenticated else None
     engine = RecommendationEngine(user=user)
-    
-    # Obtener recomendaciones del homepage
     recomendaciones = engine.get_homepage_recommendations()
-    
-    # Productos por categoría para carruseles
-    productos_cocina = Producto.objects.filter(
-        categoria__nombre__icontains='cocina',
-        activo=True,
-        stock__gt=0
-    ).select_related('categoria').order_by('-fecha_creacion')[:15]
-    
-    productos_limpieza = Producto.objects.filter(
-        categoria__nombre__icontains='limpieza',
-        activo=True,
-        stock__gt=0
-    ).select_related('categoria').order_by('-fecha_creacion')[:15]
-    
-    # Si no hay suficientes recomendaciones personalizadas, completar
-    productos_destacados = list(recomendaciones.get('personalized', []))
-    if len(productos_destacados) < 6:
-        adicionales = Producto.objects.filter(
-            activo=True,
-            stock__gt=0
-        ).exclude(
-            id__in=[p.id for p in productos_destacados]
-        ).select_related('categoria').order_by('-fecha_creacion')[:6 - len(productos_destacados)]
-        productos_destacados.extend(list(adicionales))
 
-    # Banners promocionales
+    ids_usados = set()
+
+    # ── Ofertas especiales ────────────────────────────────────────────
+    hoy = timezone.now().date()
+    ids_con_promo = Promocion.objects.filter(
+        activo=True,
+        fecha_inicio__lte=hoy,
+        fecha_fin__gte=hoy
+    ).values_list('producto_id', flat=True)
+
+    productos_en_promo = list(
+        Producto.objects.filter(id__in=ids_con_promo, activo=True, stock__gt=0)
+        .exclude(id__in=ids_usados)
+        .select_related('categoria')
+        .prefetch_related('promociones')[:6]
+    )
+    if len(productos_en_promo) < 6:
+        adicionales = Producto.objects.filter(
+            activo=True, stock__gt=0
+        ).exclude(id__in=ids_usados | {p.id for p in productos_en_promo}
+        ).select_related('categoria').order_by('-fecha_creacion')[:6 - len(productos_en_promo)]
+        productos_en_promo.extend(list(adicionales))
+
+    ids_usados.update(p.id for p in productos_en_promo)
+
+    # ── Recomendados ─────────────────────────────────────────────────
+    recomendados = [p for p in recomendaciones.get('personalized', []) if p.id not in ids_usados]
+    if len(recomendados) < 6:
+        adicionales = Producto.objects.filter(
+            activo=True, stock__gt=0
+        ).exclude(id__in=ids_usados | {p.id for p in recomendados}
+        ).select_related('categoria').order_by('-fecha_creacion')[:15 - len(recomendados)]
+        recomendados.extend(list(adicionales))
+
+    ids_usados.update(p.id for p in recomendados)
+
+    # ── Más vendidos ──────────────────────────────────────────────────
+    from application.order.models import OrderItem as OI
+    ids_mas_vendidos = (
+        OI.objects.filter(order__status='delivered')
+        .values('product_id')
+        .annotate(total=Sum('quantity'))
+        .order_by('-total')
+        .values_list('product_id', flat=True)[:30]
+    )
+    mas_vendidos = list(Producto.objects.filter(
+        id__in=ids_mas_vendidos, activo=True, stock__gt=0
+    ).exclude(id__in=ids_usados).select_related('categoria')[:15])
+
+    if len(mas_vendidos) < 6:
+        engine2 = RecommendationEngine(user=user)
+        populares = engine2.get_popular_products(limit=30)
+        ids_ya = ids_usados | {p.id for p in mas_vendidos}
+        for p in populares:
+            if p.id not in ids_ya:
+                mas_vendidos.append(p)
+                ids_ya.add(p.id)
+            if len(mas_vendidos) >= 15:
+                break
+
+    ids_usados.update(p.id for p in mas_vendidos)
+
+    # ── Más vistos ────────────────────────────────────────────────────
+    ids_mas_vistos = (
+        ProductView.objects.values('product_id')
+        .annotate(total=Count('id'))
+        .order_by('-total')
+        .values_list('product_id', flat=True)[:30]
+    )
+    mas_vistos = list(Producto.objects.filter(
+        id__in=ids_mas_vistos, activo=True, stock__gt=0
+    ).exclude(id__in=ids_usados).select_related('categoria')[:15])
+
+    if len(mas_vistos) < 6:
+        adicionales = Producto.objects.filter(
+            activo=True, stock__gt=0
+        ).exclude(id__in=ids_usados | {p.id for p in mas_vistos}
+        ).select_related('categoria').order_by('-fecha_creacion')[:15 - len(mas_vistos)]
+        mas_vistos.extend(list(adicionales))
+
+    ids_usados.update(p.id for p in mas_vistos)
+
+    # ── Nuevos ────────────────────────────────────────────────────────
+    nuevos = list(
+        Producto.objects.filter(activo=True, stock__gt=0)
+        .exclude(id__in=ids_usados)
+        .select_related('categoria')
+        .order_by('-fecha_creacion')[:15]
+    )
+    ids_usados.update(p.id for p in nuevos)
+
+    # ── Carruseles por categoría ──────────────────────────────────────
+    productos_cocina = Producto.objects.filter(
+        categoria__nombre__icontains='cocina', activo=True, stock__gt=0
+    ).exclude(id__in=ids_usados).select_related('categoria').order_by('-fecha_creacion')[:15]
+
+    ids_usados.update(p.id for p in productos_cocina)
+
+    productos_limpieza = Producto.objects.filter(
+        categoria__nombre__icontains='limpieza', activo=True, stock__gt=0
+    ).exclude(id__in=ids_usados).select_related('categoria').order_by('-fecha_creacion')[:15]
+
     banners = BannerPromocion.objects.filter(activo=True)
-    
+
     context = {
-        # Para sección "Promociones Especiales"
-        'productos': productos_destacados[:6],
-        
-        # Para carruseles
+        'productos': productos_en_promo[:6],
+        'recomendados': recomendados[:15],        # ← variable separada
+        'mas_vendidos': mas_vendidos,
+        'mas_vistos': mas_vistos,
+        'nuevos': nuevos,
         'productos_cocina': productos_cocina,
         'productos_limpieza': productos_limpieza,
-        
-        # Categorías
         'categorias': Categoria.objects.filter(activo=True),
-
-        # Banners
         'banners': banners,
     }
-    
+
     return render(request, 'product/home.html', context)
 
 

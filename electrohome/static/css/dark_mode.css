@@ -910,3 +910,22 @@ body, header, footer, main, section, aside,
   display: block !important;
   color: #e2e8f0 !important;
 }
+/* ============================================================
+   FIX HOVERS CLAROS EN DARK MODE (REDES / TARJETAS / LINKS)
+   ============================================================ */
+
+[data-theme="dark"] .hover\:bg-blue-50:hover {
+  background: rgba(56, 139, 253, 0.12) !important;
+}
+
+[data-theme="dark"] .hover\:bg-pink-50:hover {
+  background: rgba(236, 72, 153, 0.12) !important;
+}
+
+[data-theme="dark"] .hover\:bg-gray-50:hover {
+  background: #1c2330 !important;
+}
+
+[data-theme="dark"] .hover\:bg-gray-100:hover {
+  background: #21262d !important;
+}
