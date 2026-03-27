@@ -440,3 +440,111 @@ class BannerPromocion(models.Model):
 
     def __str__(self):
         return self.titulo
+    
+# ═══════════════════════════════════════════
+# SECCIONES PROMOCIONALES (Black Friday, etc)
+# ═══════════════════════════════════════════
+
+class SeccionPromocional(models.Model):
+    ICONO_CHOICES = [
+        ('🔥', '🔥 Fuego'),
+        ('⚡', '⚡ Rayo'),
+        ('🏆', '🏆 Trofeo'),
+        ('⭐', '⭐ Estrella'),
+        ('✨', '✨ Brillos'),
+        ('🎯', '🎯 Diana'),
+        ('💥', '💥 Explosión'),
+        ('🛒', '🛒 Carrito'),
+        ('🖤', '🖤 Negro'),
+        ('🎉', '🎉 Fiesta'),
+    ]
+
+    COLOR_CHOICES = [
+        ('red',    'Rojo'),
+        ('blue',   'Azul'),
+        ('yellow', 'Amarillo'),
+        ('green',  'Verde'),
+        ('purple', 'Morado'),
+        ('black',  'Negro'),
+        ('orange', 'Naranja'),
+    ]
+
+    nombre        = models.CharField(max_length=100)
+    slug          = models.SlugField(max_length=120, unique=True, blank=True)
+    subtitulo     = models.CharField(max_length=200, blank=True)
+    icono         = models.CharField(max_length=10, choices=ICONO_CHOICES, default='🔥')
+    color_acento  = models.CharField(max_length=20, choices=COLOR_CHOICES, default='red')
+    activo        = models.BooleanField(default=True)
+    orden         = models.PositiveSmallIntegerField(default=0)
+    fecha_inicio  = models.DateField()
+    fecha_fin     = models.DateField()
+    mostrar_timer = models.BooleanField(default=False)
+    url_ver_todo  = models.CharField(max_length=200, blank=True)
+    created_at    = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['orden']
+        verbose_name = 'Sección Promocional'
+        verbose_name_plural = 'Secciones Promocionales'
+
+    def __str__(self):
+        return self.nombre
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            from django.utils.text import slugify
+            self.slug = slugify(self.nombre)
+        super().save(*args, **kwargs)
+
+    @property
+    def vigente(self):
+        hoy = timezone.now().date()
+        return self.activo and self.fecha_inicio <= hoy <= self.fecha_fin
+
+    @property
+    def total_productos(self):
+        return self.productos_seccion.count()
+
+
+class ProductoSeccion(models.Model):
+    seccion              = models.ForeignKey(
+                               SeccionPromocional,
+                               on_delete=models.CASCADE,
+                               related_name='productos_seccion'
+                           )
+    producto             = models.ForeignKey(
+                               Producto,
+                               on_delete=models.CASCADE,
+                               related_name='secciones'
+                           )
+    descuento_porcentaje = models.DecimalField(max_digits=5, decimal_places=2)
+    precio_promocional   = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    orden                = models.PositiveSmallIntegerField(default=0)
+    destacado            = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['orden']
+        unique_together = ('seccion', 'producto')
+        verbose_name = 'Producto en Sección'
+        verbose_name_plural = 'Productos en Secciones'
+
+    def __str__(self):
+        return f"{self.producto.nombre} — {self.seccion.nombre} ({self.descuento_porcentaje}%)"
+
+    def save(self, *args, **kwargs):
+        if self.descuento_porcentaje and self.producto.precio:
+            from decimal import Decimal
+            self.precio_promocional = self.producto.precio * (
+                1 - Decimal(str(self.descuento_porcentaje)) / 100
+            )
+        super().save(*args, **kwargs)
+
+    @property
+    def precio_original(self):
+        return self.producto.precio
+
+    @property
+    def ahorro(self):
+        if self.precio_promocional:
+            return self.producto.precio - self.precio_promocional
+        return 0
