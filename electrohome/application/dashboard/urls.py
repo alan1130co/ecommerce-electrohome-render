@@ -30,21 +30,23 @@ urlpatterns = [
     path('usuarios/', views.usuarios_list, name='usuarios'),
     path('pedidos/<int:pedido_id>/estado/', views.cambiar_estado_pedido, name='cambiar_estado_pedido'),
     
+    # Promociones
     path('promociones/', views.promociones_list, name='promociones'),
     path('promociones/crear/', views.crear_promocion, name='crear_promocion'),
     path('promociones/<int:promo_id>/editar/', views.editar_promocion, name='editar_promocion'),
     path('promociones/<int:promo_id>/eliminar/', views.eliminar_promocion, name='eliminar_promocion'),
     path('envio-masivo/', views.envio_masivo, name='envio_masivo'),
     
-    path('resenas/',                         views.resenas_list,    name='resenas'),
-path('resenas/<int:resena_id>/aprobar/', views.aprobar_resena,  name='aprobar_resena'),
-path('resenas/<int:resena_id>/rechazar/',views.rechazar_resena, name='rechazar_resena'),
-path('resenas/<int:resena_id>/eliminar/',views.eliminar_resena, name='eliminar_resena'),
-]
+    # Reseñas
+    path('resenas/', views.resenas_list, name='resenas'),
+    path('resenas/<int:resena_id>/aprobar/', views.aprobar_resena, name='aprobar_resena'),
+    path('resenas/<int:resena_id>/rechazar/', views.rechazar_resena, name='rechazar_resena'),
+    path('resenas/<int:resena_id>/eliminar/', views.eliminar_resena, name='eliminar_resena'),
 
-# Secciones promocionales y banners
-path('secciones/', views.secciones_list, name='secciones'),
-path('banners/crear/', views.crear_banner, name='crear_banner'),
-path('banners/<int:banner_id>/editar/', views.editar_banner, name='editar_banner'),
-path('banners/<int:banner_id>/eliminar/', views.eliminar_banner, name='eliminar_banner'),
-path('banners/<int:banner_id>/toggle/', views.toggle_banner, name='toggle_banner'),
+    # Secciones promocionales y banners  ← ahora SÍ están adentro
+    path('secciones/', views.secciones_list, name='secciones'),
+    path('banners/crear/', views.crear_banner, name='crear_banner'),
+    path('banners/<int:banner_id>/editar/', views.editar_banner, name='editar_banner'),
+    path('banners/<int:banner_id>/eliminar/', views.eliminar_banner, name='eliminar_banner'),
+    path('banners/<int:banner_id>/toggle/', views.toggle_banner, name='toggle_banner'),
+]  # ← corchete de cierre al final
