@@ -134,3 +134,47 @@ class PromocionForm(forms.ModelForm):
             'fecha_fin': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'activo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
+    
+
+from application.product.models import BannerPromocion
+
+class BannerForm(forms.ModelForm):
+    class Meta:
+        model = BannerPromocion
+        fields = ['titulo', 'subtitulo', 'imagen', 'url_destino', 
+                  'texto_boton', 'color_boton', 'orden', 'activo']
+        widgets = {
+            'titulo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ej: Hasta 50% OFF en electrodomésticos'
+            }),
+            'subtitulo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ej: Ofertas por tiempo limitado'
+            }),
+            'imagen': forms.FileInput(attrs={'class': 'form-control'}),
+            'url_destino': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '/productos/?categoria=7'
+            }),
+            'texto_boton': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Ver ofertas'
+            }),
+            'color_boton': forms.TextInput(attrs={
+                'class': 'form-control',
+                'type': 'color'
+            }),
+            'orden': forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+            'activo': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        labels = {
+            'titulo': 'Título del banner',
+            'subtitulo': 'Subtítulo',
+            'imagen': 'Imagen del banner',
+            'url_destino': 'URL al hacer clic',
+            'texto_boton': 'Texto del botón',
+            'color_boton': 'Color del botón',
+            'orden': 'Orden (0 = primero)',
+            'activo': 'Banner activo',
+        }

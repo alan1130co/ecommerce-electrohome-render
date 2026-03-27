@@ -599,7 +599,6 @@
         <a class="eh-nav-link {% if request.resolver_match.url_name == 'resenas' %}active{% endif %}"
            href="{% url 'dashboard:resenas' %}">
             <i class="fas fa-star"></i> Reseñas
-            {% comment %} Badge de pendientes {% endcomment %}
         </a>
 
         <div class="eh-nav-section">Marketing</div>
@@ -607,10 +606,15 @@
            href="{% url 'dashboard:promociones' %}">
             <i class="fas fa-tag"></i> Promociones
         </a>
+        <a class="eh-nav-link {% if 'secciones' in request.path %}active{% endif %}"
+           href="{% url 'dashboard:secciones' %}">
+            <i class="fas fa-layer-group"></i> Secciones del Home
+        </a>
         <a class="eh-nav-link {% if request.resolver_match.url_name == 'envio_masivo' %}active{% endif %}"
            href="{% url 'dashboard:envio_masivo' %}">
             <i class="fas fa-envelope"></i> Envío Masivo
         </a>
+
     </nav>
 
     <div class="eh-sidebar-footer">

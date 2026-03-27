@@ -671,3 +671,80 @@ def eliminar_resena(request, resena_id):
         resena.delete()
         messages.success(request, 'Reseña eliminada definitivamente.')
     return redirect('dashboard:resenas')
+
+# ========== SECCIONES PROMOCIONALES ==========
+from application.product.models import BannerPromocion
+
+@supervisor_required
+def secciones_list(request):
+    from application.product.models import Promocion
+    hoy = timezone.now().date()
+    
+    # Agrupa las promociones vigentes por etiqueta (cada etiqueta = una "sección")
+    promociones = Promocion.objects.filter(
+        activo=True
+    ).select_related('producto').order_by('etiqueta', '-created_at')
+    
+    banners = BannerPromocion.objects.all().order_by('orden')
+    
+    return render(request, 'dashboard/secciones.html', {
+        'promociones': promociones,
+        'banners': banners,
+        'hoy': hoy,
+    })
+
+
+@supervisor_required
+def crear_banner(request):
+    from .forms import BannerForm
+    if request.method == 'POST':
+        form = BannerForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Banner creado correctamente.')
+            return redirect('dashboard:secciones')
+        else:
+            messages.error(request, 'Error al crear el banner.')
+    else:
+        form = BannerForm()
+    return render(request, 'dashboard/form_banner.html', {
+        'form': form, 'titulo': 'Crear Banner', 'boton': 'Crear'
+    })
+
+
+@supervisor_required
+def editar_banner(request, banner_id):
+    from .forms import BannerForm
+    banner = get_object_or_404(BannerPromocion, id=banner_id)
+    if request.method == 'POST':
+        form = BannerForm(request.POST, request.FILES, instance=banner)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Banner actualizado.')
+            return redirect('dashboard:secciones')
+    else:
+        form = BannerForm(instance=banner)
+    return render(request, 'dashboard/form_banner.html', {
+        'form': form, 'titulo': 'Editar Banner', 'boton': 'Actualizar', 'banner': banner
+    })
+
+
+@supervisor_required
+def eliminar_banner(request, banner_id):
+    banner = get_object_or_404(BannerPromocion, id=banner_id)
+    if request.method == 'POST':
+        banner.delete()
+        messages.success(request, 'Banner eliminado.')
+        return redirect('dashboard:secciones')
+    return render(request, 'dashboard/eliminar_banner.html', {'banner': banner})
+
+
+@supervisor_required  
+def toggle_banner(request, banner_id):
+    """Activar/desactivar banner desde la lista (AJAX)"""
+    banner = get_object_or_404(BannerPromocion, id=banner_id)
+    if request.method == 'POST':
+        banner.activo = not banner.activo
+        banner.save()
+        return JsonResponse({'activo': banner.activo})
+    return JsonResponse({'error': 'Método no permitido'}, status=405)

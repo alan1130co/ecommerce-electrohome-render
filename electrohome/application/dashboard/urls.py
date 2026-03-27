@@ -42,3 +42,9 @@ path('resenas/<int:resena_id>/rechazar/',views.rechazar_resena, name='rechazar_r
 path('resenas/<int:resena_id>/eliminar/',views.eliminar_resena, name='eliminar_resena'),
 ]
 
+# Secciones promocionales y banners
+path('secciones/', views.secciones_list, name='secciones'),
+path('banners/crear/', views.crear_banner, name='crear_banner'),
+path('banners/<int:banner_id>/editar/', views.editar_banner, name='editar_banner'),
+path('banners/<int:banner_id>/eliminar/', views.eliminar_banner, name='eliminar_banner'),
+path('banners/<int:banner_id>/toggle/', views.toggle_banner, name='toggle_banner'),
