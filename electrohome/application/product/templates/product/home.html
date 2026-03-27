@@ -1627,7 +1627,7 @@ body, header, footer, main, section,
               <i class="fas fa-chevron-left" style="font-size:0.9rem;"></i>
             </button>
             <div id="carousel-recom" class="flex overflow-x-auto space-x-5 scrollbar-hide scroll-smooth snap-x snap-mandatory pb-4 px-2" style="padding-left:4px;padding-right:4px;">
-              {% for producto in productos|slice:":15" %}
+              {% for producto in recomendados|slice:":6" %}
               <div class="carousel-card snap-start">
                 <div class="carousel-image-container">
                   <button class="wishlist-btn" data-product-id="{{ producto.id }}" onclick="toggleWishlist(event, {{ producto.id }})">♡</button>

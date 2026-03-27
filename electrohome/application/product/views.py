@@ -56,15 +56,16 @@ def index(request):
             ids_usados.add(ps.producto.id)
 
     # ── Recomendados ──────────────────────────────────────────────────
-    recomendados = [p for p in recomendaciones.get('personalized', []) if p.id not in ids_usados]
-    if len(recomendados) < 6:
-        adicionales = Producto.objects.filter(
-            activo=True, stock__gt=0
-        ).exclude(id__in=ids_usados | {p.id for p in recomendados}
-        ).select_related('categoria').order_by('-fecha_creacion')[:15 - len(recomendados)]
-        recomendados.extend(list(adicionales))
+recomendados = list(recomendaciones.get('personalized', []))
 
-    ids_usados.update(p.id for p in recomendados)
+if len(recomendados) < 15:
+    ids_recomendados = {p.id for p in recomendados}
+    adicionales = Producto.objects.filter(
+        activo=True, stock__gt=0
+    ).exclude(id__in=ids_recomendados
+    ).select_related('categoria').prefetch_related('promociones').order_by('-fecha_creacion')[:15 - len(recomendados)]
+    recomendados.extend(list(adicionales))
+
 
     # ── Más vendidos ──────────────────────────────────────────────────
     from application.order.models import OrderItem as OI
