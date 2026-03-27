@@ -31,7 +31,7 @@ def index(request):
     ids_usados = set()
     hoy = timezone.now().date()
 
-    # ── Ofertas especiales (productos con promoción vigente) ──────────
+    # ── Ofertas especiales ────────────────────────────────────────────
     ofertas_especiales = list(Producto.objects.filter(
         activo=True,
         stock__gt=0,
@@ -56,16 +56,15 @@ def index(request):
             ids_usados.add(ps.producto.id)
 
     # ── Recomendados ──────────────────────────────────────────────────
-recomendados = list(recomendaciones.get('personalized', []))
+    recomendados = list(recomendaciones.get('personalized', []))
 
-if len(recomendados) < 15:
-    ids_recomendados = {p.id for p in recomendados}
-    adicionales = Producto.objects.filter(
-        activo=True, stock__gt=0
-    ).exclude(id__in=ids_recomendados
-    ).select_related('categoria').prefetch_related('promociones').order_by('-fecha_creacion')[:15 - len(recomendados)]
-    recomendados.extend(list(adicionales))
-
+    if len(recomendados) < 15:
+        ids_recomendados = {p.id for p in recomendados}
+        adicionales = Producto.objects.filter(
+            activo=True, stock__gt=0
+        ).exclude(id__in=ids_recomendados
+        ).select_related('categoria').prefetch_related('promociones').order_by('-fecha_creacion')[:15 - len(recomendados)]
+        recomendados.extend(list(adicionales))
 
     # ── Más vendidos ──────────────────────────────────────────────────
     from application.order.models import OrderItem as OI
