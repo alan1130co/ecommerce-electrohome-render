@@ -1182,6 +1182,46 @@ body, header, footer, main, section,
   to   { opacity: 1; transform: translateY(0); }
 }
 .fade-in-up { animation: fadeInUp 0.5s ease both; }
+@keyframes arrow-pulse {
+  0%,100% { transform:translateY(-50%) scale(1);
+             filter:drop-shadow(0 0 6px rgba(0,0,0,0.7)); }
+  50%     { transform:translateY(-50%) scale(1.2);
+             filter:drop-shadow(0 0 14px rgba(0,0,0,0.9)); }
+}
+@keyframes arrow-bounce-left {
+  0%,100% { transform:translateY(-50%) translateX(0); }
+  50%     { transform:translateY(-50%) translateX(-7px); }
+}
+@keyframes arrow-bounce-right {
+  0%,100% { transform:translateY(-50%) translateX(0); }
+  50%     { transform:translateY(-50%) translateX(7px); }
+}
+
+/* SOLO móvil */
+@media (max-width: 1023px) {
+  #promo-btn-left,
+  #promo-btn-right {
+    opacity: 1 !important;
+    transform: translateY(-50%) translateX(0) !important;
+    transition: none !important;
+  }
+  #promo-btn-left {
+    animation: arrow-pulse 1.8s ease-in-out infinite,
+               arrow-bounce-left 1.5s ease-in-out infinite;
+  }
+  #promo-btn-right {
+    animation: arrow-pulse 1.8s ease-in-out infinite,
+               arrow-bounce-right 1.5s ease-in-out infinite;
+  }
+}
+
+/* SOLO desktop — asegura que el JS pueda ocultar las flechas */
+@media (min-width: 1024px) {
+  #promo-btn-left,
+  #promo-btn-right {
+    animation: none !important;
+  }
+}
     </style>
   </head>
 
@@ -1353,28 +1393,25 @@ body, header, footer, main, section,
 
         </div>
 
-        <button onclick="movePromo(-1)" id="promo-btn-left"
-                style="position:absolute;top:50%;left:0;transform:translateY(-50%) translateX(-100%);
-                       background:none;border:none;
-                       width:64px;height:64px;font-size:2rem;
-                       cursor:pointer;display:flex;align-items:center;justify-content:center;
-                       z-index:10;opacity:0;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
-                       color:#fff;
-                       text-shadow:0 0 12px rgba(0,0,0,0.8), 2px 2px 0 rgba(0,0,0,0.6), -1px -1px 0 rgba(0,0,0,0.6);
-                       filter:drop-shadow(0 0 6px rgba(0,0,0,0.7));">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button onclick="movePromo(1)" id="promo-btn-right"
-                style="position:absolute;top:50%;right:0;transform:translateY(-50%) translateX(100%);
-                       background:none;border:none;
-                       width:64px;height:64px;font-size:2rem;
-                       cursor:pointer;display:flex;align-items:center;justify-content:center;
-                       z-index:10;opacity:0;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
-                       color:#fff;
-                       text-shadow:0 0 12px rgba(0,0,0,0.8), 2px 2px 0 rgba(0,0,0,0.6), -1px -1px 0 rgba(0,0,0,0.6);
-                       filter:drop-shadow(0 0 6px rgba(0,0,0,0.7));">
-          <i class="fas fa-chevron-right"></i>
-        </button>
+        <button onclick="movePromo(-1); event.stopPropagation();" id="promo-btn-left"
+        style="position:absolute;top:50%;left:10px;transform:translateY(-50%) translateX(-100%);
+               background:rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.7);
+               width:44px;height:44px;border-radius:50%;
+               cursor:pointer;display:flex;align-items:center;justify-content:center;
+               z-index:10;color:#fff;font-size:1.1rem;
+               opacity:0;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;">
+  <i class="fas fa-chevron-left"></i>
+</button>
+
+<button onclick="movePromo(1); event.stopPropagation();" id="promo-btn-right"
+        style="position:absolute;top:50%;right:10px;transform:translateY(-50%) translateX(100%);
+               background:rgba(0,0,0,0.35);border:2px solid rgba(255,255,255,0.7);
+               width:44px;height:44px;border-radius:50%;
+               cursor:pointer;display:flex;align-items:center;justify-content:center;
+               z-index:10;color:#fff;font-size:1.1rem;
+               opacity:0;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;">
+  <i class="fas fa-chevron-right"></i>
+</button>
 
         <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;" id="promo-dots">
           <button onclick="goToPromo(0)" class="promo-dot" style="width:10px;height:10px;border-radius:50%;border:2px solid #fff;background:#fff;cursor:pointer;transition:all 0.2s;padding:0;"></button>
@@ -2325,24 +2362,27 @@ body, header, footer, main, section,
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-      const section = document.getElementById('promo-carousel-section');
-      if (section && promoTotal > 0) {
-        promoTimer = setInterval(() => movePromo(1), 5000);
-        const btnL = document.getElementById('promo-btn-left');
-        const btnR = document.getElementById('promo-btn-right');
+  const section = document.getElementById('promo-carousel-section');
+  if (section && promoTotal > 0) {
+    promoTimer = setInterval(() => movePromo(1), 5000);
+    const btnL = document.getElementById('promo-btn-left');
+    const btnR = document.getElementById('promo-btn-right');
 
-        section.addEventListener('mouseenter', () => {
-          clearInterval(promoTimer);
-          if (btnL) { btnL.style.opacity='1'; btnL.style.transform='translateY(-50%) translateX(0)'; }
-          if (btnR) { btnR.style.opacity='1'; btnR.style.transform='translateY(-50%) translateX(0)'; }
-        });
-        section.addEventListener('mouseleave', () => {
-          promoTimer = setInterval(() => movePromo(1), 5000);
-          if (btnL) { btnL.style.opacity='0'; btnL.style.transform='translateY(-50%) translateX(-100%)'; }
-          if (btnR) { btnR.style.opacity='0'; btnR.style.transform='translateY(-50%) translateX(100%)'; }
-        });
-      }
-    });
+    // Solo hover en desktop — en móvil el CSS lo maneja
+    if (window.innerWidth >= 1024) {
+      section.addEventListener('mouseenter', () => {
+        clearInterval(promoTimer);
+        if (btnL) { btnL.style.opacity='1'; btnL.style.transform='translateY(-50%) translateX(0)'; }
+        if (btnR) { btnR.style.opacity='1'; btnR.style.transform='translateY(-50%) translateX(0)'; }
+      });
+      section.addEventListener('mouseleave', () => {
+        promoTimer = setInterval(() => movePromo(1), 5000);
+        if (btnL) { btnL.style.opacity='0'; btnL.style.transform='translateY(-50%) translateX(-100%)'; }
+        if (btnR) { btnR.style.opacity='0'; btnR.style.transform='translateY(-50%) translateX(100%)'; }
+      });
+    }
+  }
+});
     </script>
 
     {% include 'chatbot/chatbot_widget.html' %}

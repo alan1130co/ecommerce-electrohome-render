@@ -221,19 +221,6 @@ header .relative { overflow: visible !important; }
 [data-theme="dark"] .mdr-item.mdr-danger .mdr-ico { color: #f85149; background: rgba(248,81,73,0.1); }
 </style>
 </head>
-<!-- ★ MOBILE HEADER -->
-    <div id="meh-header">
-      <div class="meh-top">
-        <a href="{% url 'product:home' %}" class="meh-logo">
-          <img src="{% static 'img/logo_de_electrohome.png' %}" alt="ElectroHome" />
-        </a>
-        <form action="{% url 'product:search' %}" method="GET" class="meh-search">
-          <input type="text" name="q" placeholder="Buscar productos..." value="{{ request.GET.q }}" autocomplete="off" />
-          <button type="submit"><i class="fas fa-search"></i></button>
-        </form>
-      </div>
-    </div>
-
     <!-- HEADER DESKTOP -->
     <header class="bg-blue-800 shadow-2xl border-b-4 border-blue-400 sticky top-0 z-50">
       <nav class="container mx-auto px-4 py-4">
@@ -417,8 +404,7 @@ header .relative { overflow: visible !important; }
 
     <!-- Footer si lo tienes -->
     {% include 'includes/footer.html' %}
-    <!-- Footer si lo tienes -->
-    {% include 'includes/footer.html' %}
+    
 
 <!-- ★ BOTTOM NAV -->
 <nav id="meh-botnav">
