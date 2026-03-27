@@ -125,6 +125,7 @@ def index(request):
     banners = BannerPromocion.objects.filter(activo=True)
 
     context = {
+    'productos': recomendados[:6],
     'secciones_vigentes': secciones_vigentes,
     'recomendados': recomendados[:15],
     'mas_vendidos': mas_vendidos,
