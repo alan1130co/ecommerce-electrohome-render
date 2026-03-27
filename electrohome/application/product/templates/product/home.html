@@ -1505,7 +1505,7 @@ body, header, footer, main, section,
       <a href="{% url 'product:products_list' %}" class="section-link">Ver todas las ofertas <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productos-grid">
-      {% for producto in recomendados|slice:":6" %}
+      {% for producto in ofertas_especiales %}
       <div class="product-card">
         <div class="product-image-container">
           <button class="wishlist-btn" data-product-id="{{ producto.id }}" onclick="toggleWishlist(event, {{ producto.id }})">♡</button>

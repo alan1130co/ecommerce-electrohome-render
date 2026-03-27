@@ -22,8 +22,8 @@ from application.product.models import Resena
 def index(request):
     from django.db.models import Count, Sum
     from django.utils import timezone
-    from application.product.models import SeccionPromocional  # ← agregar este import
-    
+    from application.product.models import SeccionPromocional, Promocion
+
     user = request.user if request.user.is_authenticated else None
     engine = RecommendationEngine(user=user)
     recomendaciones = engine.get_homepage_recommendations()
@@ -31,7 +31,18 @@ def index(request):
     ids_usados = set()
     hoy = timezone.now().date()
 
-    # ── Secciones promocionales (nuevo sistema) ───────────────────────
+    # ── Ofertas especiales (productos con promoción vigente) ──────────
+    ofertas_especiales = list(Producto.objects.filter(
+        activo=True,
+        stock__gt=0,
+        promociones__activo=True,
+        promociones__fecha_inicio__lte=timezone.now(),
+        promociones__fecha_fin__gte=timezone.now(),
+    ).select_related('categoria').prefetch_related('promociones').distinct()[:6])
+
+    ids_usados.update(p.id for p in ofertas_especiales)
+
+    # ── Secciones promocionales ───────────────────────────────────────
     secciones_vigentes = SeccionPromocional.objects.filter(
         activo=True,
         fecha_inicio__lte=hoy,
@@ -40,12 +51,11 @@ def index(request):
         'productos_seccion__producto__categoria'
     ).order_by('orden')
 
-    # Registrar IDs usados por secciones para no repetirlos abajo
     for seccion in secciones_vigentes:
         for ps in seccion.productos_seccion.all():
             ids_usados.add(ps.producto.id)
 
-    # ── Recomendados ─────────────────────────────────────────────────
+    # ── Recomendados ──────────────────────────────────────────────────
     recomendados = [p for p in recomendaciones.get('personalized', []) if p.id not in ids_usados]
     if len(recomendados) < 6:
         adicionales = Producto.objects.filter(
@@ -125,17 +135,17 @@ def index(request):
     banners = BannerPromocion.objects.filter(activo=True)
 
     context = {
-    'productos': recomendados[:6],
-    'secciones_vigentes': secciones_vigentes,
-    'recomendados': recomendados[:15],
-    'mas_vendidos': mas_vendidos,
-    'mas_vistos': mas_vistos,
-    'nuevos': nuevos,
-    'productos_cocina': productos_cocina,
-    'productos_limpieza': productos_limpieza,
-    'categorias': Categoria.objects.filter(activo=True),
-    'banners': banners,
-}
+        'ofertas_especiales': ofertas_especiales,
+        'secciones_vigentes': secciones_vigentes,
+        'recomendados': recomendados[:15],
+        'mas_vendidos': mas_vendidos,
+        'mas_vistos': mas_vistos,
+        'nuevos': nuevos,
+        'productos_cocina': productos_cocina,
+        'productos_limpieza': productos_limpieza,
+        'categorias': Categoria.objects.filter(activo=True),
+        'banners': banners,
+    }
 
     return render(request, 'product/home.html', context)
 
