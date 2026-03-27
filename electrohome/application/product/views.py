@@ -22,35 +22,28 @@ from application.product.models import Resena
 def index(request):
     from django.db.models import Count, Sum
     from django.utils import timezone
+    from application.product.models import SeccionPromocional  # ← agregar este import
     
     user = request.user if request.user.is_authenticated else None
     engine = RecommendationEngine(user=user)
     recomendaciones = engine.get_homepage_recommendations()
 
     ids_usados = set()
-
-    # ── Ofertas especiales ────────────────────────────────────────────
     hoy = timezone.now().date()
-    ids_con_promo = Promocion.objects.filter(
+
+    # ── Secciones promocionales (nuevo sistema) ───────────────────────
+    secciones_vigentes = SeccionPromocional.objects.filter(
         activo=True,
         fecha_inicio__lte=hoy,
-        fecha_fin__gte=hoy
-    ).values_list('producto_id', flat=True)
+        fecha_fin__gte=hoy,
+    ).prefetch_related(
+        'productos_seccion__producto__categoria'
+    ).order_by('orden')
 
-    productos_en_promo = list(
-        Producto.objects.filter(id__in=ids_con_promo, activo=True, stock__gt=0)
-        .exclude(id__in=ids_usados)
-        .select_related('categoria')
-        .prefetch_related('promociones')[:6]
-    )
-    if len(productos_en_promo) < 6:
-        adicionales = Producto.objects.filter(
-            activo=True, stock__gt=0
-        ).exclude(id__in=ids_usados | {p.id for p in productos_en_promo}
-        ).select_related('categoria').order_by('-fecha_creacion')[:6 - len(productos_en_promo)]
-        productos_en_promo.extend(list(adicionales))
-
-    ids_usados.update(p.id for p in productos_en_promo)
+    # Registrar IDs usados por secciones para no repetirlos abajo
+    for seccion in secciones_vigentes:
+        for ps in seccion.productos_seccion.all():
+            ids_usados.add(ps.producto.id)
 
     # ── Recomendados ─────────────────────────────────────────────────
     recomendados = [p for p in recomendaciones.get('personalized', []) if p.id not in ids_usados]
@@ -132,8 +125,9 @@ def index(request):
     banners = BannerPromocion.objects.filter(activo=True)
 
     context = {
-        'productos': productos_en_promo[:6],
-        'recomendados': recomendados[:15],        # ← variable separada
+        'productos': productos_en_promo[:6],     # puedes dejarlo o quitarlo
+        'secciones_vigentes': secciones_vigentes, # ← NUEVO
+        'recomendados': recomendados[:15],
         'mas_vendidos': mas_vendidos,
         'mas_vistos': mas_vistos,
         'nuevos': nuevos,
