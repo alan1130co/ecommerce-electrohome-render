@@ -1474,8 +1474,8 @@ body, header, footer, main, section,
         </div>
       </section>
 
-      <!-- ═══════════════════════════════════════════════
-           3. OFERTAS DEL DÍA — timer + productos
+     <!-- ═══════════════════════════════════════════════
+           3. SECCIONES PROMOCIONALES
            ═══════════════════════════════════════════════ -->
 
       <!-- Barra de cuenta regresiva -->
@@ -1492,30 +1492,37 @@ body, header, footer, main, section,
         </div>
       </div>
 
-      <section id="promociones" class="section-white py-16">
+      {% for seccion in secciones_vigentes %}
+      <section id="seccion-{{ seccion.slug }}" class="section-white py-16">
         <div class="container mx-auto px-4">
           <div class="section-header">
             <div class="section-title-wrap">
               <div class="section-accent-bar red"></div>
               <div>
-                <div class="section-title">🔥 Ofertas especiales</div>
-                <div class="section-subtitle">Los mejores precios, solo por hoy</div>
+                <div class="section-title">{{ seccion.icono }} {{ seccion.nombre }}</div>
+                {% if seccion.subtitulo %}
+                  <div class="section-subtitle">{{ seccion.subtitulo }}</div>
+                {% endif %}
               </div>
             </div>
-            <a href="{% url 'product:products_list' %}" class="section-link">Ver todas las ofertas <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
+            {% if seccion.url_ver_todo %}
+              <a href="{{ seccion.url_ver_todo }}" class="section-link">Ver todas las ofertas <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>
+            {% endif %}
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productos-grid">
-            {% for producto in productos|slice:":6" %}
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for ps in seccion.productos_seccion.all|slice:":6" %}
+            {% with producto=ps.producto %}
             <div class="product-card">
               <div class="product-image-container">
-                <button class="wishlist-btn" data-product-id="{{ producto.id }}" onclick="toggleWishlist(event, {{ producto.id }})">♡</button>
+                <button class="wishlist-btn" data-product-id="{{ producto.id }}"
+                        onclick="toggleWishlist(event, {{ producto.id }})">♡</button>
                 {% if producto.imagen_principal %}
                   <img src="{{ producto.imagen_principal }}" alt="{{ producto.nombre }}">
                 {% else %}
                   <img src="{% static 'img/productos/producto-ejemplo.jpg' %}" alt="{{ producto.nombre }}">
                 {% endif %}
-                {% if producto.descuento and producto.descuento > 0 %}
-                  <span class="discount-badge">-{{ producto.descuento }}%</span>
+                {% if ps.descuento_porcentaje > 0 %}
+                  <span class="discount-badge">-{{ ps.descuento_porcentaje|floatformat:0 }}%</span>
                 {% endif %}
                 <div class="free-shipping-badge">
                   <span><i class="fas fa-truck" style="font-size:0.65rem;"></i> Envío gratis</span>
@@ -1528,26 +1535,43 @@ body, header, footer, main, section,
                   <div class="product-stars">⭐⭐⭐⭐⭐</div>
                   <span class="product-reviews">(0 reseñas)</span>
                 </div>
-                <div class="product-pricing">
-                  {% if producto.descuento and producto.descuento > 0 %}
-                    <span class="product-price-original">{{ producto.precio|formato_precio }}</span>
-                    <span class="product-price-current">{{ producto.precio_descuento|formato_precio }}</span>
-                  {% else %}
-                    <span class="product-price-current">{{ producto.precio|formato_precio }}</span>
-                  {% endif %}
+                <div class="product-pricing" style="flex-direction:column;gap:4px;align-items:flex-start;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <span class="product-price-original">{{ ps.precio_original|formato_precio }}</span>
+                    <span style="background:#ef4444;color:#fff;font-size:0.72rem;font-weight:800;
+                                 padding:2px 8px;border-radius:20px;">
+                      -{{ ps.descuento_porcentaje|floatformat:0 }}%
+                    </span>
+                  </div>
+                  <span class="product-price-current">{{ ps.precio_promocional|formato_precio }}</span>
+                  <span style="font-size:0.75rem;color:#10b981;font-weight:600;">
+                    Ahorras {{ ps.ahorro|formato_precio }}
+                  </span>
                 </div>
                 <div class="product-actions">
                   <a href="{% url 'product:product_detail' producto.id %}" class="btn-details">Ver más</a>
-                  <button class="btn-buy" onclick="agregarAlCarrito({{ producto.id }})"><i class="fas fa-cart-plus" style="font-size:0.875rem;"></i> Comprar</button>
+                  <button class="btn-buy" onclick="agregarAlCarrito({{ producto.id }})">
+                    <i class="fas fa-cart-plus" style="font-size:0.875rem;"></i> Comprar
+                  </button>
                 </div>
               </div>
             </div>
+            {% endwith %}
             {% empty %}
-            <div class="col-span-3 text-center py-10"><p style="color:var(--text-tertiary);" class="text-lg">No hay productos disponibles.</p></div>
+            <div class="col-span-3 text-center py-10">
+              <p style="color:var(--text-tertiary);" class="text-lg">No hay productos en esta sección.</p>
+            </div>
             {% endfor %}
           </div>
         </div>
       </section>
+      {% empty %}
+      <section class="section-white py-16">
+        <div class="container mx-auto px-4 text-center py-10">
+          <p style="color:var(--text-tertiary);" class="text-lg">No hay ofertas activas en este momento.</p>
+        </div>
+      </section>
+      {% endfor %}
 
       <!-- ═══════════════════════════════════════════════
            4. BANNER PROMOCIONAL HORIZONTAL

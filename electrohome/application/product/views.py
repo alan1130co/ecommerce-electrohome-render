@@ -125,17 +125,16 @@ def index(request):
     banners = BannerPromocion.objects.filter(activo=True)
 
     context = {
-        'productos': productos_en_promo[:6],     # puedes dejarlo o quitarlo
-        'secciones_vigentes': secciones_vigentes, # ← NUEVO
-        'recomendados': recomendados[:15],
-        'mas_vendidos': mas_vendidos,
-        'mas_vistos': mas_vistos,
-        'nuevos': nuevos,
-        'productos_cocina': productos_cocina,
-        'productos_limpieza': productos_limpieza,
-        'categorias': Categoria.objects.filter(activo=True),
-        'banners': banners,
-    }
+    'secciones_vigentes': secciones_vigentes,
+    'recomendados': recomendados[:15],
+    'mas_vendidos': mas_vendidos,
+    'mas_vistos': mas_vistos,
+    'nuevos': nuevos,
+    'productos_cocina': productos_cocina,
+    'productos_limpieza': productos_limpieza,
+    'categorias': Categoria.objects.filter(activo=True),
+    'banners': banners,
+}
 
     return render(request, 'product/home.html', context)
 
