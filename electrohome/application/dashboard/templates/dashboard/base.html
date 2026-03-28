@@ -37,18 +37,50 @@
         margin: 0;
     }
 
-    /* ── DARK MODE body ── */
-    [data-theme="dark"] body { background: #0d1117 !important; }
-    [data-theme="dark"] .eh-main { background: #0d1117; }
-    [data-theme="dark"] .eh-card { background: #161b22 !important; border: 1px solid #30363d; }
-    [data-theme="dark"] .eh-stat { background: #161b22 !important; border-left-color: inherit; }
-    [data-theme="dark"] .eh-stat-value { color: #e6edf3 !important; }
-    [data-theme="dark"] .eh-stat-label { color: #8b949e !important; }
-    [data-theme="dark"] .eh-page-title { color: #58a6ff !important; }
-    [data-theme="dark"] .eh-page-subtitle { color: #8b949e !important; }
-    [data-theme="dark"] .eh-table th { background: #21262d !important; color: #8b949e !important; border-color: #30363d !important; }
-    [data-theme="dark"] .eh-table td { color: #e6edf3 !important; border-color: #21262d !important; }
-    [data-theme="dark"] .eh-table tr:hover td { background: #21262d !important; }
+    /* ── DARK MODE body — Paleta Charcoal Blue (suave, no quema) ── */
+    [data-theme="dark"] body { background: #1e2130 !important; }
+    [data-theme="dark"] .eh-main { background: #1e2130 !important; }
+
+    /* Cards y contenedores */
+    [data-theme="dark"] .eh-card { background: #252837 !important; border: 1px solid #343848 !important; }
+    [data-theme="dark"] .eh-card-header { background: linear-gradient(135deg, #1a1e2e 0%, #1e2b5e 100%) !important; }
+    [data-theme="dark"] .eh-stat { background: #252837 !important; border-left-color: inherit; }
+    [data-theme="dark"] .eh-stat-value { color: #dde3f0 !important; }
+    [data-theme="dark"] .eh-stat-label { color: #7d8599 !important; }
+
+    /* Tipografía */
+    [data-theme="dark"] .eh-page-title { color: #5b7cf6 !important; }
+    [data-theme="dark"] .eh-page-subtitle { color: #7d8599 !important; }
+
+    /* Tablas */
+    [data-theme="dark"] .eh-table th { background: #2d3142 !important; color: #7d8599 !important; border-color: #343848 !important; }
+    [data-theme="dark"] .eh-table td { color: #dde3f0 !important; border-color: #2d3142 !important; }
+    [data-theme="dark"] .eh-table tr:hover td { background: #2d3142 !important; }
+
+    /* Sidebar y header del dashboard */
+    [data-theme="dark"] .eh-sidebar { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; border-right-color: rgba(255,255,255,0.05) !important; }
+    [data-theme="dark"] .eh-header { background: linear-gradient(180deg, #111827 0%, #1a1e2e 100%) !important; }
+    [data-theme="dark"] #dash-meh-header { background: linear-gradient(180deg, #1a1e2e 0%, #1d2b5e 100%) !important; }
+    [data-theme="dark"] #dash-botnav { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; }
+    [data-theme="dark"] #dash-drawer { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; }
+
+    /* Access cards */
+    [data-theme="dark"] .eh-access-card { background: #252837 !important; border-color: #343848 !important; }
+    [data-theme="dark"] .eh-access-card:hover { border-color: #5b7cf6 !important; }
+    [data-theme="dark"] .eh-access-title { color: #5b7cf6 !important; }
+    [data-theme="dark"] .eh-access-sub { color: #7d8599 !important; }
+
+    /* Notif dropdown */
+    [data-theme="dark"] .eh-notif-dropdown { background: #252837 !important; border-color: #343848 !important; }
+    [data-theme="dark"] .eh-notif-item:hover { background: #2d3142 !important; }
+    [data-theme="dark"] .eh-notif-item strong { color: #dde3f0 !important; }
+
+    /* Badges en dark */
+    [data-theme="dark"] .eh-badge-blue   { background: rgba(91,124,246,0.15) !important; color: #9fb3ff !important; }
+    [data-theme="dark"] .eh-badge-green  { background: rgba(63,185,80,0.12)  !important; color: #3fb950 !important; }
+    [data-theme="dark"] .eh-badge-yellow { background: rgba(240,180,41,0.12) !important; color: #f0b429 !important; }
+    [data-theme="dark"] .eh-badge-red    { background: rgba(248,81,73,0.12)  !important; color: #f85149 !important; }
+    [data-theme="dark"] .eh-badge-cyan   { background: rgba(6,182,212,0.12)  !important; color: #22d3ee !important; }
 
     /* ── THEME TOGGLE BUTTON ── */
     .theme-toggle-button {
@@ -463,178 +495,43 @@
     .dash-mdr-item.dash-danger:hover { background: rgba(248,113,113,0.12); color: #fecaca; }
     /* ══════════════════════════════════════
        RESPONSIVE DASHBOARD — MOBILE FIXES
-       Aplica a todas las páginas del dashboard
     ══════════════════════════════════════ */
-
-    /* PAGE HEADER: título + botones se apilan en móvil */
     @media (max-width: 1023px) {
-
-        .eh-page-header {
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            gap: 12px !important;
-            margin-bottom: 1.25rem !important;
-        }
-
-        .eh-page-header .d-flex.gap-2 {
-            flex-wrap: wrap !important;
-            width: 100% !important;
-        }
-
+        .eh-page-header { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; margin-bottom: 1.25rem !important; }
+        .eh-page-header .d-flex.gap-2 { flex-wrap: wrap !important; width: 100% !important; }
         .eh-page-header .d-flex.gap-2 > a,
-        .eh-page-header .d-flex.gap-2 > button {
-            flex: 1 1 auto !important;
-            min-width: 0 !important;
-            justify-content: center !important;
-            text-align: center !important;
-            font-size: 0.8rem !important;
-            padding: 8px 10px !important;
-        }
-
-        /* Títulos más pequeños en móvil */
+        .eh-page-header .d-flex.gap-2 > button { flex: 1 1 auto !important; min-width: 0 !important; justify-content: center !important; text-align: center !important; font-size: 0.8rem !important; padding: 8px 10px !important; }
         .eh-page-title { font-size: 1.25rem !important; }
         .eh-page-subtitle { font-size: 0.82rem !important; }
-
-        /* TABLAS: scroll horizontal sin desbordarse */
-        .table-responsive {
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-            border-radius: 0 0 12px 12px !important;
-        }
-
-        .eh-table {
-            min-width: 540px !important;
-        }
-
-        /* Celdas más compactas */
-        .eh-table th,
-        .eh-table td {
-            padding: 8px 10px !important;
-            font-size: 0.78rem !important;
-            white-space: nowrap !important;
-        }
-
-        /* Botones de acciones en tabla más pequeños */
+        .table-responsive { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
+        .eh-table { min-width: 540px !important; }
+        .eh-table th, .eh-table td { padding: 8px 10px !important; font-size: 0.78rem !important; white-space: nowrap !important; }
         .eh-table td .d-flex.gap-1 > a,
-        .eh-table td .d-flex.gap-1 > button {
-            padding: 5px 8px !important;
-            font-size: 0.75rem !important;
-        }
-
-        /* CARDS */
+        .eh-table td .d-flex.gap-1 > button { padding: 5px 8px !important; font-size: 0.75rem !important; }
         .eh-card { border-radius: 10px !important; }
-
-        /* STAT CARDS: 2 por fila en móvil */
-        .eh-stat {
-            padding: 1rem !important;
-        }
+        .eh-stat { padding: 1rem !important; }
         .eh-stat-value { font-size: 1.5rem !important; }
         .eh-stat-label { font-size: 0.72rem !important; }
-
-        /* ACCESS CARDS: compactas */
-        .eh-access-card {
-            padding: 1rem 0.75rem !important;
-        }
+        .eh-access-card { padding: 1rem 0.75rem !important; }
         .eh-access-icon { font-size: 1.75rem !important; margin-bottom: 0.5rem !important; }
         .eh-access-title { font-size: 0.85rem !important; }
         .eh-access-sub { font-size: 0.72rem !important; margin-bottom: 0.5rem !important; }
-
-        /* PAGINACIÓN: botones más pequeños */
         .d-flex.justify-content-center.gap-2 > a,
-        .d-flex.justify-content-center.gap-2 > span {
-            padding: 5px 10px !important;
-            font-size: 0.8rem !important;
-        }
-
-        /* FILTROS DE PEDIDOS: wrap en móvil */
-        .d-flex.gap-2.flex-wrap.mb-4 > a {
-            padding: 5px 10px !important;
-            font-size: 0.78rem !important;
-        }
-
-        /* FORMULARIOS: inputs full width */
-        .row.g-3 > [class*="col-md"] {
-            flex: 0 0 100% !important;
-            max-width: 100% !important;
-        }
-
-        /* Botones de formulario apilados */
+        .d-flex.justify-content-center.gap-2 > span { padding: 5px 10px !important; font-size: 0.8rem !important; }
+        .d-flex.gap-2.flex-wrap.mb-4 > a { padding: 5px 10px !important; font-size: 0.78rem !important; }
+        .row.g-3 > [class*="col-md"] { flex: 0 0 100% !important; max-width: 100% !important; }
         .d-flex.gap-3 > .eh-btn-yellow,
         .d-flex.gap-3 > .eh-btn-primary,
-        .d-flex.gap-3 > .eh-btn-danger {
-            flex: 1 1 auto !important;
-            justify-content: center !important;
-            text-align: center !important;
-        }
-
-        /* CARD eliminación: ancho completo */
-        .eh-card[style*="max-width"] {
-            max-width: 100% !important;
-        }
-
-        /* TABS USUARIOS */
-        #pane-clientes > div:first-child,
-        #pane-admins > div:first-child {
-            border-radius: 10px !important;
-        }
-
-        /* Tabs de usuarios en móvil */
-        #tab-clientes, #tab-admins {
-            padding: 8px 12px !important;
-            font-size: 0.8rem !important;
-        }
-
-        /* ENVÍO MASIVO: columnas apiladas */
-        .col-md-6 { flex: 0 0 100% !important; max-width: 100% !important; }
-
-        /* MODAL PEDIDOS: ancho completo */
-        #modal-overlay > div {
-            max-width: calc(100vw - 32px) !important;
-            margin: 0 16px !important;
-        }
-
-        /* SECCIONES: h2 más pequeño */
-        div > h2[style] { font-size: 0.9rem !important; }
-
-        /* BADGES no se corten */
+        .d-flex.gap-3 > .eh-btn-danger { flex: 1 1 auto !important; justify-content: center !important; text-align: center !important; }
+        .eh-card[style*="max-width"] { max-width: 100% !important; }
+        #modal-overlay > div { max-width: calc(100vw - 32px) !important; margin: 0 16px !important; }
         .eh-badge { white-space: nowrap !important; }
-
-        /* CONFIRM CARDS: full width */
-        .col-md-6 .eh-card { width: 100% !important; }
-
-        /* Botones confirm apilados */
-        .d-flex.gap-3 form,
-        .d-flex.gap-3 > form + a {
-            flex: 1 !important;
-        }
-        form.d-flex.gap-3 > button,
-        form.d-flex.gap-3 > a {
-            flex: 1 !important;
-            justify-content: center !important;
-        }
+        form.d-flex.gap-3 > button, form.d-flex.gap-3 > a { flex: 1 !important; justify-content: center !important; }
     }
-
-    /* Extra pequeño (360px) */
     @media (max-width: 480px) {
         .eh-page-title { font-size: 1.1rem !important; }
-
-        .eh-table {
-            min-width: 480px !important;
-            font-size: 0.75rem !important;
-        }
-
+        .eh-table { min-width: 480px !important; }
         .eh-stat-value { font-size: 1.3rem !important; }
-
-        /* Ocultar columnas menos importantes en tablas */
-        .eh-table th:nth-child(3),
-        .eh-table td:nth-child(3) {
-            display: none !important;
-        }
-
-        .eh-page-header .d-flex.gap-2 > a {
-            font-size: 0.75rem !important;
-            padding: 7px 8px !important;
-        }
     }
 
     /* ── FIX ÍCONOS TEMA — máxima especificidad ── */
