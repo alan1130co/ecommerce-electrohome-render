@@ -10,12 +10,18 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 # ===== CONFIGURACIÓN DE BASE DE DATOS POSTGRESQL =====
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
+# DATABASES = {                          # <- comenta esto
+#     'default': dj_database_url.config(
+#         default=config('DATABASE_URL')
+#     )
+# }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 # ===== CONFIGURACIÓN DE CACHÉ =====
 CACHES = {
     'default': {

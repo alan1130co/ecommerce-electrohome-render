@@ -37,50 +37,18 @@
         margin: 0;
     }
 
-    /* ── DARK MODE body — Paleta Charcoal Blue (suave, no quema) ── */
-    [data-theme="dark"] body { background: #1e2130 !important; }
-    [data-theme="dark"] .eh-main { background: #1e2130 !important; }
-
-    /* Cards y contenedores */
-    [data-theme="dark"] .eh-card { background: #252837 !important; border: 1px solid #343848 !important; }
-    [data-theme="dark"] .eh-card-header { background: linear-gradient(135deg, #1a1e2e 0%, #1e2b5e 100%) !important; }
-    [data-theme="dark"] .eh-stat { background: #252837 !important; border-left-color: inherit; }
-    [data-theme="dark"] .eh-stat-value { color: #dde3f0 !important; }
-    [data-theme="dark"] .eh-stat-label { color: #7d8599 !important; }
-
-    /* Tipografía */
-    [data-theme="dark"] .eh-page-title { color: #5b7cf6 !important; }
-    [data-theme="dark"] .eh-page-subtitle { color: #7d8599 !important; }
-
-    /* Tablas */
-    [data-theme="dark"] .eh-table th { background: #2d3142 !important; color: #7d8599 !important; border-color: #343848 !important; }
-    [data-theme="dark"] .eh-table td { color: #dde3f0 !important; border-color: #2d3142 !important; }
-    [data-theme="dark"] .eh-table tr:hover td { background: #2d3142 !important; }
-
-    /* Sidebar y header del dashboard */
-    [data-theme="dark"] .eh-sidebar { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; border-right-color: rgba(255,255,255,0.05) !important; }
-    [data-theme="dark"] .eh-header { background: linear-gradient(180deg, #111827 0%, #1a1e2e 100%) !important; }
-    [data-theme="dark"] #dash-meh-header { background: linear-gradient(180deg, #1a1e2e 0%, #1d2b5e 100%) !important; }
-    [data-theme="dark"] #dash-botnav { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; }
-    [data-theme="dark"] #dash-drawer { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; }
-
-    /* Access cards */
-    [data-theme="dark"] .eh-access-card { background: #252837 !important; border-color: #343848 !important; }
-    [data-theme="dark"] .eh-access-card:hover { border-color: #5b7cf6 !important; }
-    [data-theme="dark"] .eh-access-title { color: #5b7cf6 !important; }
-    [data-theme="dark"] .eh-access-sub { color: #7d8599 !important; }
-
-    /* Notif dropdown */
-    [data-theme="dark"] .eh-notif-dropdown { background: #252837 !important; border-color: #343848 !important; }
-    [data-theme="dark"] .eh-notif-item:hover { background: #2d3142 !important; }
-    [data-theme="dark"] .eh-notif-item strong { color: #dde3f0 !important; }
-
-    /* Badges en dark */
-    [data-theme="dark"] .eh-badge-blue   { background: rgba(91,124,246,0.15) !important; color: #9fb3ff !important; }
-    [data-theme="dark"] .eh-badge-green  { background: rgba(63,185,80,0.12)  !important; color: #3fb950 !important; }
-    [data-theme="dark"] .eh-badge-yellow { background: rgba(240,180,41,0.12) !important; color: #f0b429 !important; }
-    [data-theme="dark"] .eh-badge-red    { background: rgba(248,81,73,0.12)  !important; color: #f85149 !important; }
-    [data-theme="dark"] .eh-badge-cyan   { background: rgba(6,182,212,0.12)  !important; color: #22d3ee !important; }
+    /* ── DARK MODE body ── */
+    [data-theme="dark"] body { background: #1a1f2e !important; }
+    [data-theme="dark"] .eh-main { background: #1a1f2e; }
+    [data-theme="dark"] .eh-card { background: #1e2536 !important; border: 1px solid #374151; }
+    [data-theme="dark"] .eh-stat { background: #1e2536 !important; border-left-color: inherit; }
+    [data-theme="dark"] .eh-stat-value { color: #e6edf3 !important; }
+    [data-theme="dark"] .eh-stat-label { color: #8b949e !important; }
+    [data-theme="dark"] .eh-page-title { color: #58a6ff !important; }
+    [data-theme="dark"] .eh-page-subtitle { color: #8b949e !important; }
+    [data-theme="dark"] .eh-table th { background: #2d3548 !important; color: #8b949e !important; border-color: #374151 !important; }
+    [data-theme="dark"] .eh-table td { color: #e6edf3 !important; border-color: #2d3548 !important; }
+    [data-theme="dark"] .eh-table tr:hover td { background: #2d3548 !important; }
 
     /* ── THEME TOGGLE BUTTON ── */
     .theme-toggle-button {
@@ -493,47 +461,6 @@
     .dash-mdr-item.dash-danger { color: #fca5a5; }
     .dash-mdr-item.dash-danger .dash-mdr-ico { background: rgba(248,113,113,0.15); color: #fca5a5; }
     .dash-mdr-item.dash-danger:hover { background: rgba(248,113,113,0.12); color: #fecaca; }
-    /* ══════════════════════════════════════
-       RESPONSIVE DASHBOARD — MOBILE FIXES
-    ══════════════════════════════════════ */
-    @media (max-width: 1023px) {
-        .eh-page-header { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; margin-bottom: 1.25rem !important; }
-        .eh-page-header .d-flex.gap-2 { flex-wrap: wrap !important; width: 100% !important; }
-        .eh-page-header .d-flex.gap-2 > a,
-        .eh-page-header .d-flex.gap-2 > button { flex: 1 1 auto !important; min-width: 0 !important; justify-content: center !important; text-align: center !important; font-size: 0.8rem !important; padding: 8px 10px !important; }
-        .eh-page-title { font-size: 1.25rem !important; }
-        .eh-page-subtitle { font-size: 0.82rem !important; }
-        .table-responsive { overflow-x: auto !important; -webkit-overflow-scrolling: touch !important; }
-        .eh-table { min-width: 540px !important; }
-        .eh-table th, .eh-table td { padding: 8px 10px !important; font-size: 0.78rem !important; white-space: nowrap !important; }
-        .eh-table td .d-flex.gap-1 > a,
-        .eh-table td .d-flex.gap-1 > button { padding: 5px 8px !important; font-size: 0.75rem !important; }
-        .eh-card { border-radius: 10px !important; }
-        .eh-stat { padding: 1rem !important; }
-        .eh-stat-value { font-size: 1.5rem !important; }
-        .eh-stat-label { font-size: 0.72rem !important; }
-        .eh-access-card { padding: 1rem 0.75rem !important; }
-        .eh-access-icon { font-size: 1.75rem !important; margin-bottom: 0.5rem !important; }
-        .eh-access-title { font-size: 0.85rem !important; }
-        .eh-access-sub { font-size: 0.72rem !important; margin-bottom: 0.5rem !important; }
-        .d-flex.justify-content-center.gap-2 > a,
-        .d-flex.justify-content-center.gap-2 > span { padding: 5px 10px !important; font-size: 0.8rem !important; }
-        .d-flex.gap-2.flex-wrap.mb-4 > a { padding: 5px 10px !important; font-size: 0.78rem !important; }
-        .row.g-3 > [class*="col-md"] { flex: 0 0 100% !important; max-width: 100% !important; }
-        .d-flex.gap-3 > .eh-btn-yellow,
-        .d-flex.gap-3 > .eh-btn-primary,
-        .d-flex.gap-3 > .eh-btn-danger { flex: 1 1 auto !important; justify-content: center !important; text-align: center !important; }
-        .eh-card[style*="max-width"] { max-width: 100% !important; }
-        #modal-overlay > div { max-width: calc(100vw - 32px) !important; margin: 0 16px !important; }
-        .eh-badge { white-space: nowrap !important; }
-        form.d-flex.gap-3 > button, form.d-flex.gap-3 > a { flex: 1 !important; justify-content: center !important; }
-    }
-    @media (max-width: 480px) {
-        .eh-page-title { font-size: 1.1rem !important; }
-        .eh-table { min-width: 480px !important; }
-        .eh-stat-value { font-size: 1.3rem !important; }
-    }
-
     /* ── FIX ÍCONOS TEMA — máxima especificidad ── */
 #dash-meh-header .theme-toggle-button .sun-icon,
 #dash-drawer .theme-toggle-button .sun-icon,
