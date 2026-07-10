@@ -22,7 +22,7 @@ user, created = User.objects.get_or_create(
 if created:
     user.set_password('password123')
     user.save()
-    print(f"✅ Usuario creado: {user.username}")
+    print(f"[OK] Usuario creado: {user.username}")
 
 # Crear productos de muestra
 products_data = [
@@ -130,7 +130,7 @@ for product_data in products_data:
         defaults=product_data
     )
     if created:
-        print(f"✅ Producto creado: {product.name}")
+        print(f"[OK] Producto creado: {product.name}")
 
 # Crear pedidos de muestra
 orders_data = [
@@ -175,7 +175,7 @@ for order_data in orders_data:
         defaults=order_data
     )
     if created:
-        print(f"✅ Pedido creado: #{order.order_number}")
+        print(f"[OK] Pedido creado: #{order.order_number}")
 
 # Crear FAQs
 faqs_data = [
@@ -212,9 +212,9 @@ for faq_data in faqs_data:
         defaults=faq_data
     )
     if created:
-        print(f"✅ FAQ creada: {faq.question}")
+        print(f"[OK] FAQ creada: {faq.question}")
 
-print("\n🎉 ¡Datos de prueba cargados exitosamente!")
-print(f"📊 Productos: {Product.objects.count()}")
-print(f"📦 Pedidos: {Order.objects.count()}")
-print(f"❓ FAQs: {FAQ.objects.count()}")
+print("\n[OK] Datos de prueba cargados exitosamente!")
+print(f"[INFO] Productos: {Product.objects.count()}")
+print(f"[INFO] Pedidos: {Order.objects.count()}")
+print(f"[INFO] FAQs: {FAQ.objects.count()}")

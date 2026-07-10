@@ -37,51 +37,6 @@
         margin: 0;
     }
 
-    /* ── DARK MODE body — Paleta Charcoal Blue (suave, no quema) ── */
-    [data-theme="dark"] body { background: #1e2130 !important; }
-    [data-theme="dark"] .eh-main { background: #1e2130 !important; }
-
-    /* Cards y contenedores */
-    [data-theme="dark"] .eh-card { background: #252837 !important; border: 1px solid #343848 !important; }
-    [data-theme="dark"] .eh-card-header { background: linear-gradient(135deg, #1a1e2e 0%, #1e2b5e 100%) !important; }
-    [data-theme="dark"] .eh-stat { background: #252837 !important; border-left-color: inherit; }
-    [data-theme="dark"] .eh-stat-value { color: #dde3f0 !important; }
-    [data-theme="dark"] .eh-stat-label { color: #7d8599 !important; }
-
-    /* Tipografía */
-    [data-theme="dark"] .eh-page-title { color: #5b7cf6 !important; }
-    [data-theme="dark"] .eh-page-subtitle { color: #7d8599 !important; }
-
-    /* Tablas */
-    [data-theme="dark"] .eh-table th { background: #2d3142 !important; color: #7d8599 !important; border-color: #343848 !important; }
-    [data-theme="dark"] .eh-table td { color: #dde3f0 !important; border-color: #2d3142 !important; }
-    [data-theme="dark"] .eh-table tr:hover td { background: #2d3142 !important; }
-
-    /* Sidebar y header del dashboard */
-    [data-theme="dark"] .eh-sidebar { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; border-right-color: rgba(255,255,255,0.05) !important; }
-    [data-theme="dark"] .eh-header { background: linear-gradient(180deg, #111827 0%, #1a1e2e 100%) !important; }
-    [data-theme="dark"] #dash-meh-header { background: linear-gradient(180deg, #1a1e2e 0%, #1d2b5e 100%) !important; }
-    [data-theme="dark"] #dash-botnav { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; }
-    [data-theme="dark"] #dash-drawer { background: linear-gradient(180deg, #1a1e2e 0%, #1e2538 100%) !important; }
-
-    /* Access cards */
-    [data-theme="dark"] .eh-access-card { background: #252837 !important; border-color: #343848 !important; }
-    [data-theme="dark"] .eh-access-card:hover { border-color: #5b7cf6 !important; }
-    [data-theme="dark"] .eh-access-title { color: #5b7cf6 !important; }
-    [data-theme="dark"] .eh-access-sub { color: #7d8599 !important; }
-
-    /* Notif dropdown */
-    [data-theme="dark"] .eh-notif-dropdown { background: #252837 !important; border-color: #343848 !important; }
-    [data-theme="dark"] .eh-notif-item:hover { background: #2d3142 !important; }
-    [data-theme="dark"] .eh-notif-item strong { color: #dde3f0 !important; }
-
-    /* Badges en dark */
-    [data-theme="dark"] .eh-badge-blue   { background: rgba(91,124,246,0.15) !important; color: #9fb3ff !important; }
-    [data-theme="dark"] .eh-badge-green  { background: rgba(63,185,80,0.12)  !important; color: #3fb950 !important; }
-    [data-theme="dark"] .eh-badge-yellow { background: rgba(240,180,41,0.12) !important; color: #f0b429 !important; }
-    [data-theme="dark"] .eh-badge-red    { background: rgba(248,81,73,0.12)  !important; color: #f85149 !important; }
-    [data-theme="dark"] .eh-badge-cyan   { background: rgba(6,182,212,0.12)  !important; color: #22d3ee !important; }
-
     /* ── THEME TOGGLE BUTTON ── */
     .theme-toggle-button {
         width: 40px; height: 40px; border-radius: 50%;
@@ -98,8 +53,6 @@
     }
 .theme-toggle-button .sun-icon  { display: block; }
 .theme-toggle-button .moon-icon { display: none; }
-[data-theme="dark"] .theme-toggle-button .sun-icon  { display: none; }
-[data-theme="dark"] .theme-toggle-button .moon-icon { display: block; }
 
     /* ── HEADER ── */
     .eh-header {
@@ -534,27 +487,6 @@
         .eh-stat-value { font-size: 1.3rem !important; }
     }
 
-    /* ── FIX ÍCONOS TEMA — máxima especificidad ── */
-#dash-meh-header .theme-toggle-button .sun-icon,
-#dash-drawer .theme-toggle-button .sun-icon,
-.eh-header .theme-toggle-button .sun-icon {
-  display: block !important;
-}
-#dash-meh-header .theme-toggle-button .moon-icon,
-#dash-drawer .theme-toggle-button .moon-icon,
-.eh-header .theme-toggle-button .moon-icon {
-  display: none !important;
-}
-[data-theme="dark"] #dash-meh-header .theme-toggle-button .sun-icon,
-[data-theme="dark"] #dash-drawer .theme-toggle-button .sun-icon,
-[data-theme="dark"] .eh-header .theme-toggle-button .sun-icon {
-  display: none !important;
-}
-[data-theme="dark"] #dash-meh-header .theme-toggle-button .moon-icon,
-[data-theme="dark"] #dash-drawer .theme-toggle-button .moon-icon,
-[data-theme="dark"] .eh-header .theme-toggle-button .moon-icon {
-  display: block !important;
-}
 </style>
 </head>
 

@@ -9,31 +9,31 @@ class EmailBackend(ModelBackend):
     """
     def authenticate(self, request, username=None, password=None, **kwargs):
         # Debug: imprimir lo que llega
-        print(f"🔍 DEBUG authenticate - username recibido: {username}")
-        print(f"🔍 DEBUG authenticate - password recibido: {'***' if password else 'None'}")
-        
+        print(f"[DEBUG] authenticate - username recibido: {username}")
+        print(f"[DEBUG] authenticate - password recibido: {'***' if password else 'None'}")
+
         if not username or not password:
-            print("❌ Username o password vacíos")
+            print("[ERROR] Username o password vacios")
             return None
-        
+
         try:
             # Buscar usuario por email
             user = Usuario.objects.get(email=username)
-            print(f"✅ Usuario encontrado: {user.email}")
-            
+            print(f"[OK] Usuario encontrado: {user.email}")
+
             # Verificar contraseña
             if user.check_password(password):
-                print("✅ Contraseña correcta")
+                print("[OK] Contrasena correcta")
                 return user
             else:
-                print("❌ Contraseña incorrecta")
+                print("[ERROR] Contrasena incorrecta")
                 return None
-            
+
         except Usuario.DoesNotExist:
-            print(f"❌ No existe usuario con email: {username}")
+            print(f"[ERROR] No existe usuario con email: {username}")
             return None
         except Exception as e:
-            print(f"❌ Error inesperado: {e}")
+            print(f"[ERROR] Error inesperado: {e}")
             return None
     
     def get_user(self, user_id):

@@ -36,7 +36,7 @@
     "model": "product.categoria",
     "pk": 4,
     "fields": {
-      "nombre": "Climatizaci\u00f3n",
+      "nombre": "Climatización",
       "descripcion": "",
       "activo": true,
       "fecha_creacion": "2025-11-28T18:04:17.695Z",
@@ -113,7 +113,7 @@
     "model": "product.categoria",
     "pk": 11,
     "fields": {
-      "nombre": "Electrodom\u00e9sticos peque\u00f1os",
+      "nombre": "Electrodomésticos pequeños",
       "descripcion": "",
       "activo": true,
       "fecha_creacion": "2026-03-16T20:07:00.136Z",
@@ -124,7 +124,7 @@
     "model": "product.categoria",
     "pk": 12,
     "fields": {
-      "nombre": "Grandes electrodom\u00e9sticos",
+      "nombre": "Grandes electrodomésticos",
       "descripcion": "",
       "activo": true,
       "fecha_creacion": "2026-03-16T20:07:00.136Z",
@@ -146,7 +146,7 @@
     "model": "product.categoria",
     "pk": 14,
     "fields": {
-      "nombre": "Afeitado y Depilaci\u00f3n",
+      "nombre": "Afeitado y Depilación",
       "descripcion": "",
       "activo": true,
       "fecha_creacion": "2026-03-16T20:10:56.379Z",
@@ -168,7 +168,7 @@
     "model": "product.categoria",
     "pk": 16,
     "fields": {
-      "nombre": "Col\u00e1geno y Prote\u00ednas",
+      "nombre": "Colágeno y Proteínas",
       "descripcion": "",
       "activo": true,
       "fecha_creacion": "2026-03-16T20:11:44.968Z",
@@ -289,7 +289,7 @@
     "model": "product.categoria",
     "pk": 27,
     "fields": {
-      "nombre": "Refrigeraci\u00f3n",
+      "nombre": "Refrigeración",
       "descripcion": "",
       "activo": true,
       "fecha_creacion": "2026-03-16T20:15:42.250Z",

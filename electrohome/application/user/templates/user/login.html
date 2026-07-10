@@ -32,35 +32,6 @@
             background: linear-gradient(135deg, #1d4ed8, #1e3a8a) !important;
             color: #ffffff !important;
         }
-        [data-theme="dark"] .btn-submit {
-            background: linear-gradient(135deg, #f97316, #ea580c) !important;
-            color: #ffffff !important;
-        }
-        [data-theme="dark"] .btn-submit:hover {
-            background: linear-gradient(135deg, #fb923c, #f97316) !important;
-            color: #ffffff !important;
-        }
-
-        [data-theme="dark"] .rounded-2xl {
-            background: #161b22 !important;
-            border: 1px solid #21262d !important;
-        }
-        [data-theme="dark"] .custom-input {
-            background-color: #0d1117 !important;
-            border-color: #30363d !important;
-            color: #e6edf3 !important;
-        }
-        [data-theme="dark"] .custom-input::placeholder { color: #6e7681 !important; }
-        [data-theme="dark"] .text-gray-600,
-        [data-theme="dark"] .text-gray-700 { color: #8b949e !important; }
-        [data-theme="dark"] .border-gray-200 { border-color: #21262d !important; }
-        [data-theme="dark"] .bg-white.border-2 {
-            background: #1c2330 !important;
-            border-color: #30363d !important;
-            color: #e6edf3 !important;
-        }
-        [data-theme="dark"] .border-t-2.border-gray-300 { border-color: #21262d !important; }
-        [data-theme="dark"] span.bg-white { background: #161b22 !important; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -80,7 +51,7 @@
 
     <main class="container mx-auto px-4 py-16">
         <div class="max-w-md mx-auto">
-            <div class="rounded-2xl shadow-2xl overflow-hidden" style="background:var(--card-bg);">
+            <div class="rounded-2xl shadow-2xl overflow-hidden" style="background:var(--bg-card);">
                 <!-- Header -->
                 <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-center">
                     <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
@@ -138,7 +109,7 @@
                         {% csrf_token %}
                         
                         <div class="mb-5">
-                            <label class="block font-bold mb-2" style="color:var(--text-primary);"></label>
+                            <label class="block text-gray-700 font-bold mb-2">
                                 <i class="fas fa-envelope text-blue-600 mr-2"></i>
                                 Correo Electrónico
                             </label>

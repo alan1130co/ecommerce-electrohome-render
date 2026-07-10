@@ -86,42 +86,6 @@
         background: linear-gradient(135deg, #1d4ed8, #1e3a8a) !important;
         color: #ffffff !important;
     }
-    [data-theme="dark"] .btn-submit {
-        background: linear-gradient(135deg, #f97316, #ea580c) !important;
-        color: #ffffff !important;
-    }
-    [data-theme="dark"] .btn-submit:hover {
-        background: linear-gradient(135deg, #fb923c, #f97316) !important;
-        color: #ffffff !important;
-    }
-
-    /* ── Dark mode ── */
-    [data-theme="dark"] .custom-input {
-        background-color: #0d1117 !important;
-        border-color: #30363d !important;
-        color: #e6edf3 !important;
-    }
-    [data-theme="dark"] .custom-input::placeholder { color: #6e7681 !important; }
-    [data-theme="dark"] .custom-input:focus {
-        background-color: #161b22 !important;
-        border-color: #388bfd !important;
-    }
-    [data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 {
-        background: rgba(56,139,253,0.08) !important;
-        border-color: #388bfd !important;
-    }
-    [data-theme="dark"] .bg-gradient-to-r.from-blue-50.to-indigo-50 p { color: #58a6ff !important; }
-    [data-theme="dark"] .text-gray-600,
-    [data-theme="dark"] .text-gray-700 { color: #8b949e !important; }
-    [data-theme="dark"] .border-gray-200,
-    [data-theme="dark"] .border-t-2.border-gray-200 { border-color: #21262d !important; }
-    [data-theme="dark"] .bg-white.border-2 {
-        background: #1c2330 !important;
-        border-color: #30363d !important;
-        color: #e6edf3 !important;
-    }
-    [data-theme="dark"] .border-t-2.border-gray-300 { border-color: #21262d !important; }
-    [data-theme="dark"] span.bg-white { background: #161b22 !important; }
 </style>
 </head>
 <body class="bg-gray-50">
@@ -141,7 +105,7 @@
 
     <main class="container mx-auto px-4 py-16">
         <div class="max-w-2xl mx-auto">
-            <div class="rounded-2xl shadow-2xl" style="background:var(--card-bg);border:1px solid var(--border-color);box-shadow:0 25px 60px rgba(0,0,0,0.5);"></div>
+            <div class="rounded-2xl shadow-2xl" style="background:var(--bg-card);border:1px solid var(--border-color);box-shadow:0 25px 60px rgba(0,0,0,0.5);"></div>
                 <!-- Header -->
                 <div class="bg-gradient-to-r from-blue-800 to-blue-600 p-8 text-center rounded-t-2xl">
                     <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
@@ -152,7 +116,7 @@
                 </div>
 
                 <!-- Contenido -->
-                <div class="p-8 rounded-b-2xl" style="background:var(--card-bg);">
+                <div class="p-8 rounded-b-2xl" style="background:var(--bg-card);">
                     <!-- Mensajes -->
                     {% if messages %}
                     <div class="mb-6">

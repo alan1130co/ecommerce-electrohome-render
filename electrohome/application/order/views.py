@@ -155,10 +155,10 @@ El equipo de ElectroHome 🏠
                 fail_silently=False,
             )
             
-            print(f"✅ Correo de confirmación enviado a {order.email}")
-            
+            print(f"[OK] Correo de confirmacion enviado a {order.email}")
+
         except Exception as e:
-            print(f"⚠️ Error al enviar correo: {e}")
+            print(f"[WARN] Error al enviar correo: {e}")
             # No detenemos el proceso, solo registramos el error
         # ===== FIN EMAIL =====
         

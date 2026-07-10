@@ -207,7 +207,7 @@ def chat_message(request):
         return JsonResponse(response_data)
 
     except Exception as e:
-        print(f"❌ Error en chat_message: {e}")
+        print(f"[ERROR] Error en chat_message: {e}")
         import traceback
         traceback.print_exc()
         return JsonResponse({'success': False, 'error': str(e)}, status=500)
@@ -376,7 +376,7 @@ def call_claude_api(user_message, history):
 
     api_key = getattr(settings, 'ANTHROPIC_API_KEY', None)
     if not api_key:
-        print("❌ ANTHROPIC_API_KEY no configurada en settings")
+        print("[ERROR] ANTHROPIC_API_KEY no configurada en settings")
         return _fallback_response()
 
     system_prompt = f"""Eres "Electro", el asistente virtual de Electrohome, tienda colombiana de electrodomésticos.
@@ -446,14 +446,14 @@ FORMATO:
         if resp.status_code == 200:
             return resp.json()['content'][0]['text'].strip()
 
-        print(f"❌ Claude API {resp.status_code}: {resp.text}")
+        print(f"[ERROR] Claude API {resp.status_code}: {resp.text}")
         return _fallback_response()
 
     except requests.exceptions.Timeout:
-        print("❌ Claude API timeout")
+        print("[ERROR] Claude API timeout")
         return _fallback_response()
     except Exception as e:
-        print(f"❌ Claude error: {e}")
+        print(f"[ERROR] Claude error: {e}")
         return _fallback_response()
 
 

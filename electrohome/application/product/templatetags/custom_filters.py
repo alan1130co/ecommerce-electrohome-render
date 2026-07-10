@@ -42,3 +42,24 @@ def formato_numero(valor):
 @register.filter
 def get_item(dictionary, key):
     return dictionary.get(key)
+
+
+@register.filter(name='cld_optimize')
+def cld_optimize(url, width=400):
+    """
+    Inserta transformaciones de Cloudinary (f_auto,q_auto,w_<ancho>) en una
+    URL de imagen para servir el formato y peso óptimos según el navegador.
+    Si la URL no es de Cloudinary (ej. imágenes externas o de prueba),
+    se devuelve sin modificar.
+    """
+    if not url or 'res.cloudinary.com' not in url or '/upload/' not in url:
+        return url
+
+    try:
+        width = int(width)
+    except (TypeError, ValueError):
+        width = 400
+
+    marker = '/upload/'
+    idx = url.index(marker) + len(marker)
+    return f"{url[:idx]}f_auto,q_auto,w_{width}/{url[idx:]}"

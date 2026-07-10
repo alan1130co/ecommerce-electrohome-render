@@ -1,20 +1,30 @@
 from .base import *
 from decouple import config
 import os
+import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY')
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '*']
 
-# ===== CONFIGURACIÓN DE BASE DE DATOS POSTGRESQL =====
-import dj_database_url
+ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
-}
+# ===== CONFIGURACIÓN DE BASE DE DATOS =====
+# Por defecto usa SQLite local, así el entorno local nunca depende de
+# la base de datos remota (Supabase/Postgres en la nube).
+# Si quieres apuntar a un Postgres propio, define DATABASE_URL en tu .env.
+DATABASE_URL = config('DATABASE_URL', default='')
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # ===== CONFIGURACIÓN DE CACHÉ =====
 CACHES = {
@@ -53,11 +63,18 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_AGE = 86400
 SESSION_SAVE_EVERY_REQUEST = False
 
-# ===== CONFIGURACIÓN DE EMAIL CON RESEND =====
-EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
-ANYMAIL = {
-    'RESEND_API_KEY': config('RESEND_API_KEY'),
-}
+# ===== CONFIGURACIÓN DE EMAIL =====
+# Sin RESEND_API_KEY, los correos se imprimen en la consola en vez de
+# enviarse (así el servidor local arranca aunque no tengas esa credencial).
+RESEND_API_KEY = config('RESEND_API_KEY', default='')
+if RESEND_API_KEY:
+    EMAIL_BACKEND = 'anymail.backends.resend.EmailBackend'
+    ANYMAIL = {
+        'RESEND_API_KEY': RESEND_API_KEY,
+    }
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@electrohome.com')
 SERVER_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@electrohome.com')
 PASSWORD_RESET_TIMEOUT = 86400
@@ -106,9 +123,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# ===== WOMPI =====
-WOMPI_PUBLIC_KEY = config('WOMPI_PUBLIC_KEY')
-WOMPI_PRIVATE_KEY = config('WOMPI_PRIVATE_KEY')
+# ===== WOMPI (sandbox por defecto en local) =====
+WOMPI_PUBLIC_KEY = config('WOMPI_PUBLIC_KEY', default='')
+WOMPI_PRIVATE_KEY = config('WOMPI_PRIVATE_KEY', default='')
 WOMPI_ENVIRONMENT = config('WOMPI_ENVIRONMENT', default='test')
 
 if WOMPI_ENVIRONMENT == 'prod':
@@ -118,16 +135,19 @@ else:
 
 SITE_URL = 'https://electrohome.site'
 
-# ===== CLOUDINARY =====
-INSTALLED_APPS += ['cloudinary_storage', 'cloudinary', 'anymail']
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': config('CLOUDINARY_API_KEY'),
-    'API_SECRET': config('CLOUDINARY_API_SECRET'),
-}
+# ===== CLOUDINARY (opcional en local) =====
+# Sin credenciales de Cloudinary, los archivos que subas localmente
+# (reseñas, banners) se guardan en el sistema de archivos local en vez
+# de romper el arranque del servidor.
+CLOUDINARY_CLOUD_NAME = config('CLOUDINARY_CLOUD_NAME', default='')
+if CLOUDINARY_CLOUD_NAME:
+    INSTALLED_APPS += ['cloudinary_storage', 'cloudinary']
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': CLOUDINARY_CLOUD_NAME,
+        'API_KEY': config('CLOUDINARY_API_KEY', default=''),
+        'API_SECRET': config('CLOUDINARY_API_SECRET', default=''),
+    }
 
 # ===== SEGURIDAD =====
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

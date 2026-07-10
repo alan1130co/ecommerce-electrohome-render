@@ -4,72 +4,24 @@
    <link rel="stylesheet" href="{% static 'css/header.css' %}">
    ============================================================ */
 
-/* ── Variables base (por si la página no carga dark_mode.css) ── */
-:root {
-  --header-bg:         #1e40af;
-  --header-text:       #ffffff;
-  --input-bg:          #ffffff;
-  --input-border:      #cbd5e0;
-  --input-text:        #1a202c;
-  --text-tertiary:     #718096;
-  --bg-secondary:      #ffffff;
-  --bg-tertiary:       #e8edf2;
-  --border-color:      #e2e8f0;
-  --accent-blue:       #2563eb;
-  --accent-yellow:     #f59e0b;
-  --dropdown-bg:       #ffffff;
-  --dropdown-border:   #e2e8f0;
-  --dropdown-header-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  --dropdown-item-hover: #f0f7ff;
-  --dropdown-text:     #1a202c;
-  --theme-btn-bg:      rgba(255,255,255,0.15);
-  --theme-btn-border:  rgba(255,255,255,0.3);
-}
-
-[data-theme="dark"] {
-  --header-bg:         #010409;
-  --header-text:       #e6edf3;
-  --input-bg:          #0d1117;
-  --input-border:      #30363d;
-  --input-text:        #e6edf3;
-  --text-tertiary:     #6e7681;
-  --bg-secondary:      #161b22;
-  --bg-tertiary:       #1c2330;
-  --border-color:      #21262d;
-  --accent-blue:       #58a6ff;
-  --accent-yellow:     #f0b429;
-  --dropdown-bg:       #161b22;
-  --dropdown-border:   #30363d;
-  --dropdown-header-bg: linear-gradient(135deg, #1c2330 0%, #161b22 100%);
-  --dropdown-item-hover: #1c2330;
-  --dropdown-text:     #e6edf3;
-  --theme-btn-bg:      rgba(255,255,255,0.07);
-  --theme-btn-border:  rgba(255,255,255,0.12);
-}
+/* Este archivo NO define variables propias — usa exclusivamente las
+   que declara static/css/dark_mode.css (fuente unica de verdad).
+   Debe cargarse siempre junto con dark_mode.css. */
 
 /* ============================================================
    HEADER BASE
    ============================================================ */
 header {
-  background-color: var(--header-bg) !important;
+  background-color: #1e40af !important; /* azul institucional, distinto de --bg-card (tarjetas) */
   overflow: visible !important;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-[data-theme="dark"] header,
-[data-theme="dark"] header[class*="bg-"] {
-  background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
-  border-bottom: 1px solid #21262d !important;
-  box-shadow: 0 1px 0 rgba(240,246,252,0.1), 0 4px 20px rgba(0,0,0,0.5) !important;
-  overflow: visible !important;
 }
 
 /* Todos los links y botones del header en blanco */
 header a,
 header button:not(.theme-toggle-button):not(#user-menu-btn) {
-  color: var(--header-text) !important;
+  color: #ffffff !important; /* header siempre azul (claro) o slate (oscuro): texto blanco fijo en ambos temas */
 }
-[data-theme="dark"] header a:hover { color: #f0b429 !important; }
 
 /* ── Logo ── */
 .logo-principal {
@@ -149,8 +101,8 @@ header button:not(.theme-toggle-button):not(#user-menu-btn) {
    ============================================================ */
 .theme-toggle-button {
   position: relative; width: 46px; height: 46px;
-  background: var(--theme-btn-bg);
-  border: 1.5px solid var(--theme-btn-border);
+  background: rgba(255,255,255,0.15);
+  border: 1.5px solid rgba(255,255,255,0.3);
   border-radius: 50%; cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -202,11 +154,6 @@ header button:not(.theme-toggle-button):not(#user-menu-btn) {
   border-color: rgba(255,255,255,0.6) !important;
   box-shadow: 0 4px 16px rgba(245,158,11,0.5) !important;
 }
-[data-theme="dark"] #user-menu-btn {
-  background: linear-gradient(135deg, #f0b429 0%, #b45309 100%) !important;
-  border-color: rgba(240,180,41,0.3) !important;
-  box-shadow: 0 2px 12px rgba(240,180,41,0.3) !important;
-}
 
 /* ── Contenedor del dropdown nunca corta ── */
 header .relative { overflow: visible !important; }
@@ -223,23 +170,12 @@ header .relative { overflow: visible !important; }
   z-index: 99999 !important;
   position: absolute !important;
 }
-[data-theme="dark"] #user-dropdown {
-  background: #161b22 !important;
-  border: 1px solid #30363d !important;
-  box-shadow: 0 0 0 1px rgba(240,246,252,0.05),
-              0 24px 64px rgba(0,0,0,0.7),
-              0 8px 24px rgba(0,0,0,0.5) !important;
-}
 
 /* ── Header del panel ── */
 .dropdown-header {
   background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%) !important;
   padding: 18px 18px 16px !important;
   border-bottom: 1px solid #e2e8f0 !important;
-}
-[data-theme="dark"] .dropdown-header {
-  background: linear-gradient(135deg, #1c2330 0%, #161b22 100%) !important;
-  border-bottom: 1px solid #21262d !important;
 }
 
 /* ── Avatar ── */
@@ -253,16 +189,12 @@ header .relative { overflow: visible !important; }
   flex-shrink: 0 !important;
   box-shadow: 0 2px 8px rgba(245,158,11,0.4) !important;
 }
-[data-theme="dark"] .dropdown-avatar {
-  background: linear-gradient(135deg, #f0b429 0%, #b45309 100%) !important;
-}
 
 /* ── Nombre ── */
 .dropdown-name {
   font-weight: 700 !important; font-size: 0.9rem !important;
   color: #1a202c !important; line-height: 1.2 !important;
 }
-[data-theme="dark"] .dropdown-name { color: #e6edf3 !important; }
 
 /* ── Badge "Cliente" ── */
 .dropdown-badge {
@@ -273,9 +205,6 @@ header .relative { overflow: visible !important; }
   margin-top: 4px !important;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
   color: white !important;
-}
-[data-theme="dark"] .dropdown-badge {
-  background: linear-gradient(135deg, #1d4ed8 0%, #1e3a8a 100%) !important;
 }
 
 /* ── Items ── */
@@ -291,12 +220,6 @@ header .relative { overflow: visible !important; }
   color: #2563eb !important;
   padding-left: 22px !important;
 }
-[data-theme="dark"] .dropdown-item { color: #e6edf3 !important; }
-[data-theme="dark"] .dropdown-item:hover {
-  background: #1c2330 !important;
-  color: #58a6ff !important;
-  padding-left: 22px !important;
-}
 
 /* ── Icono del item ── */
 .item-icon {
@@ -307,9 +230,6 @@ header .relative { overflow: visible !important; }
   background: #e8edf2 !important; color: #2563eb !important;
   font-size: 0.85rem !important;
   transition: all 0.15s ease !important;
-}
-[data-theme="dark"] .item-icon {
-  background: #21262d !important; color: #58a6ff !important;
 }
 .dropdown-item:hover .item-icon {
   background: rgba(37,99,235,0.1) !important;
@@ -327,15 +247,6 @@ header .relative { overflow: visible !important; }
   color: #dc2626 !important;
   padding-left: 22px !important;
 }
-[data-theme="dark"] .dropdown-item.logout { color: #f85149 !important; }
-[data-theme="dark"] .dropdown-item.logout .item-icon {
-  color: #f85149 !important;
-  background: rgba(248,81,73,0.1) !important;
-}
-[data-theme="dark"] .dropdown-item.logout:hover {
-  background: rgba(248,81,73,0.08) !important;
-  color: #f85149 !important;
-}
 
 /* ── Divisor ── */
 .dropdown-divider {
@@ -343,7 +254,6 @@ header .relative { overflow: visible !important; }
   background: #e2e8f0 !important;
   margin: 4px 0 !important;
 }
-[data-theme="dark"] .dropdown-divider { background: #21262d !important; }
 
 /* ============================================================
    MOBILE HEADER
@@ -361,32 +271,27 @@ header .relative { overflow: visible !important; }
 
 #meh-header {
   position: sticky; top: 0; z-index: 999;
-  background: var(--header-bg);
+  background: #1e40af; /* azul institucional, igual que header */
   padding: 10px 14px;
   display: flex; flex-direction: column;
   box-shadow: 0 2px 14px rgba(0,0,0,0.22);
-}
-[data-theme="dark"] #meh-header {
-  background: linear-gradient(180deg, #010409 0%, #0d1117 100%);
-  border-bottom: 1px solid #21262d;
 }
 .meh-top { display: flex; align-items: center; gap: 10px; }
 .meh-logo { flex-shrink: 0; }
 .meh-logo img { height: 33px; width: auto; display: block; }
 .meh-top .meh-search { flex: 1; min-width: 0; }
 .meh-search {
-  display: flex; background: var(--input-bg);
+  display: flex; background: #ffffff; /* buscador siempre blanco en claro */
   border-radius: 11px; overflow: hidden;
   border: 1.5px solid rgba(255,255,255,0.15);
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
-[data-theme="dark"] .meh-search { background: #0d1117; border-color: #30363d; }
 .meh-search input {
   flex: 1; min-width: 0; border: none; outline: none;
   padding: 11px 14px; font-size: 14px;
-  background: transparent; color: var(--input-text); font-family: inherit;
+  background: transparent; color: var(--text-primary); font-family: inherit;
 }
-.meh-search input::placeholder { color: var(--text-tertiary); }
+.meh-search input::placeholder { color: var(--text-muted); }
 .meh-search button {
   background: #f59e0b; border: none;
   padding: 0 18px; height: 44px;
@@ -411,34 +316,28 @@ header .relative { overflow: visible !important; }
 #meh-botnav {
   position: fixed; bottom: 0; left: 0; right: 0;
   z-index: 998; height: 62px;
-  background: var(--bg-secondary);
+  background: var(--bg-card);
   border-top: 1px solid var(--border-color);
   display: flex; align-items: stretch;
   box-shadow: 0 -4px 20px rgba(0,0,0,0.09);
   padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-[data-theme="dark"] #meh-botnav {
-  background: #0d1117; border-top-color: #21262d;
-  box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
 }
 .bn-tab {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 3px; text-decoration: none;
   background: none; border: none; cursor: pointer;
-  color: var(--text-tertiary); font-family: inherit;
+  color: var(--text-muted); font-family: inherit;
   padding: 6px 0 4px; position: relative;
   transition: color 0.18s; -webkit-tap-highlight-color: transparent;
 }
 .bn-tab:active { opacity: 0.7; }
 .bn-tab.bn-on { color: var(--accent-blue); }
-[data-theme="dark"] .bn-tab.bn-on { color: #58a6ff; }
 .bn-tab.bn-on::before {
   content: ''; position: absolute; top: 0; left: 50%;
   transform: translateX(-50%); width: 28px; height: 3px;
   background: var(--accent-blue); border-radius: 0 0 4px 4px;
 }
-[data-theme="dark"] .bn-tab.bn-on::before { background: #58a6ff; }
 .bn-ico {
   font-size: 1.22rem; line-height: 1; position: relative;
   display: flex; align-items: center; justify-content: center;
@@ -450,9 +349,8 @@ header .relative { overflow: visible !important; }
   font-size: 8px; font-weight: 800;
   min-width: 16px; height: 16px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  border: 2px solid var(--bg-secondary); padding: 0 2px; line-height: 1;
+  border: 2px solid var(--bg-card); padding: 0 2px; line-height: 1;
 }
-[data-theme="dark"] .bn-chip { border-color: #0d1117; }
 .bn-tab.bn-cart .bn-ico {
   background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
   border-radius: 50%; width: 46px; height: 46px;
@@ -462,9 +360,6 @@ header .relative { overflow: visible !important; }
 }
 .bn-tab.bn-cart:active .bn-ico {
   transform: scale(0.91); box-shadow: 0 2px 8px rgba(37,99,235,0.3);
-}
-[data-theme="dark"] .bn-tab.bn-cart .bn-ico {
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
 }
 
 /* ============================================================
@@ -479,23 +374,17 @@ header .relative { overflow: visible !important; }
 #meh-drawer {
   position: fixed; top: 0; right: -100%;
   width: min(82vw, 310px); height: 100%;
-  z-index: 1001; background: var(--bg-secondary);
+  z-index: 1001; background: var(--bg-card);
   box-shadow: -8px 0 40px rgba(0,0,0,0.2);
   transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex; flex-direction: column; overflow-y: auto;
 }
-[data-theme="dark"] #meh-drawer {
-  background: #0d1117; border-left: 1px solid #21262d;
-}
 #meh-drawer.open { right: 0; }
 .mdr-head {
-  background: var(--header-bg); padding: 18px 16px 14px;
+  background: #1e40af; /* azul institucional, igual que header */
+  padding: 18px 16px 14px;
   display: flex; align-items: center;
   justify-content: space-between; flex-shrink: 0;
-}
-[data-theme="dark"] .mdr-head {
-  background: linear-gradient(135deg, #010409 0%, #0d1117 100%);
-  border-bottom: 1px solid #21262d;
 }
 .mdr-close {
   background: rgba(255,255,255,0.15); border: none;
@@ -507,7 +396,7 @@ header .relative { overflow: visible !important; }
 .mdr-section {
   padding: 10px 18px 3px; font-size: 10px; font-weight: 800;
   letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--text-tertiary);
+  color: var(--text-muted);
 }
 .mdr-item {
   display: flex; align-items: center; gap: 13px;
@@ -519,22 +408,17 @@ header .relative { overflow: visible !important; }
   border-left: none; border-right: none; border-top: none;
   width: 100%; text-align: left; font-family: inherit;
 }
-[data-theme="dark"] .mdr-item { color: #e6edf3; border-color: #21262d; }
 .mdr-item:last-child { border-bottom: none; }
-.mdr-item:hover { background: var(--bg-tertiary); color: var(--accent-blue); }
-[data-theme="dark"] .mdr-item:hover { background: #161b22; color: #58a6ff; }
+.mdr-item:hover { background: var(--bg-elevated); color: var(--accent-blue); }
 .mdr-ico {
   width: 34px; height: 34px; border-radius: 10px;
   background: rgba(37,99,235,0.09); color: var(--accent-blue);
   display: flex; align-items: center; justify-content: center;
   font-size: 0.95rem; flex-shrink: 0;
 }
-[data-theme="dark"] .mdr-ico { color: #58a6ff; }
 .mdr-item.mdr-danger { color: #dc2626; }
 .mdr-item.mdr-danger .mdr-ico { background: rgba(220,38,38,0.08); color: #dc2626; }
 .mdr-item.mdr-danger:hover { background: rgba(220,38,38,0.05); color: #dc2626; }
-[data-theme="dark"] .mdr-item.mdr-danger { color: #f85149; }
-[data-theme="dark"] .mdr-item.mdr-danger .mdr-ico { color: #f85149; background: rgba(248,81,73,0.1); }
 
 /* ============================================================
    MODAL AUTH — botones
@@ -553,8 +437,4 @@ header .relative { overflow: visible !important; }
 /* ============================================================
    MOBILE MENU (menú desplegable hamburguesa desktop/tablet)
    ============================================================ */
-#mobile-menu { background-color: var(--header-bg); }
-[data-theme="dark"] #mobile-menu {
-  background: linear-gradient(180deg, #010409 0%, #0d1117 100%) !important;
-  border-top: 1px solid #21262d;
-}
+#mobile-menu { background-color: #1e40af; }
