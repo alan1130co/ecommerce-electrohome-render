@@ -501,6 +501,14 @@ header { overflow: visible !important; }
 [data-theme="dark"] .eh-page-title { color: var(--accent-blue) !important; }
 [data-theme="dark"] .eh-stat-value { color: var(--text-primary) !important; }
 [data-theme="dark"] .eh-card-header { background: var(--bg-elevated) !important; }
+[data-theme="dark"] .dash-quick-card,
+[data-theme="dark"] .dash-metric-card { background: var(--bg-card) !important; border: 1px solid var(--border-color) !important; box-shadow: var(--card-shadow) !important; }
+[data-theme="dark"] .dash-q-title { color: var(--accent-blue) !important; }
+[data-theme="dark"] .dash-q-sub   { color: var(--text-secondary) !important; }
+[data-theme="dark"] .dash-q-arrow { color: var(--text-muted) !important; }
+[data-theme="dark"] .dash-quick-card:hover .dash-q-arrow { color: var(--text-secondary) !important; }
+[data-theme="dark"] .dm-value { color: var(--text-primary) !important; }
+[data-theme="dark"] .dm-label { color: var(--text-secondary) !important; }
 
 /* ============================================================
    15. SCROLLBAR
