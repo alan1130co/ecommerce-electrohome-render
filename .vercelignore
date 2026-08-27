@@ -1,0 +1,61 @@
+# Entorno virtual (Vercel instala dependencias desde requirements.txt)
+venv/
+env/
+ENV/
+.venv/
+
+# Cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Base de datos local (en producción se usa Supabase)
+db.sqlite3
+db.sqlite3-journal
+*.sqlite3
+
+# Media local (en producción se usa Cloudinary)
+media/
+
+# Estáticos ya recolectados localmente (Vercel corre collectstatic en el build)
+staticfiles/
+
+# Variables de entorno y secretos (nunca deben subirse)
+.env
+.env.local
+.env.*.local
+*.env
+
+# Herramientas de desarrollo / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Control de versiones
+.git/
+.gitignore
+
+# Tests y cobertura
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Logs
+*.log
+
+# Backups y basura del sistema
+*.bak
+*.backup
+*.old
+Thumbs.db
+.DS_Store
+
+# Claude Code / configuración local del asistente
+.claude/
+
+# Scripts locales de arranque en Windows
+iniciar.bat
