@@ -43,8 +43,6 @@ WOMPI_ENVIRONMENT = os.environ.get('WOMPI_ENVIRONMENT', 'test')
 WOMPI_API_URL = 'https://sandbox.wompi.co/v1'
 
 # ===== ARCHIVOS ESTÃTICOS =====
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-
 # ===== CLOUDINARY =====
 INSTALLED_APPS += ['cloudinary_storage', 'cloudinary']
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
