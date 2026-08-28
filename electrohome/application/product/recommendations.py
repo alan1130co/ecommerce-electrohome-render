@@ -283,45 +283,71 @@ class RecommendationEngine:
         Productos trending excluyendo los conocidos
         """
         from .models import ProductView, Producto
-        
-        excluded_ids = self._get_excluded_products() if self.user and self.user.is_authenticated else set()
-        
+
+        if self.user and self.user.is_authenticated:
+            excluded_ids = self._get_excluded_products()
+            cache_key = None
+        else:
+            cache_key = f'trending_products_{days}_{limit}'
+            cached = cache.get(cache_key)
+            if cached:
+                return cached
+            excluded_ids = set()
+
         since = timezone.now() - timedelta(days=days)
-        
+
         trending_ids = ProductView.objects.filter(
             viewed_at__gte=since
         ).values('product_id').annotate(
             view_count=Count('id')
         ).filter(
-            view_count__gte=2 
+            view_count__gte=2
         ).order_by('-view_count')[:limit * 3].values_list('product_id', flat=True)
-        
+
         products = Producto.objects.filter(
             id__in=trending_ids,
             activo=True,
             stock__gt=0
         ).exclude(
-            id__in=excluded_ids 
+            id__in=excluded_ids
         ).select_related('categoria')[:limit]
-        
-        return list(products)
+
+        products = list(products)
+
+        if cache_key:
+            cache.set(cache_key, products, self.cache_timeout)
+
+        return products
     
     def get_new_arrivals(self, limit=10):
         """
         Productos nuevos excluyendo los conocidos
         """
         from .models import Producto
-        
-        excluded_ids = self._get_excluded_products() if self.user and self.user.is_authenticated else set()
-        
+
+        if self.user and self.user.is_authenticated:
+            excluded_ids = self._get_excluded_products()
+            cache_key = None
+        else:
+            cache_key = f'new_arrivals_{limit}'
+            cached = cache.get(cache_key)
+            if cached:
+                return cached
+            excluded_ids = set()
+
         products = Producto.objects.filter(
             activo=True,
             stock__gt=0
         ).exclude(
             id__in=excluded_ids
         ).select_related('categoria').order_by('-fecha_creacion')[:limit]
-        
-        return list(products)
+
+        products = list(products)
+
+        if cache_key:
+            cache.set(cache_key, products, self.cache_timeout)
+
+        return products
     
     def get_homepage_recommendations(self):
         """

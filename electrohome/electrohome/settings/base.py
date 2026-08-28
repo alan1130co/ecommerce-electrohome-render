@@ -11,17 +11,19 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import os
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-j!&amsgcyeces&3lvzhfy*al7(zowo@227_y*$gt51bws(4lgm')
+# decouple.config lee primero el entorno real (Vercel en producción) y
+# si no existe, cae al archivo .env (desarrollo local).
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-j!&amsgcyeces&3lvzhfy*al7(zowo@227_y*$gt51bws(4lgm')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
     "localhost",

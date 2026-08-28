@@ -19,16 +19,32 @@ DATABASES = {
     )
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+# En Vercel (serverless) LocMemCache no persiste entre invocaciones.
+# Si REDIS_URL está definida (ej. Upstash), se usa Redis; si no, cae a
+# LocMemCache para que el sitio siga funcionando sin caché real hasta
+# que se aprovisione Redis.
+REDIS_URL = os.environ.get('REDIS_URL', '')
+if REDIS_URL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': REDIS_URL,
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
 
 # ===== SEGURIDAD =====
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = [x for x in os.environ.get('CSRF_TRUSTED_ORIGINS', 'https://ecommerce-electrohome-render.onrender.com').split(',') if x]
+CSRF_TRUSTED_ORIGINS = [x for x in os.environ.get(
+    'CSRF_TRUSTED_ORIGINS',
+    'https://electrohome.site,https://www.electrohome.site,https://*.vercel.app'
+).split(',') if x]
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 

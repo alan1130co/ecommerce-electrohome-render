@@ -1,28 +1,36 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.decorators.cache import never_cache 
 from django.views.decorators.http import require_POST
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q, Min, Max
 
 from .models import Producto, Categoria, Promocion, BannerPromocion, ProductView
 from .cart_services import CartService
 from .recommendations import (
-    RecommendationEngine, 
-    track_product_view, 
+    RecommendationEngine,
+    track_product_view,
     get_recommendations_for_cart
 )
 from application.order.models import Order, OrderItem
 from application.product.models import Resena
 
+HOMEPAGE_ANON_CACHE_KEY = 'homepage_anon_html_v1'
+HOMEPAGE_ANON_CACHE_TIMEOUT = 60
 
-@never_cache 
+
 def index(request):
     from django.db.models import Count, Sum
     from django.utils import timezone
     from application.product.models import SeccionPromocional, Promocion
+
+    is_anonymous = not request.user.is_authenticated
+    if is_anonymous:
+        cached_html = cache.get(HOMEPAGE_ANON_CACHE_KEY)
+        if cached_html is not None:
+            return HttpResponse(cached_html)
 
     user = request.user if request.user.is_authenticated else None
     engine = RecommendationEngine(user=user)
@@ -147,7 +155,12 @@ def index(request):
         'banners': banners,
     }
 
-    return render(request, 'product/home.html', context)
+    response = render(request, 'product/home.html', context)
+
+    if is_anonymous:
+        cache.set(HOMEPAGE_ANON_CACHE_KEY, response.content, HOMEPAGE_ANON_CACHE_TIMEOUT)
+
+    return response
 
 
 def product_detail(request, product_id):
