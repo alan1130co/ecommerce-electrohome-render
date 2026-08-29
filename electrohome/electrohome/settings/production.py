@@ -18,6 +18,11 @@ DATABASES = {
         ssl_require=True,
     )
 }
+# Ver nota en local.py: el pooler de Supabase en modo transacción no
+# soporta cursores server-side entre queries de la misma request —
+# allauth abre uno en cualquier intento de login y revienta con 500
+# intermitente (psycopg2.errors.InvalidCursorName) sin este flag.
+DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
 
 # En Vercel (serverless) LocMemCache no persiste entre invocaciones.
 # Si REDIS_URL está definida (ej. Upstash), se usa Redis; si no, cae a

@@ -18,6 +18,15 @@ if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.config(default=DATABASE_URL)
     }
+    # Supabase expone su pooler (puerto 6543) en modo transacción de
+    # PgBouncer: la conexión física puede rotar entre queries de la MISMA
+    # request, así que un cursor server-side abierto por una query puede
+    # dejar de existir para la siguiente (psycopg2.errors.InvalidCursorName,
+    # intermitente). django-allauth abre uno de estos con .iterator() en
+    # filter_users_by_email(), reventando CUALQUIER login con password
+    # incorrecta con un 500 en vez de 401. Este flag es la recomendación
+    # oficial de Django para pooler en modo transacción.
+    DATABASES['default']['DISABLE_SERVER_SIDE_CURSORS'] = True
 else:
     DATABASES = {
         'default': {
