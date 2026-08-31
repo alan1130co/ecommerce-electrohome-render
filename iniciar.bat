@@ -2,6 +2,6 @@
 cd /d C:\Users\alanc\ecommerce-electrohome
 call venv\Scripts\activate
 set DJANGO_SETTINGS_MODULE=electrohome.settings.local
-cd electrohome
+cd backend
 python manage.py runserver
 pause

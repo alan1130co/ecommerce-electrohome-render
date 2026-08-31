@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "electrohome/electrohome/wsgi.py": {
+    "backend/electrohome/wsgi.py": {
       "maxDuration": 30
     }
   }
