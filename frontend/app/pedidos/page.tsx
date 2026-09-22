@@ -1,99 +1,130 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 
-import { apiClientFetch } from "@/lib/api-client";
-import { formatFecha, formatPrecio, statusColor } from "@/lib/orderStatus";
+import { userApiGetSafe } from "@/lib/api-user";
+import { formatFecha, formatPrecio, statusColor, statusIcon } from "@/lib/orderStatus";
 import type { Order } from "@/lib/types";
-import { useAuthStore } from "@/store/authStore";
 
-export default function PedidosPage() {
-  const router = useRouter();
-  const { user, checked, fetchMe } = useAuthStore();
-
-  const [orders, setOrders] = useState<Order[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchMe();
-  }, [fetchMe]);
-
-  useEffect(() => {
-    if (checked && !user) {
-      router.push("/cuenta/login?next=/pedidos");
-    }
-  }, [checked, user, router]);
-
-  useEffect(() => {
-    if (!user) return;
-    apiClientFetch<Order[]>("/api/orders/")
-      .then(setOrders)
-      .catch((e) => setError(e instanceof Error ? e.message : "No se pudieron cargar tus pedidos"));
-    // user cambia de referencia en cada fetchMe() aunque sea la misma
-    // persona — usar user.id evita refetches redundantes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
-
-  if (!checked || !user) {
-    return (
-      <main className="mx-auto max-w-3xl flex-1 px-4 py-16 text-center text-gray-500">
-        Verificando sesión...
-      </main>
-    );
+export default async function PedidosPage() {
+  const result = await userApiGetSafe<Order[]>("/api/orders/");
+  if (!result.ok) {
+    redirect("/cuenta/login?next=/pedidos");
   }
-
-  if (error) {
-    return (
-      <main className="mx-auto max-w-3xl flex-1 px-4 py-16 text-center text-red-500">{error}</main>
-    );
-  }
-
-  if (!orders) {
-    return (
-      <main className="mx-auto max-w-3xl flex-1 px-4 py-16 text-center text-gray-500">
-        Cargando pedidos...
-      </main>
-    );
-  }
+  const orders = result.data;
 
   if (orders.length === 0) {
     return (
-      <main className="mx-auto max-w-3xl flex-1 px-4 py-16 text-center">
-        <p className="text-gray-500">Todavía no tienes pedidos.</p>
-        <Link
-          href="/productos"
-          className="mt-4 inline-block rounded bg-blue-700 px-4 py-2 font-semibold text-white hover:bg-blue-800"
-        >
-          Ver productos
-        </Link>
+      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
+        <h1 className="mb-6 flex items-center gap-3 text-2xl font-bold text-blue-800 dark:text-blue-300">
+          <i className="fas fa-shopping-bag" /> Mis Pedidos
+        </h1>
+        <div className="rounded-lg bg-white p-16 text-center shadow-md dark:bg-slate-800">
+          <p className="text-gray-500 dark:text-slate-400">No tienes pedidos aún</p>
+          <p className="mt-1 text-sm text-gray-500 dark:text-slate-400">¡Realiza tu primera compra!</p>
+          <Link
+            href="/productos"
+            className="mt-6 inline-flex items-center gap-2 rounded-md bg-amber-500 px-6 py-3 font-semibold text-white transition hover:bg-amber-600"
+          >
+            <i className="fas fa-shopping-bag" /> Ir a Comprar
+          </Link>
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-8">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Mis pedidos</h1>
+    <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
+      <h1 className="mb-6 flex items-center gap-3 text-2xl font-bold text-blue-800 dark:text-blue-300">
+        <i className="fas fa-shopping-bag" /> Mis Pedidos
+      </h1>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {orders.map((order) => (
-          <Link
-            key={order.id}
-            href={`/pedidos/${order.id}`}
-            className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-gray-200 bg-white p-4 transition hover:border-blue-400 hover:shadow-sm"
-          >
-            <div>
-              <p className="font-semibold text-gray-800">#{order.order_number}</p>
-              <p className="text-sm text-gray-500">{formatFecha(order.created_at)}</p>
+          <div key={order.id} className="overflow-hidden rounded-lg bg-white shadow-md dark:bg-slate-800">
+            <div className="flex items-center justify-between bg-blue-700 px-5 py-3 text-white">
+              <div>
+                <p className="font-bold">Pedido #{order.order_number}</p>
+                <p className="flex items-center gap-1 text-xs text-blue-100">
+                  <i className="fas fa-calendar" /> {formatFecha(order.created_at)}
+                </p>
+              </div>
+              <span
+                className={`flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold ${statusColor(order.status)}`}
+              >
+                <i className={`fas ${statusIcon(order.status)}`} /> {order.status_display}
+              </span>
             </div>
-            <span
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${statusColor(order.status)}`}
-            >
-              {order.status_display}
-            </span>
-            <p className="font-bold text-blue-700">{formatPrecio(order.total)}</p>
-          </Link>
+
+            <div className="grid gap-4 p-5 sm:grid-cols-2">
+              <div>
+                <h3 className="mb-2 flex items-center gap-2 font-bold text-blue-800 dark:text-blue-300">
+                  <i className="fas fa-shopping-bag" /> Productos ({order.items.length})
+                </h3>
+                <ul className="space-y-2">
+                  {order.items.slice(0, 3).map((item) => (
+                    <li key={item.id} className="flex items-center gap-2 text-sm">
+                      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md bg-gray-100 dark:bg-slate-200">
+                        {item.product_image && (
+                          <Image
+                            src={item.product_image}
+                            alt={item.product_name}
+                            fill
+                            sizes="40px"
+                            className="object-cover"
+                          />
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <span className="block truncate text-gray-800 dark:text-slate-200">{item.product_name}</span>
+                        <span className="text-xs text-gray-500 dark:text-slate-400">
+                          Cantidad: {item.quantity} x {formatPrecio(item.product_price)}
+                        </span>
+                      </div>
+                    </li>
+                  ))}
+                  {order.items.length > 3 && (
+                    <li className="text-xs font-medium text-gray-500 dark:text-slate-400">
+                      + {order.items.length - 3} producto{order.items.length - 3 === 1 ? "" : "s"} más
+                    </li>
+                  )}
+                </ul>
+              </div>
+
+              <div>
+                <h3 className="mb-2 flex items-center gap-2 font-bold text-blue-800 dark:text-blue-300">
+                  <i className="fas fa-map-marker-alt" /> Envío
+                </h3>
+                <p className="text-sm text-gray-700 dark:text-slate-300">{order.shipping_address}</p>
+                <p className="text-sm text-gray-700 dark:text-slate-300">
+                  {order.shipping_city}, {order.shipping_department}
+                </p>
+                <p className="mt-1 text-sm text-gray-700 dark:text-slate-300">
+                  <i className="fas fa-phone" /> {order.phone}
+                </p>
+
+                <h3 className="mt-4 mb-2 flex items-center gap-2 font-bold text-blue-800 dark:text-blue-300">
+                  <i className="fas fa-credit-card" /> Pago
+                </h3>
+                <p className="text-sm text-gray-700 dark:text-slate-300">{order.payment_method_display}</p>
+              </div>
+            </div>
+
+            <div className="my-1 border-t border-gray-200 dark:border-slate-700" />
+
+            <div className="flex items-center justify-between px-5 py-4">
+              <div>
+                <p className="text-xs text-gray-500 dark:text-slate-400">Total pagado</p>
+                <p className="text-xl font-bold text-blue-700 dark:text-blue-400">{formatPrecio(order.total)}</p>
+              </div>
+              <Link
+                href={`/pedidos/${order.id}`}
+                className="flex items-center gap-2 rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-800"
+              >
+                <i className="fas fa-eye" /> Ver Detalle
+              </Link>
+            </div>
+          </div>
         ))}
       </div>
     </main>
