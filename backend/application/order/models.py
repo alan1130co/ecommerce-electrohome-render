@@ -112,12 +112,12 @@ class Order(models.Model):
     order_number = models.CharField(max_length=20, unique=True, editable=False)
     
     class Meta:
-        verbose_name = 'Orden'
-        verbose_name_plural = 'Órdenes'
+        verbose_name = 'Pedido'
+        verbose_name_plural = 'Pedidos'
         ordering = ['-created_at']
-    
+
     def __str__(self):
-        return f"Orden #{self.order_number} - {self.user.username}"
+        return f"Pedido #{self.order_number} - {self.user.username}"
     
     def save(self, *args, **kwargs):
         if not self.order_number:
@@ -138,8 +138,8 @@ class OrderItem(models.Model):
     product_image = models.CharField(max_length=500, blank=True, null=True)  
     
     class Meta:
-        verbose_name = 'Item de Orden'
-        verbose_name_plural = 'Items de Orden'
+        verbose_name = 'Item de Pedido'
+        verbose_name_plural = 'Items de Pedido'
     
     def __str__(self):
         return f"{self.quantity}x {self.product_name}"
