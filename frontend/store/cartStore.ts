@@ -14,19 +14,30 @@ interface CartState {
   clearCart: () => Promise<void>;
 }
 
+// Mismo problema que auth/wishlistStore: varios consumidores montados a
+// la vez pueden disparar fetchCart() en paralelo — deduplicar el fetch en
+// vuelo evita peticiones repetidas.
+let inFlightFetch: Promise<void> | null = null;
+
 export const useCartStore = create<CartState>((set) => ({
   summary: null,
   loading: false,
   error: null,
 
   fetchCart: async () => {
-    set({ loading: true, error: null });
-    try {
-      const summary = await apiClientFetch<CartSummary>("/api/cart/");
-      set({ summary, loading: false });
-    } catch (e) {
-      set({ loading: false, error: e instanceof Error ? e.message : "Error al cargar el carrito" });
-    }
+    if (inFlightFetch) return inFlightFetch;
+    inFlightFetch = (async () => {
+      set({ loading: true, error: null });
+      try {
+        const summary = await apiClientFetch<CartSummary>("/api/cart/");
+        set({ summary, loading: false });
+      } catch (e) {
+        set({ loading: false, error: e instanceof Error ? e.message : "Error al cargar el carrito" });
+      } finally {
+        inFlightFetch = null;
+      }
+    })();
+    return inFlightFetch;
   },
 
   addItem: async (productId, quantity = 1) => {

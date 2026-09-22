@@ -14,5 +14,12 @@ export default function CartBadge() {
     fetchCart();
   }, [fetchCart]);
 
-  return <span aria-label="Carrito">🛒 {totalItems}</span>;
+  return (
+    <span aria-label="Carrito" className="relative inline-flex">
+      <i className="fas fa-shopping-cart header-icon-lg" />
+      <span className="absolute -top-2 -right-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-xs font-bold text-white">
+        {totalItems}
+      </span>
+    </span>
+  );
 }

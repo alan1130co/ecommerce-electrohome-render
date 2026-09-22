@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import ChatWidget from "@/components/chatbot/ChatWidget";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
+import Toast from "@/components/layout/Toast";
 
 /**
  * El panel /dashboard tiene su propio chrome (sidebar de admin, sin
@@ -24,9 +25,12 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
   return (
     <>
       <Navbar />
-      {children}
-      <Footer />
+      <div className="flex flex-1 flex-col pb-16 lg:pb-0">
+        {children}
+        <Footer />
+      </div>
       <ChatWidget />
+      <Toast />
     </>
   );
 }
