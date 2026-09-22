@@ -29,8 +29,8 @@ export default function ResenaForm({ productId }: { productId: number }) {
 
   if (!user) {
     return (
-      <p className="text-sm text-gray-500">
-        <a href="/cuenta/login" className="text-blue-700 hover:underline">
+      <p className="text-sm text-gray-500 dark:text-slate-400">
+        <a href="/cuenta/login" className="text-blue-700 hover:underline dark:text-blue-400">
           Inicia sesión
         </a>{" "}
         para dejar una reseña (solo si ya recibiste el producto).
@@ -40,19 +40,19 @@ export default function ResenaForm({ productId }: { productId: number }) {
 
   if (sent) {
     return (
-      <p className="rounded-md bg-green-50 p-3 text-sm text-green-700">
+      <p className="rounded-md bg-green-50 p-3 text-sm text-green-700 dark:bg-green-500/10 dark:text-green-400">
         ¡Gracias! Tu reseña quedó pendiente de aprobación.
       </p>
     );
   }
 
   if (status.ya_reseno) {
-    return <p className="text-sm text-gray-500">Ya dejaste una reseña para este producto.</p>;
+    return <p className="text-sm text-gray-500 dark:text-slate-400">Ya dejaste una reseña para este producto.</p>;
   }
 
   if (!status.puede_resenar) {
     return (
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-gray-500 dark:text-slate-400">
         Solo puedes reseñar productos que hayas recibido en un pedido entregado.
       </p>
     );
@@ -82,10 +82,10 @@ export default function ResenaForm({ productId }: { productId: number }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3 rounded-lg border border-gray-200 bg-white p-4">
-      <h3 className="font-semibold text-gray-800">Deja tu reseña</h3>
+    <form onSubmit={handleSubmit} className="space-y-3 rounded-lg border border-gray-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-800">
+      <h3 className="font-semibold text-gray-800 dark:text-slate-200">Deja tu reseña</h3>
 
-      {error && <p className="text-sm font-medium text-red-500">{error}</p>}
+      {error && <p className="text-sm font-medium text-red-500 dark:text-red-400">{error}</p>}
 
       <div className="flex items-center gap-1">
         {[1, 2, 3, 4, 5].map((n) => (
@@ -94,7 +94,7 @@ export default function ResenaForm({ productId }: { productId: number }) {
             type="button"
             onClick={() => setCalificacion(n)}
             aria-label={`${n} estrellas`}
-            className={`text-2xl ${n <= calificacion ? "text-amber-400" : "text-gray-300"}`}
+            className={`text-2xl ${n <= calificacion ? "text-amber-400" : "text-gray-300 dark:text-slate-600"}`}
           >
             ★
           </button>
@@ -106,7 +106,7 @@ export default function ResenaForm({ productId }: { productId: number }) {
         placeholder="Título (opcional)"
         value={titulo}
         onChange={(e) => setTitulo(e.target.value)}
-        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
       />
       <textarea
         required
@@ -114,13 +114,13 @@ export default function ResenaForm({ productId }: { productId: number }) {
         value={comentario}
         onChange={(e) => setComentario(e.target.value)}
         rows={3}
-        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
       />
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setFoto(e.target.files?.[0] ?? null)}
-        className="w-full text-sm text-gray-600 file:mr-3 file:rounded-md file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100"
+        className="w-full text-sm text-gray-600 file:mr-3 file:rounded-md file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100 dark:text-slate-400 dark:file:bg-blue-500/10 dark:file:text-blue-400"
       />
 
       <button
