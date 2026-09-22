@@ -37,12 +37,14 @@ class CategoriaAdminSerializer(CategoriaSerializer):
 
 class PromocionAdminSerializer(serializers.ModelSerializer):
     producto_nombre = serializers.CharField(source='producto.nombre', read_only=True)
+    producto_precio = serializers.DecimalField(source='producto.precio', max_digits=10, decimal_places=2, read_only=True)
+    producto_imagen = serializers.CharField(source='producto.imagen_principal', read_only=True)
     vigente = serializers.ReadOnlyField()
 
     class Meta:
         model = Promocion
         fields = [
-            'id', 'producto', 'producto_nombre', 'descuento_porcentaje',
+            'id', 'producto', 'producto_nombre', 'producto_precio', 'producto_imagen', 'descuento_porcentaje',
             'precio_promocional', 'etiqueta', 'activo', 'fecha_inicio',
             'fecha_fin', 'vigente', 'created_at',
         ]
@@ -56,10 +58,13 @@ class BannerAdminSerializer(BannerPromocionSerializer):
 class ResenaAdminSerializer(ResenaSerializer):
     producto_nombre = serializers.CharField(source='producto.nombre', read_only=True)
     usuario_email = serializers.CharField(source='usuario.email', read_only=True)
+    usuario_first_name = serializers.CharField(source='usuario.first_name', read_only=True)
+    usuario_last_name = serializers.CharField(source='usuario.last_name', read_only=True)
 
     class Meta(ResenaSerializer.Meta):
         fields = ResenaSerializer.Meta.fields + [
             'motivo_rechazo', 'revisado_en', 'producto', 'producto_nombre', 'usuario_email',
+            'usuario_first_name', 'usuario_last_name',
         ]
 
 
@@ -80,9 +85,15 @@ class OrderAdminSerializer(OrderSerializer):
 
 
 class UsuarioAdminSerializer(serializers.ModelSerializer):
+    total_orders = serializers.SerializerMethodField()
+
     class Meta:
         model = Usuario
         fields = [
             'id', 'email', 'first_name', 'last_name', 'telefono', 'ciudad',
-            'fecha_registro', 'is_staff', 'is_active', 'tipo_usuario',
+            'fecha_registro', 'is_staff', 'is_active', 'is_superuser', 'tipo_usuario',
+            'total_orders', 'last_login',
         ]
+
+    def get_total_orders(self, obj):
+        return obj.get_total_orders()

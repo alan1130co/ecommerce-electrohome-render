@@ -33,6 +33,7 @@ def _user_data_full(user):
         'direccion': user.direccion,
         'total_orders': user.get_total_orders(),
         'total_spent': str(user.get_total_spent()),
+        'fecha_registro': user.fecha_registro,
     }
 
 
