@@ -17,19 +17,27 @@ class RecommendationEngine:
         # Usar RECOMMENDATION_CONFIG si está definido, sino fallback a 3600
         config = getattr(settings, 'RECOMMENDATION_CONFIG', {})
         self.cache_timeout = config.get('CACHE_TIMEOUT', 3600)
-    
+        self._excluded_products_cache = None
+
     def _get_excluded_products(self):
         """
         Obtiene todos los productos que el usuario ya conoce
-        y que NO deberían aparecer en recomendaciones
+        y que NO deberían aparecer en recomendaciones.
+        Memoizado por instancia: get_homepage_recommendations() llama a
+        4 métodos distintos sobre el mismo engine, y cada uno llamaba esto
+        por su cuenta (4 queries x 4 = 16 queries repetidas por request).
         """
+        if self._excluded_products_cache is not None:
+            return self._excluded_products_cache
+
         from .models import ProductView, Purchase, CartItem, WishlistItem
-        
+
         excluded_ids = set()
-        
+
         if not self.user or not self.user.is_authenticated:
+            self._excluded_products_cache = excluded_ids
             return excluded_ids
-        
+
         # 1. Productos comprados
         purchased = Purchase.objects.filter(
             user=self.user
@@ -55,7 +63,8 @@ class RecommendationEngine:
             viewed_at__gte=recent_threshold
         ).values_list('product_id', flat=True)[:20]
         excluded_ids.update(recent_views)
-        
+
+        self._excluded_products_cache = excluded_ids
         return excluded_ids
     
     def get_personalized_recommendations(self, limit=10):

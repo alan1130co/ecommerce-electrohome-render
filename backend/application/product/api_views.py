@@ -18,6 +18,28 @@ from .recommendations import RecommendationEngine, track_product_view, track_sea
 HOMEPAGE_API_CACHE_KEY = 'homepage_api_json_v1'
 HOMEPAGE_API_CACHE_TIMEOUT = 60
 
+ORDEN_OPCIONES = {
+    'nombre_asc': 'nombre',
+    'nombre_desc': '-nombre',
+    'precio_asc': 'precio',
+    'precio_desc': '-precio',
+    'nuevo': '-fecha_creacion',
+    'antiguo': 'fecha_creacion',
+}
+
+
+def filtrar_por_precio_y_ordenar(queryset, params):
+    """?precio_min=&precio_max=&orden= — compartido entre ProductoListAPIView y SearchAPIView."""
+    precio_min = params.get('precio_min')
+    precio_max = params.get('precio_max')
+    if precio_min:
+        queryset = queryset.filter(precio__gte=precio_min)
+    if precio_max:
+        queryset = queryset.filter(precio__lte=precio_max)
+
+    orden = params.get('orden', '-fecha_creacion')
+    return queryset.order_by(ORDEN_OPCIONES.get(orden, '-fecha_creacion'))
+
 
 class CategoriaListAPIView(generics.ListAPIView):
     """GET /api/categorias/ — categorías padre con sus subcategorías anidadas."""
@@ -65,26 +87,10 @@ class ProductoListAPIView(generics.ListAPIView):
                 Q(marca__icontains=search_query)
             )
 
-        precio_min = params.get('precio_min')
-        precio_max = params.get('precio_max')
-        if precio_min:
-            productos = productos.filter(precio__gte=precio_min)
-        if precio_max:
-            productos = productos.filter(precio__lte=precio_max)
-
         if params.get('disponible') == '1':
             productos = productos.filter(stock__gt=0)
 
-        orden = params.get('orden', '-fecha_creacion')
-        orden_opciones = {
-            'nombre_asc': 'nombre',
-            'nombre_desc': '-nombre',
-            'precio_asc': 'precio',
-            'precio_desc': '-precio',
-            'nuevo': '-fecha_creacion',
-            'antiguo': 'fecha_creacion',
-        }
-        return productos.order_by(orden_opciones.get(orden, '-fecha_creacion'))
+        return filtrar_por_precio_y_ordenar(productos, params)
 
 
 class ProductoDetailAPIView(generics.RetrieveAPIView):
@@ -202,8 +208,10 @@ class HomeAPIView(APIView):
         ).exclude(id__in=ids_usados).select_related('categoria')[:15])
 
         if len(mas_vendidos) < 6:
-            engine2 = RecommendationEngine(user=user)
-            populares = engine2.get_popular_products(limit=30)
+            # Reutiliza `engine` (ya trae el excluded-products memoizado de
+            # get_homepage_recommendations) en vez de crear otra instancia
+            # que repetiría esas queries desde cero.
+            populares = engine.get_popular_products(limit=30)
             ids_ya = ids_usados | {p.id for p in mas_vendidos}
             for p in populares:
                 if p.id not in ids_ya:
@@ -291,8 +299,10 @@ class ContactAPIView(APIView):
 
 
 class SearchAPIView(APIView):
-    """GET /api/search/?q=... — equivalente a search_view, misma lógica
-    de query, mismo tracking, y las mismas sugerencias si no hay resultados."""
+    """GET /api/search/?q=...&precio_min=&precio_max=&orden= — equivalente a
+    search_view, misma lógica de query, mismo tracking, y las mismas
+    sugerencias si no hay resultados. precio_min/precio_max/orden reutilizan
+    filtrar_por_precio_y_ordenar (misma lógica que ProductoListAPIView)."""
 
     def get(self, request):
         query = request.query_params.get('q', '').strip()
@@ -306,6 +316,7 @@ class SearchAPIView(APIView):
                 Q(categoria__nombre__icontains=query) |
                 Q(marca__icontains=query)
             ).filter(stock__gt=0, activo=True).select_related('categoria')
+            productos = filtrar_por_precio_y_ordenar(productos, request.query_params)
 
             track_search_query(request, query, productos.count())
 

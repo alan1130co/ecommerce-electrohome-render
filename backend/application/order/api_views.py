@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from application.product.cart_services import CartService
 from application.product.recommendations import RecommendationEngine
 
+from . import ubicaciones
 from .models import Order
 from .order_services import OrderService
 from .serializers import CheckoutSerializer, OrderSerializer
@@ -122,6 +123,44 @@ class CheckoutAPIView(APIView):
         engine.clear_user_cache()
 
         return Response(OrderSerializer(order).data, status=status.HTTP_201_CREATED)
+
+
+class CalcularEnvioAPIView(APIView):
+    """GET /api/checkout/calcular-envio/?ciudad=X — reutiliza el mismo
+    OrderService._calculate_shipping que corre al crear la orden, para que
+    el checkout pueda mostrar el costo real de envío antes de confirmar,
+    sin duplicar la tabla de tarifas en el frontend."""
+
+    def get(self, request):
+        ciudad = request.query_params.get('ciudad', '')
+        shipping_cost = OrderService._calculate_shipping(ciudad)
+        return Response({'ciudad': ciudad, 'shipping_cost': str(shipping_cost)})
+
+
+class UbicacionesDepartamentosAPIView(APIView):
+    """GET /api/ubicaciones/departamentos/ — lista de departamentos de
+    Colombia (dataset DIVIPOLA vendorizado), para el select en cascada
+    de dirección de envío."""
+
+    def get(self, request):
+        return Response(ubicaciones.get_departamentos())
+
+
+class UbicacionesCiudadesAPIView(APIView):
+    """GET /api/ubicaciones/ciudades/?departamento=X — ciudades/municipios
+    de ese departamento. 400 si falta el parámetro o el departamento no
+    existe en el dataset."""
+
+    def get(self, request):
+        departamento = request.query_params.get('departamento', '')
+        if not departamento:
+            return Response({'detail': 'Falta el parámetro departamento'}, status=status.HTTP_400_BAD_REQUEST)
+
+        ciudades = ubicaciones.get_ciudades(departamento)
+        if ciudades is None:
+            return Response({'detail': f'Departamento "{departamento}" no encontrado'}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(ciudades)
 
 
 class OrderListAPIView(generics.ListAPIView):

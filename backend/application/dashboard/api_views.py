@@ -8,6 +8,7 @@ from django.core.files.storage import default_storage
 from django.core.mail import EmailMultiAlternatives
 from django.core.paginator import Paginator
 from django.db.models import Count, Sum
+from django.db.models.functions import TruncDate, TruncHour
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -138,8 +139,9 @@ class AdminDashboardStatsAPIView(APIView):
         total_clientes = Cliente.objects.count()
         total_categorias = Categoria.objects.count()
 
-        total_ventas = Purchase.objects.count()
-        ingresos_totales = Purchase.objects.aggregate(total=Sum('price'))['total'] or 0
+        ventas_agg = Purchase.objects.aggregate(total_ventas=Count('id'), ingresos_totales=Sum('price'))
+        total_ventas = ventas_agg['total_ventas']
+        ingresos_totales = ventas_agg['ingresos_totales'] or 0
         total_vistas = ProductView.objects.count()
 
         conversion = 0
@@ -154,32 +156,60 @@ class AdminDashboardStatsAPIView(APIView):
         )
 
         hoy = timezone.now().date()
+        tz = timezone.get_current_timezone()
 
+        # Antes: un query POR día/hora del rango (30 + 48 + 14 = 92 queries).
+        # Ahora: 1 query por bloque, agrupado en la DB con Trunc* + GROUP BY,
+        # y se rellenan en Python los días/horas sin compras (total 0).
         primer_dia_mes = hoy.replace(day=1)
         ultimo_dia_mes = hoy.replace(day=monthrange(hoy.year, hoy.month)[1])
+        ventas_mes_qs = (
+            Purchase.objects.filter(purchased_at__date__gte=primer_dia_mes, purchased_at__date__lte=ultimo_dia_mes)
+            .annotate(dia=TruncDate('purchased_at', tzinfo=tz))
+            .values('dia')
+            .annotate(total=Sum('price'))
+        )
+        ventas_por_dia_map = {row['dia']: float(row['total'] or 0) for row in ventas_mes_qs}
         ventas_por_dia = []
         dia_iter = primer_dia_mes
         while dia_iter <= ultimo_dia_mes:
-            total = Purchase.objects.filter(purchased_at__date=dia_iter).aggregate(t=Sum('price'))['t'] or 0
-            ventas_por_dia.append({'dia': dia_iter.strftime('%d %b'), 'total': float(total)})
+            ventas_por_dia.append({'dia': dia_iter.strftime('%d %b'), 'total': ventas_por_dia_map.get(dia_iter, 0.0)})
             dia_iter += timedelta(days=1)
 
-        ventas_hoy = []
-        for h in range(24):
-            total = Purchase.objects.filter(
-                purchased_at__date=hoy, purchased_at__hour=h
-            ).aggregate(t=Sum('price'))['t'] or 0
-            count = Purchase.objects.filter(purchased_at__date=hoy, purchased_at__hour=h).count()
-            if count > 0:
-                ventas_hoy.append({'hora': f'{h:02d}:00', 'total': float(total), 'count': count})
+        horas_hoy_qs = (
+            Purchase.objects.filter(purchased_at__date=hoy)
+            .annotate(hora=TruncHour('purchased_at', tzinfo=tz))
+            .values('hora')
+            .annotate(total=Sum('price'), count=Count('id'))
+            .order_by('hora')
+        )
+        ventas_hoy = [
+            {'hora': row['hora'].astimezone(tz).strftime('%H:00'), 'total': float(row['total'] or 0), 'count': row['count']}
+            for row in horas_hoy_qs
+        ]
 
         inicio_semana_actual = hoy - timedelta(days=hoy.weekday())
+        fin_semana_actual = inicio_semana_actual + timedelta(days=6)
+        semana_qs = (
+            Purchase.objects.filter(
+                purchased_at__date__gte=inicio_semana_actual, purchased_at__date__lte=fin_semana_actual
+            )
+            .annotate(dia=TruncDate('purchased_at', tzinfo=tz))
+            .values('dia')
+            .annotate(total=Sum('price'), count=Count('id'))
+        )
+        semana_map = {row['dia']: row for row in semana_qs}
         dias_semana_actual = []
         for d in range(7):
             dia = inicio_semana_actual + timedelta(days=d)
-            total_dia = Purchase.objects.filter(purchased_at__date=dia).aggregate(t=Sum('price'))['t'] or 0
-            count_dia = Purchase.objects.filter(purchased_at__date=dia).count()
-            dias_semana_actual.append({'dia': dia.strftime('%d %b'), 'total': float(total_dia), 'count': count_dia})
+            row = semana_map.get(dia)
+            dias_semana_actual.append({
+                'dia': dia.strftime('%d %b'),
+                'total': float(row['total'] or 0) if row else 0.0,
+                'count': row['count'] if row else 0,
+            })
+
+        resenas_pendientes = Resena.objects.filter(estado='pendiente').count()
 
         return Response({
             'total_productos': total_productos,
@@ -190,6 +220,7 @@ class AdminDashboardStatsAPIView(APIView):
             'ingresos_totales': ingresos_totales,
             'conversion': conversion,
             'total_vistas': total_vistas,
+            'resenas_pendientes': resenas_pendientes,
             'top_productos': top_productos,
             'top_vistos': top_vistos,
             'ventas_por_dia': ventas_por_dia,
