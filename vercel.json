@@ -1,0 +1,33 @@
+{
+  "services": {
+    "frontend": {
+      "root": "frontend",
+      "framework": "nextjs"
+    },
+    "backend": {
+      "root": "backend"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api(/.*)?",
+      "destination": { "type": "service", "service": "backend" }
+    },
+    {
+      "source": "/admin(/.*)?",
+      "destination": { "type": "service", "service": "backend" }
+    },
+    {
+      "source": "/accounts(/.*)?",
+      "destination": { "type": "service", "service": "backend" }
+    },
+    {
+      "source": "/chatbot(/.*)?",
+      "destination": { "type": "service", "service": "backend" }
+    },
+    {
+      "source": "/(.*)",
+      "destination": { "type": "service", "service": "frontend" }
+    }
+  ]
+}
