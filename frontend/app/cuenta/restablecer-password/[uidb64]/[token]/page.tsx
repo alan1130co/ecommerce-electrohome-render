@@ -70,7 +70,7 @@ export default function RestablecerPasswordPage() {
           placeholder="Nueva contraseña"
           value={newPassword1}
           onChange={(e) => setNewPassword1(e.target.value)}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
         />
         <input
           type="password"
@@ -78,7 +78,7 @@ export default function RestablecerPasswordPage() {
           placeholder="Confirmar nueva contraseña"
           value={newPassword2}
           onChange={(e) => setNewPassword2(e.target.value)}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
+          className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none"
         />
 
         <button
