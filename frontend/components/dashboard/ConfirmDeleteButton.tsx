@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 
 import { apiClientFetch, ApiClientError } from "@/lib/api-client";
 
@@ -18,7 +18,7 @@ export default function ConfirmDeleteButton({
 }: {
   endpoint: string;
   confirmMessage: string;
-  label?: string;
+  label?: ReactNode;
   className?: string;
 }) {
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function ConfirmDeleteButton({
         type="button"
         onClick={handleClick}
         disabled={loading}
-        className={className ?? "text-sm font-semibold text-red-600 hover:text-red-800 disabled:opacity-50"}
+        className={className ?? "text-sm font-semibold text-red-600 hover:text-red-800 disabled:opacity-50 dark:text-red-400 dark:hover:text-red-300"}
       >
         {loading ? "Eliminando..." : label}
       </button>

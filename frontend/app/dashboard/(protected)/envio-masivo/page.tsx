@@ -7,7 +7,12 @@ export default async function EnvioMasivoPage() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Envío masivo de correos</h1>
+      <div className="mb-6">
+        <h1 className="flex items-center gap-2 text-2xl font-bold text-blue-900 dark:text-blue-300">
+          <i className="fas fa-envelope text-amber-500" /> Envío Masivo
+        </h1>
+        <p className="text-sm text-gray-500 dark:text-slate-400">Envía correos promocionales a tus clientes</p>
+      </div>
       <EnvioMasivoForm usuarios={usuarios} />
     </div>
   );

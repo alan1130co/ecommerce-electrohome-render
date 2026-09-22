@@ -4,6 +4,18 @@ import AdminPagination from "@/components/dashboard/AdminPagination";
 import ConfirmDeleteButton from "@/components/dashboard/ConfirmDeleteButton";
 import { adminApiGet } from "@/lib/api-admin";
 import type { AdminPage, CategoriaAdmin } from "@/lib/dashboard-types";
+import { formatFechaCorta } from "@/lib/orderStatus";
+
+const iconBtn = "rounded-lg px-2.5 py-1.5 text-sm text-white";
+
+function Badge({ color, children }: { color: "blue" | "cyan" | "green"; children: React.ReactNode }) {
+  const colors = {
+    blue: "bg-blue-700/10 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300",
+    cyan: "bg-cyan-500/10 text-cyan-700 dark:bg-cyan-500/15 dark:text-cyan-300",
+    green: "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300",
+  };
+  return <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${colors[color]}`}>{children}</span>;
+}
 
 export default async function CategoriasPage(props: PageProps<"/dashboard/categorias">) {
   const sp = await props.searchParams;
@@ -17,56 +29,78 @@ export default async function CategoriasPage(props: PageProps<"/dashboard/catego
   return (
     <div>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold text-gray-900">
-          Categorías <span className="text-base font-normal text-gray-500">({data.count})</span>
-        </h1>
-        <Link
-          href="/dashboard/categorias/nueva"
-          className="rounded-md bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800"
-        >
-          + Nueva categoría
-        </Link>
+        <div>
+          <h1 className="flex items-center gap-2 text-2xl font-bold text-blue-900 dark:text-blue-300">
+            <i className="fas fa-list text-amber-500" /> Categorías
+          </h1>
+          <p className="text-sm text-gray-500 dark:text-slate-400">Total: {data.count} categorías registradas</p>
+        </div>
+        <div className="flex gap-3">
+          <Link
+            href="/dashboard"
+            className="rounded-lg bg-linear-to-br from-blue-700 to-blue-900 px-4 py-2 text-sm font-semibold text-white"
+          >
+            ← Dashboard
+          </Link>
+          <Link
+            href="/dashboard/categorias/nueva"
+            className="rounded-lg bg-linear-to-br from-amber-500 to-amber-600 px-4 py-2 text-sm font-semibold text-slate-900"
+          >
+            + Crear Categoría
+          </Link>
+        </div>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white">
+      <div className="overflow-x-auto rounded-lg border border-gray-200 bg-white dark:border-slate-700 dark:bg-slate-800">
         <table className="w-full text-left text-sm">
-          <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-500 dark:bg-slate-900/40 dark:text-slate-400">
             <tr>
+              <th className="px-4 py-3">ID</th>
               <th className="px-4 py-3">Nombre</th>
-              <th className="px-4 py-3">Tipo</th>
+              <th className="px-4 py-3">Descripción</th>
               <th className="px-4 py-3">Productos</th>
               <th className="px-4 py-3">Estado</th>
+              <th className="px-4 py-3">Fecha</th>
               <th className="px-4 py-3">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {data.results.map((cat) => (
-              <tr key={cat.id} className="border-t border-gray-100">
-                <td className="px-4 py-3 font-medium text-gray-800">{cat.nombre}</td>
-                <td className="px-4 py-3 text-gray-500">
-                  {cat.es_subcategoria ? "Subcategoría" : cat.es_categoria_padre ? "Categoría padre" : "—"}
+              <tr key={cat.id} className="border-t border-gray-100 dark:border-slate-700">
+                <td className="px-4 py-3">
+                  <Badge color="blue">#{cat.id}</Badge>
                 </td>
-                <td className="px-4 py-3 text-gray-600">{cat.total_productos}</td>
+                <td className="px-4 py-3 font-bold text-blue-900 dark:text-blue-300">{cat.nombre}</td>
+                <td className="px-4 py-3 text-[13px] text-slate-500 dark:text-slate-400">{cat.descripcion}</td>
+                <td className="px-4 py-3">
+                  <Badge color="cyan">{cat.total_productos}</Badge>
+                </td>
                 <td className="px-4 py-3">
                   <span
-                    className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
-                      cat.activo ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-500"
+                    className={`rounded-full px-2.5 py-1 text-xs font-bold ${
+                      cat.activo
+                        ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300"
+                        : "bg-gray-100 text-gray-500 dark:bg-slate-700 dark:text-slate-400"
                     }`}
                   >
-                    {cat.activo ? "Activa" : "Inactiva"}
+                    {cat.activo ? "Activo" : "Inactivo"}
                   </span>
                 </td>
+                <td className="px-4 py-3 text-[13px] text-slate-500 dark:text-slate-400">{formatFechaCorta(cat.fecha_creacion)}</td>
                 <td className="px-4 py-3">
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1.5">
                     <Link
                       href={`/dashboard/categorias/${cat.id}/editar`}
-                      className="text-sm font-semibold text-blue-700 hover:text-blue-900"
+                      title="Editar"
+                      className={`${iconBtn} bg-linear-to-br from-blue-700 to-blue-900`}
                     >
-                      Editar
+                      <i className="fas fa-edit" />
                     </Link>
                     <ConfirmDeleteButton
                       endpoint={`/api/dashboard/categorias/${cat.id}/`}
                       confirmMessage={`¿Eliminar la categoría "${cat.nombre}"?`}
+                      label={<i className="fas fa-trash" />}
+                      className={`${iconBtn} bg-linear-to-br from-red-500 to-red-600 disabled:opacity-50`}
                     />
                   </div>
                 </td>
@@ -74,7 +108,7 @@ export default async function CategoriasPage(props: PageProps<"/dashboard/catego
             ))}
             {data.results.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-gray-400">
+                <td colSpan={7} className="px-4 py-8 text-center text-gray-400 dark:text-slate-500">
                   No hay categorías todavía.
                 </td>
               </tr>

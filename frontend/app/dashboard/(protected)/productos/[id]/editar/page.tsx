@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import ProductoForm from "@/components/dashboard/ProductoForm";
 import { apiGet } from "@/lib/api";
 import { adminApiGet } from "@/lib/api-admin";
@@ -13,7 +15,17 @@ export default async function EditarProductoPage(props: PageProps<"/dashboard/pr
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Editar: {producto.nombre}</h1>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="flex items-center gap-2 text-2xl font-bold text-blue-900 dark:text-blue-300">
+          <i className="fas fa-box text-amber-500" /> Editar: {producto.nombre}
+        </h1>
+        <Link
+          href="/dashboard/productos"
+          className="rounded-lg bg-linear-to-br from-blue-700 to-blue-900 px-4 py-2 text-sm font-semibold text-white"
+        >
+          <i className="fas fa-arrow-left mr-1" /> Volver a Productos
+        </Link>
+      </div>
       <ProductoForm categorias={categorias} producto={producto} />
     </div>
   );

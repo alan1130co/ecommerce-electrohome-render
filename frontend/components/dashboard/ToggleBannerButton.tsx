@@ -29,11 +29,13 @@ export default function ToggleBannerButton({ bannerId, activo }: { bannerId: num
         type="button"
         onClick={handleToggle}
         disabled={loading}
-        className={`rounded-full px-2.5 py-1 text-xs font-semibold disabled:opacity-50 ${
-          activo ? "bg-green-100 text-green-800 hover:bg-green-200" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+        className={`rounded-full px-3 py-1 text-xs font-bold disabled:opacity-50 ${
+          activo
+            ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300"
+            : "bg-slate-400/15 text-slate-400"
         }`}
       >
-        {activo ? "Activo" : "Inactivo"}
+        {activo ? "✓ Activo" : "✗ Inactivo"}
       </button>
       {error && <span className="text-xs text-red-500">{error}</span>}
     </div>

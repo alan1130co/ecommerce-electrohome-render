@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { apiClientFetch } from "@/lib/api-client";
 
-export default function LogoutButton() {
+export default function LogoutButton({ className }: { className?: string }) {
   const [loading, setLoading] = useState(false);
 
   const handleLogout = async () => {
@@ -19,13 +19,8 @@ export default function LogoutButton() {
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleLogout}
-      disabled={loading}
-      className="rounded-md border border-white/30 px-3 py-1.5 text-sm font-semibold text-white hover:bg-white/10 disabled:opacity-50"
-    >
-      {loading ? "Saliendo..." : "Cerrar sesión"}
+    <button type="button" onClick={handleLogout} disabled={loading} className={className}>
+      <i className="fas fa-sign-out-alt" /> {loading ? "Saliendo..." : "Cerrar Sesión"}
     </button>
   );
 }

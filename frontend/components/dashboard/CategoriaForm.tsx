@@ -5,7 +5,11 @@ import { useState } from "react";
 import { apiClientFetch, ApiClientError } from "@/lib/api-client";
 import type { CategoriaAdmin } from "@/lib/dashboard-types";
 
-export default function CategoriaForm({ categoria }: { categoria?: CategoriaAdmin }) {
+const inputClass =
+  "w-full rounded-lg border-2 border-slate-200 px-3.5 py-2.5 text-sm text-slate-800 focus:border-blue-700 focus:outline-none dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100";
+const labelClass = "mb-1.5 block text-xs font-bold tracking-wide text-slate-600 uppercase dark:text-slate-400";
+
+export default function CategoriaForm({ categoria, cardTitle }: { categoria?: CategoriaAdmin; cardTitle: string }) {
   const [nombre, setNombre] = useState(categoria?.nombre ?? "");
   const [descripcion, setDescripcion] = useState(categoria?.descripcion ?? "");
   const [activo, setActivo] = useState(categoria?.activo ?? true);
@@ -48,49 +52,72 @@ export default function CategoriaForm({ categoria }: { categoria?: CategoriaAdmi
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg space-y-4">
-      {error && <p className="rounded-md bg-red-50 p-3 text-sm font-medium text-red-600">{error}</p>}
-
-      <div>
-        <label htmlFor="c-nombre" className="mb-1 block text-sm font-medium text-gray-700">
-          Nombre de la categoría
-        </label>
-        <input
-          id="c-nombre"
-          required
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          className="input"
-        />
-        {fieldErrors?.nombre && <p className="mt-1 text-xs text-red-500">{fieldErrors.nombre.join(" ")}</p>}
+    <div className="max-w-xl overflow-hidden rounded-lg bg-white shadow-sm dark:bg-slate-800">
+      <div className="bg-linear-to-br from-slate-900 to-blue-900 px-5 py-4 text-[15px] font-bold text-white">
+        <i className="fas fa-list mr-2 text-amber-500" /> {cardTitle}
       </div>
+      <form onSubmit={handleSubmit} className="p-6">
+        {error && <p className="mb-4 rounded-md bg-red-50 p-3 text-sm font-medium text-red-600 dark:bg-red-500/10 dark:text-red-400">{error}</p>}
 
-      <div>
-        <label htmlFor="c-descripcion" className="mb-1 block text-sm font-medium text-gray-700">
-          Descripción
+        <div className="mb-4">
+          <label htmlFor="c-nombre" className={labelClass}>
+            Nombre de la Categoría
+          </label>
+          <input
+            id="c-nombre"
+            required
+            placeholder="Nombre de la categoría"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            className={inputClass}
+          />
+          {fieldErrors?.nombre && <p className="mt-1 text-xs text-red-500 dark:text-red-400">{fieldErrors.nombre.join(" ")}</p>}
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="c-descripcion" className={labelClass}>
+            Descripción
+          </label>
+          <textarea
+            id="c-descripcion"
+            rows={4}
+            placeholder="Descripción de la categoría"
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+            className={inputClass}
+          />
+          {fieldErrors?.descripcion && (
+            <p className="mt-1 text-xs text-red-500 dark:text-red-400">{fieldErrors.descripcion.join(" ")}</p>
+          )}
+        </div>
+
+        <label className="mb-7 flex items-center gap-2.5 font-semibold text-slate-700 dark:text-slate-300">
+          <input
+            type="checkbox"
+            checked={activo}
+            onChange={(e) => setActivo(e.target.checked)}
+            className="h-4 w-4 accent-blue-700"
+          />
+          Categoría Activa
         </label>
-        <textarea
-          id="c-descripcion"
-          rows={4}
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-          className="input"
-        />
-        {fieldErrors?.descripcion && <p className="mt-1 text-xs text-red-500">{fieldErrors.descripcion.join(" ")}</p>}
-      </div>
 
-      <label className="flex items-center gap-2 text-sm font-medium text-gray-700">
-        <input type="checkbox" checked={activo} onChange={(e) => setActivo(e.target.checked)} />
-        Categoría activa
-      </label>
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className="rounded-md bg-blue-700 px-5 py-2.5 font-semibold text-white hover:bg-blue-800 disabled:opacity-50"
-      >
-        {submitting ? "Guardando..." : categoria ? "Actualizar categoría" : "Crear categoría"}
-      </button>
-    </form>
+        <div className="flex gap-3">
+          <button
+            type="submit"
+            disabled={submitting}
+            className="rounded-lg bg-linear-to-br from-amber-500 to-amber-600 px-7 py-2.5 font-semibold text-slate-900 disabled:opacity-50"
+          >
+            <i className="fas fa-save mr-1" />{" "}
+            {submitting ? "Guardando..." : categoria ? "Actualizar Categoría" : "Crear Categoría"}
+          </button>
+          <a
+            href="/dashboard/categorias/"
+            className="rounded-lg bg-linear-to-br from-blue-700 to-blue-900 px-6 py-2.5 font-semibold text-white"
+          >
+            <i className="fas fa-times mr-1" /> Cancelar
+          </a>
+        </div>
+      </form>
+    </div>
   );
 }

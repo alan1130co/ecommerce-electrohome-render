@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+const pillClass = "rounded-lg bg-linear-to-br from-blue-700 to-blue-900 px-3.5 py-1.5 text-sm font-semibold text-white";
+
 /** Pagination Server Component genérica para los listados de /dashboard —
  * misma idea que la paginación de /productos (Links con searchParams,
  * cero JS), adaptada al sobre {current_page,num_pages,has_next,has_previous}
@@ -31,33 +33,29 @@ export default function AdminPagination({
   };
 
   return (
-    <div className="mt-6 flex items-center justify-center gap-3">
-      {hasPrevious ? (
-        <Link
-          href={buildHref(currentPage - 1)}
-          className="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100"
-        >
-          ← Anterior
-        </Link>
-      ) : (
-        <span className="rounded border border-gray-200 px-3 py-1.5 text-sm text-gray-300">
-          ← Anterior
-        </span>
+    <div className="mt-6 flex items-center justify-center gap-2">
+      {hasPrevious && (
+        <>
+          <Link href={buildHref(1)} className={pillClass}>
+            «
+          </Link>
+          <Link href={buildHref(currentPage - 1)} className={pillClass}>
+            ‹
+          </Link>
+        </>
       )}
-      <span className="text-sm text-gray-600">
-        Página {currentPage} de {numPages}
+      <span className="rounded-lg bg-linear-to-br from-slate-900 to-blue-900 px-3.5 py-1.5 text-sm font-semibold text-white">
+        {currentPage} / {numPages}
       </span>
-      {hasNext ? (
-        <Link
-          href={buildHref(currentPage + 1)}
-          className="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100"
-        >
-          Siguiente →
-        </Link>
-      ) : (
-        <span className="rounded border border-gray-200 px-3 py-1.5 text-sm text-gray-300">
-          Siguiente →
-        </span>
+      {hasNext && (
+        <>
+          <Link href={buildHref(currentPage + 1)} className={pillClass}>
+            ›
+          </Link>
+          <Link href={buildHref(numPages)} className={pillClass}>
+            »
+          </Link>
+        </>
       )}
     </div>
   );
