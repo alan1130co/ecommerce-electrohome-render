@@ -1,145 +1,76 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
 
-import { useCartStore } from "@/store/cartStore";
+import CarritoView from "@/components/product/CarritoView";
+import { userApiGet } from "@/lib/api-user";
+import type { CartSummary, ProductoDetalle, ProductoResumen } from "@/lib/types";
 
-const formatPrecio = (precio: string) =>
-  new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  }).format(Number(precio));
+export default async function CarritoPage() {
+  const summary = await userApiGet<CartSummary>("/api/cart/");
 
-export default function CarritoPage() {
-  const { summary, loading, error, fetchCart, updateItem, removeItem, clearCart } =
-    useCartStore();
-
-  useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
-
-  if (loading && !summary) {
+  if (summary.items.length === 0) {
     return (
-      <main className="mx-auto max-w-4xl flex-1 px-4 py-16 text-center text-gray-500">
-        Cargando carrito...
+      <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
+        <h1 className="mb-6 flex items-center gap-3 text-2xl font-bold text-blue-800">
+          <i className="fas fa-shopping-cart" /> Carrito de Compras
+        </h1>
+        <div className="rounded-lg bg-white p-16 text-center shadow-md">
+          <i className="fas fa-shopping-cart text-8xl text-gray-300" />
+          <p className="mt-6 text-xl font-bold text-gray-800">Tu carrito está vacío</p>
+          <p className="mt-2 text-sm text-gray-500">¡Agrega productos para empezar tu compra!</p>
+          <Link
+            href="/productos"
+            className="mt-6 inline-flex items-center gap-2 rounded-md bg-amber-500 px-6 py-3 font-semibold text-white transition hover:bg-amber-600"
+          >
+            <i className="fas fa-shopping-bag" /> Ir a Comprar
+          </Link>
+        </div>
       </main>
     );
   }
 
-  if (!summary || summary.items.length === 0) {
-    return (
-      <main className="mx-auto max-w-4xl flex-1 px-4 py-16 text-center">
-        <p className="text-lg text-gray-500">Tu carrito está vacío.</p>
-        <Link
-          href="/productos"
-          className="mt-4 inline-block rounded bg-blue-700 px-4 py-2 font-semibold text-white hover:bg-blue-800"
-        >
-          Ver productos
-        </Link>
-      </main>
-    );
+  // Especificaciones/stock por ítem (CartItemSerializer usa el serializer
+  // liviano) y recomendaciones "frecuentemente comprados juntos" por
+  // producto — ambos en paralelo entre sí y contra el fetch de arriba ya
+  // resuelto, en vez de la cascada mount→fetchCart→fetch detalles→fetch
+  // recomendaciones que hacía esto en el cliente.
+  const [detallesResueltos, recomendadosPorItem] = await Promise.all([
+    Promise.all(
+      summary.items.map((item) =>
+        userApiGet<ProductoDetalle>(`/api/productos/${item.producto.id}/`).catch(() => null),
+      ),
+    ),
+    Promise.all(
+      summary.items.map((item) =>
+        userApiGet<ProductoResumen[]>(`/api/productos/${item.producto.id}/frecuentes/?limit=4`).catch(
+          () => [] as ProductoResumen[],
+        ),
+      ),
+    ),
+  ]);
+
+  const detalles: Record<number, ProductoDetalle> = {};
+  summary.items.forEach((item, i) => {
+    const d = detallesResueltos[i];
+    if (d) detalles[item.producto.id] = d;
+  });
+
+  const enCarrito = new Set(summary.items.map((i) => i.producto.id));
+  const vistos = new Set(enCarrito);
+  const recomendados: ProductoResumen[] = [];
+  for (const lista of recomendadosPorItem) {
+    for (const p of lista) {
+      if (!vistos.has(p.id)) {
+        vistos.add(p.id);
+        recomendados.push(p);
+      }
+    }
   }
 
   return (
-    <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
-      <h1 className="mb-6 text-2xl font-bold text-gray-900">Tu carrito</h1>
-
-      {error && <p className="mb-4 text-sm font-medium text-red-500">{error}</p>}
-
-      <div className="space-y-4">
-        {summary.items.map((item) => (
-          <div
-            key={item.id}
-            className="flex flex-wrap items-center gap-4 rounded-lg border border-gray-200 bg-white p-4"
-          >
-            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-gray-100">
-              {item.producto.imagen_principal && (
-                <Image
-                  src={item.producto.imagen_principal}
-                  alt={item.producto.nombre}
-                  fill
-                  sizes="80px"
-                  className="object-cover"
-                />
-              )}
-            </div>
-
-            <div className="min-w-[10rem] flex-1">
-              <Link
-                href={`/productos/${item.producto.id}`}
-                className="font-medium text-gray-800 hover:text-blue-700"
-              >
-                {item.producto.nombre}
-              </Link>
-              <p className="text-sm text-gray-500">{formatPrecio(item.producto.precio)} c/u</p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => updateItem(item.id, item.quantity - 1)}
-                className="h-7 w-7 rounded border border-gray-300 text-gray-600 hover:bg-gray-100"
-                aria-label="Disminuir cantidad"
-              >
-                −
-              </button>
-              <span className="w-6 text-center">{item.quantity}</span>
-              <button
-                type="button"
-                onClick={() => updateItem(item.id, item.quantity + 1)}
-                className="h-7 w-7 rounded border border-gray-300 text-gray-600 hover:bg-gray-100"
-                aria-label="Aumentar cantidad"
-              >
-                +
-              </button>
-            </div>
-
-            <p className="w-24 text-right font-semibold text-blue-700">
-              {formatPrecio(item.subtotal)}
-            </p>
-
-            <button
-              type="button"
-              onClick={() => removeItem(item.id)}
-              className="text-sm text-red-500 hover:underline"
-            >
-              Eliminar
-            </button>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-6 flex flex-col items-end gap-1 text-sm text-gray-700">
-        <p>
-          Subtotal: <span className="font-semibold">{formatPrecio(summary.subtotal)}</span>
-        </p>
-        <p>
-          IVA (19%): <span className="font-semibold">{formatPrecio(summary.tax)}</span>
-        </p>
-        <p className="text-lg">
-          Total:{" "}
-          <span className="font-bold text-blue-700">{formatPrecio(summary.total)}</span>
-        </p>
-      </div>
-
-      <div className="mt-6 flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => clearCart()}
-          className="text-sm text-gray-500 hover:underline"
-        >
-          Vaciar carrito
-        </button>
-        <Link
-          href="/checkout"
-          className="rounded bg-amber-500 px-6 py-2 font-semibold text-white hover:bg-amber-600"
-        >
-          Ir a pagar
-        </Link>
-      </div>
-    </main>
+    <CarritoView
+      initialSummary={summary}
+      initialDetalles={detalles}
+      initialRecomendados={recomendados.slice(0, 4)}
+    />
   );
 }

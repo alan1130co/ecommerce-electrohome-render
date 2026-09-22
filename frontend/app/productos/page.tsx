@@ -1,16 +1,13 @@
 import Link from "next/link";
 
-import ProductCard from "@/components/product/ProductCard";
+import CatalogProductCard from "@/components/product/CatalogProductCard";
+import FiltrosSidebar from "@/components/product/FiltrosSidebar";
+import OrdenSelect from "@/components/product/OrdenSelect";
 import { apiGet } from "@/lib/api";
 import type { Categoria, PaginatedResponse, ProductoResumen } from "@/lib/types";
 
-const ORDEN_OPCIONES: { value: string; label: string }[] = [
-  { value: "-fecha_creacion", label: "Más recientes" },
-  { value: "fecha_creacion", label: "Más antiguos" },
-  { value: "precio_asc", label: "Precio: menor a mayor" },
-  { value: "precio_desc", label: "Precio: mayor a menor" },
-  { value: "nombre_asc", label: "Nombre A-Z" },
-];
+// Debe coincidir con REST_FRAMEWORK.PAGE_SIZE en backend/electrohome/settings/base.py.
+const PAGE_SIZE = 8;
 
 const FILTER_KEYS = [
   "categoria",
@@ -36,120 +33,106 @@ export default async function ProductosPage(props: PageProps<"/productos">) {
     apiGet<Categoria[]>("/api/categorias/"),
   ]);
 
-  const ordenActual = params.get("orden") ?? "-fecha_creacion";
-  const categoriaActual = params.get("categoria");
   const currentPage = Number(params.get("page") ?? "1");
+  const totalPages = Math.max(1, Math.ceil(productos.count / PAGE_SIZE));
 
-  const buildUrl = (overrides: Record<string, string | undefined>) => {
+  const buildPageUrl = (page: number) => {
     const next = new URLSearchParams(params);
-    for (const [key, value] of Object.entries(overrides)) {
-      if (value === undefined) next.delete(key);
-      else next.set(key, value);
-    }
-    if (!("page" in overrides)) next.delete("page");
+    next.set("page", String(page));
     return `/productos?${next.toString()}`;
   };
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-1 gap-8 px-4 py-8">
-      <aside className="hidden w-56 shrink-0 md:block">
-        <h2 className="mb-3 text-sm font-bold uppercase tracking-wide text-gray-500">
-          Categorías
-        </h2>
-        <ul className="space-y-1 text-sm">
-          <li>
-            <Link
-              href={buildUrl({ categoria: undefined })}
-              className={`block rounded px-2 py-1 ${
-                !categoriaActual
-                  ? "bg-blue-50 font-semibold text-blue-700"
-                  : "text-gray-700 hover:bg-gray-100"
-              }`}
-            >
-              Todas
-            </Link>
-          </li>
-          {categorias.map((cat) => (
-            <li key={cat.id}>
-              <Link
-                href={buildUrl({ categoria: String(cat.id) })}
-                className={`block rounded px-2 py-1 ${
-                  categoriaActual === String(cat.id)
-                    ? "bg-blue-50 font-semibold text-blue-700"
-                    : "text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                {cat.nombre}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </aside>
+    <main className="container mx-auto px-4 py-8">
+      <div className="mb-6 flex items-center text-sm text-gray-600 dark:text-slate-400">
+        <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400">
+          Inicio
+        </Link>
+        <i className="fas fa-chevron-right mx-2 text-xs" />
+        <span className="font-semibold text-blue-600 dark:text-blue-400">Productos</span>
+      </div>
 
-      <div className="flex-1">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <h1 className="text-xl font-bold text-gray-800">
-            Nuestros productos
-            <span className="ml-2 text-sm font-normal text-gray-500">
-              ({productos.count} resultados)
-            </span>
+      <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-blue-800 dark:text-blue-300">
+            <i className="fas fa-th-large" /> Nuestros Productos
           </h1>
-          <div className="flex flex-wrap gap-2 text-xs">
-            {ORDEN_OPCIONES.map((opcion) => (
-              <Link
-                key={opcion.value}
-                href={buildUrl({ orden: opcion.value })}
-                className={`rounded-full border px-3 py-1 ${
-                  ordenActual === opcion.value
-                    ? "border-blue-600 bg-blue-600 text-white"
-                    : "border-gray-300 text-gray-600 hover:border-blue-400"
-                }`}
-              >
-                {opcion.label}
-              </Link>
-            ))}
-          </div>
+          <p className="mt-2 text-gray-600 dark:text-slate-400">
+            {productos.count} producto{productos.count === 1 ? "" : "s"} encontrado
+            {productos.count === 1 ? "" : "s"}
+          </p>
         </div>
+        <OrdenSelect />
+      </div>
 
-        {productos.results.length === 0 ? (
-          <p className="text-gray-500">No se encontraron productos con estos filtros.</p>
-        ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {productos.results.map((producto) => (
-              <ProductCard key={producto.id} producto={producto} />
-            ))}
-          </div>
-        )}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
+        <aside className="lg:col-span-1">
+          <FiltrosSidebar categorias={categorias} />
+        </aside>
 
-        {(productos.next || productos.previous) && (
-          <div className="mt-8 flex items-center justify-center gap-3">
-            {productos.previous ? (
+        <div className="lg:col-span-3">
+          {productos.results.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {productos.results.map((producto) => (
+                  <CatalogProductCard key={producto.id} producto={producto} />
+                ))}
+              </div>
+
+              {totalPages > 1 && (
+                <div className="mt-8 flex items-center justify-center space-x-2">
+                  {currentPage > 1 && (
+                    <>
+                      <Link
+                        href={buildPageUrl(1)}
+                        className="rounded-lg border border-gray-300 bg-white px-4 py-2 transition hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                      >
+                        <i className="fas fa-angle-double-left" />
+                      </Link>
+                      <Link
+                        href={buildPageUrl(currentPage - 1)}
+                        className="rounded-lg border border-gray-300 bg-white px-4 py-2 transition hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                      >
+                        <i className="fas fa-angle-left" />
+                      </Link>
+                    </>
+                  )}
+                  <span className="rounded-lg bg-blue-600 px-4 py-2 font-bold text-white">
+                    {currentPage} de {totalPages}
+                  </span>
+                  {currentPage < totalPages && (
+                    <>
+                      <Link
+                        href={buildPageUrl(currentPage + 1)}
+                        className="rounded-lg border border-gray-300 bg-white px-4 py-2 transition hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                      >
+                        <i className="fas fa-angle-right" />
+                      </Link>
+                      <Link
+                        href={buildPageUrl(totalPages)}
+                        className="rounded-lg border border-gray-300 bg-white px-4 py-2 transition hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+                      >
+                        <i className="fas fa-angle-double-right" />
+                      </Link>
+                    </>
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="rounded-lg bg-white p-12 text-center shadow-lg dark:bg-slate-800">
+              <i className="fas fa-box-open mb-4 text-6xl text-gray-300 dark:text-slate-600" />
+              <h3 className="mb-2 text-2xl font-bold text-gray-800 dark:text-slate-100">No se encontraron productos</h3>
+              <p className="mb-6 text-gray-600 dark:text-slate-400">Intenta ajustar los filtros o buscar algo diferente</p>
               <Link
-                href={buildUrl({ page: String(currentPage - 1) })}
-                className="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100"
+                href="/productos"
+                className="inline-block rounded-lg bg-blue-600 px-6 py-3 font-bold text-white transition hover:bg-blue-700"
               >
-                ← Anterior
+                Ver todos los productos
               </Link>
-            ) : (
-              <span className="rounded border border-gray-200 px-3 py-1.5 text-sm text-gray-300">
-                ← Anterior
-              </span>
-            )}
-            <span className="text-sm text-gray-600">Página {currentPage}</span>
-            {productos.next ? (
-              <Link
-                href={buildUrl({ page: String(currentPage + 1) })}
-                className="rounded border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-100"
-              >
-                Siguiente →
-              </Link>
-            ) : (
-              <span className="rounded border border-gray-200 px-3 py-1.5 text-sm text-gray-300">
-                Siguiente →
-              </span>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );
